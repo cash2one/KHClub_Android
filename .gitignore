@@ -1,0 +1,6 @@
+ass
+*.apk
+bin/
+gen/
+.settings/
+proguard/
