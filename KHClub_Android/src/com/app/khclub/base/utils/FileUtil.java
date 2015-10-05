@@ -29,7 +29,7 @@ import android.os.Environment;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.app.khclub.base.app.JLXCApplication;
+import com.app.khclub.base.app.KHApplication;
 
 
 
@@ -44,22 +44,22 @@ import com.app.khclub.base.app.JLXCApplication;
 	public static boolean flag;
 	public static final String ROOT_PATH = getExternalStorageDirectory();
 	// 头像存放地址：/jlxc/headPic/icon.jpg
-	public static String HEAD_PIC_PATH = ROOT_PATH + "/jlxc/image/headPic/";
+	public static String HEAD_PIC_PATH = ROOT_PATH + "/khclub/image/headPic/";
 	// 缩略图存放地址：/jlxc/image/subImage/bigImage_sub.jpg
-	public static final String CHAT_SUB_IMAGE_PATH = ROOT_PATH + "/jlxc/chat/image/subImage/";
+	public static final String CHAT_SUB_IMAGE_PATH = ROOT_PATH + "/khclub/chat/image/subImage/";
 	// 大图存放地址：/jlxc/image/bigImage/bigImage.jpg
-	public static String CHAT_BIG_IMAGE_PATH = ROOT_PATH + "/jlxc/chat/image/bigImage/";
+	public static String CHAT_BIG_IMAGE_PATH = ROOT_PATH + "/khclub/chat/image/bigImage/";
 	// 语音存放地址：/jlxc/audio/audio.mp3
-	public static String CHAT_AUDIO_PATH = ROOT_PATH + "/jlxc/chat/audio/";
+	public static String CHAT_AUDIO_PATH = ROOT_PATH + "/khclub/chat/audio/";
 
 	//图片根目录
-	public static final String IMAGE_ROOT_PATH = ROOT_PATH + "/jlxc/image/";
+	public static final String IMAGE_ROOT_PATH = ROOT_PATH + "/khclub/image/";
 	
-	public static String AUDIO_PATH = ROOT_PATH + "/jlxc/audio/";
-	public static String BIG_IMAGE_PATH = ROOT_PATH + "/jlxc/image/bigImage/";
-	public static String SUB_IMAGE_PATH = ROOT_PATH + "/jlxc/image/subImage/";
+	public static String AUDIO_PATH = ROOT_PATH + "/khclub/audio/";
+	public static String BIG_IMAGE_PATH = ROOT_PATH + "/khclub/image/bigImage/";
+	public static String SUB_IMAGE_PATH = ROOT_PATH + "/khclub/image/subImage/";
 	// 临时目录
-	public static final String TEMP_PATH = ROOT_PATH + "/jlxc/image/temp/";
+	public static final String TEMP_PATH = ROOT_PATH + "/khclub/image/temp/";
 	private static int BUFFER_SIZE = 4 * 1024;
 
 	//创建目录
@@ -82,13 +82,13 @@ import com.app.khclub.base.app.JLXCApplication;
 //		}
 		
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            File externalCacheDir = JLXCApplication.getInstance().getExternalCacheDir();
+            File externalCacheDir = KHApplication.getInstance().getExternalCacheDir();
             if (externalCacheDir != null) {
                 cachePath = externalCacheDir.getPath();
             }
         }
         if (cachePath == null) {
-            File cacheDir = JLXCApplication.getInstance().getCacheDir();
+            File cacheDir = KHApplication.getInstance().getCacheDir();
             if (cacheDir != null && cacheDir.exists()) {
                 cachePath = cacheDir.getPath();
             }

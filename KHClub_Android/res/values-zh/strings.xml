@@ -3,5 +3,6 @@
 
     <string name="app_name">KingHomeClub</string>
     <string name="hello_world">你好!</string>
-
+	<string name="please_input_phonenum">请输入手机号码</string>
+	<string name="login_register">登录/注册</string>	
 </resources>

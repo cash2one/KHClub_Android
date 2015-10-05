@@ -3,5 +3,7 @@
 
     <string name="app_name">KHClub_Android</string>
     <string name="hello_world">Hello world!</string>
+    <string name="please_input_phonenum">please input phone number</string>
+    <string name="login_register">login/register</string>
 
 </resources>

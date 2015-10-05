@@ -4,9 +4,9 @@ public interface KHConst {
 
 	// 正式环境 112.74.202.59 192.168.1.107 www.90newtec.com
 	// 测试环境
-	public static final String DOMIN = "http://www.90newtec.com/jlxc_php/index.php/Home/MobileApi";
-	public static final String ATTACHMENT_ADDR = "http://www.90newtec.com/jlxc_php/Uploads/";
-	public static final String ROOT_PATH = "http://www.90newtec.com/jlxc_php/";
+	public static final String DOMIN = "http://192.168.1.100/khclub_php/index.php/Home/MobileApi";
+	public static final String ATTACHMENT_ADDR = "http://192.168.1.100/khclub_php/Uploads/";
+	public static final String ROOT_PATH = "http://192.168.1.100/khclub_php/";
 
 	public static final int STATUS_SUCCESS = 1;// 接口返回成功
 	public static final int STATUS_FAIL = 0;// 接口返回失败
@@ -23,14 +23,6 @@ public interface KHConst {
 	// broadCast
 	// 状态回复消息或点赞或者新好友
 	public static final String BROADCAST_NEW_MESSAGE_PUSH = "com.jlxc.broadcastreceiver.newsPush";
-	// tab栏徽标更新通知
-	public static final String BROADCAST_TAB_BADGE = "com.jlxc.broadcastreceiver.tabBadge";
-	// 消息顶部更新
-	public static final String BROADCAST_MESSAGE_REFRESH = "com.jlxc.broadcastreceiver.messageRefresh";
-	// 动态详细更新后上一页面也进行更新
-	public static final String BROADCAST_NEWS_LIST_REFRESH = "com.jlxc.broadcastreceiver.newsDetailRefresh";
-	// 新圈子发布
-	public static final String BROADCAST_NEW_TOPIC_REFRESH = "com.jlxc.broadcastreceiver.newTopicPublish";
 	
 	// 匹配网页
 	public static final String URL_PATTERN = "[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*";

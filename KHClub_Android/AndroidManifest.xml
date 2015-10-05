@@ -41,12 +41,13 @@
         android:targetSdkVersion="21" />
 
     <application
+        android:name="com.app.khclub.base.app.KHApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
-            android:name="com.app.khclub.base.ui.activity.MainTabActivity"
+            android:name="com.app.khclub.login.ui.activity.LaunchActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,6 +55,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+	     <activity android:name="com.app.khclub.login.ui.activity.LoginActivity" >
+	     </activity>
+	     <activity android:name="com.app.khclub.login.ui.activity.SecondLoginActivity" >
+	     </activity>
+	     <activity android:name="com.app.khclub.login.ui.activity.RegisterActivity" >
+	     </activity>
+	     <activity android:name="com.app.khclub.base.ui.activity.MainTabActivity" >
+	     </activity>	             
     </application>
 
 </manifest>

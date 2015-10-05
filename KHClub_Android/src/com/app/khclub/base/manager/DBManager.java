@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import com.app.khclub.base.app.JLXCApplication;
+import com.app.khclub.base.app.KHApplication;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -29,8 +29,8 @@ public class DBManager {
 
 		if (null == dbManager) {
 			dbManager = new DBManager();
-			dbManager.dbImport(JLXCApplication.getInstance());
-			dbManager.helper = new SQLiteOpenHelper(JLXCApplication.getInstance(), ROOT_PATH+"/jlxc/jlxc.db", null, 1) {
+			dbManager.dbImport(KHApplication.getInstance());
+			dbManager.helper = new SQLiteOpenHelper(KHApplication.getInstance(), ROOT_PATH+"/jlxc/jlxc.db", null, 1) {
 				@Override
 				public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {					
 				}
@@ -185,13 +185,13 @@ public class DBManager {
 	public static String getExternalStorageDirectory() {
 		String cachePath = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            File externalCacheDir = JLXCApplication.getInstance().getExternalFilesDir("");
+            File externalCacheDir = KHApplication.getInstance().getExternalFilesDir("");
             if (externalCacheDir != null) {
                 cachePath = externalCacheDir.getPath();
             }
         }
         if (cachePath == null) {
-            File cacheDir = JLXCApplication.getInstance().getFilesDir();
+            File cacheDir = KHApplication.getInstance().getFilesDir();
             if (cacheDir != null && cacheDir.exists()) {
                 cachePath = cacheDir.getPath();
             }

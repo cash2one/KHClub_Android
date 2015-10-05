@@ -94,7 +94,7 @@ public class MainTabActivity extends BaseActivity {
 		}
 
 		// 注册通知
-		registerNotify();
+//		registerNotify();
 	}
 
 	// 初始化云巴
@@ -220,20 +220,20 @@ public class MainTabActivity extends BaseActivity {
 	private BroadcastReceiver newMessageReceiver;
 
 	// 注册通知
-	private void registerNotify() {
-
-		// 刷新tab
-		newMessageReceiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				// 刷新tab
-//				refreshTab();
-			}
-		};
-		IntentFilter intentFilter = new IntentFilter(
-				KHConst.BROADCAST_TAB_BADGE);
-		registerReceiver(newMessageReceiver, intentFilter);
-	}
+//	private void registerNotify() {
+//
+//		// 刷新tab
+//		newMessageReceiver = new BroadcastReceiver() {
+//			@Override
+//			public void onReceive(Context context, Intent intent) {
+//				// 刷新tab
+////				refreshTab();
+//			}
+//		};
+//		IntentFilter intentFilter = new IntentFilter(
+//				KHConst.BROADCAST_TAB_BADGE);
+//		registerReceiver(newMessageReceiver, intentFilter);
+//	}
 
 //	// 刷新tab 未读标志
 //	private void refreshTab() {

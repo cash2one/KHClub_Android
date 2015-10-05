@@ -16,23 +16,23 @@ import com.umeng.analytics.MobclickAgent;
  * @author Direct.Hao
  * 
  */
-public class JLXCApplication extends Application {
+public class KHApplication extends Application {
 	// application
-	public static JLXCApplication application;
+	public static KHApplication application;
 	public static boolean isDebug;
 
-	public static JLXCApplication getInstance() {
+	public static KHApplication getInstance() {
         return application;
     }
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		application = (JLXCApplication) getApplicationContext();
+		application = (KHApplication) getApplicationContext();
 //		//数据库初始化
 //		DBManager.getInstance(); 
-//		//FileUtils初始化
-//		FileUtil.makeDirs();
+		//FileUtils初始化
+		FileUtil.makeDirs();
 //		//云巴初始化
 //		YunBaManager.start(getApplicationContext());
 //        //初始化用户模型
