@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_yellow"
+    android:background="@color/main_light_white"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -14,20 +14,18 @@
 
         <ImageView
             android:id="@+id/img_notice_btn"
-            android:layout_width="64dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_launcher" />
+            android:padding="5dp"
+            android:src="@drawable/notice_icon" />
 
         <TextView
             android:id="@+id/tv_square_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="left|center"
-            android:paddingLeft="15dp"
+            android:gravity="center"
+            android:text="广场"
             android:textColor="@color/main_brown"
             android:textSize="@dimen/font_size_huge" />
 
@@ -35,11 +33,7 @@
             android:id="@+id/img_news_publish_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="12dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="10dp"
-            android:paddingTop="12dp"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/publish_btn" />
     </LinearLayout>
     <!-- 主页动态的listview -->
 

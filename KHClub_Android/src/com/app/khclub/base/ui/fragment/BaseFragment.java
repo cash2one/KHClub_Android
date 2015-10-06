@@ -64,6 +64,17 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	/**
+	 * 左侧进入
+	 * 
+	 * @param intent
+	 */
+	public void startActivityWithLeft(Intent intent) {
+		startActivity(intent);
+		getActivity().overridePendingTransition(R.anim.push_left_in,
+				R.anim.push_left_out);
+	}
+
+	/**
 	 * 下方进入
 	 * 
 	 * @param intent

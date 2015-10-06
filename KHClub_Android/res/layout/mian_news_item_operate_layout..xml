@@ -10,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
         android:orientation="horizontal" >
 
         <!-- 发布的时间 -->
@@ -17,33 +18,43 @@
         <TextView
             android:id="@+id/txt_main_news_publish_time"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="top|left"
             android:text="时间"
+            android:layout_gravity="top"
             android:textColor="@color/main_deep_black" />
 
         <!-- 分享按钮 -->
 
         <TextView
             android:id="@+id/btn_mian_share"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:background="@drawable/alert_dialog_confirm_btn_normal"
             android:text="分享" />
 
         <!-- 评论按钮 -->
 
         <TextView
             android:id="@+id/btn_mian_reply"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/alert_dialog_confirm_btn_normal"
             android:text="评论" />
 
         <!-- 点赞按钮 -->
 
         <TextView
             android:id="@+id/btn_news_like"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+             android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/alert_dialog_confirm_btn_normal"
             android:text="点赞" />
     </LinearLayout>
 

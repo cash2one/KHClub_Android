@@ -1,73 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/publish_news_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
     android:background="@color/main_white"
-    android:id="@+id/publish_news_layout">
+    android:orientation="vertical" >
 
     <include layout="@layout/layout_title_bar" />
-    
+
     <EditText
         android:id="@+id/contentEt"
-        android:layout_marginTop="20dip"
-        android:layout_marginLeft="30dip"
-        android:layout_marginRight="30dip"
         android:layout_width="match_parent"
         android:layout_height="130dip"
+        android:layout_marginLeft="30dip"
+        android:layout_marginRight="30dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/alert_dialog_background"
         android:gravity="top"
-        android:background="@color/main_white"
         android:hint="宣布点儿什么吧 o(*￣▽￣*)o ..."
-        android:padding="7dip"
+        android:inputType="textMultiLine"
         android:maxLength="140"
-        android:textSize="@dimen/font_size_small"
-        android:inputType="textMultiLine" >
+        android:padding="7dip"
+        android:textSize="@dimen/font_size_small" >
+
         <requestFocus />
     </EditText>
 
     <RelativeLayout
         android:id="@+id/addImageLayout"
-        android:layout_marginTop="10dip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip" >
+
         <ImageView
             android:id="@+id/addImageView"
             android:layout_width="70dip"
             android:layout_height="70dip"
             android:layout_marginLeft="30dip"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher" />
-        
+            android:src="@drawable/add_picture" />
     </RelativeLayout>
 
-    <LinearLayout        
-        android:id="@+id/choice_location_layout" 
-        android:layout_marginTop="15dip"
-        android:layout_marginLeft="30dip"
-	    android:padding="0dip"
+    <LinearLayout
+        android:id="@+id/choice_location_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_launcher" 
+        android:layout_marginLeft="30dip"
+        android:layout_marginTop="15dip"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
-        <ImageView 
-            android:layout_marginLeft="15dip"
+        android:orientation="horizontal"
+        android:padding="0dip" >
+
+        <ImageView
             android:layout_width="15dip"
             android:layout_height="15dip"
+            android:layout_marginLeft="15dip"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_launcher"/>
-        
-        <TextView 
+            android:src="@drawable/news_location" />
+
+        <TextView
             android:id="@+id/choice_location_text_view"
-            android:layout_marginLeft="2dip"
-            android:textColor="@color/main_deep_gary"
-            android:textSize="@dimen/font_size_tiny"
             android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_marginRight="10dip"
-            android:text="告诉我你在哪里...."/>
-        
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="10dip"
+            android:text="告诉我你在哪里...."
+            android:textColor="@color/main_deep_gary"
+            android:textSize="@dimen/font_size_tiny" />
     </LinearLayout>
 
 </LinearLayout>

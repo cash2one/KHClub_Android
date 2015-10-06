@@ -136,7 +136,7 @@ public class NewsListFragment extends BaseFragment {
 				// 跳转至通知页面
 				Intent intentCampusInfo = new Intent(mContext,
 						NoticeActivity.class);
-				startActivityWithRight(intentCampusInfo);
+				startActivityWithLeft(intentCampusInfo);
 			}
 		});
 	}
@@ -349,9 +349,9 @@ public class NewsListFragment extends BaseFragment {
 		// 设置用户名，职位，公司
 		helper.setText(R.id.txt_main_news_user_name, titleData.getUserName());
 		helper.setText(R.id.txt_main_news_user_office,
-				titleData.getUserOffice());
+				"| 首席执行官 "+titleData.getUserOffice());
 		helper.setText(R.id.txt_main_news_user_company,
-				titleData.getUserCompany());
+				"腾讯科技"+titleData.getUserCompany());
 
 		// 设置事件监听
 		final int postion = helper.getPosition();
@@ -582,7 +582,7 @@ public class NewsListFragment extends BaseFragment {
 				if (R.id.btn_news_like == viewID) {
 					// 点赞操作
 					likeOperate(postion, view, operateData);
-				} else if (R.id.btn_mian_reply == viewID) {
+				} else if (R.id.btn_mian_share == viewID) {
 					// 分享操作
 				} else {
 					// 跳转到动态详情
