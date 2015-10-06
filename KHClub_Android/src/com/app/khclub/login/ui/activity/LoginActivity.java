@@ -18,7 +18,7 @@ import com.app.khclub.base.manager.ActivityManager;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.ui.activity.BaseActivity;
 import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.base.utils.LogUtils;
+import com.app.khclub.base.utils.ToastUtil;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -50,7 +50,6 @@ public class LoginActivity extends BaseActivity {
 				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);  
 		        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 			} catch (Exception e) {
-				LogUtils.e("登录或注册页面出错。");
 			}
 			
 	        break;
@@ -64,8 +63,14 @@ public class LoginActivity extends BaseActivity {
 	 */
 	public void loginOrRegister() {
 		final String username = usernameEt.getText().toString().trim();
-		//网络请求
-		showLoading("正在验证，请稍后", true);
+		if(username.length() < 1){
+			ToastUtil.show(this, getString(R.string.login_username_not_null));
+			return;
+		}
+		
+		//网络请求 hud
+		showLoading(getString(R.string.login_wait_a_minute), true);
+		
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("username", username);
 				
@@ -104,7 +109,7 @@ public class LoginActivity extends BaseActivity {
 					break;
 				case KHConst.STATUS_FAIL:
 					hideLoading();
-					Toast.makeText(LoginActivity.this, jsonResponse.getString(KHConst.HTTP_MESSAGE),
+					Toast.makeText(LoginActivity.this, jsonResponse.getString(getString(R.string.net_error)),
 							Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -113,7 +118,7 @@ public class LoginActivity extends BaseActivity {
 				// TODO Auto-generated method stub
 				super.onFailure(arg0, arg1, flag);
 				hideLoading();
-				Toast.makeText(LoginActivity.this, "网络异常",
+				Toast.makeText(LoginActivity.this, getString(R.string.net_error),
 						Toast.LENGTH_SHORT).show();
 			}
 			

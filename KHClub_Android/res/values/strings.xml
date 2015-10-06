@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">KHClub_Android</string>
+    <string name="app_name">KingHomeClub</string>
     <string name="hello_world">Hello world!</string>
-    <string name="please_input_phonenum">please input phone number</string>
-    <string name="login_register">login/register</string>
+    
+    <!-- Loading -->
+    <string name="uploading">Uploading..</string>
+    <!-- Loading -->
+
+    <!-- Toast -->
+    <string name="net_error">Net exception.</string>
+    <!-- Toast -->
+
+    <!-- Alert -->
+    <string name="alert_title">Prompt</string>
+    <string name="alert_sure">Confirm</string>
+    <string name="alert_cancle">Cancel</string>
+    <string name="alert_finish">Close</string>
+    <string name="next">Next</string>
+    <!-- Alert -->
+    
+    <!-- Login -->
+    <string name="login_please_enter_phonenum">Please enter phone number</string>
+    <string name="login_login_register">Login/Register</string>
+    <string name="login_wait_a_minute">Wait a minute</string>
+    <string name="login_username_not_null">Username can\'t be empty</string>
+	<string name="login_password_not_null">Password can\'t be empty</string>
+    <string name="login_loginning">Logining</string>
+    <string name="login_login_title">Login</string>
+    <string name="login_password_error">Username or password error</string>
+    <string name="login_black_list">You have been banned</string>
+    <string name="login_forgot_password">forgot password?</string>
+    <string name="login_please_enter_password">Please enter password</string> 
+    <string name="login_verification_not_null">Verification code can\'t be empty</string>
+    <string name="login_password_length_six">Password length of at least six</string>
+    <string name="login_register_successful">Successful</string>
+    <string name="login_modify_password">Password</string>
+    <string name="login_register_title">Register</string> 
+    <string name="login_verification_send">Verification code has been sent to</string>
+    <string name="login_resend">resend</string>   
+    <!-- Login -->
+    
+    
 
 </resources>

@@ -21,6 +21,7 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.Md5Utils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -69,12 +70,13 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 	public void login() {
 		final String password = passwordEt.getText().toString().trim();
 		if (null==password || "".equals(password)) {
-			Toast.makeText(SecondLoginActivity.this, "密码不能为空",
+			//密码不能为空
+			Toast.makeText(SecondLoginActivity.this, getString(R.string.login_password_not_null),
 					Toast.LENGTH_SHORT).show();
 			return; 
 		}
-		//网络请求
-		showLoading("正在登录，请稍后", true);
+		//网络请求 
+		showLoading(getString(R.string.login_loginning), true);
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("username", username);
 		params.addBodyParameter("password", Md5Utils.encode(password));
@@ -95,8 +97,6 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 //					//数据持久化
 //					UserManager.getInstance().saveAndUpdate();
 					
-					Toast.makeText(SecondLoginActivity.this, "登录成功",
-							Toast.LENGTH_SHORT).show();
 					//跳转主页
 					Intent intent = new Intent(SecondLoginActivity.this, MainTabActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -114,7 +114,13 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 					break; 
 				case KHConst.STATUS_FAIL:
 					hideLoading();
-					Toast.makeText(SecondLoginActivity.this, jsonResponse.getString(KHConst.HTTP_MESSAGE),
+					//1为封禁 2为黑名单
+					int msg = KHUtils.stringToInt(jsonResponse.getString(KHConst.HTTP_MESSAGE));
+					String errorString = getString(R.string.login_password_error);
+					if (msg == 1) {
+						errorString = getString(R.string.login_black_list);
+					}
+					Toast.makeText(SecondLoginActivity.this, errorString,
 							Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -123,66 +129,21 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 				// TODO Auto-generated method stub
 				super.onFailure(arg0, arg1, flag);
 				hideLoading();
-				Toast.makeText(SecondLoginActivity.this, "网络异常",
+				Toast.makeText(SecondLoginActivity.this, getString(R.string.net_error),
 						Toast.LENGTH_SHORT).show();
 			}
 			
-		}, null)); 
+		}, null));
 	}
 	
 	//找回密码
 	public void findPwd() {
-		
-//		showLoading("验证码获取中..", false);
-//		try {
-//			//发送验证码
-//			SMSSDK.getVerificationCode("86",username);			
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
 
-    	Intent intent = new Intent(SecondLoginActivity.this, VerifyActivity.class);
+    	Intent intent = new Intent(SecondLoginActivity.this, RegisterActivity.class);
     	intent.putExtra("username", username);
     	intent.putExtra("isFindPwd", true);
     	startActivityWithRight(intent);			
 		
-//		//网络请求
-//		RequestParams params = new RequestParams();
-//		params.addBodyParameter("phone_num", username);
-//		HttpManager.post(JLXCConst.GET_MOBILE_VERIFY, params, new JsonRequestCallBack<String>(new LoadDataHandler<String>(){
-//			
-//			@Override
-//			public void onSuccess(JSONObject jsonResponse, String flag) {
-//				// TODO Auto-generated method stub
-//				super.onSuccess(jsonResponse, flag);
-//				LogUtils.i(jsonResponse.toJSONString(), 1);
-//				int status = jsonResponse.getInteger(JLXCConst.HTTP_STATUS);
-//				switch (status) {
-//				case JLXCConst.STATUS_SUCCESS:
-//					hideLoading();
-//					//跳转
-//	            	Intent intent = new Intent(SecondLoginActivity.this, RegisterActivity.class);
-//	            	intent.putExtra("username", username);
-//	            	intent.putExtra("isFindPwd", true);
-//	            	startActivityWithRight(intent);	
-//					
-//					break;
-//				case JLXCConst.STATUS_FAIL:
-//					hideLoading();
-//					Toast.makeText(SecondLoginActivity.this, jsonResponse.getString(JLXCConst.HTTP_MESSAGE),
-//							Toast.LENGTH_SHORT).show();
-//				}
-//			}
-//			@Override
-//			public void onFailure(HttpException arg0, String arg1, String flag) {
-//				// TODO Auto-generated method stub
-//				super.onFailure(arg0, arg1, flag);
-//				hideLoading();
-//				Toast.makeText(SecondLoginActivity.this, "网络异常",
-//						Toast.LENGTH_SHORT).show();
-//			}
-//			
-//		}, null)); 
 	}
 	
 	@Override
@@ -196,94 +157,22 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 		//设置用户名
 		Intent intent =	getIntent();
 		setUsername(intent.getStringExtra("username"));
-		setBarText("登录");
+		setBarText(getString(R.string.login_login_title));
 		RelativeLayout rlBar = (RelativeLayout) findViewById(R.id.layout_base_title);
 		rlBar.setBackgroundResource(R.color.main_clear);
 		
-//		findPwdTextView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG ); //下划线
-		
-//		passwordEt.setText("123456");
-//		EventHandler eh=new EventHandler(){
-//			@Override
-//			public void afterEvent(int event, int result, Object data) {
-//				Message msg = new Message();
-//				msg.arg1 = event;
-//				msg.arg2 = result;
-//				msg.obj = data;
-//				handler.sendMessage(msg);
-//			}
-//		};
-//		SMSSDK.registerEventHandler(eh);
 	}
 	
 	@Override
 	public void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
-//		try {
-//			EventHandler eh=new EventHandler(){
-//				@Override
-//				public void afterEvent(int event, int result, Object data) {
-//					Message msg = new Message();
-//					msg.arg1 = event;
-//					msg.arg2 = result;
-//					msg.obj = data;
-//					handler.sendMessage(msg);
-//				}
-//			};
-//			SMSSDK.registerEventHandler(eh);			
-//		} catch (Exception e) {
-//			System.out.println("没初始化SMSSDK 因为这个短信sdk对DEBUG有影响 所以不是RELEASE不初始化");
-//		}		
 
 	}
 	@Override
 	public void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
-//		try {
-//			SMSSDK.unregisterAllEventHandler();	
-//		} catch (Exception e) {
-//			System.out.println("没初始化SMSSDK 因为这个短信sdk对DEBUG有影响 所以不是RELEASE不初始化");
-//		}		
 	}
 	
-//	@SuppressLint("HandlerLeak") 
-//	Handler handler=new Handler(){
-//
-//		@Override
-//		public void handleMessage(Message msg) {
-//			hideLoading();
-//			// TODO Auto-generated method stub
-//			super.handleMessage(msg);
-//			int event = msg.arg1;
-//			int result = msg.arg2;
-//			Object data = msg.obj;
-//			Log.e("event", "event="+event);
-//			if (result == SMSSDK.RESULT_COMPLETE) {
-//				//短信注册成功后，返回MainActivity,然后提示新好友
-//				if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {//提交验证码成功
-////					Toast.makeText(getApplicationContext(), "提交验证码成功", Toast.LENGTH_SHORT).show();
-//				} else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
-//	            	Intent intent = new Intent(SecondLoginActivity.this, RegisterActivity.class);
-//	            	intent.putExtra("username", username);
-//	            	intent.putExtra("isFindPwd", true);
-//	            	startActivityWithRight(intent);	
-//	            	
-////	            	SMSSDK.unregisterAllEventHandler();
-//				}else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){//返回支持发送验证码的国家列表
-////					Toast.makeText(getApplicationContext(), "获取国家列表成功", Toast.LENGTH_SHORT).show();
-//					
-//				}
-//			} else {
-//				((Throwable) data).printStackTrace();
-//				ToastUtil.show(SecondLoginActivity.this, "网络有点小问题");
-//			}
-//			
-//		}
-//		
-//	};
-
 	public String getUsername() {
 		return username;
 	}

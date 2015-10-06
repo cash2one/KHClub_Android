@@ -20,9 +20,8 @@
         android:layout_marginTop="150dip"
         android:background="@color/main_clear"
         android:drawablePadding="10dp"
-        android:hint="@string/please_input_phonenum"
+        android:hint="@string/login_please_enter_phonenum"
         android:inputType="number"
-        android:maxLength="11"
         android:padding="5dip"
         android:singleLine="true"
         android:textColor="@color/main_deep_black"
@@ -44,7 +43,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dip"
         android:background="@drawable/login_button"
-        android:text="@string/login_register"
+        android:text="@string/login_login_register"
         android:textColor="@color/main_brown"
         android:textSize="@dimen/font_size_small" />
 

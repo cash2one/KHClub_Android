@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">KingHomeClub</string>
+    <string name="app_name">国王俱乐部</string>
     <string name="hello_world">你好!</string>
-	<string name="please_input_phonenum">请输入手机号码</string>
-	<string name="login_register">登录/注册</string>	
+    
+    <!-- Loading -->
+    <string name="uploading">上传中，请稍候..</string>
+    <!-- Loading -->
+
+    <!-- Toast -->
+    <string name="net_error">网络异常</string>
+    <!-- Toast -->
+
+    <!-- Alert -->
+    <string name="alert_title">提示</string>
+    <string name="alert_sure">确定</string>
+    <string name="alert_cancle">取消</string>
+    <string name="alert_finish">关闭</string>
+    <string name="next">下一步</string>
+    <!-- Alert -->
+    
+    <!-- Login -->
+	<string name="login_please_enter_phonenum">请输入手机号码</string>
+	<string name="login_login_register">登录/注册</string>
+	<string name="login_wait_a_minute">正在验证，请稍后</string>
+    <string name="login_username_not_null">用户名不能为空</string>
+    <string name="login_password_not_null">密码不能为空</string>
+    <string name="login_loginning">正在登录，请稍后</string>
+    <string name="login_login_title">登录</string>
+    <string name="login_password_error">用户名或者密码错误</string>
+    <string name="login_black_list">很遗憾、您已被封禁</string>
+    <string name="login_forgot_password">忘记密码?</string>
+    <string name="login_please_enter_password">请输入密码</string>
+    <string name="login_verification_not_null">验证码不能为空</string>
+    <string name="login_password_length_six">密码长度至少六位</string>
+    <string name="login_register_successful">注册成功</string>
+	<string name="login_modify_password">修改密码</string>
+    <string name="login_register_title">注册</string>
+    <string name="login_resend">重发</string>    
+    <!-- Login -->
+    		
 </resources>
