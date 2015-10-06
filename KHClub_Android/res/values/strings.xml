@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">KingHomeClub</string>
     <string name="hello_world">Hello world!</string>
     
     <!-- Loading -->
     <string name="uploading">Uploading..</string>
+    <string name="downloading">Downloading</string>
     <!-- Loading -->
 
     <!-- Toast -->
@@ -14,9 +15,10 @@
 
     <!-- Alert -->
     <string name="alert_title">Prompt</string>
-    <string name="alert_sure">Confirm</string>
+    <string name="alert_confirm">Confirm</string>
     <string name="alert_cancle">Cancel</string>
-    <string name="alert_finish">Close</string>
+    <string name="alert_close">Close</string>
+    <string name="alert_finish">Finish</string>
     <string name="next">Next</string>
     <!-- Alert -->
     
@@ -36,10 +38,15 @@
     <string name="login_password_length_six">Password length of at least six</string>
     <string name="login_register_successful">Successful</string>
     <string name="login_modify_password">Password</string>
-    <string name="login_register_title">Register</string> 
-    <string name="login_verification_send">Verification code has been sent to</string>
+    <string name="login_register_title">Register</string>
+    <string name="login_verification_send">Sent to</string>
     <string name="login_resend">resend</string>   
+	<string name="login_verification_arrivied">Verification code has arrived</string>
+    <string name="login_verification_error">Verification code or phone number error</string>
+    <string name="login_please_enter_verification">Please enter verification</string>
+    <string name="login_password_length" tools:ignore="TypographyDashes">Password length 6-32 characters</string>    
     <!-- Login -->
+    
     
     
 

@@ -43,13 +43,13 @@ import com.app.khclub.base.app.KHApplication;
 
 	public static boolean flag;
 	public static final String ROOT_PATH = getExternalStorageDirectory();
-	// 头像存放地址：/jlxc/headPic/icon.jpg
+	// 头像存放地址：/khclub/headPic/icon.jpg
 	public static String HEAD_PIC_PATH = ROOT_PATH + "/khclub/image/headPic/";
-	// 缩略图存放地址：/jlxc/image/subImage/bigImage_sub.jpg
+	// 缩略图存放地址：/khclub/image/subImage/bigImage_sub.jpg
 	public static final String CHAT_SUB_IMAGE_PATH = ROOT_PATH + "/khclub/chat/image/subImage/";
-	// 大图存放地址：/jlxc/image/bigImage/bigImage.jpg
+	// 大图存放地址：/khclub/image/bigImage/bigImage.jpg
 	public static String CHAT_BIG_IMAGE_PATH = ROOT_PATH + "/khclub/chat/image/bigImage/";
-	// 语音存放地址：/jlxc/audio/audio.mp3
+	// 语音存放地址：/khclub/audio/audio.mp3
 	public static String CHAT_AUDIO_PATH = ROOT_PATH + "/khclub/chat/audio/";
 
 	//图片根目录

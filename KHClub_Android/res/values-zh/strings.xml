@@ -6,6 +6,7 @@
     
     <!-- Loading -->
     <string name="uploading">上传中，请稍候..</string>
+    <string name="downloading">获取中，请稍候..</string>
     <!-- Loading -->
 
     <!-- Toast -->
@@ -14,9 +15,10 @@
 
     <!-- Alert -->
     <string name="alert_title">提示</string>
-    <string name="alert_sure">确定</string>
+    <string name="alert_confirm">确定</string>
     <string name="alert_cancle">取消</string>
-    <string name="alert_finish">关闭</string>
+    <string name="alert_close">关闭</string>
+    <string name="alert_finish">完成</string>
     <string name="next">下一步</string>
     <!-- Alert -->
     
@@ -37,7 +39,12 @@
     <string name="login_register_successful">注册成功</string>
 	<string name="login_modify_password">修改密码</string>
     <string name="login_register_title">注册</string>
-    <string name="login_resend">重发</string>    
+    <string name="login_verification_send">验证码已经发送至</string>
+    <string name="login_resend">重发</string>
+    <string name="login_verification_arrivied">验证码已发送至您的手机</string>
+    <string name="login_verification_error">验证码错误或者手机号码有误</string>
+    <string name="login_please_enter_verification">请输入验证码</string>    
+    <string name="login_password_length">密码长度只能是6到32位</string>
     <!-- Login -->
     		
 </resources>

@@ -30,7 +30,7 @@ public class DBManager {
 		if (null == dbManager) {
 			dbManager = new DBManager();
 			dbManager.dbImport(KHApplication.getInstance());
-			dbManager.helper = new SQLiteOpenHelper(KHApplication.getInstance(), ROOT_PATH+"/jlxc/jlxc.db", null, 1) {
+			dbManager.helper = new SQLiteOpenHelper(KHApplication.getInstance(), ROOT_PATH+"/khclub/khclub.db", null, 1) {
 				@Override
 				public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {					
 				}
@@ -91,14 +91,14 @@ public class DBManager {
 	@SuppressLint("SdCardPath") 
 	private void dbImport(Context context)
     {
-		String dbpath = ROOT_PATH+"/jlxc/jlxc.db";
+		String dbpath = ROOT_PATH+"/khclub/khclub.db";
 		File file =  new File(dbpath);
 		if (file.exists()) {
 			Log.i("--", "数据库已经存在");
 			return;
 		}
         try {
-            File dir = new File(ROOT_PATH+"/jlxc");
+            File dir = new File(ROOT_PATH+"/khclub");
             // 如果/sdcard/testdb目录中存在，创建这个目录
             if (!dir.exists()){
             	dir.mkdir();
@@ -113,7 +113,7 @@ public class DBManager {
             	// f.delete();
               // 获得封装testDatabase.db文件的InputStream对象
                 AssetManager asset = context.getAssets();
-                InputStream is = asset.open("jlxc.db");
+                InputStream is = asset.open("khclub.db");
                 //File dbfile = new File(context.getFilesDir().getAbsolutePath() +File.separator+ "mydb.db");  
                 FileOutputStream fos = new FileOutputStream(dbpath);
                 byte[] buffer = new byte[1024];

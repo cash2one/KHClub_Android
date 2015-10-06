@@ -21,9 +21,10 @@ import com.app.khclub.R;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
+import com.app.khclub.base.manager.UserManager;
+import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.ui.activity.MainTabActivity;
-import com.app.khclub.base.ui.view.CustomAlertDialog;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.Md5Utils;
 import com.app.khclub.base.utils.ToastUtil;
@@ -157,14 +158,14 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 								.getInteger(KHConst.HTTP_STATUS);
 						if (status == KHConst.STATUS_SUCCESS) {
 							hideLoading();
-//							JSONObject result = jsonResponse
-//									.getJSONObject(KHConst.HTTP_RESULT);
-//							UserModel userMd = new UserModel();
-//							userMd.setContentWithJson(result);
-//							UserManager.getInstance().setUser(userMd);
-//							ToastUtil.show(RegisterActivity.this, "修改成功");
-//							// 数据持久化
-//							UserManager.getInstance().saveAndUpdate();
+							JSONObject result = jsonResponse
+									.getJSONObject(KHConst.HTTP_RESULT);
+							UserModel userMd = new UserModel();
+							userMd.setContentWithJson(result);
+							UserManager.getInstance().setUser(userMd);
+							ToastUtil.show(RegisterActivity.this, "修改成功");
+							// 数据持久化
+							UserManager.getInstance().saveAndUpdate();
 							// 跳转主页
 							Intent intent = new Intent(RegisterActivity.this,
 									MainTabActivity.class);
@@ -218,14 +219,14 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 								.getInteger(KHConst.HTTP_STATUS);
 						if (status == KHConst.STATUS_SUCCESS) {
 							hideLoading();
-//							JSONObject result = jsonResponse
-//									.getJSONObject(KHConst.HTTP_RESULT);
-//							// 设置用户实例
-//							UserModel userMd = new UserModel();
-//							userMd.setContentWithJson(result);
-//							UserManager.getInstance().setUser(userMd);
-//							// 数据持久化
-//							UserManager.getInstance().saveAndUpdate();
+							JSONObject result = jsonResponse
+									.getJSONObject(KHConst.HTTP_RESULT);
+							// 设置用户实例
+							UserModel userMd = new UserModel();
+							userMd.setContentWithJson(result);
+							UserManager.getInstance().setUser(userMd);
+							// 数据持久化
+							UserManager.getInstance().saveAndUpdate();
 							ToastUtil.show(RegisterActivity.this, getString(R.string.login_register_successful));
 							// 进入主页
 							Intent intent = new Intent(RegisterActivity.this,
@@ -339,7 +340,7 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 			//发送验证码
 			SMSSDK.getVerificationCode("86",userPhoneNumber);	
 			verifyCountdownTimer.start();
-			showLoading("验证码获取中..", true);
+			showLoading(getString(R.string.downloading), true);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -368,14 +369,14 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 						finishRegister();
 					}
 				} else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
-					ToastUtil.show(RegisterActivity.this, "验证码已发送至您的手机");	
+					ToastUtil.show(RegisterActivity.this, getString(R.string.login_verification_arrivied));	
 					
 				}else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){//返回支持发送验证码的国家列表
 					
 				}
 			} else {
 				((Throwable) data).printStackTrace();
-				ToastUtil.show(RegisterActivity.this, "验证码错误或者手机号码有误");
+				ToastUtil.show(RegisterActivity.this, getString(R.string.login_verification_error));
 			}
 			
 		}

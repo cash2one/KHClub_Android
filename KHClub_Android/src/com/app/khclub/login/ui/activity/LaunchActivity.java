@@ -8,7 +8,10 @@ import android.view.WindowManager;
 
 import com.app.khclub.R;
 import com.app.khclub.base.manager.ActivityManager;
+import com.app.khclub.base.manager.UserManager;
+import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivity;
+import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class LaunchActivity extends BaseActivity {
@@ -50,12 +53,12 @@ public class LaunchActivity extends BaseActivity {
 			handler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-//					UserModel userModel = UserManager.getInstance().getUser();
-//					if (null != userModel.getUsername() && null != userModel.getLogin_token()) {
-//						startActivity(new Intent(LaunchActivity.this, MainTabActivity.class));
-//					} else {
+					UserModel userModel = UserManager.getInstance().getUser();
+					if (null != userModel.getUsername() && null != userModel.getLogin_token()) {
+						startActivity(new Intent(LaunchActivity.this, MainTabActivity.class));
+					} else {
 						startActivity(new Intent(LaunchActivity.this, LoginActivity.class));
-//					}
+					}
 					finish();
 				}
 			}, 2000);

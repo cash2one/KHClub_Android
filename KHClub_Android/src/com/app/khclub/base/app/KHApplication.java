@@ -29,8 +29,8 @@ public class KHApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		application = (KHApplication) getApplicationContext();
-//		//数据库初始化
-//		DBManager.getInstance(); 
+		//数据库初始化
+		DBManager.getInstance(); 
 		//FileUtils初始化
 		FileUtil.makeDirs();
 //		//云巴初始化

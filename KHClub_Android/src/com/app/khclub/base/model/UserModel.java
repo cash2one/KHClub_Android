@@ -19,8 +19,8 @@ public class UserModel implements Serializable{
 	private String username;
 	//用户密码
 	private String password;
-	//helloha_id
-	private String helloha_id;
+	//kh_id
+	private String kh_id;
 	//姓名
 	private String name;
 	//电话号
@@ -28,23 +28,23 @@ public class UserModel implements Serializable{
 	//姓别 0男 1女 2不知道
 	private int sex;	
 	//学校
-	private String school;	
+	private String company_name;	
 	//学校编码
-	private String school_code;	
+	private String address;	
 	//头像地址
 	private String head_image;
 	//头像缩略图地址
 	private String head_sub_image;	
-	//年龄
-	private int age;		
+	//职位
+	private String job;		
 	//生日
 	private String birthday;
 	//城市
-	private String city;
+	private String e_mail;
 	//签名
-	private String sign;
+	private String signature;
 	//背景图片
-	private String background_image;
+	private String qr_code;
 	//登录token
 	private String login_token;
 	//融云im_token
@@ -55,21 +55,21 @@ public class UserModel implements Serializable{
 	public void setContentWithJson(JSONObject object) {
 		
 		setUid(object.getIntValue("id"));
-		setAge(object.getIntValue("age"));
+		setKh_id(object.getString("kh_id"));
 		setHead_image(object.getString("head_image"));
 		setHead_sub_image(object.getString("head_sub_image"));
 		setName(object.getString("name"));
 		setPassword(object.getString("password"));
 		setUsername(object.getString("username"));
 		setPhone_num(object.getString("phone_num"));
-		setSchool(object.getString("school"));
-		setSchool_code(object.getString("school_code"));
+		setCompany_name(object.getString("company_name"));
+		setE_mail(object.getString("e_mail"));
+		setQr_code(object.getString("qr_code"));
 		setSex(object.getIntValue("sex"));
-		setHelloha_id(object.getString("helloha_id"));
 		setBirthday(object.getString("birthday"));
-		setCity(object.getString("city"));
-		setSign(object.getString("sign"));
-		setBackground_image(object.getString("background_image"));
+		setAddress(object.getString("address"));
+		setSignature(object.getString("signature"));
+		setJob(object.getString("job"));
 		setLogin_token(object.getString("login_token"));
 		setIm_token(object.getString("im_token"));
 	}
@@ -92,12 +92,6 @@ public class UserModel implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getHelloha_id() {
-		return helloha_id;
-	}
-	public void setHelloha_id(String helloha_id) {
-		this.helloha_id = helloha_id;
-	}
 	public String getName() {
 		return name;
 	}
@@ -116,18 +110,6 @@ public class UserModel implements Serializable{
 	public void setSex(int sex) {
 		this.sex = sex;
 	}
-	public String getSchool() {
-		return school;
-	}
-	public void setSchool(String school) {
-		this.school = school;
-	}
-	public String getSchool_code() {
-		return school_code;
-	}
-	public void setSchool_code(String school_code) {
-		this.school_code = school_code;
-	}
 	public String getHead_image() {
 		return head_image;
 	}
@@ -140,35 +122,11 @@ public class UserModel implements Serializable{
 	public void setHead_sub_image(String head_sub_image) {
 		this.head_sub_image = head_sub_image;
 	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
 	public String getBirthday() {
 		return birthday;
 	}
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	public String getSign() {
-		return sign;
-	}
-	public void setSign(String sign) {
-		this.sign = sign;
-	}
-	public String getBackground_image() {
-		return background_image;
-	}
-	public void setBackground_image(String background_image) {
-		this.background_image = background_image;
 	}
 	public String getLogin_token() {
 		return login_token;
@@ -181,6 +139,62 @@ public class UserModel implements Serializable{
 	}
 	public void setIm_token(String im_token) {
 		this.im_token = im_token;
+	}
+
+	public String getKh_id() {
+		return kh_id;
+	}
+
+	public void setKh_id(String kh_id) {
+		this.kh_id = kh_id;
+	}
+
+	public String getCompany_name() {
+		return company_name;
+	}
+
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getJob() {
+		return job;
+	}
+
+	public void setJob(String job) {
+		this.job = job;
+	}
+
+	public String getE_mail() {
+		return e_mail;
+	}
+
+	public void setE_mail(String e_mail) {
+		this.e_mail = e_mail;
+	}
+
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+	public String getQr_code() {
+		return qr_code;
+	}
+
+	public void setQr_code(String qr_code) {
+		this.qr_code = qr_code;
 	}	
 	
 	

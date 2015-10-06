@@ -92,10 +92,10 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 				case KHConst.STATUS_SUCCESS:
 					hideLoading();
 					//登录成功用户信息注入
-//					JSONObject result = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
-//					UserManager.getInstance().getUser().setContentWithJson(result);
-//					//数据持久化
-//					UserManager.getInstance().saveAndUpdate();
+					JSONObject result = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
+					UserManager.getInstance().getUser().setContentWithJson(result);
+					//数据持久化
+					UserManager.getInstance().saveAndUpdate();
 					
 					//跳转主页
 					Intent intent = new Intent(SecondLoginActivity.this, MainTabActivity.class);

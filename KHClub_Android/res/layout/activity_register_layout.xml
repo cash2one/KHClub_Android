@@ -21,7 +21,7 @@
         android:layout_marginTop="110dip"        
         android:layout_width="280dip"
         android:layout_height="wrap_content"
-        android:text="您的电话号" />  
+        android:text="@string/login_verification_send" />  
         
     <LinearLayout 
         android:id="@+id/verificationcode_layout"
@@ -39,7 +39,7 @@
          android:maxLength="6"
          android:padding="5dip"
          android:background="@color/main_clear"
-         android:hint="请输入验证码"
+         android:hint="@string/login_please_enter_verification"
          android:textColorHint="@color/login_edit_hint_color"   
          android:textColor="@color/main_deep_black"      
          android:singleLine="true"
@@ -52,7 +52,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="30dip"
-        android:text="重新获取" />             
+        android:text="@string/login_resend" />             
      
     </LinearLayout>
     
@@ -75,7 +75,7 @@
          android:maxLength="24"
          android:padding="5dip"
          android:background="@color/main_clear"
-         android:hint="请输入密码"
+         android:hint="@string/login_please_enter_password"
          android:textColorHint="@color/login_edit_hint_color"   
          android:textColor="@color/main_deep_black"      
          android:singleLine="true"
@@ -94,7 +94,7 @@
          android:layout_height="wrap_content"
          android:textSize="@dimen/font_size_tiny"
          android:layout_marginTop="10dip"
-         android:text="密码长度只能是6到24位哦"
+         android:text="@string/login_password_length"
          android:textColor="@color/main_brown"
          android:layout_below="@+id/passwd_edittext"
          android:layout_centerHorizontal="true"/>
@@ -109,6 +109,6 @@
          android:background="@drawable/login_button"
          android:layout_height="45dip"
          android:layout_marginTop="40dip"
-         android:text="完成" />       
+         android:text="@string/alert_finish" />       
      
 </RelativeLayout>
