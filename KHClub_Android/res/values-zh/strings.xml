@@ -49,6 +49,7 @@
     		
 	<!-- Personal -->
     <string name="personal_me_title">我的</string>
+    <string name="personal_signature">个人说明</string>
     <!-- Personal -->    		
     		
 </resources>

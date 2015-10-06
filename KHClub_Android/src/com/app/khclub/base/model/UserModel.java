@@ -49,8 +49,15 @@ public class UserModel implements Serializable{
 	private String login_token;
 	//融云im_token
 	private String im_token;
+	//0为全部可见 1为好友可见
+	private int company_state;
+	//0为全部可见 1为好友可见
+	private int address_state;
+	//0为全部可见 1为好友可见
+	private int email_state;
+	//0为全部可见 1为好友可见
+	private int phone_state;	
 	
-	//Congestion
 	//内容注入
 	public void setContentWithJson(JSONObject object) {
 		
@@ -72,6 +79,10 @@ public class UserModel implements Serializable{
 		setJob(object.getString("job"));
 		setLogin_token(object.getString("login_token"));
 		setIm_token(object.getString("im_token"));
+		setCompany_state(object.getIntValue("company_state"));
+		setAddress_state(object.getIntValue("address_state"));
+		setEmail_state(object.getIntValue("email_state"));
+		setPhone_state(object.getIntValue("phone_state"));
 	}
 	
 	public int getUid() {
@@ -195,7 +206,38 @@ public class UserModel implements Serializable{
 
 	public void setQr_code(String qr_code) {
 		this.qr_code = qr_code;
+	}
+
+	public int getCompany_state() {
+		return company_state;
+	}
+
+	public void setCompany_state(int company_state) {
+		this.company_state = company_state;
+	}
+
+	public int getAddress_state() {
+		return address_state;
+	}
+
+	public void setAddress_state(int address_state) {
+		this.address_state = address_state;
+	}
+
+	public int getEmail_state() {
+		return email_state;
+	}
+
+	public void setEmail_state(int email_state) {
+		this.email_state = email_state;
+	}
+
+	public int getPhone_state() {
+		return phone_state;
+	}
+
+	public void setPhone_state(int phone_state) {
+		this.phone_state = phone_state;
 	}	
-	
 	
 }
