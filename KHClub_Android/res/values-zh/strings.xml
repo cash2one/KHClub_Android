@@ -47,4 +47,8 @@
     <string name="login_password_length">密码长度只能是6到32位</string>
     <!-- Login -->
     		
+	<!-- Personal -->
+    <string name="personal_me_title">我的</string>
+    <!-- Personal -->    		
+    		
 </resources>

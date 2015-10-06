@@ -47,6 +47,9 @@
     <string name="login_password_length" tools:ignore="TypographyDashes">Password length 6-32 characters</string>    
     <!-- Login -->
     
+    <!-- Personal -->
+    <string name="personal_me_title">Me</string>
+    <!-- Personal -->
     
     
 
