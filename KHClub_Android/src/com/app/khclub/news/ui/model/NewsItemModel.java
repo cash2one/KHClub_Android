@@ -68,7 +68,7 @@ public class NewsItemModel {
 		// 公司
 		private String userCompany;
 		// 职位
-		private String userOffice;
+		private String userJob;
 
 		public String getHeadSubImage() {
 			return headSubImage;
@@ -110,12 +110,12 @@ public class NewsItemModel {
 			this.userCompany = userCompany;
 		}
 
-		public String getUserOffice() {
-			return userOffice;
+		public String getUserJob() {
+			return userJob;
 		}
 
-		public void setUserOffice(String userOffice) {
-			this.userOffice = userOffice;
+		public void setUserJob(String userJob) {
+			this.userJob = userJob;
 		}
 	}
 
@@ -178,12 +178,8 @@ public class NewsItemModel {
 			return likeCount;
 		}
 
-		public void setLikeCount(String likeCount) {
-			try {
-				this.likeCount = Integer.parseInt(likeCount);
-			} catch (Exception e) {
-				LogUtils.e("点赞数据格式错误.");
-			}
+		public void setLikeCount(int likeCount) {
+			this.likeCount = likeCount;
 		}
 
 		public void setIsLike(String isLike) {

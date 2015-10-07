@@ -7,6 +7,7 @@ import java.util.List;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.base.model.ImageModel;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
 
 public class NewsModel implements Serializable {
 
@@ -22,7 +23,7 @@ public class NewsModel implements Serializable {
 	// 用户的公司
 	private String userCompany;
 	// 用户的职位
-	private String userOffice;
+	private String userJob;
 	// 用户的头像
 	private String userHeadImage;
 	// 用户的头像缩略图
@@ -40,9 +41,9 @@ public class NewsModel implements Serializable {
 	// 发布的时间
 	private String sendTime;
 	// 动态的评论量
-	private String commentQuantity;
+	private int commentQuantity;
 	// 动态的点赞量
-	private String likeQuantity;
+	private int likeQuantity;
 	// 用户是否点赞
 	private String isLike;
 
@@ -56,11 +57,11 @@ public class NewsModel implements Serializable {
 		if (object.containsKey("name")) {
 			setUserName(object.getString("name"));
 		}
-		if (object.containsKey("company")) {
-			setUserCompany(object.getString("company"));
+		if (object.containsKey("company_name")) {
+			setUserCompany(object.getString("company_name"));
 		}
-		if (object.containsKey("offic")) {
-			setUserOffice(object.getString("offic"));
+		if (object.containsKey("job")) {
+			setUserJob(object.getString("job"));
 		}
 		if (object.containsKey("head_image")) {
 			setUserHeadImage(KHConst.ATTACHMENT_ADDR
@@ -166,20 +167,20 @@ public class NewsModel implements Serializable {
 		this.newsContent = newsContent;
 	}
 
-	public String getCommentQuantity() {
+	public int getCommentQuantity() {
 		return commentQuantity;
 	}
 
 	public void setCommentQuantity(String commentQuantity) {
-		this.commentQuantity = commentQuantity;
+		this.commentQuantity = KHUtils.stringToInt(commentQuantity);
 	}
 
-	public String getLikeQuantity() {
+	public int getLikeQuantity() {
 		return likeQuantity;
 	}
 
 	public void setLikeQuantity(String likeQuantity) {
-		this.likeQuantity = likeQuantity;
+		this.likeQuantity = KHUtils.stringToInt(likeQuantity);
 	}
 
 	public String getSendTime() {
@@ -222,11 +223,11 @@ public class NewsModel implements Serializable {
 		this.userCompany = userCompany;
 	}
 
-	public String getUserOffice() {
-		return userOffice;
+	public String getUserJob() {
+		return userJob;
 	}
 
-	public void setUserOffice(String userOffice) {
-		this.userOffice = userOffice;
+	public void setUserJob(String userJob) {
+		this.userJob = userJob;
 	}
 }

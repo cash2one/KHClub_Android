@@ -12,6 +12,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -117,8 +118,7 @@ public class NewsListFragment extends BaseFragment {
 		// 获取上次缓存的数据
 		// setLastData(UserManager.getInstance().getUser().getUid());
 		// 从服务器加载数据
-		//getNewsData(UserManager.getInstance().getUser().getUid(), pageIndex, "");
-		getNewsData(121, pageIndex, "");
+		getNewsData(UserManager.getInstance().getUser().getUid(), pageIndex, "");
 		// 点击发布按钮
 		publishBtn.setOnClickListener(new OnClickListener() {
 
@@ -166,7 +166,10 @@ public class NewsListFragment extends BaseFragment {
 		mLocalBroadcastManager = LocalBroadcastManager
 				.getInstance(getActivity());
 		IntentFilter myIntentFilter = new IntentFilter();
-		myIntentFilter.addAction("BROADCAST_NEWS_LIST_REFRESH"/*KHConst.BROADCAST_NEWS_LIST_REFRESH*/);
+		myIntentFilter.addAction("BROADCAST_NEWS_LIST_REFRESH"/*
+															 * KHConst.
+															 * BROADCAST_NEWS_LIST_REFRESH
+															 */);
 		// 注册广播
 		mLocalBroadcastManager.registerReceiver(mBroadcastReceiver,
 				myIntentFilter);
@@ -226,7 +229,6 @@ public class NewsListFragment extends BaseFragment {
 	/**
 	 * listView 的设置
 	 * */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void newsListViewSet() {
 		// 设置刷新模式
 		newsListView.setMode(Mode.BOTH);
@@ -234,9 +236,10 @@ public class NewsListFragment extends BaseFragment {
 		/**
 		 * 刷新监听
 		 * */
-		newsListView.setOnRefreshListener(new OnRefreshListener2() {
+		newsListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 			@Override
-			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+			public void onPullDownToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
 				if (!isRequestingData) {
 					isRequestingData = true;
 					pageIndex = 1;
@@ -247,7 +250,8 @@ public class NewsListFragment extends BaseFragment {
 			}
 
 			@Override
-			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+			public void onPullUpToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
 				if (!lastPage && !isRequestingData) {
 					isRequestingData = true;
 					isPullDowm = false;
@@ -348,10 +352,9 @@ public class NewsListFragment extends BaseFragment {
 
 		// 设置用户名，职位，公司
 		helper.setText(R.id.txt_main_news_user_name, titleData.getUserName());
-		helper.setText(R.id.txt_main_news_user_office,
-				"| 首席执行官 "+titleData.getUserOffice());
+		helper.setText(R.id.txt_main_news_user_job, titleData.getUserJob());
 		helper.setText(R.id.txt_main_news_user_company,
-				"腾讯科技"+titleData.getUserCompany());
+				titleData.getUserCompany());
 
 		// 设置事件监听
 		final int postion = helper.getPosition();
@@ -440,9 +443,9 @@ public class NewsListFragment extends BaseFragment {
 		// 点赞按钮
 		TextView likeBtn = helper.getView(R.id.btn_news_like);
 		if (opData.getIsLike()) {
-			likeBtn.setText("已赞");
+			likeBtn.setText("已赞 " + opData.getLikeCount());
 		} else {
-			likeBtn.setText("未赞");
+			likeBtn.setText("点赞 " + opData.getLikeCount());
 		}
 
 		// 设置事件监听
@@ -466,9 +469,8 @@ public class NewsListFragment extends BaseFragment {
 	 * 获取动态数据
 	 * */
 	private void getNewsData(int userID, int desPage, String lastTime) {
-		// String path = KHConst.NEWS_LIST + "?" + "user_id=" + userID +
-		// "&page="+ desPage + "&frist_time=" + lastTime;
-		String path = "http://www.90newtec.com/jlxc_php/index.php/Home/MobileApi/newsList?user_id=121&page=1";
+		String path = KHConst.NEWS_LIST + "?" + "user_id=" + userID + "&page="
+				+ desPage + "&frist_time=" + lastTime;
 		HttpManager.get(path, new JsonRequestCallBack<String>(
 				new LoadDataHandler<String>() {
 
@@ -619,11 +621,13 @@ public class NewsListFragment extends BaseFragment {
 			public void onOperateStart(boolean isLike) {
 				if (isLike) {
 					// 点赞操作
-					oprtView.setText("已赞");
+					operateData.setLikeCount(operateData.getLikeCount() + 1);
+					oprtView.setText("已赞 " + operateData.getLikeCount());
 					operateData.setIsLike("1");
 				} else {
 					// 取消点赞
-					oprtView.setText("点赞");
+					operateData.setLikeCount(operateData.getLikeCount() - 1);
+					oprtView.setText("点赞 " + operateData.getLikeCount());
 					operateData.setIsLike("0");
 				}
 			}
@@ -633,10 +637,12 @@ public class NewsListFragment extends BaseFragment {
 				// 撤销上次
 				newsOPerate.operateRevoked();
 				if (isLike) {
-					oprtView.setText("点赞");
+					operateData.setLikeCount(operateData.getLikeCount() - 1);
+					oprtView.setText("点赞 " + operateData.getLikeCount());
 					operateData.setIsLike("0");
 				} else {
-					oprtView.setText("已赞");
+					operateData.setLikeCount(operateData.getLikeCount() + 1);
+					oprtView.setText("已赞 " + operateData.getLikeCount());
 					operateData.setIsLike("1");
 				}
 			}
@@ -692,7 +698,10 @@ public class NewsListFragment extends BaseFragment {
 		@Override
 		public void onReceive(Context context, Intent resultIntent) {
 			String action = resultIntent.getAction();
-			if (action.equals("BROADCAST_NEWS_LIST_REFRESH"/*KHConst.BROADCAST_NEWS_LIST_REFRESH*/)) {
+			if (action.equals("BROADCAST_NEWS_LIST_REFRESH"/*
+															 * KHConst.
+															 * BROADCAST_NEWS_LIST_REFRESH
+															 */)) {
 				if (resultIntent.hasExtra(NewsConstants.OPERATE_UPDATE)) {
 					// 更新动态列表
 					NewsModel resultNews = (NewsModel) resultIntent

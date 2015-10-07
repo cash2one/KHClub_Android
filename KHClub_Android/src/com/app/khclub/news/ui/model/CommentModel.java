@@ -25,6 +25,8 @@ public class CommentModel implements Serializable {
 	private String addDate;
 	// 评论的内容
 	private String commentContent;
+	// 用户的职位
+	private String userOffice;
 	// 评论针对的对象ID
 	private String replyUserId;
 	// 评论针对的对象的名字
@@ -133,5 +135,13 @@ public class CommentModel implements Serializable {
 
 	public void setReplyUserName(String replyUserName) {
 		this.replyUserName = replyUserName;
+	}
+
+	public String getUserOffice() {
+		return userOffice;
+	}
+
+	public void setUserOffice(String userOffice) {
+		this.userOffice = userOffice;
 	}
 }

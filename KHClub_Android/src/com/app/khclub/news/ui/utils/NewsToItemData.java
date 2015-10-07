@@ -15,7 +15,8 @@ import com.app.khclub.news.ui.model.NewsModel;
  * */
 public class NewsToItemData {
 	// 将动态转换为动态不同item形式的数据
-	public static List<NewsItemModel> newsDataToItems(List<NewsModel> orgDataList) {
+	public static List<NewsItemModel> newsDataToItems(
+			List<NewsModel> orgDataList) {
 		LinkedList<NewsItemModel> itemList = new LinkedList<NewsItemModel>();
 		for (NewsModel newsMd : orgDataList) {
 			itemList.add(createNewsTitle(newsMd, NewsItemModel.NEWS_TITLE));
@@ -37,7 +38,7 @@ public class NewsToItemData {
 			item.setHeadSubImage(news.getUserHeadSubImage());
 			item.setUserName(news.getUserName());
 			item.setUserCompany(news.getUserCompany());
-			item.setUserOffice(news.getUserOffice());
+			item.setUserJob(news.getUserJob());
 		} catch (Exception e) {
 			LogUtils.e("createNewsTitle error.");
 		}
@@ -70,8 +71,8 @@ public class NewsToItemData {
 			item.setSendTime(news.getSendTime());
 			item.setLikeCount(news.getLikeQuantity());
 			item.setIsLike(news.getIsLike());
-			item.setCommentCount(news.getCommentQuantity());
-		
+			item.setCommentCount(String.valueOf(news.getCommentQuantity()));
+
 		} catch (Exception e) {
 			LogUtils.e("createOperate error.");
 		}

@@ -66,7 +66,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	// 与评论或点赞数据相关的key
 	private final static String USER_HEAD = "user_head";
 	private final static String USER_NAME = "user_name";
-	private final static String USER_OFFICE = "user_office";
+	private final static String USER_JOB = "USER_JOB";
 	private final static String PUBLISH_TIME = "publish_time";
 	private final static String COMMENT_CONTENT = "comment_content";
 	// 当前显示的是否为评论数据(可以显示点赞数据)
@@ -87,7 +87,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	// 与动态发相关的一些信息
 	private ImageView newsUserHeadImgView;
 	private TextView newsUserName;
-	private TextView newsUserOffice;
+	private TextView newsUserJob;
 	private TextView newsUserCompany;
 	private TextView newsContent;
 	private MultiImageView newsPictures;
@@ -98,7 +98,6 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	private TextView newsCommentCount;
 	private TextView newsLikeCount;
 	private List<ImageView> likePersonList;
-
 	// 当前的动态对象
 	private NewsModel currentNews;
 	// 评论源数据
@@ -208,11 +207,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		}
 
 		// 从网络上更新动态数据
-		// getNewsDetailData(
-		// String.valueOf(UserManager.getInstance().getUser().getUid()),
-		// currentNews.getNewsID());
-
-		getNewsDetailData("121", currentNews.getNewsID());
+		getNewsDetailData(
+				String.valueOf(UserManager.getInstance().getUser().getUid()),
+				currentNews.getNewsID());
 	}
 
 	/**
@@ -297,7 +294,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 						tempMap.put(USER_HEAD, resultmModel.getHeadSubImage());
 						tempMap.put(USER_NAME, resultmModel.getPublishName());
 						tempMap.put(PUBLISH_TIME, resultmModel.getAddDate());
-						tempMap.put(USER_OFFICE, resultmModel.getUserOffice());
+						tempMap.put(USER_JOB, resultmModel.getUserOffice());
 						tempMap.put(COMMENT_CONTENT,
 								resultmModel.getCommentContent());
 						detailAdapter.add(tempMap);
@@ -340,7 +337,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				.findViewById(R.id.img_news_detail_user_head);
 		newsUserName = (TextView) contenteader
 				.findViewById(R.id.txt_news_detail_user_name);
-		newsUserOffice = (TextView) contenteader
+		newsUserJob = (TextView) contenteader
 				.findViewById(R.id.txt_news_detail_user_office);
 		newsUserCompany = (TextView) contenteader
 				.findViewById(R.id.txt_news_detail_user_company);
@@ -434,8 +431,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		imgLoader.displayImage(data.getUserHeadSubImage(), newsUserHeadImgView,
 				options);
 		newsUserName.setText(data.getUserName());
-		newsUserOffice.setText("首席执行官"/* data.getUserOffice() */);
-		newsUserCompany.setText("腾讯科技"/* data.getUserCompany() */);
+		newsUserJob.setText(data.getUserJob());
+		newsUserCompany.setText(data.getUserCompany());
 		if (data.getNewsContent().equals("")) {
 			newsContent.setVisibility(View.GONE);
 		} else {
@@ -504,12 +501,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 						.getView(R.id.img_news_reply_user_head), options);
 				helper.setText(R.id.txt_news_reply_user_name,
 						item.get(USER_NAME));
-				helper.setText(R.id.txt_news_reply_user_office, "首席执行官"/*
-																		 * item.get
-																		 * (
-																		 * USER_OFFICE
-																		 * )
-																		 */);
+				helper.setText(R.id.txt_news_reply_user_job, item.get(USER_JOB));
 				if (isCurrentShowComment) {
 					// 评论的内容
 					helper.setVisible(R.id.txt_news_reply_time, true);
@@ -560,7 +552,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			tempMap.put(USER_HEAD, commentDataList.get(index).getHeadSubImage());
 			tempMap.put(USER_NAME, commentDataList.get(index).getPublishName());
 			tempMap.put(PUBLISH_TIME, commentDataList.get(index).getAddDate());
-			tempMap.put(USER_OFFICE, commentDataList.get(index).getUserOffice());
+			tempMap.put(USER_JOB, commentDataList.get(index).getUserOffice());
 			tempMap.put(COMMENT_CONTENT, commentDataList.get(index)
 					.getCommentContent());
 			dataList.add(tempMap);
@@ -578,7 +570,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			Map<String, String> tempMap = new HashMap<String, String>();
 			tempMap.put(USER_HEAD, likeDataList.get(index).getHeadSubImage());
 			tempMap.put(USER_NAME, likeDataList.get(index).getName());
-			tempMap.put(USER_OFFICE, likeDataList.get(index).getUserOffice());
+			tempMap.put(USER_JOB, likeDataList.get(index).getUserOffice());
 			dataList.add(tempMap);
 		}
 		isCurrentShowComment = false;
@@ -626,10 +618,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	 * 获取动态详情数据
 	 * */
 	private void getNewsDetailData(String uid, String newsId) {
-		// String path = KHConst.NEWS_DETAIL + "?" + "news_id=" + newsId
-		// + "&user_id=" + uid;
-		String path = "http://www.90newtec.com/jlxc_php/index.php/Home/MobileApi/newsDetail?news_id="
-				+ newsId + "+&user_id=121";
+		String path = KHConst.NEWS_DETAIL + "?" + "news_id=" + newsId
+				+ "&user_id=" + uid;
 		HttpManager.get(path, new JsonRequestCallBack<String>(
 				new LoadDataHandler<String>() {
 
@@ -721,11 +711,11 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				// 在显示评论的情况下点击的是根布局
 				if (isCurrentShowComment
 						&& viewID == R.id.layout_news_reply_rootview) {
-					if (commentDataList.get(currentOperateIndex).getUserId()
-							.equals("121"/*
-										 * String.valueOf( UserManager
-										 * .getInstance() .getUser().getUid())
-										 */)) {
+					if (commentDataList
+							.get(currentOperateIndex)
+							.getUserId()
+							.equals(String.valueOf(UserManager.getInstance()
+									.getUser().getUid()))) {
 						// 如果是自己发布的评论，则删除评论
 						List<String> menuList = new ArrayList<String>();
 						menuList.add("删除评论");

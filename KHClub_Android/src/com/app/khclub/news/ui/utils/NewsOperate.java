@@ -88,7 +88,7 @@ public class NewsOperate {
 						super.onFailure(arg0, arg1, flag);
 						callInterface
 								.onFinish(OP_Type_Delete_News, false, null);
-						ToastUtil.show(mContext, "竟然删除失败，请检查网络 （/TДT)/");
+						ToastUtil.show(mContext, "删除失败，请检查网络");
 					}
 				}, null));
 	}

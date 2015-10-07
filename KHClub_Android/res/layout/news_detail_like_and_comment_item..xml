@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:app2="http://schemas.android.com/apk/res/com.app.khclub"
-    android:id="@+id/layout_news_title_rootview"
+    android:id="@+id/layout_news_reply_rootview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/main_deep_white"
@@ -12,10 +12,10 @@
     android:paddingRight="@dimen/news_item_margins_right"
     android:paddingTop="@dimen/news_item_margins_top" >
 
-    <!-- 用户头像 -->
+    <!-- 评论或点赞的头像 -->
 
     <com.app.khclub.base.ui.view.RoundImageView
-        android:id="@+id/img_mian_news_user_head"
+        android:id="@+id/img_news_reply_user_head"
         android:layout_width="@dimen/head_image_size_large"
         android:layout_height="@dimen/head_image_size_large"
         android:scaleType="centerCrop"
@@ -37,7 +37,7 @@
             <!-- 昵称 -->
 
             <TextView
-                android:id="@+id/txt_comment_user_name"
+                android:id="@+id/txt_news_reply_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="名字"
@@ -52,7 +52,7 @@
             <!-- 时间 -->
 
             <TextView
-                android:id="@+id/txt_comment_publish_time"
+                android:id="@+id/txt_news_reply_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -63,7 +63,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/txt_comment_user_office"
+            android:id="@+id/txt_news_reply_user_job"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_interior_space_small"
@@ -76,7 +76,7 @@
             android:textSize="@dimen/font_size_tiny" />
 
         <TextView
-            android:id="@+id/txt_comment_content"
+            android:id="@+id/txt_news_reply_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
