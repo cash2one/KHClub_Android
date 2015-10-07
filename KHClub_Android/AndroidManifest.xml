@@ -55,14 +55,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Login -->
         <activity android:name="com.app.khclub.login.ui.activity.LoginActivity" >
         </activity>
         <activity android:name="com.app.khclub.login.ui.activity.SecondLoginActivity" >
         </activity>
         <activity android:name="com.app.khclub.login.ui.activity.RegisterActivity" >
         </activity>
-        <activity android:name="com.app.khclub.base.ui.activity.MainTabActivity" >
-        </activity>
+        
+        <!-- Common -->
+        <activity android:name="com.app.khclub.base.ui.activity.MainTabActivity" />
+        <activity android:name="com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity" />
 
         <!-- 动态 -->
         <activity android:name="com.app.khclub.base.ui.activity.BigImgLookActivity" >
@@ -71,8 +74,24 @@
         </activity>
         <activity android:name="com.app.khclub.news.ui.activity.PublishNewsActivity" >
         </activity>
+        <activity android:name="com.app.khclub.news.ui.activity.ChoiceLocationActivity" >
+        </activity>
+        <activity android:name="com.app.khclub.news.ui.activity.PublisPhotoHandelActivity" >
+        </activity>                
         <activity android:name="com.app.khclub.news.ui.activity.NoticeActivity" >
         </activity>
+        
+        <!--Me -->
+        <activity android:name="com.app.khclub.personal.ui.activity.PersonalSettingActivity" 
+            	  android:theme="@android:style/Theme.Holo.Light">
+        </activity>
+        <activity android:name="com.app.khclub.personal.ui.activity.PersonalDescActivity" 
+            	  android:theme="@android:style/Theme.Holo.Light"/>
+        
+        <!-- 高德部分 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="dcfc269c2e9c8d084aec3245924315c2" />
     </application>
 
 </manifest>

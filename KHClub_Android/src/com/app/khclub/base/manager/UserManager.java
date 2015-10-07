@@ -72,6 +72,10 @@ public class UserManager {
 			userModel.setQr_code(cursor.getString(14));
 			userModel.setLogin_token(cursor.getString(15));
 			userModel.setIm_token(cursor.getString(16));
+			userModel.setCompany_state(cursor.getInt(18));
+			userModel.setAddress_state(cursor.getInt(19));
+			userModel.setEmail_state(cursor.getInt(20));
+			userModel.setPhone_state(cursor.getInt(21));
 			setUser(userModel);
 		}
 	}

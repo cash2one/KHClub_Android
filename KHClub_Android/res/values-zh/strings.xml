@@ -7,6 +7,11 @@
     <!-- Loading -->
     <string name="uploading">上传中，请稍候..</string>
     <string name="downloading">获取中，请稍候..</string>
+    <string name="uploading_success">上传成功</string>
+    <string name="downloading_success">获取成功</string>
+    <string name="uploading_fail">上传失败</string>
+    <string name="downloading_fail">获取失败</string>
+    
     <!-- Loading -->
 
     <!-- Toast -->
@@ -14,9 +19,10 @@
     <!-- Toast -->
 
     <!-- Alert -->
+    <string name="alert_save">保存</string>
     <string name="alert_title">提示</string>
     <string name="alert_confirm">确定</string>
-    <string name="alert_cancle">取消</string>
+    <string name="alert_cancel">取消</string>
     <string name="alert_close">关闭</string>
     <string name="alert_finish">完成</string>
     <string name="next">下一步</string>
@@ -50,6 +56,37 @@
 	<!-- Personal -->
     <string name="personal_me_title">我的</string>
     <string name="personal_signature">个人说明</string>
+    <string name="personal_icon">头像</string>
+    <string name="personal_name">昵称</string>
+    <string name="personal_job">职位</string>
+    <string name="personal_company">公司</string>
+    <string name="personal_address">地址</string>
+    <string name="personal_sex">性别</string>
+    <string name="personal_email">邮箱</string>
+    <string name="personal_phone">电话</string>
+    <string name="personal_enter_name">请输入昵称</string>
+    <string name="personal_enter_job">请输入职位</string>
+    <string name="personal_enter_company">请输入公司</string>
+    <string name="personal_enter_sign">请输入签名</string>
+    <string name="personal_enter_address">请输入地址</string>
+    <string name="personal_enter_email">请输入邮箱</string>
+    <string name="personal_enter_phone">请输入电话</string>
+    <string name="personal_sex_male">男</string>
+    <string name="personal_sex_female">女</string>
+    <string name="personal_name_not_null">昵称不能为空</string>
+    <string name="personal_name_too_long">名字太长</string>
+    <string name="personal_none">暂无</string>
+    <string name="personal_friends_can_see">仅好友可见</string>
     <!-- Personal -->    		
+
+    <!-- News -->
+    <string name="news_enter_content">请输入内容</string>
+    <string name="news_where">所在位置</string>
+    <string name="news_content_image_empty">内容和图片至少有一个不能为空</string>
+    <string name="news_content_too_long">内容不能超过140个字</string>
+    <string name="news_publish_success">发布成功</string>
+    <string name="news_publish_fail">发布失败</string>
+    <string name="news_publish">发布</string>
+    <!-- News -->
     		
 </resources>

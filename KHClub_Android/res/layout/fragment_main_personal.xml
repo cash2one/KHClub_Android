@@ -6,81 +6,93 @@
     android:background="@color/main_light_white"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@+id/layout_base_title"
+    <com.app.khclub.base.ui.view.CustomerScrollView
+        android:id="@+id/scrollView_person"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/action_bar_height_size"
-        android:background="@color/main_blue"
-        android:gravity="center_vertical" >
-
-        <TextView
-            android:id="@+id/base_tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="110dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="@string/personal_me_title"
-            android:textColor="@color/main_brown"
-            android:textSize="@dimen/action_bar_title_size" />
-
-        <TextView
-            android:id="@+id/base_tv_back"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:layout_centerVertical="true" />
-
-        <!-- clickable暂时关闭 "@drawable/back_click_selector" -->
-
-        <ImageView
-            android:layout_width="35dip"
-            android:layout_height="20dip"
-            android:layout_centerVertical="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/back_btn" />
-
-        <ImageButton
-            android:id="@+id/btn_more_operate"
-            android:layout_width="50dip"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:background="@color/main_brown"
-            android:paddingRight="20dp" />
-    </RelativeLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vPager"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="220dip"
-        android:layout_gravity="center"
-        android:persistentDrawingCache="animation" />	
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
-        android:background="@color/main_white"
-        android:orientation="vertical" >
-
-        <TextView
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        tools:ignore="UselessParent" >
+        <LinearLayout 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_marginTop="10dp"
-            android:text="@string/personal_signature"
-            android:textSize="@dimen/font_size_large" />
-
-        <TextView
-            android:id="@+id/sign_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="11dp"
-            android:inputType="textMultiLine"
-            android:textSize="@dimen/font_size_medium"
-            tools:ignore="TextViewEdits" />
-    </LinearLayout>
-
+		   	android:layout_height="match_parent"
+		   	android:background="@color/main_light_white"
+		   	android:orientation="vertical">
+            <RelativeLayout
+	        android:id="@+id/layout_base_title"
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/action_bar_height_size"
+	        android:background="@color/main_blue"
+	        android:gravity="center_vertical" >
+	
+	        <TextView
+	            android:id="@+id/base_tv_title"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerInParent="true"
+	            android:layout_marginRight="110dp"
+	            android:ellipsize="end"
+	            android:gravity="center"
+	            android:singleLine="true"
+	            android:text="@string/personal_me_title"
+	            android:textColor="@color/main_brown"
+	            android:textSize="@dimen/action_bar_title_size" />
+	
+	        <TextView
+	            android:id="@+id/base_tv_back"
+	            android:layout_width="50dip"
+	            android:layout_height="50dip"
+	            android:layout_centerVertical="true" />
+	
+	        <!-- clickable暂时关闭 "@drawable/back_click_selector" -->
+	
+	        <ImageView
+	            android:layout_width="35dip"
+	            android:layout_height="20dip"
+	            android:layout_centerVertical="true"
+	            android:scaleType="fitCenter"
+	            android:src="@drawable/back_btn" />
+	
+	        <ImageButton
+	            android:id="@+id/btn_more_operate"
+	            android:layout_width="50dip"
+	            android:layout_height="match_parent"
+	            android:layout_alignParentRight="true"
+	            android:background="@color/main_brown"
+	            android:paddingRight="20dp" />
+	    	</RelativeLayout>
+	
+		    <android.support.v4.view.ViewPager
+		        android:id="@+id/vPager"
+		        android:layout_margin="10dp"
+		        android:layout_width="match_parent"
+		        android:layout_height="220dip"
+		        android:layout_gravity="center"
+		        android:persistentDrawingCache="animation" />	
+		
+		    <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="10dip"
+		        android:background="@color/main_white"
+		        android:orientation="vertical" >
+		
+		        <TextView
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_marginLeft="10dip"
+		            android:layout_marginTop="10dp"
+		            android:text="@string/personal_signature"
+		            android:textSize="@dimen/font_size_large" />
+		
+		        <TextView
+		            android:id="@+id/sign_text_view"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_margin="11dp"
+		            android:inputType="textMultiLine"
+		            android:textSize="@dimen/font_size_medium"
+		            tools:ignore="TextViewEdits" />
+		    </LinearLayout>
+        </LinearLayout>
+	</com.app.khclub.base.ui.view.CustomerScrollView>
 </LinearLayout>

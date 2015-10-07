@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="left"
-                    android:text="职位"
+                    android:text="@string/personal_job"
                     android:textColor="@color/main_deep_black"
                     android:textSize="@dimen/font_size_tiny" />
             </LinearLayout>

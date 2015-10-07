@@ -74,37 +74,37 @@ public class PersonalInfoFragment extends BaseFragment {
 		if (null != userModel.getName() && userModel.getName().length() > 0) {
 			nameTextView.setText(userModel.getName());
 		}else {
-			nameTextView.setText("暂无");
+			nameTextView.setText(R.string.personal_none);
 		}
 		//职业
 		if (null != userModel.getJob() && userModel.getJob().length() > 0) {
 			jobTextView.setText(userModel.getJob());
 		}else {
-			jobTextView.setText("暂无");
+			jobTextView.setText(R.string.personal_none);
 		}		
 		//公司
 		if (null != userModel.getCompany_name() && userModel.getCompany_name().length() > 0) {
 			companyTextView.setText(userModel.getCompany_name());
 		}else {
-			companyTextView.setText("暂无");
+			companyTextView.setText(R.string.personal_none);
 		}		
 		//电话
 		if (null != userModel.getPhone_num() && userModel.getPhone_num().length() > 0) {
 			phoneTextView.setText(userModel.getPhone_num());
 		}else {
-			phoneTextView.setText("暂无");
+			phoneTextView.setText(R.string.personal_none);
 		}
 		//邮件
 		if (null != userModel.getE_mail() && userModel.getE_mail().length() > 0) {
 			emailTextView.setText(userModel.getE_mail());
 		}else {
-			emailTextView.setText("暂无");
+			emailTextView.setText(R.string.personal_none);
 		}	
 		//地址
 		if (null != userModel.getAddress() && userModel.getAddress().length() > 0) {
 			addressTextView.setText(userModel.getAddress());
 		}else {
-			addressTextView.setText("暂无");
+			addressTextView.setText(R.string.personal_none);
 		}			
 	}
 

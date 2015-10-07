@@ -17,7 +17,7 @@
         android:layout_marginTop="20dip"
         android:background="@drawable/alert_dialog_background"
         android:gravity="top"
-        android:hint="宣布点儿什么吧 o(*￣▽￣*)o ..."
+        android:hint="@string/news_enter_content"
         android:inputType="textMultiLine"
         android:maxLength="140"
         android:padding="7dip"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dip"
             android:layout_marginRight="10dip"
-            android:text="告诉我你在哪里...."
+            android:text="@string/news_where"
             android:textColor="@color/main_deep_gary"
             android:textSize="@dimen/font_size_tiny" />
     </LinearLayout>

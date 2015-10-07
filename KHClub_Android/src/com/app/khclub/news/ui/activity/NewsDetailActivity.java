@@ -7,7 +7,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar{
 
 	@Override
 	public int setLayoutId() {
-		 return R.layout.activity_news_detail_news;
+		 return R.layout.activity_news_detail;
 	}
 
 	@Override

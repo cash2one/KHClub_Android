@@ -1,5 +1,6 @@
 package com.app.khclub.personal.ui.fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import com.app.khclub.R;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
+import com.app.khclub.personal.ui.activity.PersonalSettingActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -25,7 +27,8 @@ public class PersonalFragment extends BaseFragment {
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.base_tv_back:
-			
+			Intent intent = new Intent(getActivity(), PersonalSettingActivity.class);
+			startActivityWithRight(intent);
 			break;
 
 		default:
@@ -58,7 +61,7 @@ public class PersonalFragment extends BaseFragment {
 		if (null != userModel.getSignature() && userModel.getSignature().length() > 0) {
 			signTextView.setText(userModel.getName());
 		}else {
-			signTextView.setText("暂无");
+			signTextView.setText(R.string.personal_none);
 		}
 	}
 	
