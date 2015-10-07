@@ -7,6 +7,10 @@
     <!-- Loading -->
     <string name="uploading">Uploading..</string>
     <string name="downloading">Downloading</string>
+    <string name="uploading_success">Upload Completed</string>
+    <string name="downloading_success">Download Completed</string>
+    <string name="uploading_fail">Upload Fail</string>
+    <string name="downloading_fail">Download Fail</string>    
     <!-- Loading -->
 
     <!-- Toast -->
@@ -14,9 +18,10 @@
     <!-- Toast -->
 
     <!-- Alert -->
+    <string name="alert_save">Save</string>
     <string name="alert_title">Prompt</string>
     <string name="alert_confirm">Confirm</string>
-    <string name="alert_cancle">Cancel</string>
+    <string name="alert_cancel">Cancel</string>
     <string name="alert_close">Close</string>
     <string name="alert_finish">Finish</string>
     <string name="next">Next</string>
@@ -36,7 +41,7 @@
     <string name="login_please_enter_password">Please enter password</string> 
     <string name="login_verification_not_null">Verification code can\'t be empty</string>
     <string name="login_password_length_six">Password length of at least six</string>
-    <string name="login_register_successful">Successful</string>
+    <string name="login_register_successful">Success</string>
     <string name="login_modify_password">Password</string>
     <string name="login_register_title">Register</string>
     <string name="login_verification_send">Sent to</string>
@@ -49,7 +54,38 @@
     
     <!-- Personal -->
     <string name="personal_me_title">Me</string>
+    <string name="personal_signature">Signature</string>
+    <string name="personal_icon">Icon</string>
+    <string name="personal_name">Name</string>
+    <string name="personal_job">Job</string>
+    <string name="personal_company">Company</string>
+    <string name="personal_address">Address</string>
+    <string name="personal_sex">Sex</string>
+    <string name="personal_email">Email</string>
+    <string name="personal_phone">Phone</string>
+    <string name="personal_enter_name">Please enter name</string>
+    <string name="personal_enter_job">Please enter job</string>
+    <string name="personal_enter_sign">Please enter sign</string>
+    <string name="personal_enter_address">Please enter address</string>
+    <string name="personal_enter_email">Please enter email</string>
+    <string name="personal_enter_phone">Please enter phone</string>
+    <string name="personal_sex_male">Man</string>
+    <string name="personal_sex_female">Woman</string>
+    <string name="personal_name_not_null">Name can\'t be empty</string>
+    <string name="personal_name_too_long">Name too long</string>
+    <string name="personal_none">None</string>
+    <string name="personal_friends_can_see">Only friends can see</string>
     <!-- Personal -->
+    
+    <!-- News -->
+    <string name="news_enter_content">Please enter content</string>
+    <string name="news_where">Where</string>
+    <string name="news_content_image_empty">Pictures and content both empty!</string>
+    <string name="news_content_too_long">Content can\'t exceed 140 characters</string>
+    <string name="news_publish_success">Success</string>
+    <string name="news_publish_fail">Fail</string>
+    <string name="news_publish">Publish</string>
+    <!-- News -->
     
     
 

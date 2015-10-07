@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    
+    <include layout="@layout/layout_title_bar" />
+    <com.app.khclub.base.ui.view.CustomerScrollView
+        android:background="@color/main_light_white"
+        android:id="@+id/scrollView_person"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        tools:ignore="UselessParent" >
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        	<include layout="@layout/personal_information_layout"/>
+        	
+ 	   <TextView 
+            android:padding="10dp"
+            android:text="Clear Cache"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_white"/>
+        <View
+	        android:layout_width="match_parent"
+	        android:layout_height="1px"
+	        android:background="@color/main_light_gary" />
+        <TextView 
+            android:padding="10dp"
+            android:text="Version"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_white"/>          	
+        </LinearLayout>
+        
+    </com.app.khclub.base.ui.view.CustomerScrollView>
+       
+</LinearLayout>
+
+
+    

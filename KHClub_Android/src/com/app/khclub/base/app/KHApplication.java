@@ -35,8 +35,8 @@ public class KHApplication extends Application {
 		FileUtil.makeDirs();
 //		//云巴初始化
 //		YunBaManager.start(getApplicationContext());
-//        //初始化用户模型
-//        UserManager.getInstance().getUser();
+        //初始化用户模型
+        UserManager.getInstance().getUser();
 //        //友盟测试模式
 //        MobclickAgent.setDebugMode(true);
         //初始化图片加载对象

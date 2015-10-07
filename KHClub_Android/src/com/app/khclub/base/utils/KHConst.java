@@ -22,7 +22,9 @@ public interface KHConst {
 
 	// broadCast
 	// 状态回复消息或点赞或者新好友
-	public static final String BROADCAST_NEW_MESSAGE_PUSH = "com.jlxc.broadcastreceiver.newsPush";
+	public static final String BROADCAST_NEW_MESSAGE_PUSH = "com.khclub.broadcastreceiver.newsPush";
+	public static final String BROADCAST_NEWS_LIST_REFRESH = "com.khclub.broadcastreceiver.newsPush";
+	
 	
 	// 匹配网页
 	public static final String URL_PATTERN = "[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*";
@@ -80,6 +82,9 @@ public interface KHConst {
 	// 修改个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION = DOMIN
 			+ "/changePersonalInformation";
+	// 修改有可见状态的个人信息
+	public static final String CHANGE_PERSONAL_INFORMATION_STATE = DOMIN
+			+ "/changePersonalInformationState";	
 	// 获取学校列表
 	public static final String GET_SCHOOL_LIST = DOMIN + "/getSchoolList";
 	// 获取学校学生列表

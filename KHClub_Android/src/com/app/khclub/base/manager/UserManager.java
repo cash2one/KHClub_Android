@@ -39,11 +39,12 @@ public class UserManager {
 	//本地持久化
 	public void saveAndUpdate() {
 		clear();
-		String sql = "insert into kh_user (id,username,name,kh_id,sex,phone_num,company_name,address,head_image,head_sub_image,job,birthday,e_mail,signature,qr_code,login_token,im_token,iosdevice_token) " +
+		String sql = "insert into kh_user (id,username,name,kh_id,sex,phone_num,company_name,address,head_image,head_sub_image,job,birthday,e_mail,signature,qr_code,login_token,im_token,iosdevice_token,company_state,address_state,email_state,phone_state) " +
 				     "values ('"+user.getUid()+"', '"+user.getUsername()+"', '"+user.getName()+"', '"+user.getKh_id()+"'," +
 				     " '"+user.getSex()+"', '"+user.getPhone_num()+"', '"+user.getCompany_name()+"', '"+user.getAddress()+"'" +
 				     ", '"+user.getHead_image()+"', '"+user.getHead_sub_image()+"', '"+user.getJob()+"', '"+user.getBirthday()+"'" +
-				     ", '"+user.getE_mail()+"', '"+user.getSignature()+"', '"+user.getQr_code()+"', '"+user.getLogin_token()+"', '"+user.getIm_token()+"', '')";
+				     ", '"+user.getE_mail()+"', '"+user.getSignature()+"', '"+user.getQr_code()+"', '"+user.getLogin_token()+"', '"+user.getIm_token()+"', ''" +
+				     ", "+user.getCompany_state()+", "+user.getAddress_state()+", "+user.getEmail_state()+", "+user.getPhone_state()+")";
 		DBManager.getInstance().excute(sql);
 	}
 	
@@ -71,6 +72,10 @@ public class UserManager {
 			userModel.setQr_code(cursor.getString(14));
 			userModel.setLogin_token(cursor.getString(15));
 			userModel.setIm_token(cursor.getString(16));
+			userModel.setCompany_state(cursor.getInt(18));
+			userModel.setAddress_state(cursor.getInt(19));
+			userModel.setEmail_state(cursor.getInt(20));
+			userModel.setPhone_state(cursor.getInt(21));
 			setUser(userModel);
 		}
 	}

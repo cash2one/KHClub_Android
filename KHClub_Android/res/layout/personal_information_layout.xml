@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_white"
+    android:orientation="vertical" >
+
+    <!-- 头像 -->
+    <LinearLayout
+        android:id="@+id/head_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="@string/personal_icon"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small" />
+		
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/head_image_view"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@color/main_gary"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter" />
+        </RelativeLayout>        
+
+    </LinearLayout>
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/main_light_gary" />    
+    
+    <!-- 姓名 -->
+    <LinearLayout
+        android:id="@+id/name_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="@string/personal_name"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small" />
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+	        <TextView
+	            android:id="@+id/name_text_view"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+	            android:text="测试"
+	            android:textColor="@color/main_deep_black"
+	            android:textSize="@dimen/font_size_medium" />            
+        </RelativeLayout>    
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/main_light_gary" />
+    
+    <!-- 签名 -->
+    <LinearLayout
+        android:id="@+id/job_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="@string/personal_job"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+	        <TextView
+	            android:id="@+id/job_text_view"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+	            android:text="CEO"
+	            android:textColor="@color/main_deep_black"
+	            android:textSize="@dimen/font_size_medium" />            
+        </RelativeLayout>         
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/main_light_gary" />
+    
+    <!-- 公司 -->
+    <LinearLayout
+        android:id="@+id/company_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="@string/personal_company"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+	        <TextView
+	            android:id="@+id/company_text_view"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+	            android:text="xxxx公司"
+	            android:textColor="@color/main_deep_black"
+	            android:textSize="@dimen/font_size_medium" />            
+        </RelativeLayout>          
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/main_light_gary" />
+    
+    <!-- 地址 -->
+    <LinearLayout
+        android:id="@+id/address_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="@string/personal_address"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+	        <TextView
+	            android:id="@+id/address_text_view"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+	            android:text="xxxx地址"
+	            android:textColor="@color/main_deep_black"
+	            android:textSize="@dimen/font_size_medium" />            
+        </RelativeLayout>          
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/main_light_gary" />    
+    
+    <!-- 性别 -->
+    <LinearLayout
+        android:id="@+id/sex_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="@string/personal_sex"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small" />
+
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+	        <TextView
+	            android:id="@+id/sex_text_view"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+	            android:text="女孩纸"
+	            android:textColor="@color/main_deep_black"
+	            android:textSize="@dimen/font_size_medium" />            
+        </RelativeLayout>  
+
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/main_light_gary" />
+    
+    <!-- 邮箱 -->
+    <LinearLayout
+        android:id="@+id/email_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="@string/personal_email"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small" />
+
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+	        <TextView
+	            android:id="@+id/email_text_view"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+	            android:text="sdfsdfs@sdfds"
+	            android:textColor="@color/main_deep_black"
+	            android:textSize="@dimen/font_size_medium" />            
+        </RelativeLayout>  
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/main_light_gary" />
+    
+    <!-- 电话 -->
+    <LinearLayout
+        android:id="@+id/phone_layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="@string/personal_phone"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small" />
+
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+            
+	        <TextView
+	            android:id="@+id/phone_text_view"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+	            android:text="123456"
+	            android:textColor="@color/main_deep_black"
+	            android:textSize="@dimen/font_size_medium" />            
+        </RelativeLayout>  
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/main_light_gary" />
+    
+    <!-- 签名 -->
+    <LinearLayout
+        android:id="@+id/sign_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:text="@string/personal_signature"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small" />
+
+        <TextView
+            android:id="@+id/sign_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_weight="1"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="你好啊 哈哈哈哈"
+            android:textColor="@color/main_deep_black"
+            android:textSize="@dimen/font_size_medium" />
+
+    </LinearLayout>    
+    
+</LinearLayout>
