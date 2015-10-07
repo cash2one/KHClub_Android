@@ -122,6 +122,8 @@ public class PersonalDescActivity extends BaseActivityWithTopBar {
 			if (UserManager.getInstance().getUser().getCompany_state() == 1) {
 				stateBox.setChecked(true);	
 			}
+			//这里有逻辑问题 直接隐藏
+			stateLayout.setVisibility(View.GONE);
 			break;
 		case EMAIL_KEY:
 			//邮箱
