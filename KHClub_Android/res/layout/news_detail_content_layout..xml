@@ -19,7 +19,7 @@
         <!-- 用户头像 -->
 
         <com.app.khclub.base.ui.view.RoundImageView
-            android:id="@+id/img_mian_news_user_head"
+            android:id="@+id/img_news_detail_user_head"
             android:layout_width="@dimen/head_image_size_large"
             android:layout_height="@dimen/head_image_size_large"
             android:scaleType="centerCrop"
@@ -41,7 +41,7 @@
                 <!-- 昵称 -->
 
                 <TextView
-                    android:id="@+id/txt_main_news_user_name"
+                    android:id="@+id/txt_news_detail_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="名字"
@@ -50,7 +50,7 @@
                 <!-- 职位 -->
 
                 <TextView
-                    android:id="@+id/txt_main_news_user_office"
+                    android:id="@+id/txt_news_detail_user_office"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -61,7 +61,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/txt_main_news_user_company"
+                android:id="@+id/txt_news_detail_user_company"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/item_interior_space_small"
@@ -78,7 +78,7 @@
     <!-- 动态的文字内容 -->
 
     <TextView
-        android:id="@+id/txt_main_news_content"
+        android:id="@+id/txt_news_detail_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/news_item_margins_top"
@@ -90,14 +90,14 @@
     <!-- 九宫格的图片 -->
 
     <com.app.khclub.news.ui.view.MultiImageView
-        android:id="@+id/miv_main_news_images"
+        android:id="@+id/miv_news_detail_images"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <!-- 地理位置 -->
 
     <TextView
-        android:id="@+id/txt_main_news_location"
+        android:id="@+id/txt_news_detail_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/item_interior_space_small"
@@ -116,7 +116,7 @@
         <!-- 发布的时间 -->
 
         <TextView
-            android:id="@+id/txt_main_news_publish_time"
+            android:id="@+id/txt_news_detail_publish_time"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="top"
@@ -128,7 +128,7 @@
         <!-- 分享按钮 -->
 
         <TextView
-            android:id="@+id/btn_mian_share"
+            android:id="@+id/btn_news_detail_share"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:background="@drawable/alert_dialog_confirm_btn_normal"
@@ -138,7 +138,7 @@
         <!-- 点赞按钮 -->
 
         <TextView
-            android:id="@+id/btn_news_like"
+            android:id="@+id/btn_news_detail_like"
             android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
@@ -175,21 +175,21 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/img_like_user_A"
+            android:id="@+id/img_news_detail_like_user_A"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:padding="2dp"
             android:src="@drawable/ic_launcher" />
 
         <ImageView
-            android:id="@+id/img_like_user_B"
+            android:id="@+id/img_news_detail_like_user_B"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:padding="2dp"
             android:src="@drawable/ic_launcher" />
 
         <ImageView
-            android:id="@+id/img_like_user_C"
+            android:id="@+id/img_news_detail_like_user_C"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:padding="2dp"
