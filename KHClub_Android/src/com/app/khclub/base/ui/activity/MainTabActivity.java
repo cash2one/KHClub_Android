@@ -94,7 +94,7 @@ public class MainTabActivity extends BaseActivity {
 		}
 
 		// 注册通知
-//		registerNotify();
+		registerNotify();
 	}
 
 	// 初始化云巴
@@ -102,7 +102,7 @@ public class MainTabActivity extends BaseActivity {
 		// registerMessageRecevier();
 		final UserModel userModel = UserManager.getInstance().getUser();
 		if (userModel.getUid() != 0) {
-			YunBaManager.subscribe(this, new String[] { KHConst.JLXC
+			YunBaManager.subscribe(this, new String[] { KHConst.KH
 					+ userModel.getUid() }, new IMqttActionListener() {
 				@Override
 				public void onSuccess(IMqttToken arg0) {
@@ -127,9 +127,9 @@ public class MainTabActivity extends BaseActivity {
 	}
 
 	// 获取最新版本号
-	private void getLastVersion() {
-		new NewVersionCheckManager(this, this).checkNewVersion(false, null);
-	}
+//	private void getLastVersion() {
+//		new NewVersionCheckManager(this, this).checkNewVersion(false, null);
+//	}
 
 	@SuppressLint("InflateParams")
 	private View getTabItemView(int index) {
@@ -159,7 +159,7 @@ public class MainTabActivity extends BaseActivity {
 		// 初始化tab
 		initTab();
 		// 初始化云巴
-//		initYunBa();
+		initYunBa();
 		// 获取最新版本
 //		getLastVersion();
 	}
@@ -220,20 +220,20 @@ public class MainTabActivity extends BaseActivity {
 	private BroadcastReceiver newMessageReceiver;
 
 	// 注册通知
-//	private void registerNotify() {
-//
-//		// 刷新tab
-//		newMessageReceiver = new BroadcastReceiver() {
-//			@Override
-//			public void onReceive(Context context, Intent intent) {
-//				// 刷新tab
-////				refreshTab();
-//			}
-//		};
-//		IntentFilter intentFilter = new IntentFilter(
-//				KHConst.BROADCAST_TAB_BADGE);
-//		registerReceiver(newMessageReceiver, intentFilter);
-//	}
+	private void registerNotify() {
+
+		// 刷新tab
+		newMessageReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				// 刷新tab
+//				refreshTab();
+			}
+		};
+		IntentFilter intentFilter = new IntentFilter(
+				KHConst.BROADCAST_TAB_BADGE);
+		registerReceiver(newMessageReceiver, intentFilter);
+	}
 
 //	// 刷新tab 未读标志
 //	private void refreshTab() {

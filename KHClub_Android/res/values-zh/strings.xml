@@ -77,6 +77,9 @@
     <string name="personal_name_too_long">名字太长</string>
     <string name="personal_none">暂无</string>
     <string name="personal_friends_can_see">仅好友可见</string>
+    <string name="personal_no_person">不存在此人</string>
+    <string name="personal_add_friend">添加为好友</string>
+    <string name="personal_moments">动态列表</string>
     <!-- Personal -->    		
 
     <!-- News -->

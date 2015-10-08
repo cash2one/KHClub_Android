@@ -5,9 +5,13 @@ import java.io.Serializable;
 import com.alibaba.fastjson.JSONObject;
 
 public class UserModel implements Serializable{
-
+	
+	//性别
 	public static final int SexBoy = 0;
 	public static final int SexGirl = 1;
+	//可见状态
+	public static final int SeeAll = 0;
+	public static final int SeeOnlyFriends = 1;
 	
 	/**
 	 * 

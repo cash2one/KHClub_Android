@@ -75,6 +75,9 @@
     <string name="personal_name_too_long">Name too long</string>
     <string name="personal_none">None</string>
     <string name="personal_friends_can_see">Only friends can see</string>
+    <string name="personal_no_person">Don\'t exist</string>
+    <string name="personal_add_friend">Add</string>
+    <string name="personal_moments">Moments</string>
     <!-- Personal -->
     
     <!-- News -->
@@ -86,6 +89,7 @@
     <string name="news_publish_fail">Fail</string>
     <string name="news_publish">Publish</string>
     <!-- News -->
+    
     
     
 
