@@ -618,32 +618,31 @@ public class NewsListFragment extends BaseFragment {
 		newsOPerate.setLikeListener(new LikeCallBack() {
 
 			@Override
-			public void onOperateStart(boolean isLike) {
+			public void onLikeStart(boolean isLike) {
 				if (isLike) {
 					// 点赞操作
 					operateData.setLikeCount(operateData.getLikeCount() + 1);
 					oprtView.setText("已赞 " + operateData.getLikeCount());
-					operateData.setIsLike("1");
+					operateData.setIsLike(true);
 				} else {
 					// 取消点赞
 					operateData.setLikeCount(operateData.getLikeCount() - 1);
 					oprtView.setText("点赞 " + operateData.getLikeCount());
-					operateData.setIsLike("0");
+					operateData.setIsLike(false);
 				}
 			}
 
 			@Override
-			public void onOperateFail(boolean isLike) {
+			public void onLikeFail(boolean isLike) {
 				// 撤销上次
-				newsOPerate.operateRevoked();
 				if (isLike) {
 					operateData.setLikeCount(operateData.getLikeCount() - 1);
 					oprtView.setText("点赞 " + operateData.getLikeCount());
-					operateData.setIsLike("0");
+					operateData.setIsLike(false);
 				} else {
 					operateData.setLikeCount(operateData.getLikeCount() + 1);
 					oprtView.setText("已赞 " + operateData.getLikeCount());
-					operateData.setIsLike("1");
+					operateData.setIsLike(true);
 				}
 			}
 		});

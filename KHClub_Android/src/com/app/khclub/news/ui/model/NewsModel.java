@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.base.model.ImageModel;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.base.utils.LogUtils;
 
 public class NewsModel implements Serializable {
 
@@ -45,7 +46,7 @@ public class NewsModel implements Serializable {
 	// 动态的点赞量
 	private int likeQuantity;
 	// 用户是否点赞
-	private String isLike;
+	private boolean isLike;
 
 	// 内容注入
 	@SuppressWarnings("unchecked")
@@ -199,12 +200,18 @@ public class NewsModel implements Serializable {
 		this.imageNewsList = imageNewsList;
 	}
 
-	public String getIsLike() {
+	public boolean getIsLike() {
 		return isLike;
 	}
 
 	public void setIsLike(String isLike) {
-		this.isLike = isLike;
+		if (isLike.equals("1")) {
+			this.isLike = true;
+		} else if (isLike.equals("0")) {
+			this.isLike = false;
+		} else {
+			LogUtils.e("点赞数据错误.");
+		}
 	}
 
 	public String getTimesTamp() {

@@ -182,12 +182,8 @@ public class NewsItemModel {
 			this.likeCount = likeCount;
 		}
 
-		public void setIsLike(String isLike) {
-			if (isLike.equals("1")) {
-				this.isLike = true;
-			} else {
-				this.isLike = false;
-			}
+		public void setIsLike(Boolean isLike) {
+			this.isLike = isLike;
 		}
 
 		public String getSendTime() {

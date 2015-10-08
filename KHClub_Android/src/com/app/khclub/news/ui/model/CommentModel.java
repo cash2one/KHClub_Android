@@ -26,11 +26,11 @@ public class CommentModel implements Serializable {
 	// 评论的内容
 	private String commentContent;
 	// 用户的职位
-	private String userOffice;
+	private String userJob;
 	// 评论针对的对象ID
-	private String replyUserId;
+	private String targetUserId;
 	// 评论针对的对象的名字
-	private String replyUserName;
+	private String targetUserName;
 
 	// 内容注入
 	public void setContentWithJson(JSONObject object) {
@@ -57,11 +57,14 @@ public class CommentModel implements Serializable {
 		if (object.containsKey("comment_content")) {
 			setCommentContent(object.getString("comment_content"));
 		}
-		if (object.containsKey("被评论者的id")) {
-			setReplyUserId(object.getString("被评论者的id"));
+		if (object.containsKey("job")) {
+			setUserJob(object.getString("job"));
 		}
-		if (object.containsKey("被评论者的名字")) {
-			setReplyUserName(object.getString("被评论者的名字"));
+		if (object.containsKey("target_id")) {
+			setTargetUserId(object.getString("target_id"));
+		}
+		if (object.containsKey("target_name")) {
+			setTargetUserName(object.getString("target_name"));
 		}
 	}
 
@@ -121,27 +124,27 @@ public class CommentModel implements Serializable {
 		this.commentContent = commentContent;
 	}
 
-	public String getReplyUserId() {
-		return replyUserId;
+	public String getTargetUserId() {
+		return targetUserId;
 	}
 
-	public void setReplyUserId(String replyUserId) {
-		this.replyUserId = replyUserId;
+	public void setTargetUserId(String userId) {
+		this.targetUserId = userId;
 	}
 
-	public String getReplyUserName() {
-		return replyUserName;
+	public String getTargetUserName() {
+		return targetUserName;
 	}
 
-	public void setReplyUserName(String replyUserName) {
-		this.replyUserName = replyUserName;
+	public void setTargetUserName(String userName) {
+		this.targetUserName = userName;
 	}
 
-	public String getUserOffice() {
-		return userOffice;
+	public String getUserJob() {
+		return userJob;
 	}
 
-	public void setUserOffice(String userOffice) {
-		this.userOffice = userOffice;
+	public void setUserJob(String job) {
+		this.userJob = job;
 	}
 }

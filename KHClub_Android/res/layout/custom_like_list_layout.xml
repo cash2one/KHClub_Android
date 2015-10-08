@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app2="http://schemas.android.com/apk/res/com.app.khclub"
+    android:id="@+id/layout_like_list_root_view"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <com.app.khclub.base.ui.view.RoundImageView
+        android:id="@+id/iv_like_head_img_A"
+        android:layout_width="@dimen/head_image_size_small"
+        android:layout_height="@dimen/head_image_size_small"
+        android:layout_marginLeft="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher"
+        app2:rect_adius="1dp" />
+
+    <com.app.khclub.base.ui.view.RoundImageView
+        android:id="@+id/iv_like_head_img_B"
+        android:layout_width="@dimen/head_image_size_small"
+        android:layout_height="@dimen/head_image_size_small"
+        android:layout_marginLeft="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher"
+        app2:rect_adius="1dp" />
+
+    <com.app.khclub.base.ui.view.RoundImageView
+        android:id="@+id/iv_like_head_img_C"
+        android:layout_width="@dimen/head_image_size_small"
+        android:layout_height="@dimen/head_image_size_small"
+        android:layout_marginLeft="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher"
+        app2:rect_adius="1dp" />
+
+</LinearLayout>

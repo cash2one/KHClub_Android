@@ -20,7 +20,7 @@ public class LikeModel implements Serializable {
 	// 点赞者的名字
 	private String name;
 	//点赞者的职位
-	private String userOffice;
+	private String userJob;
 
 	// 内容注入
 	public void setContentWithJson(JSONObject object) {
@@ -30,6 +30,9 @@ public class LikeModel implements Serializable {
 				+ object.getString("head_sub_image"));
 		if (object.containsKey("name")) {
 			setName(object.getString("name"));
+		}
+		if (object.containsKey("job")) {
+			setUserJob(object.getString("job"));
 		}
 	}
 
@@ -65,11 +68,11 @@ public class LikeModel implements Serializable {
 		this.name = name;
 	}
 
-	public String getUserOffice() {
-		return userOffice;
+	public String getUserJob() {
+		return userJob;
 	}
 
-	public void setUserOffice(String userOffice) {
-		this.userOffice = userOffice;
+	public void setUserJob(String job) {
+		this.userJob = job;
 	}
 }

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:app2="http://schemas.android.com/apk/res/com.app.khclub"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@color/main_deep_white"
     android:clickable="true"
@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/news_item_margins_left"
         android:paddingRight="@dimen/news_item_margins_right"
@@ -28,7 +28,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="@dimen/item_interior_space_medium" >
 
@@ -82,7 +82,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/news_item_margins_top"
-        android:background="@drawable/selector_deep_white_click"
+        android:background="@color/main_white"
+        android:paddingLeft="@dimen/news_item_margins_left"
+        android:paddingRight="@dimen/news_item_margins_right"
         android:text="文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容"
         android:textColor="@color/main_deep_black"
         android:textSize="@dimen/font_size_medium" />
@@ -92,7 +94,9 @@
     <com.app.khclub.news.ui.view.MultiImageView
         android:id="@+id/miv_news_detail_images"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/news_item_margins_left"
+        android:paddingRight="@dimen/news_item_margins_right" />
 
     <!-- 地理位置 -->
 
@@ -102,6 +106,8 @@
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/item_interior_space_small"
         android:drawableStart="@drawable/news_location"
+        android:paddingLeft="@dimen/news_item_margins_left"
+        android:paddingRight="@dimen/news_item_margins_right"
         android:paddingTop="@dimen/news_item_margins_top"
         android:text="地理位置"
         android:textColor="@color/main_gary"
@@ -109,7 +115,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp" >
 
@@ -155,7 +161,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="40dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
@@ -174,26 +180,12 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <ImageView
-            android:id="@+id/img_news_detail_like_user_A"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:padding="2dp"
-            android:src="@drawable/ic_launcher" />
+        <!-- 点赞头像列表 -->
 
-        <ImageView
-            android:id="@+id/img_news_detail_like_user_B"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:padding="2dp"
-            android:src="@drawable/ic_launcher" />
-
-        <ImageView
-            android:id="@+id/img_news_detail_like_user_C"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:padding="2dp"
-            android:src="@drawable/ic_launcher" />
+        <com.app.khclub.news.ui.view.LikeImageListView
+            android:id="@+id/control_news_detail_like_listview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/txt_news_detail_like_count"

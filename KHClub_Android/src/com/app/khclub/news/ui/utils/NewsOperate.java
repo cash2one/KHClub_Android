@@ -10,6 +10,7 @@ import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.news.ui.model.CommentModel;
 import com.lidroid.xutils.exception.HttpException;
@@ -96,22 +97,28 @@ public class NewsOperate {
 	/**
 	 * 发布评论
 	 * 
+	 * 参数依次是
+	 * 
 	 * @param user
 	 *            当前操作的用户
 	 * @param newsID
 	 *            操作动态的id
 	 * @param content
 	 *            发布评论的内容
+	 * @param targetID
+	 *            目标用户的id（被回复者，评论时可省略）
 	 * */
 
-	public void publishComment(final UserModel user, String newsID,
-			String content) {
+	public void publishComment(final UserModel user, String... parameter) {
 		lastOperateType = OP_Type_Add_Comment;
 		callInterface.onStart(OP_Type_Add_Comment);
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("user_id", String.valueOf(user.getUid()));
-		params.addBodyParameter("news_id", newsID);
-		params.addBodyParameter("comment_content", content);
+		params.addBodyParameter("news_id", parameter[0]);
+		params.addBodyParameter("comment_content", parameter[1]);
+		if (parameter.length >= 3) {
+			params.addBodyParameter("target_id", parameter[2]);
+		}
 
 		HttpManager.post(KHConst.SEND_COMMENT, params,
 				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
@@ -130,6 +137,7 @@ public class NewsOperate {
 							temMode.setPublishName(user.getName());
 							temMode.setHeadSubImage(KHConst.ATTACHMENT_ADDR
 									+ user.getHead_sub_image());
+							temMode.setUserJob(user.getJob());
 							callInterface.onFinish(OP_Type_Add_Comment, true,
 									temMode);
 						}
@@ -184,8 +192,7 @@ public class NewsOperate {
 						if (status == KHConst.STATUS_FAIL) {
 							callInterface.onFinish(OP_Type_Delete_Comment,
 									false, null);
-							ToastUtil.show(mContext, jsonResponse
-									.getString(KHConst.HTTP_MESSAGE));
+							ToastUtil.show(mContext, "error");
 						}
 					}
 
@@ -211,9 +218,10 @@ public class NewsOperate {
 		if (!isUploadData) {
 			isUploadData = true;
 			if (isLike) {
-				likeCallInterface.onOperateStart(true);
+
+				likeCallInterface.onLikeStart(true);
 			} else {
-				likeCallInterface.onOperateStart(false);
+				likeCallInterface.onLikeStart(false);
 			}
 			// 参数设置
 			RequestParams params = new RequestParams();
@@ -244,16 +252,11 @@ public class NewsOperate {
 
 									if (status == KHConst.STATUS_FAIL) {
 										if (OP_Type_Like == lastOperateType) {
-											likeCallInterface
-													.onOperateFail(true);
+											likeCallInterface.onLikeFail(true);
 										} else {
-											likeCallInterface
-													.onOperateFail(false);
+											likeCallInterface.onLikeFail(false);
 										}
-										ToastUtil.show(
-												mContext,
-												jsonResponse
-														.getString(KHConst.HTTP_MESSAGE));
+										ToastUtil.show(mContext, "error");
 										isUploadData = false;
 									}
 								}
@@ -263,28 +266,13 @@ public class NewsOperate {
 										String arg1, String flag) {
 									super.onFailure(arg0, arg1, flag);
 									if (OP_Type_Like == lastOperateType) {
-										likeCallInterface.onOperateFail(true);
+										likeCallInterface.onLikeFail(true);
 									} else {
-										likeCallInterface.onOperateFail(false);
+										likeCallInterface.onLikeFail(false);
 									}
 									isUploadData = false;
 								}
 							}, null));
-		}
-	}
-
-	/**
-	 * 撤销上次操作
-	 * */
-	public void operateRevoked() {
-		switch (lastOperateType) {
-		case OP_Type_Like:
-			break;
-
-		case OP_Type_Like_cancel:
-			break;
-		default:
-			break;
 		}
 	}
 
@@ -302,8 +290,8 @@ public class NewsOperate {
 	 * 点赞回调接口
 	 * */
 	public interface LikeCallBack {
-		public void onOperateStart(boolean isLike);
+		public void onLikeStart(boolean isLike);
 
-		public void onOperateFail(boolean isLike);
+		public void onLikeFail(boolean isLike);
 	}
 }
