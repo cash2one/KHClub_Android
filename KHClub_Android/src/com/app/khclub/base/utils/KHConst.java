@@ -4,9 +4,9 @@ public interface KHConst {
 
 	// 正式环境 112.74.202.59 192.168.1.107 www.90newtec.com
 	// 测试环境
-	public static final String DOMIN = "http://192.168.1.100/khclub_php/index.php/Home/MobileApi";
-	public static final String ATTACHMENT_ADDR = "http://192.168.1.100/khclub_php/Uploads/";
-	public static final String ROOT_PATH = "http://192.168.1.100/khclub_php";
+	public static final String DOMIN = "http://192.168.1.106/khclub_php/index.php/Home/MobileApi";
+	public static final String ATTACHMENT_ADDR = "http://192.168.1.106/khclub_php/Uploads/";
+	public static final String ROOT_PATH = "http://192.168.1.106/khclub_php";
 
 	public static final int STATUS_SUCCESS = 1;// 接口返回成功
 	public static final int STATUS_FAIL = 0;// 接口返回失败
