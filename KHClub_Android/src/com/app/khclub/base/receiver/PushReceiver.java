@@ -14,6 +14,7 @@ import com.app.khclub.R;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.NewsPushModel;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.login.ui.activity.LaunchActivity;
 import com.app.khclub.message.model.IMModel;
 
@@ -38,7 +39,7 @@ public class PushReceiver extends BroadcastReceiver {
 				showMsg.append("[Message] ").append(YunBaManager.MQTT_TOPIC)
 						.append(" = ").append(topic).append(" ,")
 							.append(YunBaManager.MQTT_MSG).append(" = ").append(msg);	
-//				LogUtils.i(showMsg.toString(),1);
+				LogUtils.i(showMsg.toString(),1);
 				
 				//json解析
 				JSONObject obj = JSON.parseObject(msg);

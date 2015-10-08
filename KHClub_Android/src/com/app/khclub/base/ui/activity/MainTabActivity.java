@@ -10,29 +10,21 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v4.content.LocalBroadcastManager;
-import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.app.khclub.R;
-import com.app.khclub.base.manager.NewVersionCheckManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.NewsPushModel;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
-import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.fragment.ContactFragment;
 import com.app.khclub.message.ui.fragment.MessageFragment;
 import com.app.khclub.news.ui.fragment.NewsListFragment;
@@ -227,7 +219,7 @@ public class MainTabActivity extends BaseActivity {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				// 刷新tab
-//				refreshTab();
+				refreshTab();
 			}
 		};
 		IntentFilter intentFilter = new IntentFilter(
@@ -235,55 +227,29 @@ public class MainTabActivity extends BaseActivity {
 		registerReceiver(newMessageReceiver, intentFilter);
 	}
 
-//	// 刷新tab 未读标志
-//	private void refreshTab() {
-//		View messageView = mTabHost.getTabWidget().getChildAt(2);
-//		TextView unreadTextView = (TextView) messageView
-//				.findViewById(R.id.unread_text_view);
-//		// 聊天页面
-//		// 新好友请求未读
+	// 刷新tab 未读标志
+	private void refreshTab() {
+		View newsView = mTabHost.getTabWidget().getChildAt(0);
+		TextView newsUnreadTextView = (TextView) newsView
+				.findViewById(R.id.unread_text_view);
+		// 聊天页面
+		// 新好友请求未读
 //		int newFriendsCount = 0;
-//		// 徽标 最多显示99
-//		// 未读推送
-//		int newsUnreadCount = 0;
-//
-//		try {
+		// 徽标 最多显示99
+		// 未读推送
+		int newsUnreadCount = 0;
+		try {
 //			newFriendsCount = IMModel.unReadNewFriendsCount();
-//			newsUnreadCount = NewsPushModel.findUnreadCount().size();
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//		}
-//
-//		final Conversation.ConversationType[] conversationTypes = {
-//				Conversation.ConversationType.PRIVATE,
-//				Conversation.ConversationType.DISCUSSION,
-//				Conversation.ConversationType.GROUP,
-//				Conversation.ConversationType.SYSTEM,
-//				Conversation.ConversationType.APP_PUBLIC_SERVICE,
-//				Conversation.ConversationType.PUBLIC_SERVICE };
-//		int unreadCount = 0;
-//		if (null != RongIM.getInstance()) {
-//			if (null != RongIM.getInstance().getRongIMClient()) {
-//				try {
-//					unreadCount = RongIM.getInstance().getRongIMClient()
-//							.getUnreadCount(conversationTypes);
-//				} catch (Exception e) {
-//					LogUtils.i("unread 异常", 1);
-//				}
-//			}
-//		}
-//		int total = newsUnreadCount + newFriendsCount + unreadCount;
-//		if (total > 99) {
-//			total = 99;
-//		}
-//		// 暂时不显示未读消息
-//		// unreadTextView.setText(total+"");
-//		if (total == 0) {
-//			unreadTextView.setVisibility(View.GONE);
-//		} else {
-//			unreadTextView.setVisibility(View.VISIBLE);
-//		}
-//	}
+			newsUnreadCount = NewsPushModel.findUnreadCount().size();
+		} catch (Exception e) {
+		}
+		//首页未读
+		if (newsUnreadCount == 0) {
+			newsUnreadTextView.setVisibility(View.GONE);
+		} else {
+			newsUnreadTextView.setVisibility(View.VISIBLE);
+		}
+	}
 
 	// @Override
 	// protected void onSaveInstanceState(Bundle outState) {

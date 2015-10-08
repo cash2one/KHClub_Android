@@ -90,6 +90,8 @@
     <string name="news_publish_success">发布成功</string>
     <string name="news_publish_fail">发布失败</string>
     <string name="news_publish">发布</string>
+    <string name="news_push_delete">删除内容</string>
+    <string name="news_push_like">为你点了赞</string>
     <!-- News -->
     		
 </resources>

@@ -40,8 +40,7 @@ public class NotifyNewsFragment extends BaseFragment {
 	private ListView notifyListView;
 	// adapter
 	private HelloHaAdapter<NewsPushModel> newsAdapter;
-	// BitmapUtils bitmapUtils;
-	// 新图片缓存工具 头像
+	// 图片缓存工具 头像
 	private DisplayImageOptions headImageOptions;
 	private int page = 1;
 	private int size = 30;
@@ -65,6 +64,10 @@ public class NotifyNewsFragment extends BaseFragment {
 		setListView();
 		// 刷新列表
 		refreshList();
+		//发送通知刷新界面
+		NewsPushModel.setIsRead();
+		//更新外面
+		sendNotify();
 	}
 
 	@Override
@@ -96,7 +99,7 @@ public class NotifyNewsFragment extends BaseFragment {
 						TimeHandle.getShowTimeFormat(item.getPush_time()));
 				// 内容
 				if (item.getType() == NewsPushModel.PushLikeNews) {
-					helper.setText(R.id.content_text_view, "为你点了赞");
+					helper.setText(R.id.content_text_view, getActivity().getString(R.string.news_push_like));
 				} else {
 					helper.setText(R.id.content_text_view,
 							item.getComment_content());
@@ -154,9 +157,6 @@ public class NotifyNewsFragment extends BaseFragment {
 				detailIntent.putExtra(NewsConstants.INTENT_KEY_NEWS_ID, ""
 						+ newsPushModel.getNews_id());
 				startActivityWithRight(detailIntent);
-				//发送通知刷新界面
-				NewsPushModel.setIsRead();
-				sendNotify();
 			}
 		});
 		// 底部检测
@@ -186,7 +186,7 @@ public class NotifyNewsFragment extends BaseFragment {
 							View view, final int position, long id) {
 
 						List<String> menuList = new ArrayList<String>();
-						menuList.add("删除内容");
+						menuList.add(getActivity().getString(R.string.news_push_delete));
 						final CustomListViewDialog confirmDialog = new CustomListViewDialog(
 								getActivity(), menuList);
 						confirmDialog.setClickCallBack(new ClickCallBack() {

@@ -88,7 +88,11 @@
     <string name="news_publish_success">Success</string>
     <string name="news_publish_fail">Fail</string>
     <string name="news_publish">Publish</string>
+    <string name="news_push_delete">Delete</string>
+    <string name="news_push_like">Like</string>
     <!-- News -->
+    
+    
     
     
     

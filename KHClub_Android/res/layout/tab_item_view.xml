@@ -25,7 +25,7 @@
             android:textSize="@dimen/font_size_small" />
     </LinearLayout>
 
-<!--     <TextView
+    <TextView
         android:id="@+id/unread_text_view"
         android:layout_width="10dip"
         android:layout_height="10dip"
@@ -35,7 +35,7 @@
         android:gravity="center"
         android:textColor="#e60028"
         android:visibility="gone"
-        android:textSize="10sp"/> -->
+        android:textSize="10sp"/>
     
 
 </FrameLayout>
