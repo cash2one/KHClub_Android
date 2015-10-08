@@ -9,7 +9,6 @@ public class NoticeActivity extends BaseActivityWithTopBar{
 	public int setLayoutId() {
 		 return R.layout.activity_news_notice;
 	}
-
 	@Override
 	protected void setUpView() {
 		

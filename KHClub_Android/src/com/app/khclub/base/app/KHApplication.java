@@ -33,8 +33,8 @@ public class KHApplication extends Application {
 		DBManager.getInstance(); 
 		//FileUtils初始化
 		FileUtil.makeDirs();
-//		//云巴初始化
-//		YunBaManager.start(getApplicationContext());
+		//云巴初始化
+		YunBaManager.start(getApplicationContext());
         //初始化用户模型
         UserManager.getInstance().getUser();
 //        //友盟测试模式

@@ -481,7 +481,7 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 			public void onClick(View v) {
 				String job = et_search.getText().toString().trim();
 				uploadInformation("job", job);
-				nameTextView.setText(job);
+				jobTextView.setText(job);
 				dialog.dismiss();
 			}
 		});
@@ -651,7 +651,7 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 		// 类型
 		params.addBodyParameter("field", "head_image");
 		
-		showLoading("上传中^_^", true);
+		showLoading(getResources().getString(R.string.uploading), true);
 		HttpManager.post(KHConst.CHANGE_INFORMATION_IMAGE, params,
 				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 

@@ -9,7 +9,7 @@ import com.app.khclub.base.manager.DBManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.utils.LogUtils;
 
-//该模型对应数据表 jlxc_news_push 该表中不存储类型为'添加好友'的推送类型
+//该模型对应数据表 kh_news_push 该表中不存储类型为'添加好友'的推送类型
 public class NewsPushModel {
 	//加好友
 	public final static int PushAddFriend = 1;
@@ -52,7 +52,7 @@ public class NewsPushModel {
 	 */
 	public void save(){
 		
-		String sql = "INSERT INTO jlxc_news_push values (null" +
+		String sql = "INSERT INTO kh_news_push values (null" +
 					 ",'"+getUid()+"','"+getHead_image()+"','"+getName()+"' , '"+getComment_content()+"','"+getType()+"'" +
 					 ",'"+getNews_id()+"','"+getNews_content()+"','"+getNews_image()+"','"+getNews_user_name()+"','"+getIs_read()+"', '"+getPush_time()+"', '"+getOwner()+"')";
 		DBManager.getInstance().excute(sql);
@@ -62,7 +62,7 @@ public class NewsPushModel {
 	 * 删除
 	 */
 	public void remove(){
-		String sql = "DELETE FROM jlxc_news_push WHERE id="+getPid();
+		String sql = "DELETE FROM kh_news_push WHERE id="+getPid();
 		DBManager.getInstance().excute(sql);
 	}
 	/**
@@ -70,7 +70,7 @@ public class NewsPushModel {
 	 */
 	public boolean isExist(){
 		
-		String sql = "SELECT * FROM jlxc_news_push WHERE news_id='"+getNews_id()+"' and uid='"+getUid()+"'"+" and push_time='"+getPush_time()+"'";
+		String sql = "SELECT * FROM kh_news_push WHERE news_id='"+getNews_id()+"' and uid='"+getUid()+"'"+" and push_time='"+getPush_time()+"'";
 	    if (NewsPushModel.findBySql(sql).size() > 0) {
 	        return true;
 	    }
@@ -81,7 +81,7 @@ public class NewsPushModel {
 	 * 删除全部
 	 */
 	public static void removeAll(){
-		String sql = "DELETE FROM jlxc_news_push";
+		String sql = "DELETE FROM kh_news_push";
 		DBManager.getInstance().excute(sql);
 	}
 	
@@ -89,7 +89,7 @@ public class NewsPushModel {
 	 * 设置已读
 	 */
 	public static void setIsRead(){
-		String sql = "UPDATE jlxc_news_push SET is_read=1";
+		String sql = "UPDATE kh_news_push SET is_read=1";
 		DBManager.getInstance().excute(sql);
 	}
 	
@@ -100,7 +100,7 @@ public class NewsPushModel {
 	 * @param pageCount 每页数据数
 	 */
 	public static List<NewsPushModel> findAll(){
-		String sql = "SELECT * FROM jlxc_news_push where owner="+UserManager.getInstance().getUser().getUid()
+		String sql = "SELECT * FROM kh_news_push where owner="+UserManager.getInstance().getUser().getUid()
 				+" ORDER BY id DESC;";
 		return findBySql(sql);
 	}
@@ -114,7 +114,7 @@ public class NewsPushModel {
 		
 		int start = (page-1)*size;
         int end   = size;
-		String sql = "SELECT * FROM jlxc_news_push where owner="+UserManager.getInstance().getUser().getUid()
+		String sql = "SELECT * FROM kh_news_push where owner="+UserManager.getInstance().getUser().getUid()
 				+" ORDER BY id DESC LIMIT "+start+","+end;
 		return findBySql(sql);
 	}
@@ -123,7 +123,7 @@ public class NewsPushModel {
 	 * 从数据库中查出所有某种类型未读的数据
 	 */
 	public static List<NewsPushModel> findUnreadCount(){
-		String sql = "SELECT * FROM jlxc_news_push WHERE owner="+UserManager.getInstance().getUser().getUid()
+		String sql = "SELECT * FROM kh_news_push WHERE owner="+UserManager.getInstance().getUser().getUid()
 				+" and is_read=0 ORDER BY id DESC;";
 		return findBySql(sql);
 	}

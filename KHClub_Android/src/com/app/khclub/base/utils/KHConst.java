@@ -2,11 +2,11 @@ package com.app.khclub.base.utils;
 
 public interface KHConst {
 
-	// 正式环境 112.74.202.59 192.168.1.107 www.90newtec.com
-	// 测试环境
-	public static final String DOMIN = "http://192.168.1.106/khclub_php/index.php/Home/MobileApi";
-	public static final String ATTACHMENT_ADDR = "http://192.168.1.106/khclub_php/Uploads/";
-	public static final String ROOT_PATH = "http://192.168.1.106/khclub_php";
+	// 正式环境 
+	// 测试环境 112.74.199.145
+	public static final String DOMIN = "http://112.74.199.145/khclub_php/index.php/Home/MobileApi";
+	public static final String ATTACHMENT_ADDR = "http://112.74.199.145/khclub_php/Uploads/";
+	public static final String ROOT_PATH = "http://112.74.199.145/khclub_php";
 
 	public static final int STATUS_SUCCESS = 1;// 接口返回成功
 	public static final int STATUS_FAIL = 0;// 接口返回失败
@@ -18,13 +18,13 @@ public interface KHConst {
 	public static final int PAGE_SIZE = 10;
 
 	// IM和推送 公用前缀
-	public static final String JLXC = "jlxc";// 返回值列表
+	public static final String KH = "kh";// 返回值列表
 
 	// broadCast
 	// 状态回复消息或点赞或者新好友
 	public static final String BROADCAST_NEW_MESSAGE_PUSH = "com.khclub.broadcastreceiver.newsPush";
 	public static final String BROADCAST_NEWS_LIST_REFRESH = "com.khclub.broadcastreceiver.newsPush";
-	
+	public static final String BROADCAST_TAB_BADGE = "com.khclub.broadcastreceiver.tabBadge";
 	
 	// 匹配网页
 	public static final String URL_PATTERN = "[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*";
