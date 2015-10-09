@@ -25,6 +25,7 @@ import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.ImageModel;
+import com.app.khclub.base.model.NewsPushModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.HttpCacheUtils;
 import com.app.khclub.base.utils.KHConst;
@@ -68,6 +69,8 @@ public class NewsListFragment extends BaseFragment {
 	// 通知按钮
 	@ViewInject(R.id.img_notice_btn)
 	private ImageView noticeBtn;
+	@ViewInject(R.id.news_unread_image_view)
+	private ImageView unreadImageView;
 	// 原始数据源
 	private List<NewsModel> newsList = new ArrayList<NewsModel>();
 	// item数据源
@@ -139,6 +142,8 @@ public class NewsListFragment extends BaseFragment {
 				startActivityWithLeft(intentCampusInfo);
 			}
 		});
+		registerNotify();
+		refreshPush();
 	}
 
 	/**
@@ -764,5 +769,32 @@ public class NewsListFragment extends BaseFragment {
 			}
 			newsListView.getRefreshableView().clearFocus();
 		}
+	}
+	
+	private BroadcastReceiver newMessageReceiver;
+	// 注册通知
+	private void registerNotify() {
+		// 刷新push
+		newMessageReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				// 刷新push
+				refreshPush();
+			}
+		};
+		IntentFilter intentFilter = new IntentFilter(
+				KHConst.BROADCAST_NEW_MESSAGE_PUSH);
+		getActivity().registerReceiver(newMessageReceiver, intentFilter);
+	}
+
+	// 刷新tab 未读标志
+	private void refreshPush() {
+		int newsUnreadCount = NewsPushModel.findUnreadCount().size();
+		if (newsUnreadCount < 1) {
+			unreadImageView.setVisibility(View.GONE);
+		}else {
+			unreadImageView.setVisibility(View.VISIBLE);
+		}
+		
 	}
 }

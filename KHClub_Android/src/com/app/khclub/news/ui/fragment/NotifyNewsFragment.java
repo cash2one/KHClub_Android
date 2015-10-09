@@ -79,6 +79,10 @@ public class NotifyNewsFragment extends BaseFragment {
 			getActivity().unregisterReceiver(messageReceiver);
 			messageReceiver = null;
 		}
+		//发送通知刷新界面
+		NewsPushModel.setIsRead();
+		//更新外面
+		sendNotify();
 	}
 
 	//////////////////////////private method/////////////////////////////
@@ -91,9 +95,13 @@ public class NotifyNewsFragment extends BaseFragment {
 			@Override
 			protected void convert(HelloHaBaseAdapterHelper helper,
 					NewsPushModel item) {
-				// TODO Auto-generated method stub
 				// 姓名
-				helper.setText(R.id.name_text_view, item.getName());
+				if (null == item.getName() || item.getName().length() < 1) {
+					helper.setText(R.id.name_text_view, getResources().getString(R.string.personal_none));
+				}else {
+					helper.setText(R.id.name_text_view, item.getName());
+				}
+
 				// 时间
 				helper.setText(R.id.time_text_view,
 						TimeHandle.getShowTimeFormat(item.getPush_time()));
@@ -151,7 +159,7 @@ public class NotifyNewsFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				NewsPushModel newsPushModel = newsAdapter.getItem(position - 1);
+				NewsPushModel newsPushModel = newsAdapter.getItem(position);
 				Intent detailIntent = new Intent(getActivity(),
 						NewsDetailActivity.class);
 				detailIntent.putExtra(NewsConstants.INTENT_KEY_NEWS_ID, ""
@@ -195,7 +203,7 @@ public class NotifyNewsFragment extends BaseFragment {
 							public void Onclick(View view, int which) {
 								//
 								NewsPushModel newsPushModel = newsAdapter
-										.getItem(position - 1);
+										.getItem(position);
 								newsPushModel.remove();
 								refreshList();
 								confirmDialog.dismiss();
