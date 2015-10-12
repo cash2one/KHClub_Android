@@ -94,6 +94,8 @@
         </activity>
         <activity android:name="com.app.khclub.personal.ui.activity.PersonalNewsActivity" >
         </activity>
+        <activity android:name="com.app.khclub.personal.ui.activity.CollectCardActivity" >
+        </activity>
 
         <!-- 云巴部分 -->
         <service android:name="io.yunba.android.core.YunBaService" >

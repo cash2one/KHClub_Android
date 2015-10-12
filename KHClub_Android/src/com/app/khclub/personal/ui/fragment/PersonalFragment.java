@@ -23,6 +23,7 @@ import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
+import com.app.khclub.personal.ui.activity.CollectCardActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.app.khclub.personal.ui.activity.PersonalNewsActivity;
 import com.app.khclub.personal.ui.activity.PersonalSettingActivity;
@@ -55,7 +56,8 @@ public class PersonalFragment extends BaseFragment {
 	// 图片缓存工具
 	private DisplayImageOptions imageOptions;
 
-	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout })
+	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout,
+			R.id.button_collect_card })
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.base_tv_back:
@@ -70,6 +72,13 @@ public class PersonalFragment extends BaseFragment {
 			intentToNewsList.putExtra(PersonalNewsActivity.INTNET_KEY_UID,
 					UserManager.getInstance().getUser().getUid());
 			startActivityWithRight(intentToNewsList);
+			break;
+
+		case R.id.button_collect_card:
+			// 收藏的名片
+			Intent intentToCardList = new Intent(this.getActivity(),
+					CollectCardActivity.class);
+			startActivityWithRight(intentToCardList);
 			break;
 		default:
 			break;

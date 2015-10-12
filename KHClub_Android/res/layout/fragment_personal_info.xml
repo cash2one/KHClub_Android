@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dip"
@@ -17,13 +16,25 @@
 
     <TextView
         android:id="@+id/name_text_view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/head_image_view"
         android:layout_marginLeft="15dip"
         android:layout_marginTop="5dip"
         android:layout_toRightOf="@+id/head_image_view"
         android:textSize="@dimen/font_size_large" />
+
+    <TextView
+        android:id="@+id/text_collect_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/head_image_view"
+        android:background="@color/main_blue"
+        android:padding="10dp"
+        android:text="收藏"
+        android:textSize="@dimen/font_size_large"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/job_text_view"
@@ -114,4 +125,5 @@
             android:layout_marginLeft="15dip"
             android:textSize="@dimen/font_size_medium" />
     </LinearLayout>
+
 </RelativeLayout>

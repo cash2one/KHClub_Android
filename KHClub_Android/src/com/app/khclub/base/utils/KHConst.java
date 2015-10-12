@@ -2,7 +2,7 @@ package com.app.khclub.base.utils;
 
 public interface KHConst {
 
-	// 正式环境 
+	// 正式环境
 	// 测试环境 112.74.199.145
 	public static final String DOMIN = "http://112.74.199.145/khclub_php/index.php/Home/MobileApi";
 	public static final String ATTACHMENT_ADDR = "http://112.74.199.145/khclub_php/Uploads/";
@@ -25,7 +25,7 @@ public interface KHConst {
 	public static final String BROADCAST_NEW_MESSAGE_PUSH = "com.khclub.broadcastreceiver.newsPush";
 	public static final String BROADCAST_NEWS_LIST_REFRESH = "com.khclub.broadcastreceiver.newsPush";
 	public static final String BROADCAST_TAB_BADGE = "com.khclub.broadcastreceiver.tabBadge";
-	
+
 	// 匹配网页
 	public static final String URL_PATTERN = "[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*";
 	// 匹配手机号
@@ -48,7 +48,7 @@ public interface KHConst {
 	public static final String FIND_PWD = DOMIN + "/findPwd";
 	// 用户登录
 	public static final String LOGIN_USER = DOMIN + "/loginUser";
-	// 注册时填写个人信息 
+	// 注册时填写个人信息
 	public static final String SAVE_PERSONAL_INFO = DOMIN + "/savePersonalInfo";
 	// //////////////////////////////////////////////首页'说说'部分////////////////////////////////////////////////
 	// 发布状态
@@ -58,7 +58,7 @@ public interface KHConst {
 	// 校园广场新闻列表
 	public static final String SCHOOL_NEWS_LIST = DOMIN + "/schoolNewsList";
 	// 校园广场新闻主页
-	public static final String SCHOOL_HOME_DATA = DOMIN + "/schoolHomeData";	
+	public static final String SCHOOL_HOME_DATA = DOMIN + "/schoolHomeData";
 	// 状态点赞列表
 	public static final String GET_NEWS_LIKE_LIST = DOMIN + "/getNewsLikeList";
 	// 发送评论
@@ -84,7 +84,7 @@ public interface KHConst {
 			+ "/changePersonalInformation";
 	// 修改有可见状态的个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION_STATE = DOMIN
-			+ "/changePersonalInformationState";	
+			+ "/changePersonalInformationState";
 	// 获取学校列表
 	public static final String GET_SCHOOL_LIST = DOMIN + "/getSchoolList";
 	// 获取学校学生列表
@@ -102,11 +102,12 @@ public interface KHConst {
 	// 个人信息中 获取最新动态的三张图片 旧版
 	public static final String GET_NEWS_IMAGES = DOMIN + "/getNewsImages";
 	// 个人信息中 获取最新动态的十张图片
-	public static final String GET_NEWS_COVER_LIST = DOMIN + "/getNewsCoverList";	
+	public static final String GET_NEWS_COVER_LIST = DOMIN
+			+ "/getNewsCoverList";
 	// 个人信息中 获取来访三张头像 弃用
 	public static final String GET_VISIT_IMAGES = DOMIN + "/getVisitImages";
 	// 个人信息中 获取粉丝数量
-	public static final String GET_FANS_COUNT = DOMIN + "/getFansCount";	
+	public static final String GET_FANS_COUNT = DOMIN + "/getFansCount";
 	// 个人信息中 获取好友三张头像
 	public static final String GET_FRIENDS_IMAGE = DOMIN + "/getFriendsImage";
 	// 个人信息中 用户发布过的状态列表
@@ -117,8 +118,7 @@ public interface KHConst {
 	public static final String PERSONAL_INFORMATION = DOMIN
 			+ "/personalInformation";
 	// 个人信息 查看别人的信息
-	public static final String PERSONAL_INFO = DOMIN
-			+ "/personalInfo";	
+	public static final String PERSONAL_INFO = DOMIN + "/personalInfo";
 	// 最近来访列表
 	public static final String GET_VISIT_LIST = DOMIN + "/getVisitList";
 	// 删除来访
@@ -156,21 +156,24 @@ public interface KHConst {
 	public static final String GET_FRIENDS_LIST = DOMIN + "/getFriendsList";
 	// 获取关注列表
 	// http://localhost/jlxc_php/index.php/Home/MobileApi/getAttentList
-	public static final String GET_ATTENT_LIST = DOMIN + "/getAttentList";	
+	public static final String GET_ATTENT_LIST = DOMIN + "/getAttentList";
 	// 获取粉丝列表
 	// http://localhost/jlxc_php/index.php/Home/MobileApi/getFansList
 	public static final String GET_FANS_LIST = DOMIN + "/getFansList";
 	// 获取其他人的关注列表
 	// http://localhost/jlxc_php/index.php/Home/MobileApi/getAttentList
-	public static final String GET_OTHER_ATTENT_LIST = DOMIN + "/getOtherAttentList";	
+	public static final String GET_OTHER_ATTENT_LIST = DOMIN
+			+ "/getOtherAttentList";
 	// 获取其他人的粉丝列表
 	// http://localhost/jlxc_php/index.php/Home/MobileApi/getFansList
-	public static final String GET_OTHER_FANS_LIST = DOMIN + "/getOtherFansList";	
+	public static final String GET_OTHER_FANS_LIST = DOMIN
+			+ "/getOtherFansList";
 	// 获取全部好友列表
 	// http://localhost/jlxc_php/index.php/Home/MobileApi/getAllFriendsList
 	public static final String GET_ALL_FRIENDS_LIST = DOMIN
 			+ "/getAllFriendsList";
-	////////////////////////////////////////发现模块 圈子//////////////////////////////////////////
+	// //////////////////////////////////////发现模块
+	// 圈子//////////////////////////////////////////
 	// http://localhost/jlxc_php/index.php/Home/MobileApi/getTopicCategory
 	// 获取圈子类型
 	public static final String GET_TOPIC_CATEGORY = DOMIN + "/getTopicCategory";
@@ -183,19 +186,23 @@ public interface KHConst {
 	// 加入一个圈子详情
 	public static final String JOIN_TOPIC = DOMIN + "/joinTopic";
 	// 退出一个圈子详情
-	public static final String QUIT_TOPIC = DOMIN + "/quitTopic";	
+	public static final String QUIT_TOPIC = DOMIN + "/quitTopic";
 	// 获取我的圈子列表
-	//http://localhost/jlxc_php/index.php/Home/MobileApi/getMyTopicList
+	// http://localhost/jlxc_php/index.php/Home/MobileApi/getMyTopicList
 	public static final String GET_MY_TOPIC_LIST = DOMIN + "/getMyTopicList";
 	// 获取我的圈子列表
-	public static final String GET_TOPIC_NEWS_LIST = DOMIN + "/getTopicNewsList";
+	public static final String GET_TOPIC_NEWS_LIST = DOMIN
+			+ "/getTopicNewsList";
 	// 获取圈子成员列表
-	public static final String GET_TOPIC_MEMBER_LIST = DOMIN + "/getTopicMemberList";
+	public static final String GET_TOPIC_MEMBER_LIST = DOMIN
+			+ "/getTopicMemberList";
 	// 获取话题主页列表
-	public static final String GET_TOPIC_HOME_LIST = DOMIN + "/getTopicHomeList";
+	public static final String GET_TOPIC_HOME_LIST = DOMIN
+			+ "/getTopicHomeList";
 	// 获取分类话题列表
-	public static final String GET_CATEGORY_TOPIC_LIST = DOMIN + "/getCategoryTopicList";
-	////////////////////////////////////////发现模块//////////////////////////////////////////
+	public static final String GET_CATEGORY_TOPIC_LIST = DOMIN
+			+ "/getCategoryTopicList";
+	// //////////////////////////////////////发现模块//////////////////////////////////////////
 	// http://localhost/jlxc_php/index.php/Home/MobileApi/getContactUser
 	// 获取联系人用户
 	public static final String GET_CONTACT_USER = DOMIN + "/getContactUser";
@@ -213,5 +220,11 @@ public interface KHConst {
 	// 推荐的人列表
 	public static final String RECOMMEND_FRIENDS_LIST = DOMIN
 			+ "/recommendFriendsList";
-
+	// //////////////////////////////////////通讯录部分//////////////////////////////////////////
+	// 收藏名片
+	public static final String COLLECT_CARD = DOMIN + "/collectCard";
+	// 取消收藏名片
+	public static final String COLLECT_CARD_DELETE = DOMIN + "/deleteCard";
+	// 获取所收藏的名片列表
+	public static final String GET_COLLECT_CARD_LIST = DOMIN + "/getCardList";
 }

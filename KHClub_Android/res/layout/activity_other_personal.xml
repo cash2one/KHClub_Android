@@ -6,111 +6,114 @@
     android:orientation="vertical" >
 
     <include layout="@layout/layout_title_bar" />
-    
+
     <com.app.khclub.base.ui.view.CustomerScrollView
-        android:background="@color/main_light_white"
-        android:layout_weight="1"
         android:id="@+id/scrollView_person"
         android:layout_width="match_parent"
         android:layout_height="0dip"
+        android:layout_weight="1"
+        android:background="@color/main_light_white"
         android:fillViewport="true"
         android:scrollbars="none"
         tools:ignore="UselessParent" >
-        <LinearLayout 
+
+        <LinearLayout
             android:layout_width="match_parent"
-		   	android:layout_height="match_parent"
-		   	android:background="@color/main_light_white"
-		   	android:orientation="vertical">
-	
-		    <android.support.v4.view.ViewPager
-		        android:id="@+id/vPager"
-		        android:layout_margin="10dp"
-		        android:layout_width="match_parent"
-		        android:layout_height="220dip"
-		        android:layout_gravity="center"
-		        android:persistentDrawingCache="animation" />	
-		        
-		    <LinearLayout
-		        android:id="@+id/image_cover_layout"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dip"
-		        android:background="@color/main_white"
-		        android:gravity="center_vertical"
-		        android:orientation="horizontal" >
-		
-		        <TextView
-		            android:layout_weight="1"
-		            android:layout_width="0dp"
-		            android:layout_height="wrap_content"
-		            android:layout_marginLeft="10dip"
-		            android:text="@string/personal_moments"
-		            android:textSize="@dimen/font_size_large" />
-		        
-	            <ImageView
-	                android:visibility="invisible"
-	                android:id="@+id/personal_picture_image_view3"
-	                android:layout_marginTop="10dip"
-	                android:layout_marginBottom="10dip"
-	                android:layout_marginRight="10dp"
-	                android:layout_width="50dp"
-	                android:layout_height="50dp"
-	                android:background="@color/main_blue"
-	                android:scaleType="centerCrop" />	
-	            <ImageView
-	                android:visibility="invisible"
-	                android:id="@+id/personal_picture_image_view2"
-	                android:layout_marginTop="10dip"
-	                android:layout_marginBottom="10dip"
-	                android:layout_marginRight="10dp"
-	                android:layout_width="50dp"
-	                android:layout_height="50dp"
-	                android:background="@color/main_blue"
-	                android:scaleType="centerCrop" />	
-	            <ImageView
-	                android:visibility="invisible"
-	                android:id="@+id/personal_picture_image_view1"
-	                android:layout_marginTop="10dip"
-	                android:layout_marginBottom="10dip"
-	                android:layout_marginRight="10dp"
-	                android:layout_width="50dp"
-	                android:layout_height="50dp"
-	                android:background="@color/main_blue"
-	                android:scaleType="centerCrop" />		                	                	        
-		
-		    </LinearLayout>		
-		    		
-		    <LinearLayout
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dip"
-		        android:background="@color/main_white"
-		        android:orientation="vertical" >
-		
-		        <TextView
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:layout_marginLeft="10dip"
-		            android:layout_marginTop="10dp"
-		            android:text="@string/personal_signature"
-		            android:textSize="@dimen/font_size_large" />
-		
-		        <TextView
-		            android:id="@+id/sign_text_view"
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:layout_margin="11dp"
-		            android:inputType="textMultiLine"
-		            android:textSize="@dimen/font_size_medium"
-		            tools:ignore="TextViewEdits" />
-		    </LinearLayout>
+            android:layout_height="match_parent"
+            android:background="@color/main_light_white"
+            android:orientation="vertical" >
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vPager"
+                android:layout_width="match_parent"
+                android:layout_height="220dip"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:persistentDrawingCache="animation" />
+
+            <LinearLayout
+                android:id="@+id/image_cover_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:background="@color/main_white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_weight="1"
+                    android:text="@string/personal_moments"
+                    android:textSize="@dimen/font_size_large" />
+
+                <ImageView
+                    android:id="@+id/personal_picture_image_view3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/main_blue"
+                    android:scaleType="centerCrop"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/personal_picture_image_view2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/main_blue"
+                    android:scaleType="centerCrop"
+                    android:visibility="invisible" />
+
+                <ImageView
+                    android:id="@+id/personal_picture_image_view1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/main_blue"
+                    android:scaleType="centerCrop"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:background="@color/main_white"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/personal_signature"
+                    android:textSize="@dimen/font_size_large" />
+
+                <TextView
+                    android:id="@+id/sign_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="11dp"
+                    android:inputType="textMultiLine"
+                    android:textSize="@dimen/font_size_medium"
+                    tools:ignore="TextViewEdits" />
+            </LinearLayout>
         </LinearLayout>
-	</com.app.khclub.base.ui.view.CustomerScrollView>
-	
-    <Button 
-        android:background="@color/main_light_black"
-        android:padding="10dp"
+    </com.app.khclub.base.ui.view.CustomerScrollView>
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/personal_add_friend"/>
+        android:background="@color/main_light_black"
+        android:padding="10dp"
+        android:text="@string/personal_add_friend" />
+
 </LinearLayout>
