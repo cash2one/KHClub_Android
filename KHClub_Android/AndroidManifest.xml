@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.app.khclub"
     android:versionCode="1"
-    android:versionName="1.0" xmlns:tools="http://schemas.android.com/tools">
+    android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -62,7 +63,7 @@
         </activity>
         <activity android:name="com.app.khclub.login.ui.activity.RegisterActivity" >
         </activity>
-        
+
         <!-- Common -->
         <activity android:name="com.app.khclub.base.ui.activity.MainTabActivity" />
         <activity android:name="com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity" />
@@ -77,20 +78,24 @@
         <activity android:name="com.app.khclub.news.ui.activity.ChoiceLocationActivity" >
         </activity>
         <activity android:name="com.app.khclub.news.ui.activity.PublisPhotoHandelActivity" >
-        </activity>                
+        </activity>
         <activity android:name="com.app.khclub.news.ui.activity.NoticeActivity" >
         </activity>
-        
-        <!--Me -->
-        <activity android:name="com.app.khclub.personal.ui.activity.PersonalSettingActivity" 
-            	  android:theme="@android:style/Theme.Holo.Light">
+
+        <!-- Me -->
+        <activity
+            android:name="com.app.khclub.personal.ui.activity.PersonalSettingActivity"
+            android:theme="@android:style/Theme.Holo.Light" >
         </activity>
-        <activity android:name="com.app.khclub.personal.ui.activity.PersonalDescActivity" 
-            	  android:theme="@android:style/Theme.Holo.Light"/>
+        <activity
+            android:name="com.app.khclub.personal.ui.activity.PersonalDescActivity"
+            android:theme="@android:style/Theme.Holo.Light" />
         <activity android:name="com.app.khclub.personal.ui.activity.OtherPersonalActivity" >
-        </activity>        
-        
-		<!-- 云巴部分 -->
+        </activity>
+        <activity android:name="com.app.khclub.personal.ui.activity.PersonalNewsActivity" >
+        </activity>
+
+        <!-- 云巴部分 -->
         <service android:name="io.yunba.android.core.YunBaService" >
         </service>
 
@@ -100,7 +105,9 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.app.khclub.base.receiver.PushReceiver" tools:ignore="ExportedReceiver">
+        <receiver
+            android:name="com.app.khclub.base.receiver.PushReceiver"
+            tools:ignore="ExportedReceiver" >
             <intent-filter>
                 <action android:name="io.yunba.android.MESSAGE_RECEIVED_ACTION" />
                 <action android:name="io.yunba.android.PRESENCE_RECEIVED_ACTION" />
@@ -109,10 +116,11 @@
 
                 <category android:name="com.app.khclub" />
             </intent-filter>
-        </receiver>		
+        </receiver>
+
         <meta-data
             android:name="YUNBA_APPKEY"
-            android:value="5616180ae6b2257059049482" />        
+            android:value="5616180ae6b2257059049482" />
         <!-- 高德部分 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"

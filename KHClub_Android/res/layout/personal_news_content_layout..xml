@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/personal_news_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/main_deep_white"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <!-- 发布的时间 -->
+
+    <TextView
+        android:id="@+id/txt_personal_news_publish_time"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:padding="10dp"
+        android:text="时间"
+        android:textColor="@color/main_deep_black"
+        android:textSize="15sp" />
+    <!-- 动态的文字内容 -->
+
+    <TextView
+        android:id="@+id/txt_personal_news_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/news_item_margins_top"
+        android:background="@color/main_white"
+        android:paddingLeft="@dimen/news_item_margins_left"
+        android:paddingRight="@dimen/news_item_margins_right"
+        android:text="文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容文字内容"
+        android:textColor="@color/main_deep_black"
+        android:textSize="@dimen/font_size_medium" />
+
+    <!-- 九宫格的图片 -->
+
+    <com.app.khclub.news.ui.view.MultiImageView
+        android:id="@+id/miv_personal_news_images"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/news_item_margins_left"
+        android:paddingRight="@dimen/news_item_margins_right" />
+
+    <!-- 地理位置 -->
+
+    <TextView
+        android:id="@+id/txt_personal_news_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/item_interior_space_small"
+        android:drawableStart="@drawable/news_location"
+        android:paddingLeft="@dimen/news_item_margins_left"
+        android:paddingRight="@dimen/news_item_margins_right"
+        android:paddingTop="@dimen/news_item_margins_top"
+        android:text="地理位置"
+        android:textColor="@color/main_gary"
+        android:textSize="@dimen/font_size_small" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <!-- 分享按钮 -->
+
+        <TextView
+            android:id="@+id/btn_personal_news_share"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:background="@drawable/alert_dialog_confirm_btn_normal"
+            android:gravity="center"
+            android:text="分享" />
+        <!-- 评论按钮 -->
+
+        <TextView
+            android:id="@+id/btn_personal_news_comment"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/alert_dialog_confirm_btn_normal"
+            android:gravity="center"
+            android:text="评论" />
+        <!-- 点赞按钮 -->
+
+        <TextView
+            android:id="@+id/btn_personal_news_like"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/alert_dialog_confirm_btn_normal"
+            android:gravity="center"
+            android:text="点赞" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_gary" />
+
+</LinearLayout>

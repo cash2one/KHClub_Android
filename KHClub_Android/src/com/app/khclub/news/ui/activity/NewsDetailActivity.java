@@ -57,6 +57,7 @@ import com.app.khclub.news.ui.view.LikeImageListView;
 import com.app.khclub.news.ui.view.LikeImageListView.EventCallBack;
 import com.app.khclub.news.ui.view.MultiImageView;
 import com.app.khclub.news.ui.view.MultiImageView.JumpCallBack;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -273,7 +274,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				case NewsOperate.OP_Type_Add_Comment:
 					showLoading("发布中...", true);
 					break;
-					
+
 				case NewsOperate.OP_Type_Delete_Comment:
 					break;
 
@@ -403,7 +404,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onClick(View arg0) {
-				// 跳转至用户主页
+				JumpToHomepage(KHUtils.stringToInt(currentNews.getUid()));
 			}
 		});
 		// 点击名字
@@ -411,7 +412,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onClick(View arg0) {
-
+				JumpToHomepage(KHUtils.stringToInt(currentNews.getUid()));
 			}
 		});
 		// 点击分享按钮
@@ -796,46 +797,52 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		@Override
 		public void onClick(View view, int postion, int viewID) {
 			currentOperateIndex = postion;
-			// 在显示评论的情况下点击的是根布局
-			if (isCurrentShowComment
-					&& viewID == R.id.layout_news_reply_rootview) {
-				if (commentDataList
-						.get(currentOperateIndex)
-						.getUserId()
-						.equals(String.valueOf(UserManager.getInstance()
-								.getUser().getUid()))) {
-					// 如果是自己发布的评论，则删除评论
-					List<String> menuList = new ArrayList<String>();
-					menuList.add("删除评论");
-					final CustomListViewDialog downDialog = new CustomListViewDialog(
-							NewsDetailActivity.this, menuList);
-					downDialog.setClickCallBack(new ClickCallBack() {
+			if (isCurrentShowComment) {
+				// 在显示评论的情况下
+				if (viewID == R.id.layout_news_reply_rootview) {
+					if (commentDataList
+							.get(currentOperateIndex)
+							.getUserId()
+							.equals(String.valueOf(UserManager.getInstance()
+									.getUser().getUid()))) {
+						// 如果是自己发布的评论，则删除评论
+						List<String> menuList = new ArrayList<String>();
+						menuList.add("删除评论");
+						final CustomListViewDialog downDialog = new CustomListViewDialog(
+								NewsDetailActivity.this, menuList);
+						downDialog.setClickCallBack(new ClickCallBack() {
 
-						@Override
-						public void Onclick(View view, int which) {
-							newsOPerate.deleteComment(
-									commentDataList.get(currentOperateIndex)
-											.getCommentID(), currentNews
-											.getNewsID());
-							downDialog.cancel();
-						}
-					});
-					downDialog.show();
+							@Override
+							public void Onclick(View view, int which) {
+								newsOPerate.deleteComment(
+										commentDataList
+												.get(currentOperateIndex)
+												.getCommentID(), currentNews
+												.getNewsID());
+								downDialog.cancel();
+							}
+						});
+						downDialog.show();
+					} else {
+						// 发布回复别人的评论
+						commentEditText.requestFocus();
+						commentEditText.setText("");
+						commentEditText.setHint("回复："
+								+ commentDataList.get(currentOperateIndex)
+										.getPublishName());
+						isPublishComment = false;
+						// 显示键盘
+						setKeyboardStatu(true);
+					}
 				} else {
-					// 发布回复别人的评论
-					commentEditText.requestFocus();
-					commentEditText.setText("");
-					commentEditText.setHint("回复："
-							+ commentDataList.get(currentOperateIndex)
-									.getPublishName());
-					isPublishComment = false;
-					// 显示键盘
-					setKeyboardStatu(true);
+					// 跳转至别人主页
+					JumpToHomepage(KHUtils.stringToInt(commentDataList.get(
+							currentOperateIndex).getUserId()));
 				}
 			} else {
-				// 跳转至别人主页
-				JumpToHomepage(KHUtils.stringToInt(commentDataList.get(
-						currentOperateIndex).getUserId()));
+				// 显示点赞列表的情况下 跳转至别人主页
+				JumpToHomepage(KHUtils.stringToInt(likeDataList.get(
+						currentOperateIndex).getUserID()));
 			}
 		}
 	}
@@ -928,10 +935,10 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	 * 跳转至用户的主页
 	 */
 	private void JumpToHomepage(int userID) {
-		// Intent intentUsrMain = new Intent(NewsDetailActivity.this,
-		// OtherPersonalActivity.class);
-		// intentUsrMain.putExtra(OtherPersonalActivity.INTENT_KEY, userID);
-		// startActivityWithRight(intentUsrMain);
+		Intent intentUsrMain = new Intent(NewsDetailActivity.this,
+				OtherPersonalActivity.class);
+		intentUsrMain.putExtra(OtherPersonalActivity.INTENT_KEY, userID);
+		startActivityWithRight(intentUsrMain);
 	}
 
 	// 重写
@@ -956,10 +963,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	 * 保存对动态的数据，并广播给上一个activity
 	 * */
 	private void updateResultData() {
-		Intent mIntent = new Intent("BROADCAST_NEWS_LIST_REFRESH"/*
-																 * KHConst.
-																 * BROADCAST_NEWS_LIST_REFRESH
-																 */);
+		Intent mIntent = new Intent(KHConst.BROADCAST_NEWS_LIST_REFRESH);
 		if (actionType.equals(NewsConstants.OPERATE_UPDATE)) {
 			mIntent.putExtra(NewsConstants.OPERATE_UPDATE, currentNews);
 		} else if (actionType.equals(NewsConstants.OPERATE_DELETET)) {

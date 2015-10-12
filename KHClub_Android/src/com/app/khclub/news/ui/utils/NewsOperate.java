@@ -218,7 +218,6 @@ public class NewsOperate {
 		if (!isUploadData) {
 			isUploadData = true;
 			if (isLike) {
-
 				likeCallInterface.onLikeStart(true);
 			} else {
 				likeCallInterface.onLikeStart(false);

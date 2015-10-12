@@ -52,8 +52,8 @@ public class NewsModel implements Serializable {
 	@SuppressWarnings("unchecked")
 	public void setContentWithJson(JSONObject object) {
 
-		if (object.containsKey("uid")) {
-			setUid(object.getString("uid"));
+		if (object.containsKey("user_id")) {
+			setUid(object.getString("user_id"));
 		}
 		if (object.containsKey("name")) {
 			setUserName(object.getString("name"));

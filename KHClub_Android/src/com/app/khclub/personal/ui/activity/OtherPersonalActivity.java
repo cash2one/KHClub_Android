@@ -1,6 +1,5 @@
 package com.app.khclub.personal.ui.activity;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,7 @@ import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.news.ui.activity.NewsDetailActivity;
 import com.app.khclub.personal.ui.fragment.OtherPersonalInfoFragment;
 import com.app.khclub.personal.ui.fragment.PersonalQrcodeFragment;
 import com.lidroid.xutils.exception.HttpException;
@@ -37,42 +37,46 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 
 	public final static String INTENT_KEY = "uid";
 	@ViewInject(R.id.vPager)
-	private ViewPager mPager;//页卡内容
-	//签名
+	private ViewPager mPager;// 页卡内容
+	// 签名
 	@ViewInject(R.id.sign_text_view)
 	private TextView signTextView;
-	//图片1
+	// 图片1
 	@ViewInject(R.id.personal_picture_image_view1)
 	private ImageView pictureImageView1;
-	//图片2
+	// 图片2
 	@ViewInject(R.id.personal_picture_image_view2)
 	private ImageView pictureImageView2;
-	//图片3
+	// 图片3
 	@ViewInject(R.id.personal_picture_image_view3)
-	private ImageView pictureImageView3;	
+	private ImageView pictureImageView3;
 	// 前10张图片数组
 	private List<String> newsImageList = new ArrayList<String>();
-	//控件数组
+	// 控件数组
 	private List<ImageView> imageList = new ArrayList<ImageView>();
-	//图片缓存工具
-	private DisplayImageOptions imageOptions;	
-	//个人信息fragment
+	// 图片缓存工具
+	private DisplayImageOptions imageOptions;
+	// 个人信息fragment
 	private OtherPersonalInfoFragment otherPersonalInfoFragment;
-	//用户ID
+	// 用户ID
 	private int uid;
-	
-	@OnClick({R.id.image_cover_layout})
+
+	@OnClick({ R.id.image_cover_layout })
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.image_cover_layout:
-			LogUtils.i("111", 1);
+			// 跳转至动态列表
+			Intent intentToNewsList = new Intent(OtherPersonalActivity.this,
+					PersonalNewsActivity.class);
+			intentToNewsList.putExtra(PersonalNewsActivity.INTNET_KEY_UID, uid);
+			startActivityWithRight(intentToNewsList);
 			break;
 		default:
 			break;
 		}
-		
+
 	}
-	
+
 	@Override
 	public int setLayoutId() {
 		// TODO Auto-generated method stub
@@ -85,14 +89,12 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		imageList.add(pictureImageView1);
 		imageList.add(pictureImageView2);
 		imageList.add(pictureImageView3);
-		imageOptions = new DisplayImageOptions.Builder()  
-        .showImageOnLoading(R.drawable.loading_default)  
-        .showImageOnFail(R.drawable.loading_default)  
-        .cacheInMemory(false)  
-        .cacheOnDisk(true)  
-        .bitmapConfig(Bitmap.Config.RGB_565)  
-        .build();
-		
+		imageOptions = new DisplayImageOptions.Builder()
+				.showImageOnLoading(R.drawable.loading_default)
+				.showImageOnFail(R.drawable.loading_default)
+				.cacheInMemory(false).cacheOnDisk(true)
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
+
 		initViewPager();
 		Intent intent = getIntent();
 		uid = intent.getIntExtra(INTENT_KEY, 0);
@@ -100,48 +102,49 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			ToastUtil.show(this, R.string.personal_no_person);
 			return;
 		}
-		
+
 		getPersonalInformation();
 	}
-	
-	 /**
-	  * 初始化ViewPager
+
+	/**
+	 * 初始化ViewPager
 	 */
-	 private void initViewPager() {
-	     mPager.setAdapter(new MessageFragmentPagerAdapter(getSupportFragmentManager()));
-	     mPager.setCurrentItem(0);
-	 }
-	 
-	 private class MessageFragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
-	
-	     public MessageFragmentPagerAdapter(FragmentManager fm) {
-	         super(fm);
-	     }
-	
-	     @Override
-	     public Fragment getItem(int i) {
-	         Fragment fragment = null;
-	         switch (i) {
-	             case 0:
-	             	otherPersonalInfoFragment = new OtherPersonalInfoFragment();
-	             	fragment = otherPersonalInfoFragment;
-	                break;
-	             case 1:
-	             	fragment = new PersonalQrcodeFragment();
-	                break;               
-	
-	         }
-	         return fragment;
-	     }
-	
-	     @Override
-	     public int getCount() {
-	         return 2;
-	     }
+	private void initViewPager() {
+		mPager.setAdapter(new MessageFragmentPagerAdapter(
+				getSupportFragmentManager()));
+		mPager.setCurrentItem(0);
 	}
-	 
-	 
-	////////////////////private method////////////////////////
+
+	private class MessageFragmentPagerAdapter extends
+			android.support.v4.app.FragmentPagerAdapter {
+
+		public MessageFragmentPagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int i) {
+			Fragment fragment = null;
+			switch (i) {
+			case 0:
+				otherPersonalInfoFragment = new OtherPersonalInfoFragment();
+				fragment = otherPersonalInfoFragment;
+				break;
+			case 1:
+				fragment = new PersonalQrcodeFragment();
+				break;
+
+			}
+			return fragment;
+		}
+
+		@Override
+		public int getCount() {
+			return 2;
+		}
+	}
+
+	// //////////////////private method////////////////////////
 	// 获取用户信息
 	private void getPersonalInformation() {
 
@@ -157,12 +160,14 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 						int status = jsonResponse
 								.getInteger(KHConst.HTTP_STATUS);
 						if (status == KHConst.STATUS_SUCCESS) {
-							JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
+							JSONObject jResult = jsonResponse
+									.getJSONObject(KHConst.HTTP_RESULT);
 							handleData(jResult);
 						}
 
 						if (status == KHConst.STATUS_FAIL) {
-							ToastUtil.show(OtherPersonalActivity.this, R.string.downloading_fail);
+							ToastUtil.show(OtherPersonalActivity.this,
+									R.string.downloading_fail);
 						}
 					}
 
@@ -170,7 +175,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 					public void onFailure(HttpException arg0, String arg1,
 							String flag) {
 						super.onFailure(arg0, arg1, flag);
-						ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+						ToastUtil.show(OtherPersonalActivity.this,
+								R.string.net_error);
 					}
 
 				}, null));
@@ -181,16 +187,17 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 
 		UserModel otherUserModel = new UserModel();
 		otherUserModel.setContentWithJson(jsonObject);
-		//签名
-		if (null != otherUserModel.getSignature() && otherUserModel.getSignature().length() > 0) {
+		// 签名
+		if (null != otherUserModel.getSignature()
+				&& otherUserModel.getSignature().length() > 0) {
 			signTextView.setText(otherUserModel.getName());
-		}else {
+		} else {
 			signTextView.setText(R.string.personal_none);
 		}
 		otherPersonalInfoFragment.setUIWithModel(otherUserModel);
-		//标题
+		// 标题
 		setBarText(otherUserModel.getName());
-		
+
 		newsImageList.clear();
 		// 他的动态
 		JSONArray imagesArray = jsonObject.getJSONArray("image_list");
@@ -198,28 +205,30 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			JSONObject object = (JSONObject) imagesArray.get(i);
 			newsImageList.add(object.getString("sub_url"));
 		}
-		//最多3
+		// 最多3
 		int size = newsImageList.size();
 		if (size > 3) {
 			size = 3;
 		}
-		//设置不可见
+		// 设置不可见
 		for (ImageView imageView : imageList) {
 			imageView.setVisibility(View.INVISIBLE);
 		}
-		
+
 		for (int i = 0; i < size; i++) {
 			ImageView imageView = imageList.get(i);
 			String path = newsImageList.get(i);
-			//设置图片
-			if (null != path && path.length() >0) {
-				ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR + path, imageView, imageOptions);
-			}else {
+			// 设置图片
+			if (null != path && path.length() > 0) {
+				ImageLoader.getInstance()
+						.displayImage(KHConst.ATTACHMENT_ADDR + path,
+								imageView, imageOptions);
+			} else {
 				imageView.setImageResource(R.drawable.loading_default);
 			}
 			imageView.setVisibility(View.VISIBLE);
-		}		
-		
+		}
+
 	}
 
 }
