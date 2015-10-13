@@ -88,16 +88,16 @@
         <item name="android:windowExitAnimation">@anim/gallery_slide_out</item>
     </style>
 
-    <!-- 话题频道菜单弹出动画 -->
-    <style name="anim_group_menu">
-        <item name="android:windowEnterAnimation">@anim/group_menu_fade_in</item>
-        <item name="android:windowExitAnimation">@anim/group_menu_fade_out</item>
+    <!-- 通讯录与会话菜单弹出动画 -->
+    <style name="anim_operate_menu">
+        <item name="android:windowEnterAnimation">@anim/operate_menu_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/operate_menu_fade_out</item>
     </style>
     
-     <!-- 话题操作菜单弹出动画 -->
-    <style name="anim_group_operate">
-        <item name="android:windowEnterAnimation">@anim/group_operate_fade_in</item>
-        <item name="android:windowExitAnimation">@anim/group_operate_fade_out</item>
+     <!-- 个人中心菜单弹出动画 -->
+    <style name="anim_personal_menu">
+        <item name="android:windowEnterAnimation">@anim/personal_menu_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/personal_menu_fade_out</item>
     </style>
 
 </resources>

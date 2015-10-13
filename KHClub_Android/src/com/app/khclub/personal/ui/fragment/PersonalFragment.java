@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ import com.app.khclub.personal.ui.activity.CollectCardActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.app.khclub.personal.ui.activity.PersonalNewsActivity;
 import com.app.khclub.personal.ui.activity.PersonalSettingActivity;
+import com.app.khclub.personal.ui.view.PersonalPopupMenu;
+import com.app.khclub.personal.ui.view.PersonalPopupMenu.OperateListener;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -49,15 +52,20 @@ public class PersonalFragment extends BaseFragment {
 	// 图片3
 	@ViewInject(R.id.personal_picture_image_view3)
 	private ImageView pictureImageView3;
+	// 操作菜单
+	@ViewInject(R.id.btn_more_operate)
+	private ImageButton operateButton;
 	// 前10张图片数组
 	private List<String> newsImageList = new ArrayList<String>();
 	// 控件数组
 	private List<ImageView> imageList = new ArrayList<ImageView>();
 	// 图片缓存工具
 	private DisplayImageOptions imageOptions;
+	// 操作菜单
+	private PersonalPopupMenu popupMenu;
 
 	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout,
-			R.id.button_collect_card })
+			R.id.button_collect_card, R.id.btn_more_operate })
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.base_tv_back:
@@ -79,6 +87,11 @@ public class PersonalFragment extends BaseFragment {
 			Intent intentToCardList = new Intent(this.getActivity(),
 					CollectCardActivity.class);
 			startActivityWithRight(intentToCardList);
+			break;
+
+		case R.id.btn_more_operate:
+			// 操作菜单
+			popupMenu.showPopupWindow(operateButton);
 			break;
 		default:
 			break;
@@ -106,7 +119,20 @@ public class PersonalFragment extends BaseFragment {
 
 	@Override
 	public void setUpViews(View rootView) {
+		// 操作菜单监听
+		popupMenu = new PersonalPopupMenu(getActivity());
+		popupMenu.setListener(new OperateListener() {
 
+			@Override
+			public void shareClick() {
+				// 分享
+			}
+
+			@Override
+			public void switchClick() {
+				// 切换名片样式
+			}
+		});
 	}
 
 	@Override
@@ -222,9 +248,6 @@ public class PersonalFragment extends BaseFragment {
 							String flag) {
 						super.onFailure(arg0, arg1, flag);
 					}
-
 				}, null));
-
 	}
-
 }
