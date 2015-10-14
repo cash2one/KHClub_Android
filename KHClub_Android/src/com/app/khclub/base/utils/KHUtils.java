@@ -148,4 +148,8 @@ public class KHUtils {
     	return intValue;
     }
     
+    public static String selfCommonIMID() {
+		return KHConst.KH + UserManager.getInstance().getUser().getUid();
+	}
+    
 }

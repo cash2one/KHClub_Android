@@ -6,7 +6,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-//配置存储
+//配置存储 同时用于存储IM非好友的姓名和头像
 public class ConfigUtils {
 		
 	//存储配置
