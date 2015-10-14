@@ -16,33 +16,32 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class PersonalInfoFragment extends BaseFragment {
 
-	//头像
+	// 头像
 	@ViewInject(R.id.head_image_view)
 	private ImageView headImageView;
-	//姓名
+	// 姓名
 	@ViewInject(R.id.name_text_view)
 	private TextView nameTextView;
-	//职业
+	// 职业
 	@ViewInject(R.id.job_text_view)
 	private TextView jobTextView;
-	//公司
+	// 公司
 	@ViewInject(R.id.company_text_view)
-	private TextView companyTextView;	
-	//电话
+	private TextView companyTextView;
+	// 电话
 	@ViewInject(R.id.phone_number_text_view)
 	private TextView phoneTextView;
-	//邮箱
+	// 邮箱
 	@ViewInject(R.id.email_text_view)
 	private TextView emailTextView;
-	//邮箱
+	// 邮箱
 	@ViewInject(R.id.address_text_view)
-	private TextView addressTextView;	
-	//用户
+	private TextView addressTextView;
+	// 用户
 	private UserModel userModel;
 	// 新图片缓存工具 头像
 	DisplayImageOptions headImageOptions;
-	
-	
+
 	@Override
 	public int setLayoutId() {
 		return R.layout.fragment_personal_info;
@@ -53,59 +52,64 @@ public class PersonalInfoFragment extends BaseFragment {
 		// 显示头像的配置
 		headImageOptions = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.loading_default)
-				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true)
-				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
+				.showImageOnFail(R.drawable.loading_default)
+				.cacheInMemory(true).cacheOnDisk(true)
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
 	@Override
 	public void setUpViews(View rootView) {
 
 	}
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		userModel = UserManager.getInstance().getUser();
-		//头像不为空
+		// 头像不为空
 		if (null != userModel.getHead_image()) {
-			ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR+userModel.getHead_image(), headImageView, headImageOptions);	
+			ImageLoader.getInstance().displayImage(
+					KHConst.ATTACHMENT_ADDR + userModel.getHead_image(),
+					headImageView, headImageOptions);
 		}
-		//姓名
+		// 姓名
 		if (null != userModel.getName() && userModel.getName().length() > 0) {
 			nameTextView.setText(userModel.getName());
-		}else {
+		} else {
 			nameTextView.setText(R.string.personal_none);
 		}
-		//职业
+		// 职业
 		if (null != userModel.getJob() && userModel.getJob().length() > 0) {
 			jobTextView.setText(userModel.getJob());
-		}else {
+		} else {
 			jobTextView.setText(R.string.personal_none);
-		}		
-		//公司
-		if (null != userModel.getCompany_name() && userModel.getCompany_name().length() > 0) {
+		}
+		// 公司
+		if (null != userModel.getCompany_name()
+				&& userModel.getCompany_name().length() > 0) {
 			companyTextView.setText(userModel.getCompany_name());
-		}else {
+		} else {
 			companyTextView.setText(R.string.personal_none);
-		}		
-		//电话
-		if (null != userModel.getPhone_num() && userModel.getPhone_num().length() > 0) {
+		}
+		// 电话
+		if (null != userModel.getPhone_num()
+				&& userModel.getPhone_num().length() > 0) {
 			phoneTextView.setText(userModel.getPhone_num());
-		}else {
+		} else {
 			phoneTextView.setText(R.string.personal_none);
 		}
-		//邮件
+		// 邮件
 		if (null != userModel.getE_mail() && userModel.getE_mail().length() > 0) {
 			emailTextView.setText(userModel.getE_mail());
-		}else {
+		} else {
 			emailTextView.setText(R.string.personal_none);
-		}	
-		//地址
-		if (null != userModel.getAddress() && userModel.getAddress().length() > 0) {
+		}
+		// 地址
+		if (null != userModel.getAddress()
+				&& userModel.getAddress().length() > 0) {
 			addressTextView.setText(userModel.getAddress());
-		}else {
+		} else {
 			addressTextView.setText(R.string.personal_none);
-		}			
+		}
 	}
-
 }

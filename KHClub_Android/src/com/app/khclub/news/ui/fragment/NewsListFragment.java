@@ -48,6 +48,7 @@ import com.app.khclub.news.ui.utils.NewsToItemData;
 import com.app.khclub.news.ui.utils.TextViewHandel;
 import com.app.khclub.news.ui.view.MultiImageView;
 import com.app.khclub.news.ui.view.MultiImageView.JumpCallBack;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
@@ -171,10 +172,7 @@ public class NewsListFragment extends BaseFragment {
 		mLocalBroadcastManager = LocalBroadcastManager
 				.getInstance(getActivity());
 		IntentFilter myIntentFilter = new IntentFilter();
-		myIntentFilter.addAction("BROADCAST_NEWS_LIST_REFRESH"/*
-															 * KHConst.
-															 * BROADCAST_NEWS_LIST_REFRESH
-															 */);
+		myIntentFilter.addAction(KHConst.BROADCAST_NEWS_LIST_REFRESH);
 		// 注册广播
 		mLocalBroadcastManager.registerReceiver(mBroadcastReceiver,
 				myIntentFilter);
@@ -476,6 +474,7 @@ public class NewsListFragment extends BaseFragment {
 	private void getNewsData(int userID, int desPage, String lastTime) {
 		String path = KHConst.NEWS_LIST + "?" + "user_id=" + userID + "&page="
 				+ desPage + "&frist_time=" + lastTime;
+		LogUtils.i("path=" + path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(
 				new LoadDataHandler<String>() {
 
@@ -567,6 +566,7 @@ public class NewsListFragment extends BaseFragment {
 							null);
 				} else {
 					// 跳转至用户主页
+					LogUtils.i("----1" + titleData.getUserID());
 					jumpToHomepage(KHUtils.stringToInt(titleData.getUserID()));
 				}
 				break;
@@ -662,10 +662,10 @@ public class NewsListFragment extends BaseFragment {
 	 * 跳转至用户的主页
 	 */
 	private void jumpToHomepage(int userID) {
-		// Intent intentToUsrMain = new Intent(mContext,
-		// OtherPersonalActivity.class);
-		// intentToUsrMain.putExtra(OtherPersonalActivity.INTENT_KEY, userID);
-		// startActivityWithRight(intentToUsrMain);
+		Intent intentToUsrMain = new Intent(mContext,
+				OtherPersonalActivity.class);
+		intentToUsrMain.putExtra(OtherPersonalActivity.INTENT_KEY, userID);
+		startActivityWithRight(intentToUsrMain);
 	}
 
 	/***
@@ -702,10 +702,7 @@ public class NewsListFragment extends BaseFragment {
 		@Override
 		public void onReceive(Context context, Intent resultIntent) {
 			String action = resultIntent.getAction();
-			if (action.equals("BROADCAST_NEWS_LIST_REFRESH"/*
-															 * KHConst.
-															 * BROADCAST_NEWS_LIST_REFRESH
-															 */)) {
+			if (action.equals(KHConst.BROADCAST_NEWS_LIST_REFRESH)) {
 				if (resultIntent.hasExtra(NewsConstants.OPERATE_UPDATE)) {
 					// 更新动态列表
 					NewsModel resultNews = (NewsModel) resultIntent
@@ -770,8 +767,9 @@ public class NewsListFragment extends BaseFragment {
 			newsListView.getRefreshableView().clearFocus();
 		}
 	}
-	
+
 	private BroadcastReceiver newMessageReceiver;
+
 	// 注册通知
 	private void registerNotify() {
 		// 刷新push
@@ -792,9 +790,9 @@ public class NewsListFragment extends BaseFragment {
 		int newsUnreadCount = NewsPushModel.findUnreadCount().size();
 		if (newsUnreadCount < 1) {
 			unreadImageView.setVisibility(View.GONE);
-		}else {
+		} else {
 			unreadImageView.setVisibility(View.VISIBLE);
 		}
-		
+
 	}
 }
