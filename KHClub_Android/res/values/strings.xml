@@ -384,9 +384,12 @@
     <string name="toast_updatenick_fail">update nickname fail!</string>
     <string name="toast_updatephoto_success">update photo success!</string>
     <string name="toast_updatephoto_fail">update photo fail!</string>
-    <string name="im_group_cover">Picture</string>    
-    
-    
+    <string name="im_group_cover">Picture</string>
+    <string name="im_qrcode">QRcode</string>
+    <string name="im_cover">Cover</string>
+    <string name="im_share">Share</string>    
+    <string name="toast_group_not_isnull">group name cannot be empty!</string>
+    <string name="toast_group_too_long">group name too long!</string>
     
 
 </resources>

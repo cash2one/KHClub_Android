@@ -196,7 +196,7 @@ public class UserUtils {
     	//本地缓存
     	String avatarPath = ConfigUtils.getStringConfig(group.getGroupId()+GROUP_AVATARKEY);
         if(avatarPath.length() > 0){
-            Picasso.with(context).load(avatarPath).placeholder(R.drawable.default_avatar).into(imageView);
+            Picasso.with(context).load(avatarPath).placeholder(R.drawable.group_icon).into(imageView);
         }
     	
     	String path = KHConst.GET_GROUP_IMAGE_AND_NAME_AND_QRCODE+"?group_id="+group.getGroupId();

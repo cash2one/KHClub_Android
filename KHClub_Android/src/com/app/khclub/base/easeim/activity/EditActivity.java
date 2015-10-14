@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.app.khclub.R;
+import com.app.khclub.base.utils.ToastUtil;
 
 public class EditActivity extends BaseActivity{
 	private EditText editText;
@@ -30,6 +31,16 @@ public class EditActivity extends BaseActivity{
 	
 	
 	public void save(View view){
+		if (editText.getText().toString().trim().length() < 1) {
+			ToastUtil.show(this, R.string.toast_group_not_isnull);
+			return;
+		}
+		
+		if (editText.getText().toString().trim().length() > 30) {
+			ToastUtil.show(this, R.string.toast_group_too_long);
+			return;
+		}
+		
 		setResult(RESULT_OK,new Intent().putExtra("data", editText.getText().toString()));
 		finish();
 	}
