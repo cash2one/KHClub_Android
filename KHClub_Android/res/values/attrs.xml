@@ -35,5 +35,11 @@
     <declare-styleable name="MultiImageView">
         <attr name="islargesize" format="boolean" />
     </declare-styleable>
+    
+    <declare-styleable name="Emojicon">
+        <attr name="emojiconSize" format="dimension"/>
+        <attr name="emojiconTextStart" format="integer"/>
+        <attr name="emojiconTextLength" format="integer"/>
+    </declare-styleable>
 
 </resources>
