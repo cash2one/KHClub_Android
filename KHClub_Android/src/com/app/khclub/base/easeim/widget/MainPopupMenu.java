@@ -1,4 +1,4 @@
-package com.app.khclub.personal.ui.view;
+package com.app.khclub.base.easeim.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,40 +15,62 @@ import com.app.khclub.R;
 /**
  * 个人中心下拉操作菜单
  * */
-public class PersonalPopupMenu extends PopupWindow {
+public class MainPopupMenu extends PopupWindow {
 
 	// 布局
 	private View conentView;
 	// onclick
-	private OperateListener listener;
+	private ClickListener listener;
 
 	@SuppressLint("NewApi")
-	public PersonalPopupMenu(final Context context) {
+	public MainPopupMenu(final Context context) {
 
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		// 获取布局
 		conentView = inflater
-				.inflate(R.layout.popup_window_personal_menu, null);
-		// 分享名片按钮
-		((LinearLayout) conentView.findViewById(R.id.layout_share_card))
+				.inflate(R.layout.popup_window_main_menu, null);
+		// 扫描二维码
+		((LinearLayout) conentView.findViewById(R.id.layout_scanQR))
 				.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View arg0) {
-						listener.shareClick();
-						PersonalPopupMenu.this.dismiss();
+						listener.scanQRcodeClick();
+						MainPopupMenu.this.dismiss();
 					}
 				});
 
-		// 切换名片样式
-		((LinearLayout) conentView.findViewById(R.id.layout_switch_card))
+		// 加好友加群
+		((LinearLayout) conentView.findViewById(R.id.layout_search))
 				.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View arg0) {
-						listener.switchClick();
-						PersonalPopupMenu.this.dismiss();
+						listener.searchClick();
+						MainPopupMenu.this.dismiss();
+					}
+				});
+
+		// 创建群
+		((LinearLayout) conentView.findViewById(R.id.layout_create_group))
+				.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View arg0) {
+						listener.createGroupClick();
+						MainPopupMenu.this.dismiss();
+					}
+				});
+
+		// 用户二维码
+		((LinearLayout) conentView.findViewById(R.id.layout_user_QRcard))
+				.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View arg0) {
+						listener.userQRShowClick();
+						MainPopupMenu.this.dismiss();
 					}
 				});
 
@@ -65,7 +87,7 @@ public class PersonalPopupMenu extends PopupWindow {
 		// 背景变暗
 		this.setBackgroundDrawable(new ColorDrawable(0x00000000));
 		// 设置窗体动画效果
-		this.setAnimationStyle(R.style.anim_personal_menu);
+		this.setAnimationStyle(R.style.anim_main_menu);
 	}
 
 	/**
@@ -80,21 +102,26 @@ public class PersonalPopupMenu extends PopupWindow {
 	}
 
 	// 监听器
-	public interface OperateListener {
-		// 创建
-		public void shareClick();
+	public interface ClickListener {
+		// 扫描二维码
+		public void scanQRcodeClick();
 
-		// 更多
-		public void switchClick();
+		// 搜索
+		public void searchClick();
+
+		// 创建群聊
+		public void createGroupClick();
+
+		// 用户的二维码
+		public void userQRShowClick();
 	}
 
 	// 回调接口
-	public OperateListener getListener() {
+	public ClickListener getListener() {
 		return listener;
 	}
 
-	//设置回调接口
-	public void setListener(OperateListener listener) {
+	public void setListener(ClickListener listener) {
 		this.listener = listener;
 	}
 }

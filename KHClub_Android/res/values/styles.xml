@@ -89,9 +89,9 @@
     </style>
 
     <!-- 通讯录与会话菜单弹出动画 -->
-    <style name="anim_operate_menu">
-        <item name="android:windowEnterAnimation">@anim/operate_menu_fade_in</item>
-        <item name="android:windowExitAnimation">@anim/operate_menu_fade_out</item>
+    <style name="anim_main_menu">
+        <item name="android:windowEnterAnimation">@anim/main_menu_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/main_menu_fade_out</item>
     </style>
     
      <!-- 个人中心菜单弹出动画 -->

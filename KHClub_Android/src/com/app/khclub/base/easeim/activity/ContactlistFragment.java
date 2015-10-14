@@ -59,6 +59,8 @@ import com.app.khclub.base.easeim.applib.controller.HXSDKHelper.HXSyncListener;
 import com.app.khclub.base.easeim.db.InviteMessgeDao;
 import com.app.khclub.base.easeim.db.UserDao;
 import com.app.khclub.base.easeim.domain.User;
+import com.app.khclub.base.easeim.widget.MainPopupMenu;
+import com.app.khclub.base.easeim.widget.MainPopupMenu.ClickListener;
 import com.app.khclub.base.easeim.widget.Sidebar;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
@@ -67,6 +69,8 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.personal.ui.view.PersonalPopupMenu;
+import com.app.khclub.personal.ui.view.PersonalPopupMenu.OperateListener;
 import com.easemob.chat.EMContactManager;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
@@ -93,109 +97,122 @@ public class ContactlistFragment extends Fragment {
 	HXContactInfoSyncListener contactInfoSyncListener;
 	View progressBar;
 	Handler handler = new Handler();
-    private User toBeProcessUser;
-    private String toBeProcessUsername;
+	private User toBeProcessUser;
+	private String toBeProcessUsername;
+	// 右上角弹出菜单
+	private MainPopupMenu mainMenu;
 
 	class HXContactSyncListener implements HXSDKHelper.HXSyncListener {
 		@Override
 		public void onSyncSucess(final boolean success) {
 			EMLog.d(TAG, "on contact list sync success:" + success);
-			ContactlistFragment.this.getActivity().runOnUiThread(new Runnable() {
-				public void run() {
-				    getActivity().runOnUiThread(new Runnable(){
+			ContactlistFragment.this.getActivity().runOnUiThread(
+					new Runnable() {
+						public void run() {
+							getActivity().runOnUiThread(new Runnable() {
 
-		                @Override
-		                public void run() {
-		                    if(success){
-		                        progressBar.setVisibility(View.GONE);
-                                refresh();
-		                    }else{
-		                        String s1 = getResources().getString(R.string.get_failed_please_check);
-		                        Toast.makeText(getActivity(), s1, 1).show();
-		                        progressBar.setVisibility(View.GONE);
-		                    }
-		                }
-		                
-		            });
-				}
-			});
+								@Override
+								public void run() {
+									if (success) {
+										progressBar.setVisibility(View.GONE);
+										refresh();
+									} else {
+										String s1 = getResources()
+												.getString(
+														R.string.get_failed_please_check);
+										Toast.makeText(getActivity(), s1, 1)
+												.show();
+										progressBar.setVisibility(View.GONE);
+									}
+								}
+
+							});
+						}
+					});
 		}
 	}
-	
-	class HXBlackListSyncListener implements HXSyncListener{
 
-        @Override
-        public void onSyncSucess(boolean success) {
-            getActivity().runOnUiThread(new Runnable(){
+	class HXBlackListSyncListener implements HXSyncListener {
 
-                @Override
-                public void run() {
-                    blackList = EMContactManager.getInstance().getBlackListUsernames();
-                    refresh();
-                }
-                
-            });
-        }
-	    
+		@Override
+		public void onSyncSucess(boolean success) {
+			getActivity().runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					blackList = EMContactManager.getInstance()
+							.getBlackListUsernames();
+					refresh();
+				}
+
+			});
+		}
+
 	};
-	
-	class HXContactInfoSyncListener implements HXSDKHelper.HXSyncListener{
+
+	class HXContactInfoSyncListener implements HXSDKHelper.HXSyncListener {
 
 		@Override
 		public void onSyncSucess(final boolean success) {
 			EMLog.d(TAG, "on contactinfo list sync success:" + success);
 			getActivity().runOnUiThread(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					progressBar.setVisibility(View.GONE);
-					if(success){
+					if (success) {
 						refresh();
 					}
 				}
 			});
 		}
-		
+
 	}
-	
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_contact_list, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.fragment_contact_list, container,
+				false);
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		//防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
-		if(savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
-		    return;
-		inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		// 防止被T后，没点确定按钮然后按了home键，长期在后台又进app导致的crash
+		if (savedInstanceState != null
+				&& savedInstanceState.getBoolean("isConflict", false))
+			return;
+		inputMethodManager = (InputMethodManager) getActivity()
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
 		listView = (ListView) getView().findViewById(R.id.list);
 		sidebar = (Sidebar) getView().findViewById(R.id.sidebar);
 		sidebar.setListView(listView);
-        
-		//黑名单列表
+
+		// 黑名单列表
 		blackList = EMContactManager.getInstance().getBlackListUsernames();
 		contactList = new ArrayList<User>();
 		// 获取设置contactlist
 		getContactList();
-		
-		//搜索框
+
+		// 搜索框
 		query = (EditText) getView().findViewById(R.id.query);
 		query.setHint(R.string.search);
 		clearSearch = (ImageButton) getView().findViewById(R.id.search_clear);
 		query.addTextChangedListener(new TextWatcher() {
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 				adapter.getFilter().filter(s);
 				if (s.length() > 0) {
 					clearSearch.setVisibility(View.VISIBLE);
 				} else {
 					clearSearch.setVisibility(View.INVISIBLE);
-					
+
 				}
 			}
 
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
 			}
 
 			public void afterTextChanged(Editable s) {
@@ -208,32 +225,42 @@ public class ContactlistFragment extends Fragment {
 				hideSoftKeyboard();
 			}
 		});
-		
+
 		// 设置adapter
-		adapter = new ContactAdapter(getActivity(), R.layout.row_contact, contactList);
+		adapter = new ContactAdapter(getActivity(), R.layout.row_contact,
+				contactList);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				String username = adapter.getItem(position).getUsername();
 				if (Constant.NEW_FRIENDS_USERNAME.equals(username)) {
 					// 进入申请与通知页面
-					User user = ((KHHXSDKHelper)HXSDKHelper.getInstance()).getContactList().get(Constant.NEW_FRIENDS_USERNAME);
+					User user = ((KHHXSDKHelper) HXSDKHelper.getInstance())
+							.getContactList()
+							.get(Constant.NEW_FRIENDS_USERNAME);
 					user.setUnreadMsgCount(0);
-					startActivity(new Intent(getActivity(), NewFriendsMsgActivity.class));
+					startActivity(new Intent(getActivity(),
+							NewFriendsMsgActivity.class));
 				} else if (Constant.GROUP_USERNAME.equals(username)) {
 					// 进入群聊列表页面
-					startActivity(new Intent(getActivity(), GroupsActivity.class));
-				} else if(Constant.CHAT_ROOM.equals(username)){
-					//进入聊天室列表页面
-				    startActivity(new Intent(getActivity(), PublicChatRoomsActivity.class));
-				}else if(Constant.CHAT_ROBOT.equals(username)){
-					//进入Robot列表页面
-					startActivity(new Intent(getActivity(), RobotsActivity.class));
-				}else {
+					startActivity(new Intent(getActivity(),
+							GroupsActivity.class));
+				} else if (Constant.CHAT_ROOM.equals(username)) {
+					// 进入聊天室列表页面
+					startActivity(new Intent(getActivity(),
+							PublicChatRoomsActivity.class));
+				} else if (Constant.CHAT_ROBOT.equals(username)) {
+					// 进入Robot列表页面
+					startActivity(new Intent(getActivity(),
+							RobotsActivity.class));
+				} else {
 					// demo中直接进入聊天页面，实际一般是进入用户详情页
-					startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("userId", adapter.getItem(position).getUsername()));
+					startActivity(new Intent(getActivity(), ChatActivity.class)
+							.putExtra("userId", adapter.getItem(position)
+									.getUsername()));
 				}
 			}
 		});
@@ -244,35 +271,71 @@ public class ContactlistFragment extends Fragment {
 				// 隐藏软键盘
 				if (getActivity().getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
 					if (getActivity().getCurrentFocus() != null)
-						inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+						inputMethodManager.hideSoftInputFromWindow(
+								getActivity().getCurrentFocus()
+										.getWindowToken(),
 								InputMethodManager.HIDE_NOT_ALWAYS);
 				}
 				return false;
 			}
 		});
 
-		ImageView addContactView = (ImageView) getView().findViewById(R.id.iv_new_contact);
-		// 进入添加好友页
-		addContactView.setOnClickListener(new OnClickListener() {
+		final ImageView operateMenuView = (ImageView) getView().findViewById(
+				R.id.iv_new_contact);
+		// 右上角菜单
+		operateMenuView.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(getActivity(), AddContactActivity.class));
+				if (null == mainMenu) {
+					mainMenu = new MainPopupMenu(getActivity());
+					mainMenu.setListener(new ClickListener() {
+
+						@Override
+						public void scanQRcodeClick() {
+							// 扫描二维码
+
+						}
+
+						@Override
+						public void searchClick() {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void createGroupClick() {
+							// 创建群聊
+
+						}
+
+						@Override
+						public void userQRShowClick() {
+							// TODO 我的二维码
+
+						}
+					});
+				}
+				mainMenu.showPopupWindow(operateMenuView);
+				// startActivity(new Intent(getActivity(),
+				// AddContactActivity.class));
 			}
 		});
 		registerForContextMenu(listView);
-		
+
 		progressBar = (View) getView().findViewById(R.id.progress_bar);
 
 		contactSyncListener = new HXContactSyncListener();
 		HXSDKHelper.getInstance().addSyncContactListener(contactSyncListener);
-		
+
 		blackListSyncListener = new HXBlackListSyncListener();
-		HXSDKHelper.getInstance().addSyncBlackListListener(blackListSyncListener);
-		
+		HXSDKHelper.getInstance().addSyncBlackListListener(
+				blackListSyncListener);
+
 		contactInfoSyncListener = new HXContactInfoSyncListener();
-		((KHHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().addSyncContactInfoListener(contactInfoSyncListener);
-		
+		((KHHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
+				.addSyncContactInfoListener(contactInfoSyncListener);
+
 		if (!HXSDKHelper.getInstance().isContactsSyncedWithServer()) {
 			progressBar.setVisibility(View.VISIBLE);
 		} else {
@@ -281,12 +344,15 @@ public class ContactlistFragment extends Fragment {
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (((AdapterContextMenuInfo) menuInfo).position > 2) {
-		    toBeProcessUser = adapter.getItem(((AdapterContextMenuInfo) menuInfo).position);
-		    toBeProcessUsername = toBeProcessUser.getUsername();
-			getActivity().getMenuInflater().inflate(R.menu.context_contact_list, menu);
+			toBeProcessUser = adapter
+					.getItem(((AdapterContextMenuInfo) menuInfo).position);
+			toBeProcessUsername = toBeProcessUser.getUsername();
+			getActivity().getMenuInflater().inflate(
+					R.menu.context_contact_list, menu);
 		}
 	}
 
@@ -294,13 +360,13 @@ public class ContactlistFragment extends Fragment {
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.delete_contact) {
 			try {
-                // 删除此联系人
-                deleteContact(toBeProcessUser);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+				// 删除此联系人
+				deleteContact(toBeProcessUser);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return true;
-		}else if(item.getItemId() == R.id.add_to_blacklist){
+		} else if (item.getItemId() == R.id.add_to_blacklist) {
 			moveToBlacklist(toBeProcessUsername);
 			return true;
 		}
@@ -336,52 +402,73 @@ public class ContactlistFragment extends Fragment {
 		pd.setMessage(st1);
 		pd.setCanceledOnTouchOutside(false);
 		pd.show();
-		
+
 		// 参数设置
 		RequestParams params = new RequestParams();
-		params.addBodyParameter("user_id", UserManager.getInstance().getUser().getUid()+"");
-		params.addBodyParameter("target_id", tobeDeleteUser.getUsername().replace(KHConst.KH, ""));
-		
+		params.addBodyParameter("user_id", UserManager.getInstance().getUser()
+				.getUid()
+				+ "");
+		params.addBodyParameter("target_id", tobeDeleteUser.getUsername()
+				.replace(KHConst.KH, ""));
+
 		HttpManager.post(KHConst.DELETE_FRIEND, params,
 				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 					@Override
 					public void onSuccess(JSONObject jsonResponse, String flag) {
 						super.onSuccess(jsonResponse, flag);
-						int status = jsonResponse.getInteger(KHConst.HTTP_STATUS);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
 						if (status == KHConst.STATUS_SUCCESS) {
-								new Thread(new Runnable() {
-									public void run() {
-										try {
-											EMContactManager.getInstance().deleteContact(tobeDeleteUser.getUsername());
-											// 删除db和内存中此用户的数据
-											UserDao dao = new UserDao(getActivity());
-											dao.deleteContact(tobeDeleteUser.getUsername());
-											((KHHXSDKHelper)HXSDKHelper.getInstance()).getContactList().remove(tobeDeleteUser.getUsername());
-											getActivity().runOnUiThread(new Runnable() {
-												public void run() {
-													pd.dismiss();
-													adapter.remove(tobeDeleteUser);
-													adapter.notifyDataSetChanged();
-												}
-											});
-							                // 删除相关的邀请消息
-							                InviteMessgeDao msgDao = new InviteMessgeDao(getActivity());
-							                msgDao.deleteMessage(toBeProcessUser.getUsername());
-										} catch (final Exception e) {
-											getActivity().runOnUiThread(new Runnable() {
-												public void run() {
-													pd.dismiss();
-													Toast.makeText(getActivity(), st2 + e.getMessage(), 1).show();
-												}
-											});
-										}
+							new Thread(new Runnable() {
+								public void run() {
+									try {
+										EMContactManager.getInstance()
+												.deleteContact(
+														tobeDeleteUser
+																.getUsername());
+										// 删除db和内存中此用户的数据
+										UserDao dao = new UserDao(getActivity());
+										dao.deleteContact(tobeDeleteUser
+												.getUsername());
+										((KHHXSDKHelper) HXSDKHelper
+												.getInstance())
+												.getContactList().remove(
+														tobeDeleteUser
+																.getUsername());
+										getActivity().runOnUiThread(
+												new Runnable() {
+													public void run() {
+														pd.dismiss();
+														adapter.remove(tobeDeleteUser);
+														adapter.notifyDataSetChanged();
+													}
+												});
+										// 删除相关的邀请消息
+										InviteMessgeDao msgDao = new InviteMessgeDao(
+												getActivity());
+										msgDao.deleteMessage(toBeProcessUser
+												.getUsername());
+									} catch (final Exception e) {
+										getActivity().runOnUiThread(
+												new Runnable() {
+													public void run() {
+														pd.dismiss();
+														Toast.makeText(
+																getActivity(),
+																st2
+																		+ e.getMessage(),
+																1).show();
+													}
+												});
 									}
-								}).start();
-						}else {
+								}
+							}).start();
+						} else {
 							ToastUtil.show(getActivity(), R.string.net_error);
 							pd.dismiss();
 						}
 					}
+
 					@Override
 					public void onFailure(HttpException arg0, String arg1,
 							String flag) {
@@ -390,56 +477,59 @@ public class ContactlistFragment extends Fragment {
 						pd.dismiss();
 					}
 				}, null));
-		
-//		new Thread(new Runnable() {
-//		public void run() {
-//			try {
-//				EMContactManager.getInstance().deleteContact(tobeDeleteUser.getUsername());
-//				// 删除db和内存中此用户的数据
-//				UserDao dao = new UserDao(getActivity());
-//				dao.deleteContact(tobeDeleteUser.getUsername());
-//				((KHHXSDKHelper)HXSDKHelper.getInstance()).getContactList().remove(tobeDeleteUser.getUsername());
-//				getActivity().runOnUiThread(new Runnable() {
-//					public void run() {
-//						pd.dismiss();
-//						adapter.remove(tobeDeleteUser);
-//						adapter.notifyDataSetChanged();
-//
-//					}
-//				});
-//                // 删除相关的邀请消息
-//                InviteMessgeDao msgDao = new InviteMessgeDao(getActivity());
-//                msgDao.deleteMessage(toBeProcessUser.getUsername());
-//			} catch (final Exception e) {
-//				getActivity().runOnUiThread(new Runnable() {
-//					public void run() {
-//						pd.dismiss();
-//						Toast.makeText(getActivity(), st2 + e.getMessage(), 1).show();
-//					}
-//				});
-//
-//			}
-//
-//		}
-//	}).start();
+
+		// new Thread(new Runnable() {
+		// public void run() {
+		// try {
+		// EMContactManager.getInstance().deleteContact(tobeDeleteUser.getUsername());
+		// // 删除db和内存中此用户的数据
+		// UserDao dao = new UserDao(getActivity());
+		// dao.deleteContact(tobeDeleteUser.getUsername());
+		// ((KHHXSDKHelper)HXSDKHelper.getInstance()).getContactList().remove(tobeDeleteUser.getUsername());
+		// getActivity().runOnUiThread(new Runnable() {
+		// public void run() {
+		// pd.dismiss();
+		// adapter.remove(tobeDeleteUser);
+		// adapter.notifyDataSetChanged();
+		//
+		// }
+		// });
+		// // 删除相关的邀请消息
+		// InviteMessgeDao msgDao = new InviteMessgeDao(getActivity());
+		// msgDao.deleteMessage(toBeProcessUser.getUsername());
+		// } catch (final Exception e) {
+		// getActivity().runOnUiThread(new Runnable() {
+		// public void run() {
+		// pd.dismiss();
+		// Toast.makeText(getActivity(), st2 + e.getMessage(), 1).show();
+		// }
+		// });
+		//
+		// }
+		//
+		// }
+		// }).start();
 	}
 
 	/**
 	 * 把user移入到黑名单
 	 */
-	private void moveToBlacklist(final String username){
+	private void moveToBlacklist(final String username) {
 		final ProgressDialog pd = new ProgressDialog(getActivity());
 		String st1 = getResources().getString(R.string.Is_moved_into_blacklist);
-		final String st2 = getResources().getString(R.string.Move_into_blacklist_success);
-		final String st3 = getResources().getString(R.string.Move_into_blacklist_failure);
+		final String st2 = getResources().getString(
+				R.string.Move_into_blacklist_success);
+		final String st3 = getResources().getString(
+				R.string.Move_into_blacklist_failure);
 		pd.setMessage(st1);
 		pd.setCanceledOnTouchOutside(false);
 		pd.show();
 		new Thread(new Runnable() {
 			public void run() {
 				try {
-					//加入到黑名单
-					EMContactManager.getInstance().addUserToBlackList(username,false);
+					// 加入到黑名单
+					EMContactManager.getInstance().addUserToBlackList(username,
+							false);
 					getActivity().runOnUiThread(new Runnable() {
 						public void run() {
 							pd.dismiss();
@@ -458,9 +548,9 @@ public class ContactlistFragment extends Fragment {
 				}
 			}
 		}).start();
-		
+
 	}
-	
+
 	// 刷新ui
 	public void refresh() {
 		try {
@@ -479,20 +569,23 @@ public class ContactlistFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 		if (contactSyncListener != null) {
-			HXSDKHelper.getInstance().removeSyncContactListener(contactSyncListener);
+			HXSDKHelper.getInstance().removeSyncContactListener(
+					contactSyncListener);
 			contactSyncListener = null;
 		}
-		
-		if(blackListSyncListener != null){
-		    HXSDKHelper.getInstance().removeSyncBlackListListener(blackListSyncListener);
+
+		if (blackListSyncListener != null) {
+			HXSDKHelper.getInstance().removeSyncBlackListListener(
+					blackListSyncListener);
 		}
-		
-		if(contactInfoSyncListener != null){
-			((KHHXSDKHelper)HXSDKHelper.getInstance()).getUserProfileManager().removeSyncContactInfoListener(contactInfoSyncListener);
+
+		if (contactInfoSyncListener != null) {
+			((KHHXSDKHelper) HXSDKHelper.getInstance()).getUserProfileManager()
+					.removeSyncContactInfoListener(contactInfoSyncListener);
 		}
 		super.onDestroy();
 	}
-	
+
 	public void showProgressBar(boolean show) {
 		if (progressBar != null) {
 			if (show) {
@@ -508,14 +601,15 @@ public class ContactlistFragment extends Fragment {
 	 */
 	private void getContactList() {
 		contactList.clear();
-		//获取本地好友列表
-		Map<String, User> users = ((KHHXSDKHelper)HXSDKHelper.getInstance()).getContactList();
+		// 获取本地好友列表
+		Map<String, User> users = ((KHHXSDKHelper) HXSDKHelper.getInstance())
+				.getContactList();
 		Iterator<Entry<String, User>> iterator = users.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<String, User> entry = iterator.next();
 			if (!entry.getKey().equals(Constant.NEW_FRIENDS_USERNAME)
-			        && !entry.getKey().equals(Constant.GROUP_USERNAME)
-			        && !entry.getKey().equals(Constant.CHAT_ROOM)
+					&& !entry.getKey().equals(Constant.GROUP_USERNAME)
+					&& !entry.getKey().equals(Constant.CHAT_ROOM)
 					&& !entry.getKey().equals(Constant.CHAT_ROBOT)
 					&& !blackList.contains(entry.getKey()))
 				contactList.add(entry.getValue());
@@ -529,37 +623,38 @@ public class ContactlistFragment extends Fragment {
 			}
 		});
 
-		if(users.get(Constant.CHAT_ROBOT)!=null){
+		if (users.get(Constant.CHAT_ROBOT) != null) {
 			contactList.add(0, users.get(Constant.CHAT_ROBOT));
 		}
 		// 加入"群聊"和"聊天室"
-        if(users.get(Constant.CHAT_ROOM) != null)
-            contactList.add(0, users.get(Constant.CHAT_ROOM));
-        if(users.get(Constant.GROUP_USERNAME) != null)
-            contactList.add(0, users.get(Constant.GROUP_USERNAME));
-        
+		if (users.get(Constant.CHAT_ROOM) != null)
+			contactList.add(0, users.get(Constant.CHAT_ROOM));
+		if (users.get(Constant.GROUP_USERNAME) != null)
+			contactList.add(0, users.get(Constant.GROUP_USERNAME));
+
 		// 把"申请与通知"添加到首位
-		if(users.get(Constant.NEW_FRIENDS_USERNAME) != null)
-		    contactList.add(0, users.get(Constant.NEW_FRIENDS_USERNAME));
-		
+		if (users.get(Constant.NEW_FRIENDS_USERNAME) != null)
+			contactList.add(0, users.get(Constant.NEW_FRIENDS_USERNAME));
+
 	}
-	
+
 	void hideSoftKeyboard() {
-        if (getActivity().getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
-            if (getActivity().getCurrentFocus() != null)
-                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
-	
+		if (getActivity().getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+			if (getActivity().getCurrentFocus() != null)
+				inputMethodManager.hideSoftInputFromWindow(getActivity()
+						.getCurrentFocus().getWindowToken(),
+						InputMethodManager.HIDE_NOT_ALWAYS);
+		}
+	}
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-	    if(((MainTabActivity)getActivity()).isConflict){
-	    	outState.putBoolean("isConflict", true);
-	    }else if(((MainTabActivity)getActivity()).getCurrentAccountRemoved()){
-	    	outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
-	    }
-	    
+		if (((MainTabActivity) getActivity()).isConflict) {
+			outState.putBoolean("isConflict", true);
+		} else if (((MainTabActivity) getActivity()).getCurrentAccountRemoved()) {
+			outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
+		}
+
 	}
 }

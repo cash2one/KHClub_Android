@@ -29,6 +29,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -38,6 +39,8 @@ import com.app.khclub.R;
 import com.app.khclub.base.easeim.Constant;
 import com.app.khclub.base.easeim.adapter.ChatAllHistoryAdapter;
 import com.app.khclub.base.easeim.db.InviteMessgeDao;
+import com.app.khclub.base.easeim.widget.MainPopupMenu;
+import com.app.khclub.base.easeim.widget.MainPopupMenu.ClickListener;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHUtils;
 import com.easemob.chat.EMChatManager;
@@ -48,7 +51,8 @@ import com.easemob.chat.EMConversation.EMConversationType;
  * 显示所有会话记录，比较简单的实现，更好的可能是把陌生人存入本地，这样取到的聊天记录是可控的
  * 
  */
-public class ChatAllHistoryFragment extends Fragment implements View.OnClickListener {
+public class ChatAllHistoryFragment extends Fragment implements
+		View.OnClickListener {
 
 	private InputMethodManager inputMethodManager;
 	private ListView listView;
@@ -60,57 +64,67 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
 	public TextView errorText;
 	private boolean hidden;
 	private List<EMConversation> conversationList = new ArrayList<EMConversation>();
-		
+	// 右上角弹出菜单
+	private MainPopupMenu mainMenu;
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_conversation_history, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.fragment_conversation_history,
+				container, false);
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		if(savedInstanceState != null && savedInstanceState.getBoolean("isConflict", false))
-            return;
-		inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (savedInstanceState != null
+				&& savedInstanceState.getBoolean("isConflict", false))
+			return;
+		inputMethodManager = (InputMethodManager) getActivity()
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
 		errorItem = (RelativeLayout) getView().findViewById(R.id.rl_error_item);
-		errorText = (TextView) errorItem.findViewById(R.id.tv_connect_errormsg);		
-		
+		errorText = (TextView) errorItem.findViewById(R.id.tv_connect_errormsg);
+
 		conversationList.addAll(loadConversationsWithRecentChat());
 		listView = (ListView) getView().findViewById(R.id.list);
 		adapter = new ChatAllHistoryAdapter(getActivity(), 1, conversationList);
 		// 设置adapter
 		listView.setAdapter(adapter);
-				
-		
-		final String st2 = getResources().getString(R.string.Cant_chat_with_yourself);
+
+		final String st2 = getResources().getString(
+				R.string.Cant_chat_with_yourself);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				EMConversation conversation = adapter.getItem(position);
 				String username = conversation.getUserName();
-				
+
 				if (username.equals(KHUtils.selfCommonIMID()))
 					Toast.makeText(getActivity(), st2, 0).show();
 				else {
-				    // 进入聊天页面
-				    Intent intent = new Intent(getActivity(), ChatActivity.class);
-				    if(conversation.isGroup()){
-				        if(conversation.getType() == EMConversationType.ChatRoom){
-				         // it is group chat
-	                        intent.putExtra("chatType", ChatActivity.CHATTYPE_CHATROOM);
-	                        intent.putExtra("groupId", username);
-				        }else{
-				         // it is group chat
-	                        intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-	                        intent.putExtra("groupId", username);
-				        }
-				        
-				    }else{
-				        // it is single chat
-                        intent.putExtra("userId", username);
-				    }
-				    startActivity(intent);
+					// 进入聊天页面
+					Intent intent = new Intent(getActivity(),
+							ChatActivity.class);
+					if (conversation.isGroup()) {
+						if (conversation.getType() == EMConversationType.ChatRoom) {
+							// it is group chat
+							intent.putExtra("chatType",
+									ChatActivity.CHATTYPE_CHATROOM);
+							intent.putExtra("groupId", username);
+						} else {
+							// it is group chat
+							intent.putExtra("chatType",
+									ChatActivity.CHATTYPE_GROUP);
+							intent.putExtra("groupId", username);
+						}
+
+					} else {
+						// it is single chat
+						intent.putExtra("userId", username);
+					}
+					startActivity(intent);
 				}
 			}
 		});
@@ -134,7 +148,8 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
 		// 搜索框中清除button
 		clearSearch = (ImageButton) getView().findViewById(R.id.search_clear);
 		query.addTextChangedListener(new TextWatcher() {
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 				adapter.getFilter().filter(s);
 				if (s.length() > 0) {
 					clearSearch.setVisibility(View.VISIBLE);
@@ -143,7 +158,8 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
 				}
 			}
 
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
 			}
 
 			public void afterTextChanged(Editable s) {
@@ -156,21 +172,64 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
 				hideSoftKeyboard();
 			}
 		});
-		
+
+		// 右上角菜单
+		final ImageView operateMenuView = (ImageView) getView().findViewById(
+				R.id.iv_char_operate_menu);
+		// 右上角菜单
+		operateMenuView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (null == mainMenu) {
+					mainMenu = new MainPopupMenu(getActivity());
+					mainMenu.setListener(new ClickListener() {
+
+						@Override
+						public void scanQRcodeClick() {
+							//扫描二维码
+
+						}
+
+						@Override
+						public void searchClick() {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void createGroupClick() {
+							// 创建群聊
+
+						}
+
+						@Override
+						public void userQRShowClick() {
+							// TODO 我的二维码
+
+						}
+					});
+				}
+				mainMenu.showPopupWindow(operateMenuView);
+			}
+		});
 	}
 
 	void hideSoftKeyboard() {
 		if (getActivity().getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
 			if (getActivity().getCurrentFocus() != null)
-				inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+				inputMethodManager.hideSoftInputFromWindow(getActivity()
+						.getCurrentFocus().getWindowToken(),
 						InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
+
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		// if(((AdapterContextMenuInfo)menuInfo).position > 0){ m,
-		getActivity().getMenuInflater().inflate(R.menu.delete_message, menu); 
+		getActivity().getMenuInflater().inflate(R.menu.delete_message, menu);
 		// }
 	}
 
@@ -185,9 +244,12 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
 			deleteMessage = false;
 			handled = true;
 		}
-		EMConversation tobeDeleteCons = adapter.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
+		EMConversation tobeDeleteCons = adapter
+				.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
 		// 删除此会话
-		EMChatManager.getInstance().deleteConversation(tobeDeleteCons.getUserName(), tobeDeleteCons.isGroup(), deleteMessage);
+		EMChatManager.getInstance().deleteConversation(
+				tobeDeleteCons.getUserName(), tobeDeleteCons.isGroup(),
+				deleteMessage);
 		InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(getActivity());
 		inviteMessgeDao.deleteMessage(tobeDeleteCons.getUserName());
 		adapter.remove(tobeDeleteCons);
@@ -195,7 +257,7 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
 
 		// 更新消息未读数
 		((MainTabActivity) getActivity()).updateUnreadLabel();
-		
+
 		return handled ? true : super.onContextItemSelected(item);
 	}
 
@@ -205,33 +267,34 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
 	public void refresh() {
 		conversationList.clear();
 		conversationList.addAll(loadConversationsWithRecentChat());
-		if(adapter != null)
-		    adapter.notifyDataSetChanged();
+		if (adapter != null)
+			adapter.notifyDataSetChanged();
 	}
 
 	/**
 	 * 获取所有会话
 	 * 
 	 * @param context
-	 * @return
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        +	 */
+	 * @return +
+	 */
 	private List<EMConversation> loadConversationsWithRecentChat() {
 		// 获取所有会话，包括陌生人
-		Hashtable<String, EMConversation> conversations = EMChatManager.getInstance().getAllConversations();
+		Hashtable<String, EMConversation> conversations = EMChatManager
+				.getInstance().getAllConversations();
 		// 过滤掉messages size为0的conversation
 		/**
-		 * 如果在排序过程中有新消息收到，lastMsgTime会发生变化
-		 * 影响排序过程，Collection.sort会产生异常
-		 * 保证Conversation在Sort过程中最后一条消息的时间不变 
-		 * 避免并发问题
+		 * 如果在排序过程中有新消息收到，lastMsgTime会发生变化 影响排序过程，Collection.sort会产生异常
+		 * 保证Conversation在Sort过程中最后一条消息的时间不变 避免并发问题
 		 */
 		List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
 		synchronized (conversations) {
 			for (EMConversation conversation : conversations.values()) {
 				if (conversation.getAllMessages().size() != 0) {
-					//if(conversation.getType() != EMConversationType.ChatRoom){
-						sortList.add(new Pair<Long, EMConversation>(conversation.getLastMessage().getMsgTime(), conversation));
-					//}
+					// if(conversation.getType() !=
+					// EMConversationType.ChatRoom){
+					sortList.add(new Pair<Long, EMConversation>(conversation
+							.getLastMessage().getMsgTime(), conversation));
+					// }
 				}
 			}
 		}
@@ -253,21 +316,24 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
 	 * 
 	 * @param usernames
 	 */
-	private void sortConversationByLastChatTime(List<Pair<Long, EMConversation>> conversationList) {
-		Collections.sort(conversationList, new Comparator<Pair<Long, EMConversation>>() {
-			@Override
-			public int compare(final Pair<Long, EMConversation> con1, final Pair<Long, EMConversation> con2) {
+	private void sortConversationByLastChatTime(
+			List<Pair<Long, EMConversation>> conversationList) {
+		Collections.sort(conversationList,
+				new Comparator<Pair<Long, EMConversation>>() {
+					@Override
+					public int compare(final Pair<Long, EMConversation> con1,
+							final Pair<Long, EMConversation> con2) {
 
-				if (con1.first == con2.first) {
-					return 0;
-				} else if (con2.first > con1.first) {
-					return 1;
-				} else {
-					return -1;
-				}
-			}
+						if (con1.first == con2.first) {
+							return 0;
+						} else if (con2.first > con1.first) {
+							return 1;
+						} else {
+							return -1;
+						}
+					}
 
-		});
+				});
 	}
 
 	@Override
@@ -282,22 +348,22 @@ public class ChatAllHistoryFragment extends Fragment implements View.OnClickList
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (!hidden && ! ((MainTabActivity)getActivity()).isConflict) {
+		if (!hidden && !((MainTabActivity) getActivity()).isConflict) {
 			refresh();
 		}
 	}
 
 	@Override
-    public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-        if(((MainTabActivity)getActivity()).isConflict){
-        	outState.putBoolean("isConflict", true);
-        }else if(((MainTabActivity)getActivity()).getCurrentAccountRemoved()){
-        	outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
-        }
-    }
+		if (((MainTabActivity) getActivity()).isConflict) {
+			outState.putBoolean("isConflict", true);
+		} else if (((MainTabActivity) getActivity()).getCurrentAccountRemoved()) {
+			outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
+		}
+	}
 
-    @Override
-    public void onClick(View v) {        
-    }
+	@Override
+	public void onClick(View v) {
+	}
 }
