@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONArray;
@@ -28,6 +29,8 @@ import com.app.khclub.personal.ui.activity.CollectCardActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.app.khclub.personal.ui.activity.PersonalNewsActivity;
 import com.app.khclub.personal.ui.activity.PersonalSettingActivity;
+import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
+import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.app.khclub.personal.ui.view.PersonalPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalPopupMenu.OperateListener;
 import com.lidroid.xutils.exception.HttpException;
@@ -38,8 +41,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class PersonalFragment extends BaseFragment {
 
+	// 页卡内容
 	@ViewInject(R.id.vPager)
-	private ViewPager mPager;// 页卡内容
+	private ViewPager mPager;
 	// 签名
 	@ViewInject(R.id.sign_text_view)
 	private TextView signTextView;
@@ -63,6 +67,8 @@ public class PersonalFragment extends BaseFragment {
 	private DisplayImageOptions imageOptions;
 	// 操作菜单
 	private PersonalPopupMenu popupMenu;
+	// 分享弹出菜单
+	private PersonalBottomPopupMenu shareMenu;
 
 	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout,
 			R.id.button_collect_card, R.id.btn_more_operate })
@@ -121,16 +127,76 @@ public class PersonalFragment extends BaseFragment {
 	public void setUpViews(View rootView) {
 		// 操作菜单监听
 		popupMenu = new PersonalPopupMenu(getActivity());
+		shareMenu = new PersonalBottomPopupMenu(getActivity(), false);
 		popupMenu.setListener(new OperateListener() {
 
 			@Override
 			public void shareClick() {
-				// 分享
+				// 分享点击
+				shareMenu.showPopupWindow(operateButton);
 			}
 
 			@Override
 			public void switchClick() {
 				// 切换名片样式
+			}
+		});
+
+		// 分享菜单的事件
+		shareMenu.setListener(new BottomClickListener() {
+
+			@Override
+			public void shareToWeiboClick() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void shareToWeChatClick() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void shareToQzoneClick() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void shareToQQFriendsClick() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void shareToFriendClick() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void shareToCircleofFriendsClick() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void editRemarkClick() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void deleteFriendClick() {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void cancelClick() {
+				// TODO Auto-generated method stub
+
 			}
 		});
 	}

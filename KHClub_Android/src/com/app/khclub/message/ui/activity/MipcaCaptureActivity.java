@@ -220,5 +220,4 @@ public class MipcaCaptureActivity extends BaseActivityWithTopBar implements Call
 		ActivityManager.getInstence().popActivity(this);
 		finish();
 	}
-
 }
