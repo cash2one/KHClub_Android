@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
+import com.app.khclub.base.easeim.KHHXSDKHelper;
+import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
@@ -98,9 +100,10 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 	}
 
 	// 设置内容
-	public void setUIWithModel(UserModel userModel) {
+	public void setUIWithModel(UserModel userModel, boolean isFriend) {
 		// 获取uid
 		userId = userModel.getUid();
+		
 		// 头像不为空
 		if (null != userModel.getHead_image()) {
 			ImageLoader.getInstance().displayImage(
@@ -128,43 +131,44 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 			companyTextView.setText(R.string.personal_none);
 		}
 
-		if (userModel.getPhone_state() == UserModel.SeeAll) {
-			// 电话
-			if (null != userModel.getPhone_num()
-					&& userModel.getPhone_num().length() > 0) {
-				phoneTextView.setText(userModel.getPhone_num());
-			} else {
-				phoneTextView.setText(R.string.personal_none);
-			}
+		
+		// 电话
+		if (null != userModel.getPhone_num()
+				&& userModel.getPhone_num().length() > 0) {
+			phoneTextView.setText(userModel.getPhone_num());
 		} else {
-			// 电话不可见
-			phoneTextView.setText("xxx");
+			phoneTextView.setText(R.string.personal_none);
 		}
-
-		if (userModel.getEmail_state() == UserModel.SeeAll) {
-			// 邮件
-			if (null != userModel.getE_mail()
-					&& userModel.getE_mail().length() > 0) {
-				emailTextView.setText(userModel.getE_mail());
-			} else {
-				emailTextView.setText(R.string.personal_none);
-			}
+		// 邮件
+		if (null != userModel.getE_mail()
+				&& userModel.getE_mail().length() > 0) {
+			emailTextView.setText(userModel.getE_mail());
 		} else {
-			// 邮件
-			emailTextView.setText("xxx");
+			emailTextView.setText(R.string.personal_none);
 		}
-
-		if (userModel.getAddress_state() == UserModel.SeeAll) {
-			// 地址
-			if (null != userModel.getAddress()
-					&& userModel.getAddress().length() > 0) {
-				addressTextView.setText(userModel.getAddress());
-			} else {
-				addressTextView.setText(R.string.personal_none);
-			}
+		// 地址
+		if (null != userModel.getAddress()
+				&& userModel.getAddress().length() > 0) {
+			addressTextView.setText(userModel.getAddress());
 		} else {
-			addressTextView.setText("xxx");
+			addressTextView.setText(R.string.personal_none);
 		}
+		
+		//不是好友
+		if (!isFriend) {
+			if (userModel.getPhone_state() == UserModel.SeeOnlyFriends) {
+				// 电话不可见
+				phoneTextView.setText("xxx");				
+			}
+			if (userModel.getEmail_state() == UserModel.SeeOnlyFriends) {
+				// 邮件
+				emailTextView.setText("xxx");				
+			}	
+			if (userModel.getAddress_state() == UserModel.SeeOnlyFriends) {
+				// 地址
+				addressTextView.setText("xxx");			
+			}			
+		}		
 
 		// 收藏按钮
 		if (userId != UserManager.getInstance().getUser().getUid()) {
