@@ -69,6 +69,9 @@ import com.app.khclub.base.easeim.utils.ImageCache;
 import com.app.khclub.base.easeim.utils.ImageUtils;
 import com.app.khclub.base.easeim.utils.SmileUtils;
 import com.app.khclub.base.easeim.utils.UserUtils;
+import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
@@ -578,10 +581,16 @@ public class MessageAdapter extends BaseAdapter{
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(context, UserProfileActivity.class);
-				intent.putExtra("username", message.getFrom());
+//				Intent intent = new Intent();
+//				intent.setClass(context, UserProfileActivity.class);
+//				intent.putExtra("username", message.getFrom());
+//				context.startActivity(intent);
+				// 跳转到其他人页面
+				Intent intent = new Intent(context, OtherPersonalActivity.class);
+				intent.putExtra(OtherPersonalActivity.INTENT_KEY,KHUtils.stringToInt(message.getFrom().replace(KHConst.KH, "")));
 				context.startActivity(intent);
+				((Activity) context).overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);				
+				
 			}
 		});
 	}

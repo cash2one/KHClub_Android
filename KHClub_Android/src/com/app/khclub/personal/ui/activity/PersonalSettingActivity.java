@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -24,19 +25,30 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
+import com.app.khclub.base.easeim.KHHXSDKHelper;
+import com.app.khclub.base.easeim.KHHXSDKModel;
+import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
+import com.app.khclub.base.manager.ActivityManager;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
+import com.app.khclub.base.ui.view.CustomAlertDialog;
 import com.app.khclub.base.ui.view.CustomSelectPhotoDialog;
 import com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity;
+import com.app.khclub.base.utils.DataCleanManager;
 import com.app.khclub.base.utils.FileUtil;
+import com.app.khclub.base.utils.HttpCacheUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.login.ui.activity.LoginActivity;
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMChatOptions;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -80,15 +92,36 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 	// 签名
 	@ViewInject(R.id.sign_text_view)
 	private TextView signTextView;	
+	/**
+	 * 打开声音提示imageview
+	 */
+	@ViewInject(R.id.iv_switch_open_sound)
+	private ImageView iv_switch_open_sound;
+	/**
+	 * 关闭声音提示imageview
+	 */
+	@ViewInject(R.id.iv_switch_close_sound)
+	private ImageView iv_switch_close_sound;
+	/**
+	 * 打开消息震动提示
+	 */
+	@ViewInject(R.id.iv_switch_open_vibrate)
+	private ImageView iv_switch_open_vibrate;
+	/**
+	 * 关闭消息震动提示
+	 */
+	@ViewInject(R.id.iv_switch_close_vibrate)
+	private ImageView iv_switch_close_vibrate;
 	
 	private UserModel userModel;
 	// 新图片缓存工具 头像
 	DisplayImageOptions headImageOptions;
-	
+	private EMChatOptions chatOptions;
+	private KHHXSDKModel model;
 	
 	@OnClick(value = { R.id.name_layout, R.id.sign_layout,R.id.company_layout,R.id.phone_layout,
-			R.id.address_layout,R.id.email_layout,
-			R.id.sex_layout, R.id.head_image_view,R.id.head_layout, R.id.job_layout})
+			R.id.address_layout,R.id.email_layout,R.id.logout_button,R.id.rl_switch_sound,R.id.rl_switch_vibrate,
+			R.id.sex_layout, R.id.head_image_view,R.id.head_layout, R.id.job_layout, R.id.clear_cache_text_view})
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		// 姓名
@@ -171,6 +204,47 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 
 					});
 			break;
+		case R.id.clear_cache_text_view:
+			//清除缓存
+			clearCache();
+			break;
+		case R.id.logout_button:
+			//退出
+			logout();
+			break;
+		case R.id.rl_switch_sound:
+			//声音
+			if (iv_switch_open_sound.getVisibility() == View.VISIBLE) {
+				iv_switch_open_sound.setVisibility(View.INVISIBLE);
+				iv_switch_close_sound.setVisibility(View.VISIBLE);
+				chatOptions.setNoticeBySound(false);
+				EMChatManager.getInstance().setChatOptions(chatOptions);
+				HXSDKHelper.getInstance().getModel().setSettingMsgSound(false);
+			} else {
+				iv_switch_open_sound.setVisibility(View.VISIBLE);
+				iv_switch_close_sound.setVisibility(View.INVISIBLE);
+				chatOptions.setNoticeBySound(true);
+				EMChatManager.getInstance().setChatOptions(chatOptions);
+				HXSDKHelper.getInstance().getModel().setSettingMsgSound(true);
+			}
+			break;
+		case R.id.rl_switch_vibrate:
+			//震动
+			if (iv_switch_open_vibrate.getVisibility() == View.VISIBLE) {
+				iv_switch_open_vibrate.setVisibility(View.INVISIBLE);
+				iv_switch_close_vibrate.setVisibility(View.VISIBLE);
+				chatOptions.setNoticedByVibrate(false);
+				EMChatManager.getInstance().setChatOptions(chatOptions);
+				HXSDKHelper.getInstance().getModel().setSettingMsgVibrate(false);
+			} else {
+				iv_switch_open_vibrate.setVisibility(View.VISIBLE);
+				iv_switch_close_vibrate.setVisibility(View.INVISIBLE);
+				chatOptions.setNoticedByVibrate(true);
+				EMChatManager.getInstance().setChatOptions(chatOptions);
+				HXSDKHelper.getInstance().getModel().setSettingMsgVibrate(true);
+			}
+			break;			
+			
 		default:
 			break;
 		}
@@ -375,6 +449,27 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 			signTextView.setText(R.string.personal_none);
 		}
 		
+		chatOptions = EMChatManager.getInstance().getChatOptions();
+		model = (KHHXSDKModel) HXSDKHelper.getInstance().getModel();
+		// 是否打开声音
+		// sound notification is switched on or not?
+		if (model.getSettingMsgSound()) {
+			iv_switch_open_sound.setVisibility(View.VISIBLE);
+			iv_switch_close_sound.setVisibility(View.INVISIBLE);
+		} else {
+			iv_switch_open_sound.setVisibility(View.INVISIBLE);
+			iv_switch_close_sound.setVisibility(View.VISIBLE);
+		}
+		
+		// 是否打开震动
+		// vibrate notification is switched on or not?
+		if (model.getSettingMsgVibrate()) {
+			iv_switch_open_vibrate.setVisibility(View.VISIBLE);
+			iv_switch_close_vibrate.setVisibility(View.INVISIBLE);
+		} else {
+			iv_switch_open_vibrate.setVisibility(View.INVISIBLE);
+			iv_switch_close_vibrate.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	// 开启缩放
@@ -718,5 +813,78 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 			tmpImageName = savedInstanceState.getString("tmpImageName");
 		}
 	}
+
 	
+	//清除缓存
+	private void clearCache(){
+		try {
+			DataCleanManager.clearAllCache(this);
+			//清除缓存
+			HttpCacheUtils.clearHttpCache();
+			ToastUtil.show(this, R.string.personal_clear_ok);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//退出
+	private void logout(){
+		final CustomAlertDialog confirmDialog = new CustomAlertDialog(
+				this, getString(R.string.personal_confirm_logout), getString(R.string.alert_confirm), getString(R.string.alert_cancel));
+		confirmDialog.show();
+		confirmDialog.setClicklistener(new CustomAlertDialog.ClickListenerInterface() {
+					@Override
+					public void doConfirm() {
+						
+						final ProgressDialog pd = new ProgressDialog(PersonalSettingActivity.this);
+						String st = getResources().getString(R.string.Are_logged_out);
+						pd.setMessage(st);
+						pd.setCanceledOnTouchOutside(false);
+						pd.show();
+						KHHXSDKHelper.getInstance().logout(true,new EMCallBack() {
+							
+							@Override
+							public void onSuccess() {
+								runOnUiThread(new Runnable() {
+									public void run() {
+										pd.dismiss();
+										// 重新显示登陆页面
+						                //清空数据
+						                UserManager.getInstance().clear();
+						                UserManager.getInstance().setUser(new UserModel());
+						                Intent exit = new Intent(PersonalSettingActivity.this, LoginActivity.class);
+						                exit.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+										startActivity(exit);
+										ActivityManager.getInstence().exitApplication();
+										
+									}
+								});
+							}
+							
+							@Override
+							public void onProgress(int progress, String status) {
+								
+							}
+							
+							@Override
+							public void onError(int code, String message) {
+								runOnUiThread(new Runnable() {
+									
+									public void run() {
+										// TODO Auto-generated method stub
+										pd.dismiss();
+									}
+								});
+							}
+						});
+						
+						
+						confirmDialog.dismiss();
+					}
+
+					@Override
+					public void doCancel() {
+						confirmDialog.dismiss();
+					}
+				});	  
+	}
 }

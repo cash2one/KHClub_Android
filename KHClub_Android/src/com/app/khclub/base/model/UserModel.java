@@ -209,7 +209,12 @@ public class UserModel implements Serializable{
 	}
 
 	public void setQr_code(String qr_code) {
-		this.qr_code = qr_code;
+		//如果是./开头 则去掉
+		if (qr_code!=null && qr_code.startsWith("./")) {
+			this.qr_code = qr_code.substring(2);
+		}else {
+			this.qr_code = qr_code;			
+		}
 	}
 
 	public int getCompany_state() {

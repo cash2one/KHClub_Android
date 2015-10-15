@@ -19,7 +19,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class PersonalQrcodeFragment extends BaseFragment {
+public class OtherPersonalQrcodeFragment extends BaseFragment {
 
 	@ViewInject(R.id.qr_code_image_view)
 	private ImageView qrcodeImageView;
@@ -38,12 +38,15 @@ public class PersonalQrcodeFragment extends BaseFragment {
 
 	@Override
 	public void setUpViews(View rootView) {
+		
+	}
+	
+	public void setQRcode(UserModel user){
 		final DisplayImageOptions options = new DisplayImageOptions.Builder()
 		.showImageOnLoading(R.drawable.loading_default)
 		.showImageOnFail(R.drawable.loading_default)
 		.cacheInMemory(true).cacheOnDisk(true)
 		.bitmapConfig(Bitmap.Config.RGB_565).build();
-		UserModel user = UserManager.getInstance().getUser();
 		//不存在获取 存在
 		if (user.getQr_code() != null && user.getQr_code().length() > 0) {
 			ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+user.getQr_code(), qrcodeImageView, options);	
@@ -61,11 +64,7 @@ public class PersonalQrcodeFragment extends BaseFragment {
 								.getInteger(KHConst.HTTP_STATUS);
 						if (status == KHConst.STATUS_SUCCESS) {
 							String qrpath = jsonResponse.getString(KHConst.HTTP_RESULT);
-							//本地缓存
 							ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+qrpath, qrcodeImageView, options);
-							UserManager.getInstance().getUser().setQr_code(qrpath);
-							UserManager.getInstance().saveAndUpdate();
-							
 						}
 						if (status == KHConst.STATUS_FAIL) {
 							ToastUtil.show(getActivity(), R.string.net_error);

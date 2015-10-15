@@ -34,7 +34,7 @@ import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.personal.ui.fragment.OtherPersonalInfoFragment;
-import com.app.khclub.personal.ui.fragment.PersonalQrcodeFragment;
+import com.app.khclub.personal.ui.fragment.OtherPersonalQrcodeFragment;
 import com.easemob.chat.EMContactManager;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -70,6 +70,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	private DisplayImageOptions imageOptions;
 	// 个人信息fragment
 	private OtherPersonalInfoFragment otherPersonalInfoFragment;
+	// 二维码fragment
+	private OtherPersonalQrcodeFragment otherPersonalQRFragment;
 	// 用户ID
 	private int uid;
 	// 是否是好友
@@ -167,7 +169,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				fragment = otherPersonalInfoFragment;
 				break;
 			case 1:
-				fragment = new PersonalQrcodeFragment();
+				otherPersonalQRFragment = new OtherPersonalQrcodeFragment();
+				fragment = otherPersonalQRFragment;
 				break;
 
 			}
@@ -231,6 +234,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			signTextView.setText(R.string.personal_none);
 		}
 		otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend, jsonObject.getIntValue("isCollected"));
+		otherPersonalQRFragment.setQRcode(otherUserModel);
 		// 标题
 		setBarText(otherUserModel.getName());
 

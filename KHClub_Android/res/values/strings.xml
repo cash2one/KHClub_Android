@@ -79,6 +79,10 @@
     <string name="personal_add_friend">Add</string>
     <string name="personal_send_message">Send Message</string>
     <string name="personal_moments">Moments</string>
+    <string name="personal_clear_cache">Clear Cache</string>
+	<string name="personal_version">Version</string>
+	<string name="personal_clear_ok">Clear OK</string>
+	<string name="personal_confirm_logout">Log out？</string>
     <!-- Personal -->
     
     <!-- News -->
@@ -393,5 +397,6 @@
     <string name="toast_group_too_long">group name too long!</string>
     <string name="im_in_black_list">User in the black list, please remove</string>
     <string name="personal_collect_card">Card</string>
+    <string name="log_out">Log out</string>
 
 </resources>

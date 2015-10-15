@@ -85,6 +85,10 @@
     <string name="personal_add_friend">添加为好友</string>
     <string name="personal_send_message">发送消息</string>
     <string name="personal_moments">动态列表</string>
+    <string name="personal_clear_cache">清空缓存</string>
+	<string name="personal_version">版本检测</string>
+	<string name="personal_clear_ok">清除成功</string>
+	<string name="personal_confirm_logout">确定退出该账号吗？</string>
     <!-- Personal -->
 
 
@@ -406,5 +410,6 @@
     <string name="toast_group_too_long">群名太长</string>
     <string name="im_in_black_list">此用户已是你好友(被拉黑状态)，从黑名单列表中移出即可</string>
 	<string name="personal_collect_card">收藏的名片</string>
+	<string name="log_out">退出</string>
 	
 </resources>
