@@ -43,6 +43,8 @@ import com.app.khclub.base.easeim.widget.MainPopupMenu;
 import com.app.khclub.base.easeim.widget.MainPopupMenu.ClickListener;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.message.ui.activity.SearchActivity;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMConversation.EMConversationType;
@@ -187,14 +189,21 @@ public class ChatAllHistoryFragment extends Fragment implements
 
 						@Override
 						public void scanQRcodeClick() {
-							//扫描二维码
+							// 扫描二维码
 
 						}
 
 						@Override
 						public void searchClick() {
-							// TODO Auto-generated method stub
-
+							// 跳转至搜索页面
+							Intent intentToSearch = new Intent(getActivity(),
+									SearchActivity.class);
+							startActivity(intentToSearch);
+							// 右侧进而动画
+							getActivity()
+									.overridePendingTransition(
+											R.anim.push_right_in,
+											R.anim.push_right_out);
 						}
 
 						@Override
