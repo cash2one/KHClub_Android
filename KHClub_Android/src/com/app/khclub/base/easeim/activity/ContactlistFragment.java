@@ -69,6 +69,7 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.message.ui.activity.MipcaCaptureActivity;
 import com.app.khclub.message.ui.activity.SearchActivity;
 import com.app.khclub.personal.ui.view.PersonalPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalPopupMenu.OperateListener;
@@ -83,6 +84,8 @@ import com.lidroid.xutils.http.RequestParams;
  * 
  */
 public class ContactlistFragment extends Fragment {
+
+	private final static int SCANNIN_GREQUEST_CODE = 1;
 	public static final String TAG = "ContactlistFragment";
 	private ContactAdapter adapter;
 	private List<User> contactList;
@@ -295,7 +298,13 @@ public class ContactlistFragment extends Fragment {
 						@Override
 						public void scanQRcodeClick() {
 							// 扫描二维码
-
+							// 扫描二维码
+							Intent intent = new Intent();
+							intent.setClass(getActivity(),
+									MipcaCaptureActivity.class);
+							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							startActivityForResult(intent,
+									SCANNIN_GREQUEST_CODE);
 						}
 
 						@Override

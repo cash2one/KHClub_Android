@@ -213,7 +213,7 @@ public class MipcaCaptureActivity extends BaseActivityWithTopBar implements Call
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
-		setBarText("HelloHa扫描");
+		setBarText("扫描");
 	}
 	
 	public void finishWithRight() {
