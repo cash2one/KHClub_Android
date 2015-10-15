@@ -86,6 +86,8 @@
         </activity>
         <activity android:name="com.app.khclub.message.ui.activity.ContactsUserActivity" >
         </activity>
+        <activity android:name="com.app.khclub.message.ui.activity.MipcaCaptureActivity" >
+        </activity>
         <activity
             android:name="com.app.khclub.personal.ui.activity.PersonalSettingActivity"
             android:theme="@android:style/Theme.Holo.Light" >

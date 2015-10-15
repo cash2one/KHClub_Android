@@ -43,8 +43,8 @@ import com.app.khclub.base.easeim.widget.MainPopupMenu;
 import com.app.khclub.base.easeim.widget.MainPopupMenu.ClickListener;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.message.ui.activity.MipcaCaptureActivity;
 import com.app.khclub.message.ui.activity.SearchActivity;
-import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMConversation.EMConversationType;
@@ -56,6 +56,7 @@ import com.easemob.chat.EMConversation.EMConversationType;
 public class ChatAllHistoryFragment extends Fragment implements
 		View.OnClickListener {
 
+	private final static int SCANNIN_GREQUEST_CODE = 1;
 	private InputMethodManager inputMethodManager;
 	private ListView listView;
 	private ChatAllHistoryAdapter adapter;
@@ -189,8 +190,13 @@ public class ChatAllHistoryFragment extends Fragment implements
 
 						@Override
 						public void scanQRcodeClick() {
-							// 扫描二维码
-
+							//扫描二维码
+							Intent intent = new Intent();
+							intent.setClass(getActivity(),
+									MipcaCaptureActivity.class);
+							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							startActivityForResult(intent,
+									SCANNIN_GREQUEST_CODE);
 						}
 
 						@Override
