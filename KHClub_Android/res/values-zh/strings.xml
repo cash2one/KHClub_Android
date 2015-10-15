@@ -83,6 +83,7 @@
     <string name="personal_friends_can_see">仅好友可见</string>
     <string name="personal_no_person">不存在此人</string>
     <string name="personal_add_friend">添加为好友</string>
+    <string name="personal_send_message">发送消息</string>
     <string name="personal_moments">动态列表</string>
     <!-- Personal -->
 
