@@ -68,10 +68,11 @@ import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.message.ui.activity.SearchActivity;
-import com.app.khclub.personal.ui.view.PersonalPopupMenu;
-import com.app.khclub.personal.ui.view.PersonalPopupMenu.OperateListener;
+import com.app.khclub.personal.ui.activity.CollectCardActivity;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.chat.EMContactManager;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
@@ -254,14 +255,27 @@ public class ContactlistFragment extends Fragment {
 					startActivity(new Intent(getActivity(),
 							PublicChatRoomsActivity.class));
 				} else if (Constant.CHAT_ROBOT.equals(username)) {
-					// 进入Robot列表页面
-					startActivity(new Intent(getActivity(),
-							RobotsActivity.class));
+//					// 进入Robot列表页面
+//					startActivity(new Intent(getActivity(),
+//							RobotsActivity.class));
+					// 收藏的名片
+					Intent intentToCardList = new Intent(getActivity(),
+							CollectCardActivity.class);
+					startActivity(intentToCardList);
+					// 右侧进而动画
+					getActivity().overridePendingTransition(
+									R.anim.push_right_in,
+									R.anim.push_right_out);
 				} else {
 					// demo中直接进入聊天页面，实际一般是进入用户详情页
-					startActivity(new Intent(getActivity(), ChatActivity.class)
-							.putExtra("userId", adapter.getItem(position)
-									.getUsername()));
+//					startActivity(new Intent(getActivity(), ChatActivity.class)
+//							.putExtra("userId", adapter.getItem(position)
+//									.getUsername()));
+					// 跳转到其他人页面
+					Intent intent = new Intent(getActivity(), OtherPersonalActivity.class);
+					intent.putExtra(OtherPersonalActivity.INTENT_KEY,KHUtils.stringToInt(adapter.getItem(position).getUsername().replace(KHConst.KH, "")));
+					startActivity(intent);
+					getActivity().overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
 				}
 			}
 		});
@@ -314,7 +328,8 @@ public class ContactlistFragment extends Fragment {
 						@Override
 						public void createGroupClick() {
 							// 创建群聊
-
+							startActivity(new Intent(getActivity(), NewGroupActivity.class));
+							getActivity().overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
 						}
 
 						@Override

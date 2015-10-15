@@ -36,7 +36,7 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 	private ImageView iv_avatar;
 	private TextView tv_admin;
 	private TextView tv_name;
-	private TextView tv_introduction;
+//	private TextView tv_introduction;
 	private EMGroup group;
 	private String groupid;
 	private ProgressBar progressBar;
@@ -49,7 +49,7 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 		tv_name = (TextView) findViewById(R.id.name);
 		tv_admin = (TextView) findViewById(R.id.tv_admin);
 		btn_add_group = (Button) findViewById(R.id.btn_add_to_group);
-		tv_introduction = (TextView) findViewById(R.id.tv_introduction);
+//		tv_introduction = (TextView) findViewById(R.id.tv_introduction);
 		progressBar = (ProgressBar) findViewById(R.id.loading);
 
 		EMGroupInfo groupInfo = (EMGroupInfo) getIntent().getSerializableExtra("groupinfo");
@@ -145,9 +145,14 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 	
      private void showGroupDetail() {
          progressBar.setVisibility(View.INVISIBLE);
-         //获取详情成功，并且自己不在群中，才让加入群聊按钮可点击
-         if(!group.getMembers().contains(EMChatManager.getInstance().getCurrentUser()))
-             btn_add_group.setEnabled(true);
+         //获取详情成功，并且自己不在群中，才让加入群聊按钮可见
+         if(!group.getMembers().contains(EMChatManager.getInstance().getCurrentUser())){
+        	btn_add_group.setVisibility(View.VISIBLE);
+         }else {
+        	btn_add_group.setVisibility(View.GONE);
+		}
+             
+         		
          tv_name.setText(group.getGroupName());
 //         tv_admin.setText(group.getOwner());
          //头像

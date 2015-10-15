@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
+import com.app.khclub.base.easeim.activity.GroupSimpleDetailActivity;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
@@ -17,6 +18,7 @@ import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
+import com.easemob.chat.EMGroupInfo;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -81,7 +83,7 @@ public class SearchActivity extends BaseActivityWithTopBar {
 	 * */
 	private void searchUserOrGroup() {
 		// 当前的ID
-		String currentID = searchEditText.getText().toString().trim();
+		final String currentID = searchEditText.getText().toString().trim();
 		if (currentID.equals("")) {
 			ToastUtil.show(getApplicationContext(), "内容不能为空");
 			return;
@@ -104,7 +106,10 @@ public class SearchActivity extends BaseActivityWithTopBar {
 							String type = jResult.getString("type");
 							if (type.equals("1")) {
 								// 跳转到群结果页面
-
+								EMGroupInfo	group = new EMGroupInfo(currentID, jResult.getString("group_name"));
+								Intent intent = new Intent(SearchActivity.this, GroupSimpleDetailActivity.class).
+		                        putExtra("groupinfo", group);
+								startActivityWithRight(intent);
 							} else if (type.equals("0")) {
 								// 跳转到其他人页面
 								Intent intent = new Intent(SearchActivity.this,

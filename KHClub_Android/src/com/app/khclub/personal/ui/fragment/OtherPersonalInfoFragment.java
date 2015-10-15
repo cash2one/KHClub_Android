@@ -100,9 +100,14 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 	}
 
 	// 设置内容
-	public void setUIWithModel(UserModel userModel, boolean isFriend) {
+	public void setUIWithModel(UserModel userModel, boolean isFriend, int isCollect) {
 		// 获取uid
 		userId = userModel.getUid();
+		if (isCollect == 0) {
+			isCollected = false;	
+		}else {
+			isCollected = true;
+		}
 		
 		// 头像不为空
 		if (null != userModel.getHead_image()) {

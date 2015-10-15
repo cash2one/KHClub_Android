@@ -269,9 +269,10 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 		groupUser.setHeader("");
 		userlist.put(Constant.GROUP_USERNAME, groupUser);
 		
-		// 添加"Robot"
+		// 添加"Robot" 更换为 名片列表
 		User robotUser = new User();
-		String strRobot = getResources().getString(R.string.robot_chat);
+//		String strRobot = getResources().getString(R.string.robot_chat);
+		String strRobot = getResources().getString(R.string.personal_collect_card);
 		robotUser.setUsername(Constant.CHAT_ROBOT);
 		robotUser.setNick(strRobot);
 		robotUser.setHeader("");

@@ -404,5 +404,7 @@
     <string name="im_share">分享本群</string>
     <string name="toast_group_not_isnull">群名不能为空！</string>
     <string name="toast_group_too_long">群名太长</string>
-
+    <string name="im_in_black_list">此用户已是你好友(被拉黑状态)，从黑名单列表中移出即可</string>
+	<string name="personal_collect_card">收藏的名片</string>
+	
 </resources>

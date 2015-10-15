@@ -3,6 +3,7 @@ package com.app.khclub.personal.ui.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
@@ -12,11 +13,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
 import com.app.khclub.base.easeim.KHHXSDKHelper;
+import com.app.khclub.base.easeim.activity.AlertDialog;
+import com.app.khclub.base.easeim.activity.ChatActivity;
+import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
@@ -25,10 +30,12 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.personal.ui.fragment.OtherPersonalInfoFragment;
 import com.app.khclub.personal.ui.fragment.PersonalQrcodeFragment;
+import com.easemob.chat.EMContactManager;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -67,8 +74,10 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	private int uid;
 	// 是否是好友
 	private boolean isFriend;
+	//私有dialog
+	private ProgressDialog progressDialog;
 
-	@OnClick({ R.id.image_cover_layout })
+	@OnClick({ R.id.image_cover_layout, R.id.add_send_btn })
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.image_cover_layout:
@@ -77,6 +86,16 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 					PersonalNewsActivity.class);
 			intentToNewsList.putExtra(PersonalNewsActivity.INTNET_KEY_UID, uid);
 			startActivityWithRight(intentToNewsList);
+			break;
+		case R.id.add_send_btn:
+			if (isFriend) {
+				//进入聊天页面
+				Intent intent = new Intent(this, ChatActivity.class)
+				.putExtra("userId", KHConst.KH+uid);
+				startActivityWithRight(intent);
+			}else {
+				addContact();
+			}
 			break;
 		default:
 			break;
@@ -116,8 +135,10 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		User user = ((KHHXSDKHelper)KHHXSDKHelper.getInstance()).getContactList().get(KHConst.KH+uid);
 		if (user != null) {
 			isFriend = true;
+			addSendButton.setText(R.string.personal_send_message);
 		}else {
 			isFriend = false;
+			addSendButton.setText(R.string.personal_add_friend);
 		}
 	}
 
@@ -209,7 +230,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		} else {
 			signTextView.setText(R.string.personal_none);
 		}
-		otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend);
+		otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend, jsonObject.getIntValue("isCollected"));
 		// 标题
 		setBarText(otherUserModel.getName());
 
@@ -244,6 +265,63 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			imageView.setVisibility(View.VISIBLE);
 		}
 
+	}
+	
+	/**
+	 *  添加contact
+	 * @param view
+	 */
+	public void addContact(){
+		
+		final String targetIMID = KHConst.KH+uid;
+		if(KHUtils.selfCommonIMID().equals(targetIMID)){
+			String str = getString(R.string.not_add_myself);
+			startActivity(new Intent(this, AlertDialog.class).putExtra("msg", str));
+			return;
+		}
+		if(((KHHXSDKHelper)HXSDKHelper.getInstance()).getContactList().containsKey(targetIMID)){
+		    //提示已在好友列表中，无需添加
+		    if(EMContactManager.getInstance().getBlackListUsernames().contains(targetIMID)){
+		        startActivity(new Intent(this, AlertDialog.class).putExtra("msg", R.string.im_in_black_list));
+		        return;
+		    }
+			String strin = getString(R.string.This_user_is_already_your_friend);
+			startActivity(new Intent(this, AlertDialog.class).putExtra("msg", strin));
+			return;
+		}
+		
+		progressDialog = new ProgressDialog(this);
+		String stri = getResources().getString(R.string.Is_sending_a_request);
+		progressDialog.setMessage(stri);
+		progressDialog.setCanceledOnTouchOutside(false);
+		progressDialog.show();
+		
+		new Thread(new Runnable() {
+			public void run() {
+				
+				try {
+					//demo写死了个reason，实际应该让用户手动填入 
+					//先就用DEMO这个死的
+					String s = getResources().getString(R.string.Add_a_friend);
+					EMContactManager.getInstance().addContact(targetIMID, s);
+					runOnUiThread(new Runnable() {
+						public void run() {
+							progressDialog.dismiss();
+							String s1 = getResources().getString(R.string.send_successful);
+							Toast.makeText(getApplicationContext(), s1, 1).show();
+						}
+					});
+				} catch (final Exception e) {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							progressDialog.dismiss();
+							String s2 = getResources().getString(R.string.Request_add_buddy_failure);
+							Toast.makeText(getApplicationContext(), s2 + e.getMessage(), 1).show();
+						}
+					});
+				}
+			}
+		}).start();
 	}
 
 }

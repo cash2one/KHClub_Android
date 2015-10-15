@@ -93,7 +93,7 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <LinearLayout
+<!--         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_myprofile_selector"
@@ -115,10 +115,11 @@
                 android:padding="8dp"
                 android:textColor="#080808"
                 android:textSize="14sp" />
-        </LinearLayout>
+        </LinearLayout> -->
     </LinearLayout>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_add_to_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -107,20 +107,20 @@ public class GroupsActivity extends BaseActivity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (position == 0) {
-					// 新建群聊
-					startActivityForResult(new Intent(GroupsActivity.this, NewGroupActivity.class), 0);
-				} else if (position == 1) {
-					// 添加公开群
-					startActivityForResult(new Intent(GroupsActivity.this, PublicGroupsActivity.class), 0);
-				} else {
+//				if (position == 0) {
+//					// 新建群聊
+//					startActivityForResult(new Intent(GroupsActivity.this, NewGroupActivity.class), 0);
+//				} else if (position == 1) {
+//					// 添加公开群
+//					startActivityForResult(new Intent(GroupsActivity.this, PublicGroupsActivity.class), 0);
+//				} else {
 					// 进入群聊
 					Intent intent = new Intent(GroupsActivity.this, ChatActivity.class);
 					// it is group chat
 					intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-					intent.putExtra("groupId", groupAdapter.getItem(position - 2).getGroupId());
+					intent.putExtra("groupId", groupAdapter.getItem(position).getGroupId());
 					startActivityForResult(intent, 0);
-				}
+//				}
 			}
 
 		});

@@ -95,21 +95,21 @@ public class GroupAdapter extends ArrayAdapter<EMGroup> {
 //				}
 //			});
 //		} else 
-		if (getItemViewType(position) == 0) {
-			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.row_add_group, null);
-			}
-			((ImageView) convertView.findViewById(R.id.avatar)).setImageResource(R.drawable.create_group);
-			((TextView) convertView.findViewById(R.id.name)).setText(newGroup);
-		} else if (getItemViewType(position) == 1) {
-			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.row_add_group, null);
-			}
-			((ImageView) convertView.findViewById(R.id.avatar)).setImageResource(R.drawable.add_public_group);
-			((TextView) convertView.findViewById(R.id.name)).setText(addPublicGroup);
-			((TextView) convertView.findViewById(R.id.header)).setVisibility(View.VISIBLE);
-
-		} else {
+//		if (getItemViewType(position) == 0) {
+//			if (convertView == null) {
+//				convertView = inflater.inflate(R.layout.row_add_group, null);
+//			}
+//			((ImageView) convertView.findViewById(R.id.avatar)).setImageResource(R.drawable.create_group);
+//			((TextView) convertView.findViewById(R.id.name)).setText(newGroup);
+//		} else if (getItemViewType(position) == 1) {
+//			if (convertView == null) {
+//				convertView = inflater.inflate(R.layout.row_add_group, null);
+//			}
+//			((ImageView) convertView.findViewById(R.id.avatar)).setImageResource(R.drawable.add_public_group);
+//			((TextView) convertView.findViewById(R.id.name)).setText(addPublicGroup);
+//			((TextView) convertView.findViewById(R.id.header)).setVisibility(View.VISIBLE);
+//
+//		} else {
 			if (convertView == null) {
 				convertView = inflater.inflate(R.layout.row_group, null);
 			}
@@ -117,17 +117,17 @@ public class GroupAdapter extends ArrayAdapter<EMGroup> {
 			TextView nameTextView = (TextView) convertView.findViewById(R.id.name);
 			ImageView imageView = (ImageView) convertView.findViewById(R.id.avatar);
 			//设置图片名字
-			UserUtils.setGroupNick(getItem(position - 2), nameTextView);
-			UserUtils.setGroupAvatar(KHApplication.getInstance(), getItem(position - 2), imageView);
+			UserUtils.setGroupNick(getItem(position), nameTextView);
+			UserUtils.setGroupAvatar(KHApplication.getInstance(), getItem(position), imageView);
 
-		}
+//		}
 
 		return convertView;
 	}
 
 	@Override
 	public int getCount() {
-		return super.getCount() + 2;
+		return super.getCount();
 	}
 
 }

@@ -391,6 +391,7 @@
     <string name="im_share">Share</string>    
     <string name="toast_group_not_isnull">group name cannot be empty!</string>
     <string name="toast_group_too_long">group name too long!</string>
-    
+    <string name="im_in_black_list">User in the black list, please remove</string>
+    <string name="personal_collect_card">Card</string>
 
 </resources>

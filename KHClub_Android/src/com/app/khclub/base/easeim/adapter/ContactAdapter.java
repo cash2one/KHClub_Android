@@ -121,12 +121,9 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 			holder.nameTextview.setText(user.getNick());
 			holder.avatar.setImageResource(R.drawable.groups_icon);
 		}else{
-		    holder.nameTextview.setText(user.getNick());
-		    if (null == user.getNick() || user.getNick().length() < 1) {
-		    	holder.nameTextview.setText(KHApplication.getInstance().getResources().getString(R.string.personal_none));
-			}
 		    //设置用户头像
 			UserUtils.setUserAvatar(getContext(), username, holder.avatar);
+			UserUtils.setUserNick(username, holder.nameTextview);
 			if(holder.unreadMsgView != null)
 			    holder.unreadMsgView.setVisibility(View.INVISIBLE);
 		}
