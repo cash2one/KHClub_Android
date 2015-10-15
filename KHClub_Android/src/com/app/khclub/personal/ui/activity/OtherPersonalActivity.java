@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,6 +52,9 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	// 图片3
 	@ViewInject(R.id.personal_picture_image_view3)
 	private ImageView pictureImageView3;
+	// 加好友或者发送消息按钮
+	@ViewInject(R.id.add_send_btn)
+	private Button addSendButton;	
 	// 前10张图片数组
 	private List<String> newsImageList = new ArrayList<String>();
 	// 控件数组
