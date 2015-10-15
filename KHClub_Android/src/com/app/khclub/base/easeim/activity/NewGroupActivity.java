@@ -16,9 +16,7 @@ package com.app.khclub.base.easeim.activity;
 import java.io.File;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -33,10 +31,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
-import com.amap.api.services.core.br;
 import com.app.khclub.R;
-import com.app.khclub.base.easeim.db.InviteMessgeDao;
-import com.app.khclub.base.easeim.domain.InviteMessage.InviteMesageStatus;
 import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
@@ -48,9 +43,7 @@ import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.FileUtil;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
-import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
-import com.easemob.chat.EMChatManager;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -60,8 +53,6 @@ public class NewGroupActivity extends BaseActivity {
 	
 	public static final int TAKE_PHOTO = 1;// 拍照
 	public static final int ALBUM_SELECT = 2;// 相册选取
-	public static final int PHOTO_RESOULT = 4;// 结果
-	public static final int GET_DEPARTMENT_REQUEST_CODE = 5;
 	public static final int CONTACT_RESULT = 100;// 通讯录选人
 	public static final String IMAGE_UNSPECIFIED = "image/*";
 	//创建成功

@@ -13,6 +13,7 @@
  */
 package com.app.khclub.base.easeim.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,15 +42,30 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
 import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.easeim.widget.ExpandGridView;
+import com.app.khclub.base.helper.JsonRequestCallBack;
+import com.app.khclub.base.helper.LoadDataHandler;
+import com.app.khclub.base.manager.HttpManager;
+import com.app.khclub.base.ui.view.CustomSelectPhotoDialog;
+import com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity;
+import com.app.khclub.base.utils.ConfigUtils;
+import com.app.khclub.base.utils.FileUtil;
+import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.base.utils.LogUtils;
+import com.app.khclub.base.utils.ToastUtil;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
 import com.easemob.util.NetUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.squareup.picasso.Picasso;
 
 public class GroupDetailsActivity extends BaseActivity implements OnClickListener {
 	private static final String TAG = "GroupDetailsActivity";
@@ -56,7 +75,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private static final int REQUEST_CODE_CLEAR_ALL_HISTORY = 3;
 	private static final int REQUEST_CODE_ADD_TO_BALCKLIST = 4;
 	private static final int REQUEST_CODE_EDIT_GROUPNAME = 5;
+	
+	public static final int TAKE_PHOTO = 10;// 拍照
+	public static final int ALBUM_SELECT = 20;// 相册选取
+	public static final String IMAGE_UNSPECIFIED = "image/*";
 
+	// 图片名字
+	private String tmpImageName;
 	String longClickUsername = null;
 
 	private ExpandGridView userGridview;
@@ -88,8 +113,12 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private RelativeLayout blacklistLayout;
 	private RelativeLayout changeGroupNameLayout;
     private RelativeLayout idLayout;
+    private RelativeLayout qrcodeLayout;
+    private RelativeLayout coverLayout;
+    private RelativeLayout shareLayout;
     private TextView idText;
-
+    private ImageView coverImageView;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -114,6 +143,10 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		deleteBtn = (Button) findViewById(R.id.btn_exitdel_grp);
 		blacklistLayout = (RelativeLayout) findViewById(R.id.rl_blacklist);
 		changeGroupNameLayout = (RelativeLayout) findViewById(R.id.rl_change_group_name);
+		qrcodeLayout = (RelativeLayout) findViewById(R.id.rl_qrcode_layout);
+		coverLayout = (RelativeLayout) findViewById(R.id.rl_cover_layout);
+		shareLayout = (RelativeLayout) findViewById(R.id.rl_share_layout);
+		coverImageView = (ImageView) findViewById(R.id.group_cover);
 		idLayout = (RelativeLayout) findViewById(R.id.rl_group_id);
 		idLayout.setVisibility(View.VISIBLE);
 		idText = (TextView) findViewById(R.id.tv_group_id_value);
@@ -129,7 +162,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		referenceWidth = referenceDrawable.getIntrinsicWidth();
 		referenceHeight = referenceDrawable.getIntrinsicHeight();
 
-
+		//显示定制的部分
+		displayCustomUI();
 		idText.setText(groupId);
 		if (group.getOwner() == null || "".equals(group.getOwner())
 				|| !group.getOwner().equals(EMChatManager.getInstance().getCurrentUser())) {
@@ -137,6 +171,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			deleteBtn.setVisibility(View.GONE);
 			blacklistLayout.setVisibility(View.GONE);
 			changeGroupNameLayout.setVisibility(View.GONE);
+			coverLayout.setVisibility(View.GONE);
 		}
 		// 如果自己是群主，显示解散按钮 也隐藏屏蔽按钮
 		if (EMChatManager.getInstance().getCurrentUser().equals(group.getOwner())) {
@@ -179,7 +214,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		clearAllHistory.setOnClickListener(this);
 		blacklistLayout.setOnClickListener(this);
 		changeGroupNameLayout.setOnClickListener(this);
-
+		coverLayout.setOnClickListener(this);
+		qrcodeLayout.setOnClickListener(this);
+		shareLayout.setOnClickListener(this);
 	}
 
 	@Override
@@ -232,30 +269,80 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 					progressDialog.setMessage(st5);
 					progressDialog.show();
 					
-					new Thread(new Runnable() {
-						public void run() {
-							try {
-							    EMGroupManager.getInstance().changeGroupName(groupId, returnData);
-								runOnUiThread(new Runnable() {
-									public void run() {
-										((TextView) findViewById(R.id.group_name)).setText(returnData + "(" + group.getAffiliationsCount()
-												+ st);
+					// 参数设置
+					RequestParams params = new RequestParams();
+					params.addBodyParameter("group_id", groupId);
+					params.addBodyParameter("group_name", returnData);
+					//先处理自己数据库
+					HttpManager.post(KHConst.UPDATE_GROUP_NAME, params,
+							new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+								@Override
+								public void onSuccess(JSONObject jsonResponse, String flag) {
+									super.onSuccess(jsonResponse, flag);
+									int status = jsonResponse.getInteger(KHConst.HTTP_STATUS);
+									if (status == KHConst.STATUS_SUCCESS) {
+										new Thread(new Runnable() {
+											public void run() {
+												try {
+												    EMGroupManager.getInstance().changeGroupName(groupId, returnData);
+													runOnUiThread(new Runnable() {
+														public void run() {
+															((TextView) findViewById(R.id.group_name)).setText(returnData + "(" + group.getAffiliationsCount()
+																	+ st);
+															progressDialog.dismiss();
+															Toast.makeText(getApplicationContext(), st6, 0).show();
+														}
+													});
+												} catch (EaseMobException e) {
+													e.printStackTrace();
+													runOnUiThread(new Runnable() {
+														public void run() {
+															progressDialog.dismiss();
+															Toast.makeText(getApplicationContext(), st7, 0).show();
+														}
+													});
+												}
+											}
+										}).start();
+									}else {
+										ToastUtil.show(GroupDetailsActivity.this, R.string.net_error);
 										progressDialog.dismiss();
-										Toast.makeText(getApplicationContext(), st6, 0).show();
 									}
-								});
-								
-							} catch (EaseMobException e) {
-								e.printStackTrace();
-								runOnUiThread(new Runnable() {
-									public void run() {
-										progressDialog.dismiss();
-										Toast.makeText(getApplicationContext(), st7, 0).show();
-									}
-								});
-							}
-						}
-					}).start();
+								}
+								@Override
+								public void onFailure(HttpException arg0, String arg1,
+										String flag) {
+									super.onFailure(arg0, arg1, flag);
+									ToastUtil.show(GroupDetailsActivity.this, R.string.net_error);
+									progressDialog.dismiss();
+								}
+							}, null));	
+					
+					
+//					new Thread(new Runnable() {
+//						public void run() {
+//							try {
+//							    EMGroupManager.getInstance().changeGroupName(groupId, returnData);
+//								runOnUiThread(new Runnable() {
+//									public void run() {
+//										((TextView) findViewById(R.id.group_name)).setText(returnData + "(" + group.getAffiliationsCount()
+//												+ st);
+//										progressDialog.dismiss();
+//										Toast.makeText(getApplicationContext(), st6, 0).show();
+//									}
+//								});
+//								
+//							} catch (EaseMobException e) {
+//								e.printStackTrace();
+//								runOnUiThread(new Runnable() {
+//									public void run() {
+//										progressDialog.dismiss();
+//										Toast.makeText(getApplicationContext(), st7, 0).show();
+//									}
+//								});
+//							}
+//						}
+//					}).start();
 				}
 				break;
 			case REQUEST_CODE_ADD_TO_BALCKLIST:
@@ -284,11 +371,144 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				}).start();
 
 				break;
+			case TAKE_PHOTO:// 当选择拍照时调用
+				DisplayMetrics dm = new DisplayMetrics();
+				getWindowManager().getDefaultDisplay().getMetrics(dm);
+				int[] screenSize = new int[] { dm.widthPixels, dm.heightPixels };
+				// 图片压缩
+				if (FileUtil.tempToLocalPath(tmpImageName, screenSize[0],
+						screenSize[1])) {
+					uploadImage();
+				}
+				break;
+			case ALBUM_SELECT:// 当选择从本地获取图片时
+				DisplayMetrics dm1 = new DisplayMetrics();
+				getWindowManager().getDefaultDisplay().getMetrics(dm1);
+				int[] screenSize1 = new int[] { dm1.widthPixels, dm1.heightPixels };
+				if (data != null) {
+					@SuppressWarnings("unchecked")
+					List<String> resultList = (List<String>) data
+							.getSerializableExtra(GalleyActivity.INTENT_KEY_PHOTO_LIST);
+					// 循环处理图片
+					for (String fileRealPath : resultList) {
+						// 只取一张
+						if (fileRealPath != null
+								&& FileUtil.tempToLocalPath(fileRealPath,
+										tmpImageName, screenSize1[0],
+										screenSize1[1])) {
+							uploadImage();
+							break;
+						}
+					}
+				}
+				break;				
 			default:
 				break;
 			}
 		}
 	}
+	
+	private void showChoiceImageAlert() {
+
+		// 设置为头像
+		final CustomSelectPhotoDialog selectDialog = new CustomSelectPhotoDialog(
+				this);
+		selectDialog.show();
+		selectDialog
+				.setClicklistener(new CustomSelectPhotoDialog.ClickListenerInterface() {
+
+					@Override
+					public void onSelectGallery() {
+						// 相册
+						tmpImageName = KHUtils.getPhotoFileName() + "";
+						// 相册
+						Intent intentAlbum = new Intent(
+								GroupDetailsActivity.this, GalleyActivity.class);
+						intentAlbum.putExtra(
+								GalleyActivity.INTENT_KEY_SELECTED_COUNT, 0);
+						intentAlbum.putExtra(GalleyActivity.INTENT_KEY_ONE,
+								true);
+						startActivityForResult(intentAlbum, ALBUM_SELECT);
+						selectDialog.dismiss();
+					}
+
+					@Override
+					public void onSelectCamera() {
+						// 相机
+						Intent intentCamera = new Intent(
+								MediaStore.ACTION_IMAGE_CAPTURE);
+						tmpImageName = KHUtils.getPhotoFileName() + "";
+						File tmpFile = new File(FileUtil.TEMP_PATH
+								+ tmpImageName);
+						intentCamera.putExtra(MediaStore.EXTRA_OUTPUT,
+								Uri.fromFile(tmpFile));
+						startActivityForResult(intentCamera, TAKE_PHOTO);
+						selectDialog.dismiss();
+					}
+
+				});
+	}	
+	
+	// 上传头像
+	private void uploadImage() {
+
+		if (progressDialog == null) {
+            progressDialog = new ProgressDialog(GroupDetailsActivity.this);
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+		progressDialog.setMessage(getResources().getString(R.string.uploading));
+		progressDialog.show();
+		
+		// 参数设置
+		RequestParams params = new RequestParams();
+		params.addBodyParameter("group_id", groupId);
+		File uplodaFile = new File(FileUtil.BIG_IMAGE_PATH + tmpImageName);
+		if (!uplodaFile.exists()) {
+			return;
+		}
+		params.addBodyParameter("image", uplodaFile);
+		HttpManager.post(KHConst.UPDATE_GROUP_COVER, params,
+				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						progressDialog.dismiss();
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						LogUtils.i(jsonResponse.toJSONString(), 1);
+						if (status == KHConst.STATUS_SUCCESS) {
+							JSONObject result = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
+							//缓存二维码和图片
+							ConfigUtils.saveConfig(result.getString("group_id")+UserUtils.GROUP_AVATARKEY, KHConst.ATTACHMENT_ADDR+result.getString("group_cover"));
+							ConfigUtils.saveConfig(result.getString("group_id")+UserUtils.GROUP_QRCODEKEY, KHConst.ROOT_PATH+result.getString("group_qr_code"));
+							setResult(RESULT_OK);
+							// 删除临时文件
+							File tmpFile = new File(FileUtil.BIG_IMAGE_PATH + tmpImageName);
+							if (tmpFile.exists()) {
+								tmpFile.delete();
+							}
+							//换图片
+							if (result.getString("group_cover") != null) {
+								Picasso.with(GroupDetailsActivity.this).load(KHConst.ATTACHMENT_ADDR+result.getString("group_cover")).placeholder(R.drawable.group_icon).into(coverImageView);
+							} else {
+								Picasso.with(GroupDetailsActivity.this).load(R.drawable.group_icon).into(coverImageView);
+							}
+						}
+						if (status == KHConst.STATUS_FAIL) {
+							ToastUtil.show(GroupDetailsActivity.this, R.string.net_error);
+						}
+					}
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						progressDialog.dismiss();
+						super.onFailure(arg0, arg1, flag);
+						ToastUtil.show(GroupDetailsActivity.this, R.string.net_error);
+					}
+				}, null));
+
+	}	
 
 	private void refreshMembers(){
 	    adapter.clear();
@@ -308,6 +528,11 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	public void exitGroup(View view) {
 		startActivityForResult(new Intent(this, ExitGroupDialog.class), REQUEST_CODE_EXIT);
 
+	}
+	
+	//显示定制的UI
+	private void displayCustomUI(){
+		UserUtils.setGroupAvatar(this, group, coverImageView);
 	}
 
 	/**
@@ -524,7 +749,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		case R.id.rl_change_group_name:
 			startActivityForResult(new Intent(this, EditActivity.class).putExtra("data", group.getGroupName()), REQUEST_CODE_EDIT_GROUPNAME);
 			break;
-
+		case R.id.rl_qrcode_layout:
+			break;
+		case R.id.rl_cover_layout:
+			showChoiceImageAlert();			
+			break;
+		case R.id.rl_share_layout:
+			break;			
 		default:
 			break;
 		}

@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
+import com.app.khclub.base.easeim.KHHXSDKHelper;
+import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
@@ -24,7 +26,6 @@ import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
-import com.app.khclub.news.ui.activity.NewsDetailActivity;
 import com.app.khclub.personal.ui.fragment.OtherPersonalInfoFragment;
 import com.app.khclub.personal.ui.fragment.PersonalQrcodeFragment;
 import com.lidroid.xutils.exception.HttpException;
@@ -60,6 +61,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	private OtherPersonalInfoFragment otherPersonalInfoFragment;
 	// 用户ID
 	private int uid;
+	// 是否是好友
+	private boolean isFriend;
 
 	@OnClick({ R.id.image_cover_layout })
 	private void clickEvent(View view) {
@@ -104,6 +107,14 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		}
 
 		getPersonalInformation();
+		
+		//是否是好友
+		User user = ((KHHXSDKHelper)KHHXSDKHelper.getInstance()).getContactList().get(KHConst.KH+uid);
+		if (user != null) {
+			isFriend = true;
+		}else {
+			isFriend = false;
+		}
 	}
 
 	/**
@@ -194,7 +205,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		} else {
 			signTextView.setText(R.string.personal_none);
 		}
-		otherPersonalInfoFragment.setUIWithModel(otherUserModel);
+		otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend);
 		// 标题
 		setBarText(otherUserModel.getName());
 

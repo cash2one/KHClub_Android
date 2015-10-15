@@ -18,11 +18,13 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.khclub.R;
+import com.app.khclub.base.easeim.utils.UserUtils;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupInfo;
@@ -31,6 +33,7 @@ import com.easemob.exceptions.EaseMobException;
 
 public class GroupSimpleDetailActivity extends BaseActivity {
 	private Button btn_add_group;
+	private ImageView iv_avatar;
 	private TextView tv_admin;
 	private TextView tv_name;
 	private TextView tv_introduction;
@@ -42,6 +45,7 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_group_simle_details);
+		iv_avatar = (ImageView) findViewById(R.id.avatar);
 		tv_name = (TextView) findViewById(R.id.name);
 		tv_admin = (TextView) findViewById(R.id.tv_admin);
 		btn_add_group = (Button) findViewById(R.id.btn_add_to_group);
@@ -145,8 +149,12 @@ public class GroupSimpleDetailActivity extends BaseActivity {
          if(!group.getMembers().contains(EMChatManager.getInstance().getCurrentUser()))
              btn_add_group.setEnabled(true);
          tv_name.setText(group.getGroupName());
-         tv_admin.setText(group.getOwner());
-         tv_introduction.setText(group.getDescription());
+//         tv_admin.setText(group.getOwner());
+         //头像
+         UserUtils.setGroupAvatar(this, group, iv_avatar);
+         //创建者
+         UserUtils.setUserNick(group.getOwner(), tv_admin);
+//         tv_introduction.setText(group.getDescription());
      }
 	
 	public void back(View view){

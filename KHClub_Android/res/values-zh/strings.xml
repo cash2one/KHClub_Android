@@ -395,8 +395,13 @@
     <string name="toast_updatenick_success">更新昵称成功!</string>
     <string name="toast_updatenick_fail">更新昵称失败!</string>
     <string name="toast_updatephoto_success">更新头像成功!</string>
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
     <string name="toast_updatephoto_fail">更新头像失败!</string>
     <string name="im_group_cover">选择封面</string>
-    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+    <string name="im_qrcode">二维码名片</string>
+    <string name="im_cover">封面</string>
+    <string name="im_share">分享本群</string>
+    <string name="toast_group_not_isnull">群名不能为空！</string>
+    <string name="toast_group_too_long">群名太长</string>
 
 </resources>
