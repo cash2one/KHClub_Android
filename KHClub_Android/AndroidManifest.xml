@@ -81,8 +81,11 @@
         </activity>
         <activity android:name="com.app.khclub.news.ui.activity.NoticeActivity" >
         </activity>
-
-        <!-- Me -->
+        <!-- Menu -->
+        <activity android:name="com.app.khclub.message.ui.activity.SearchActivity" >
+        </activity>
+        <activity android:name="com.app.khclub.message.ui.activity.ContactsUserActivity" >
+        </activity>
         <activity
             android:name="com.app.khclub.personal.ui.activity.PersonalSettingActivity"
             android:theme="@android:style/Theme.Holo.Light" >
@@ -127,8 +130,8 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="dcfc269c2e9c8d084aec3245924315c2" />
-        
-         <!-- 聊天页面 -->
+
+        <!-- 聊天页面 -->
         <activity
             android:name=".base.easeim.activity.ChatActivity"
             android:launchMode="singleTop"
@@ -140,8 +143,8 @@
         <activity
             android:name=".base.easeim.activity.AddContactActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"
-            android:theme="@style/horizontal_slide" >
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateVisible" >
         </activity>
         <!-- 群组详情 -->
         <activity
@@ -156,7 +159,6 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-        
         <activity
             android:name=".base.easeim.activity.ChatRoomActivity"
             android:screenOrientation="portrait"
@@ -169,7 +171,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
-        
+
         <!-- 新建群组 -->
         <activity
             android:name=".base.easeim.activity.NewGroupActivity"
@@ -242,27 +244,26 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-        
         <activity
             android:name=".base.easeim.activity.PublicChatRoomsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-        
+
         <!-- 语音通话 -->
         <activity
             android:name=".base.easeim.activity.VoiceCallActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/nornal_style" >
         </activity>
         <!-- 视频通话 -->
         <activity
             android:name=".base.easeim.activity.VideoCallActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
         <!-- 群聊简单信息 -->
@@ -323,18 +324,18 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <!-- robots list -->
-        <activity 
+        <activity
             android:name=".base.easeim.activity.RobotsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            ></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
         <!-- user profile -->
-		<activity 
-		    android:name=".base.easeim.activity.UserProfileActivity"
-		    android:screenOrientation="portrait"
-		    android:theme="@style/horizontal_slide"
-		    ></activity>
+        <activity
+            android:name=".base.easeim.activity.UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >
+        </activity>
 
         <!-- 开机自启动服务 -->
         <receiver android:name="com.easemob.chat.StartServiceReceiver" >
@@ -345,7 +346,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
-        
+
         <!-- gcm start -->
         <receiver
             android:name="com.easemob.chat.EMGCMBroadcastReceiver"
@@ -353,41 +354,44 @@
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.easemob.chatuidemo" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.easemob.chat.EMGCMListenerService"
+        <service
+            android:name="com.easemob.chat.EMGCMListenerService"
             android:exported="false" >
         </service>
-        
-        <receiver 
+
+        <receiver
             android:name="com.easemob.chatuidemo.receiver.GCMPushBroadCast"
-            android:exported="false">
-            <intent-filter >
-                <action android:name="com.easemob.sdk.push"/>
-                <category android:name="com.easemob.chatuidemo"/>
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.easemob.sdk.push" />
+
+                <category android:name="com.easemob.chatuidemo" />
             </intent-filter>
         </receiver>
-        
+
         <!-- 设置环信应用的appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="yukirin#khclub" />
         <!-- 声明sdk所需的service -->
-        <service android:name="com.easemob.chat.EMChatService"/>
+        <service android:name="com.easemob.chat.EMChatService" />
         <!-- 声明sdk所需的receiver -->
-        <receiver android:name="com.easemob.chat.EMMonitorReceiver">
+        <receiver android:name="com.easemob.chat.EMMonitorReceiver" >
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
-        </receiver>        
-        
+        </receiver>
     </application>
 
 </manifest>

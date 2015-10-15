@@ -69,6 +69,7 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.message.ui.activity.SearchActivity;
 import com.app.khclub.personal.ui.view.PersonalPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalPopupMenu.OperateListener;
 import com.easemob.chat.EMContactManager;
@@ -299,8 +300,15 @@ public class ContactlistFragment extends Fragment {
 
 						@Override
 						public void searchClick() {
-							// TODO Auto-generated method stub
-
+							// 跳转至搜索页面
+							Intent intentToSearch = new Intent(getActivity(),
+									SearchActivity.class);
+							startActivity(intentToSearch);
+							// 右侧进而动画
+							getActivity()
+									.overridePendingTransition(
+											R.anim.push_right_in,
+											R.anim.push_right_out);
 						}
 
 						@Override

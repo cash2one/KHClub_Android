@@ -3,7 +3,7 @@
 
     <string name="app_name">国王俱乐部</string>
     <string name="hello_world">你好!</string>
-    
+
     <!-- Loading -->
     <string name="uploading">上传中，请稍候..</string>
     <string name="downloading">获取中，请稍候..</string>
@@ -11,12 +11,14 @@
     <string name="downloading_success">获取成功</string>
     <string name="uploading_fail">上传失败</string>
     <string name="downloading_fail">获取失败</string>
-    
+
     <!-- Loading -->
+
 
     <!-- Toast -->
     <string name="net_error">网络异常</string>
     <!-- Toast -->
+
 
     <!-- Alert -->
     <string name="alert_save">保存</string>
@@ -27,11 +29,12 @@
     <string name="alert_finish">完成</string>
     <string name="next">下一步</string>
     <!-- Alert -->
-    
+
+
     <!-- Login -->
-	<string name="login_please_enter_phonenum">请输入手机号码</string>
-	<string name="login_login_register">登录/注册</string>
-	<string name="login_wait_a_minute">正在验证，请稍后</string>
+    <string name="login_please_enter_phonenum">请输入手机号码</string>
+    <string name="login_login_register">登录/注册</string>
+    <string name="login_wait_a_minute">正在验证，请稍后</string>
     <string name="login_username_not_null">用户名不能为空</string>
     <string name="login_password_not_null">密码不能为空</string>
     <string name="login_loginning">正在登录，请稍后</string>
@@ -43,17 +46,18 @@
     <string name="login_verification_not_null">验证码不能为空</string>
     <string name="login_password_length_six">密码长度至少六位</string>
     <string name="login_register_successful">注册成功</string>
-	<string name="login_modify_password">修改密码</string>
+    <string name="login_modify_password">修改密码</string>
     <string name="login_register_title">注册</string>
     <string name="login_verification_send">验证码已经发送至</string>
     <string name="login_resend">重发</string>
     <string name="login_verification_arrivied">验证码已发送至您的手机</string>
     <string name="login_verification_error">验证码错误或者手机号码有误</string>
-    <string name="login_please_enter_verification">请输入验证码</string>    
+    <string name="login_please_enter_verification">请输入验证码</string>
     <string name="login_password_length">密码长度只能是6到32位</string>
     <!-- Login -->
-    		
-	<!-- Personal -->
+
+
+    <!-- Personal -->
     <string name="personal_me_title">我的</string>
     <string name="personal_signature">个人说明</string>
     <string name="personal_icon">头像</string>
@@ -80,7 +84,8 @@
     <string name="personal_no_person">不存在此人</string>
     <string name="personal_add_friend">添加为好友</string>
     <string name="personal_moments">动态列表</string>
-    <!-- Personal -->    		
+    <!-- Personal -->
+
 
     <!-- News -->
     <string name="news_enter_content">请输入内容</string>
@@ -93,7 +98,7 @@
     <string name="news_push_delete">删除内容</string>
     <string name="news_push_like">为你点了赞</string>
     <!-- News -->
-    
+
     <string name="text_ack_msg">已读</string>
     <string name="text_delivered_msg">送达</string>
     <string name="back">返回</string>
@@ -213,10 +218,9 @@
     <string name="agree">同意</string>
     <string name="Group_chat">群聊:</string>
     <string name="not_download">未下载:</string>
-	<string name="Please_enter_a_username">请输入用户名</string>
+    <string name="Please_enter_a_username">请输入用户名</string>
     <string name="is_down_please_wait">正在下载视频请稍候</string>
     <string name="Exit_the_group_chat">退出群聊</string>
-    
     <string name="not_add_myself">不能添加自己</string>
     <string name="This_user_is_already_your_friend">此用户已是你的好友</string>
     <string name="Add_a_friend">加个好友呗</string>
@@ -348,23 +352,19 @@
     <string name="Is_download_voice_click_later">正在下载语音，稍后点击</string>
     <string name="Send_the_following_pictures">发送以下图片？</string>
     <string name="search_new">搜</string>
-    
     <string name="Delete_the_contact">删除联系人</string>
     <string name="Move_into_the_blacklist_new">移入到黑名单</string>
     <string name="Change_the_group_name">改变群名称</string>
     <string name="Sync_Groups_From_Server">从服务器下载群聊信息</string>
-    
     <string name="update_contact_list">更新联系人列表</string>
     <string name="update_black_list">更新黑名单</string>
     <string name="update_groups">更新群聊</string>
-    
     <string name="update_contact_list_failed">更新联系人列表失败</string>
     <string name="update_black_list_failed">更新黑名单失败</string>
     <string name="update_groups_failed">更新群聊失败</string>
-    
-    <string name= "no_more_messages">没有更多的消息了</string>
+    <string name="no_more_messages">没有更多的消息了</string>
     <string name="gorup_not_found">找不到这个群组</string>
-    <string name= "chatroom_allow_owner_leave"> 允许聊天室群主离开</string>
+    <string name="chatroom_allow_owner_leave"> 允许聊天室群主离开</string>
     <string name="group_id">群ID</string>
     <string name="move_out_backlist">移出黑名单</string>
     <string name="input_new_nick_hint">输入新昵称</string>
@@ -395,7 +395,8 @@
     <string name="toast_updatenick_success">更新昵称成功!</string>
     <string name="toast_updatenick_fail">更新昵称失败!</string>
     <string name="toast_updatephoto_success">更新头像成功!</string>
-    <string name="toast_updatephoto_fail">更新头像失败!</string>    
-    <string name="im_group_cover">选择封面</string>    
-        		
+    <string name="toast_updatephoto_fail">更新头像失败!</string>
+    <string name="im_group_cover">选择封面</string>
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+
 </resources>

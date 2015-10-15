@@ -104,11 +104,11 @@ public interface KHConst {
 	// 获取图片和名字
 	public static final String GET_IMAGE_AND_NAME = DOMIN + "/getImageAndName";
 	// 创建圈子
-	public static final String CREATE_GROUP = DOMIN + "/createGroup";	
+	public static final String CREATE_GROUP = DOMIN + "/createGroup";
 	// 获取群组图片和名字
-	public static final String GET_GROUP_IMAGE_AND_NAME_AND_QRCODE = DOMIN + "/getGroupImageAndNameAndQrcode";
-	
-	
+	public static final String GET_GROUP_IMAGE_AND_NAME_AND_QRCODE = DOMIN
+			+ "/getGroupImageAndNameAndQrcode";
+
 	// //////////////////////////////////////发现模块//////////////////////////////////////////
 	// http://localhost/jlxc_php/index.php/Home/MobileApi/getContactUser
 	// 获取联系人用户
@@ -130,4 +130,8 @@ public interface KHConst {
 	public static final String COLLECT_CARD_DELETE = DOMIN + "/deleteCard";
 	// 获取所收藏的名片列表
 	public static final String GET_COLLECT_CARD_LIST = DOMIN + "/getCardList";
+	// ////////////////////////////主菜，搜索，二维码，创建群///////////////////////////////////
+	// 搜索
+	public static final String SEARCH_USER_OR_GROUP = DOMIN
+			+ "/findUserOrGroup";
 }
