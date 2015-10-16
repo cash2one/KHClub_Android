@@ -48,7 +48,10 @@ import com.app.khclub.news.ui.utils.NewsToItemData;
 import com.app.khclub.news.ui.utils.TextViewHandel;
 import com.app.khclub.news.ui.view.MultiImageView;
 import com.app.khclub.news.ui.view.MultiImageView.JumpCallBack;
+import com.app.khclub.news.ui.view.NewsBottomPopupMenu;
+import com.app.khclub.news.ui.view.NewsBottomPopupMenu.NewsBottomClickListener;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
+import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
@@ -102,6 +105,8 @@ public class NewsListFragment extends BaseFragment {
 	private DisplayImageOptions options;
 	// 是否为文字长按事件
 	private boolean isLongClick = false;
+	// 底部操作弹出菜单
+	private NewsBottomPopupMenu shareMenu;
 
 	@Override
 	public int setLayoutId() {
@@ -143,6 +148,40 @@ public class NewsListFragment extends BaseFragment {
 				startActivityWithLeft(intentCampusInfo);
 			}
 		});
+		
+		//设置点击事件回调
+		shareMenu.setListener(new NewsBottomClickListener() {
+			
+			@Override
+			public void shareToWeiboClick() {
+				// 分享到微博
+				
+			}
+			
+			@Override
+			public void shareToWeChatClick() {
+				// 分享到微信
+				
+			}
+			
+			@Override
+			public void shareToQzoneClick() {
+				// 分享到qq空间
+				
+			}
+			
+			@Override
+			public void shareToCircleofFriendsClick() {
+				// 分享到朋友圈
+				
+			}
+			
+			@Override
+			public void cancelClick() {
+				// 取消操作
+				
+			}
+		});
 		registerNotify();
 		refreshPush();
 	}
@@ -152,7 +191,7 @@ public class NewsListFragment extends BaseFragment {
 	 * */
 	private void init() {
 		mContext = this.getActivity();
-
+		shareMenu = new NewsBottomPopupMenu(getActivity());
 		itemViewClickListener = new ItemViewClick();
 		newsOPerate = new NewsOperate(mContext);
 		// 获取显示图片的实例
@@ -591,6 +630,7 @@ public class NewsListFragment extends BaseFragment {
 					likeOperate(postion, view, operateData);
 				} else if (R.id.btn_mian_share == viewID) {
 					// 分享操作
+					shareMenu.showPopupWindow(publishBtn);
 				} else {
 					// 跳转到动态详情
 					jumpToNewsDetail(operateData,

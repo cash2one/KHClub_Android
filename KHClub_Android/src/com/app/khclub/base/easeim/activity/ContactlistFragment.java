@@ -47,6 +47,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -60,6 +61,7 @@ import com.app.khclub.base.easeim.db.InviteMessgeDao;
 import com.app.khclub.base.easeim.db.UserDao;
 import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.easeim.widget.MainPopupMenu;
+import com.app.khclub.base.easeim.widget.QRCodePopupMenu;
 import com.app.khclub.base.easeim.widget.MainPopupMenu.ClickListener;
 import com.app.khclub.base.easeim.widget.Sidebar;
 import com.app.khclub.base.helper.JsonRequestCallBack;
@@ -106,6 +108,8 @@ public class ContactlistFragment extends Fragment {
 	private String toBeProcessUsername;
 	// 右上角弹出菜单
 	private MainPopupMenu mainMenu;
+	// 二维码显示控件
+	private QRCodePopupMenu qrImageView;
 
 	class HXContactSyncListener implements HXSDKHelper.HXSyncListener {
 		@Override
@@ -258,27 +262,32 @@ public class ContactlistFragment extends Fragment {
 					startActivity(new Intent(getActivity(),
 							PublicChatRoomsActivity.class));
 				} else if (Constant.CHAT_ROBOT.equals(username)) {
-//					// 进入Robot列表页面
-//					startActivity(new Intent(getActivity(),
-//							RobotsActivity.class));
+					// // 进入Robot列表页面
+					// startActivity(new Intent(getActivity(),
+					// RobotsActivity.class));
 					// 收藏的名片
 					Intent intentToCardList = new Intent(getActivity(),
 							CollectCardActivity.class);
 					startActivity(intentToCardList);
 					// 右侧进而动画
 					getActivity().overridePendingTransition(
-									R.anim.push_right_in,
-									R.anim.push_right_out);
+							R.anim.push_right_in, R.anim.push_right_out);
 				} else {
 					// demo中直接进入聊天页面，实际一般是进入用户详情页
-//					startActivity(new Intent(getActivity(), ChatActivity.class)
-//							.putExtra("userId", adapter.getItem(position)
-//									.getUsername()));
+					// startActivity(new Intent(getActivity(),
+					// ChatActivity.class)
+					// .putExtra("userId", adapter.getItem(position)
+					// .getUsername()));
 					// 跳转到其他人页面
-					Intent intent = new Intent(getActivity(), OtherPersonalActivity.class);
-					intent.putExtra(OtherPersonalActivity.INTENT_KEY,KHUtils.stringToInt(adapter.getItem(position).getUsername().replace(KHConst.KH, "")));
+					Intent intent = new Intent(getActivity(),
+							OtherPersonalActivity.class);
+					intent.putExtra(
+							OtherPersonalActivity.INTENT_KEY,
+							KHUtils.stringToInt(adapter.getItem(position)
+									.getUsername().replace(KHConst.KH, "")));
 					startActivity(intent);
-					getActivity().overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+					getActivity().overridePendingTransition(
+							R.anim.push_right_in, R.anim.push_right_out);
 				}
 			}
 		});
@@ -298,6 +307,8 @@ public class ContactlistFragment extends Fragment {
 			}
 		});
 
+		// 二维码显示控件
+		qrImageView = new QRCodePopupMenu(getActivity());
 		final ImageView operateMenuView = (ImageView) getView().findViewById(
 				R.id.iv_new_contact);
 		// 右上角菜单
@@ -311,7 +322,6 @@ public class ContactlistFragment extends Fragment {
 
 						@Override
 						public void scanQRcodeClick() {
-							// 扫描二维码
 							// 扫描二维码
 							Intent intent = new Intent();
 							intent.setClass(getActivity(),
@@ -337,14 +347,21 @@ public class ContactlistFragment extends Fragment {
 						@Override
 						public void createGroupClick() {
 							// 创建群聊
-							startActivity(new Intent(getActivity(), NewGroupActivity.class));
-							getActivity().overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+							startActivity(new Intent(getActivity(),
+									NewGroupActivity.class));
+							getActivity()
+									.overridePendingTransition(
+											R.anim.push_right_in,
+											R.anim.push_right_out);
 						}
 
 						@Override
 						public void userQRShowClick() {
 							// TODO 我的二维码
-
+							qrImageView.setQRcode(false);
+							qrImageView
+									.showPopupWindow((RelativeLayout) getView()
+											.findViewById(R.id.title_bar));
 						}
 					});
 				}

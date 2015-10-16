@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -54,9 +55,11 @@ import com.app.khclub.news.ui.utils.NewsOperate;
 import com.app.khclub.news.ui.utils.NewsOperate.LikeCallBack;
 import com.app.khclub.news.ui.utils.NewsOperate.OperateCallBack;
 import com.app.khclub.news.ui.view.LikeImageListView;
+import com.app.khclub.news.ui.view.NewsBottomPopupMenu;
 import com.app.khclub.news.ui.view.LikeImageListView.EventCallBack;
 import com.app.khclub.news.ui.view.MultiImageView;
 import com.app.khclub.news.ui.view.MultiImageView.JumpCallBack;
+import com.app.khclub.news.ui.view.NewsBottomPopupMenu.NewsBottomClickListener;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -83,6 +86,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	private boolean isPublishComment = true;
 	// 记录对动态的操作
 	private String actionType = NewsConstants.OPERATE_NO_ACTION;
+	// 标题栏
+	@ViewInject(R.id.title_bar)
+	private RelativeLayout titleBar;
 	// 主listview
 	@ViewInject(R.id.news_detail_listView)
 	private PullToRefreshListView newsDetailListView;
@@ -130,6 +136,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	private String commentContentStr = "";
 	// 当前操作的位置
 	private int currentOperateIndex = -1;
+	// 底部操作弹出菜单
+	private NewsBottomPopupMenu shareMenu;
 
 	/**
 	 * 事件监听函数
@@ -216,7 +224,39 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		} else {
 			LogUtils.e("跳转到详情页面时，意图为null.");
 		}
+		// 设置分享点击事件回调
+		shareMenu.setListener(new NewsBottomClickListener() {
 
+			@Override
+			public void shareToWeiboClick() {
+				// 分享到微博
+
+			}
+
+			@Override
+			public void shareToWeChatClick() {
+				// 分享到微信
+
+			}
+
+			@Override
+			public void shareToQzoneClick() {
+				// 分享到qq空间
+
+			}
+
+			@Override
+			public void shareToCircleofFriendsClick() {
+				// 分享到朋友圈
+
+			}
+
+			@Override
+			public void cancelClick() {
+				// 取消操作
+
+			}
+		});
 		// 从网络上更新动态数据
 		getNewsDetailData(
 				String.valueOf(UserManager.getInstance().getUser().getUid()),
@@ -231,6 +271,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		commentDataList = new ArrayList<CommentModel>();
 		likeDataList = new ArrayList<LikeModel>();
 		itemViewClickListener = new ItemViewClick();
+		shareMenu = new NewsBottomPopupMenu(this);
 		dataList = new ArrayList<Map<String, String>>();
 		// 图片加载初始化
 		imgLoader = ImageLoader.getInstance();
@@ -420,7 +461,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onClick(View arg0) {
-
+				shareMenu.showPopupWindow(titleBar);
 			}
 		});
 		// 点击点赞按钮
