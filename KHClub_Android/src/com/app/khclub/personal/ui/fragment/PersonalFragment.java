@@ -147,56 +147,55 @@ public class PersonalFragment extends BaseFragment {
 
 			@Override
 			public void shareToWeiboClick() {
-				// TODO Auto-generated method stub
+				// 分享到微博
 
 			}
 
 			@Override
 			public void shareToWeChatClick() {
-				// TODO Auto-generated method stub
+				// 分享到微信
 
 			}
 
 			@Override
 			public void shareToQzoneClick() {
-				// TODO Auto-generated method stub
+				// 分享到qq空间
 
 			}
 
 			@Override
 			public void shareToQQFriendsClick() {
-				// TODO Auto-generated method stub
+				// 分享给qq好友
 
 			}
 
 			@Override
 			public void shareToFriendClick() {
-				// TODO Auto-generated method stub
+				// 分享给好友
 
 			}
 
 			@Override
 			public void shareToCircleofFriendsClick() {
-				// TODO Auto-generated method stub
+				// 分享到朋友圈
 
 			}
 
 			@Override
 			public void editRemarkClick() {
-				// TODO Auto-generated method stub
+				// 设置备注
 
 			}
 
 			@Override
 			public void deleteFriendClick() {
-				// TODO Auto-generated method stub
+				// 删除好友
 
 			}
 
 			@Override
 			public void cancelClick() {
-				// TODO Auto-generated method stub
-
+				// 取消操作
 			}
 		});
 	}

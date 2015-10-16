@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <include layout="@layout/layout_title_bar" />
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/layout_title_bar" />
 
     <com.app.khclub.base.ui.view.CustomerScrollView
         android:id="@+id/scrollView_person"

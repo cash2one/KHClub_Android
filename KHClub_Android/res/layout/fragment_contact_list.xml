@@ -6,6 +6,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/top_bar_normal_bg"
@@ -19,7 +20,6 @@
             android:text="@string/address_book"
             android:textColor="@color/bottom_text_color_normal"
             android:textSize="18sp" />
-
 
         <ImageView
             android:id="@+id/iv_new_contact"
@@ -61,31 +61,31 @@
                     android:layout_marginLeft="6dp"
                     android:text="@string/now_refresh_list" />
             </LinearLayout>
-            
-            <include 
-                android:id="@+id/search_bar_view"
-                layout="@layout/search_bar_with_padding"/>
 
+            <include
+                android:id="@+id/search_bar_view"
+                layout="@layout/search_bar_with_padding" />
 
             <ListView
                 android:id="@+id/list"
-                android:layout_below="@+id/search_bar_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@+id/search_bar_view"
                 android:background="@android:color/transparent"
                 android:cacheColorHint="#00000000"
                 android:descendantFocusability="afterDescendants"
                 android:divider="@color/divider_list"
                 android:dividerHeight="1px"
                 android:fastScrollEnabled="false" />
- 			<com.app.khclub.base.easeim.widget.Sidebar
+
+            <com.app.khclub.base.easeim.widget.Sidebar
                 android:id="@+id/sidebar"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:background="@android:color/transparent"
                 android:clickable="true" />
- 			
+
             <TextView
                 android:id="@+id/floating_header"
                 android:layout_width="wrap_content"
@@ -98,27 +98,27 @@
                 android:textColor="@android:color/white"
                 android:textSize="40sp"
                 android:visibility="invisible" />
-
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center"
-            android:visibility="gone"
-            android:id="@+id/progress_bar">
-	        <ProgressBar
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="center_horizontal"/>
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/now_refresh_list"
-                android:layout_gravity="center_horizontal"/>
-	    </LinearLayout>
-        
+                android:layout_gravity="center_horizontal"
+                android:text="@string/now_refresh_list" />
+        </LinearLayout>
     </FrameLayout>
 
 </LinearLayout>

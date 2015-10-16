@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -92,6 +92,12 @@
     <style name="anim_main_menu">
         <item name="android:windowEnterAnimation">@anim/main_menu_fade_in</item>
         <item name="android:windowExitAnimation">@anim/main_menu_fade_out</item>
+    </style>
+    
+    <!-- 二维码弹出动画 -->
+    <style name="anim_qrcode_popup">
+        <item name="android:windowEnterAnimation">@anim/qrcode_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/qrcode_fade_out</item>
     </style>
 
     <!-- 个人中心菜单弹出动画 -->
@@ -184,7 +190,7 @@
     <!--
     <style name="horizontal_slide2" parent="android:style/Theme.Holo.Light.NoActionBar">
         <item name="android:windowAnimationStyle">@style/AnimFade2</item>
-    </style>
+    </style>
     -->
 
     <style name="MyDialogStyle">

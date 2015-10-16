@@ -41,13 +41,16 @@ import com.app.khclub.base.easeim.adapter.ChatAllHistoryAdapter;
 import com.app.khclub.base.easeim.db.InviteMessgeDao;
 import com.app.khclub.base.easeim.widget.MainPopupMenu;
 import com.app.khclub.base.easeim.widget.MainPopupMenu.ClickListener;
+import com.app.khclub.base.easeim.widget.QRCodePopupMenu;
 import com.app.khclub.base.ui.activity.MainTabActivity;
+import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.message.ui.activity.MipcaCaptureActivity;
 import com.app.khclub.message.ui.activity.SearchActivity;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMConversation.EMConversationType;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * 显示所有会话记录，比较简单的实现，更好的可能是把陌生人存入本地，这样取到的聊天记录是可控的
@@ -63,12 +66,14 @@ public class ChatAllHistoryFragment extends Fragment implements
 	private EditText query;
 	private ImageButton clearSearch;
 	public RelativeLayout errorItem;
-
+	private RelativeLayout titleBar;
 	public TextView errorText;
 	private boolean hidden;
 	private List<EMConversation> conversationList = new ArrayList<EMConversation>();
 	// 右上角弹出菜单
 	private MainPopupMenu mainMenu;
+	// 二维码显示控件
+	private QRCodePopupMenu qrImageView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,7 +92,7 @@ public class ChatAllHistoryFragment extends Fragment implements
 				.getSystemService(Context.INPUT_METHOD_SERVICE);
 		errorItem = (RelativeLayout) getView().findViewById(R.id.rl_error_item);
 		errorText = (TextView) errorItem.findViewById(R.id.tv_connect_errormsg);
-
+		titleBar = (RelativeLayout) getView().findViewById(R.id.title_bar);
 		conversationList.addAll(loadConversationsWithRecentChat());
 		listView = (ListView) getView().findViewById(R.id.list);
 		adapter = new ChatAllHistoryAdapter(getActivity(), 1, conversationList);
@@ -176,6 +181,8 @@ public class ChatAllHistoryFragment extends Fragment implements
 			}
 		});
 
+		// 二维码显示控件
+		qrImageView = new QRCodePopupMenu(getActivity());
 		// 右上角菜单
 		final ImageView operateMenuView = (ImageView) getView().findViewById(
 				R.id.iv_char_operate_menu);
@@ -190,7 +197,7 @@ public class ChatAllHistoryFragment extends Fragment implements
 
 						@Override
 						public void scanQRcodeClick() {
-							//扫描二维码
+							// 扫描二维码
 							Intent intent = new Intent();
 							intent.setClass(getActivity(),
 									MipcaCaptureActivity.class);
@@ -221,7 +228,8 @@ public class ChatAllHistoryFragment extends Fragment implements
 						@Override
 						public void userQRShowClick() {
 							// TODO 我的二维码
-
+							qrImageView.setQRcode(false);
+							qrImageView.showPopupWindow(titleBar);
 						}
 					});
 				}
