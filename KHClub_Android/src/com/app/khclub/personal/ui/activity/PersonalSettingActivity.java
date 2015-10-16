@@ -32,6 +32,8 @@ import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.ActivityManager;
 import com.app.khclub.base.manager.HttpManager;
+import com.app.khclub.base.manager.NewVersionCheckManager;
+import com.app.khclub.base.manager.NewVersionCheckManager.VersionCallBack;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
@@ -119,7 +121,7 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 	private EMChatOptions chatOptions;
 	private KHHXSDKModel model;
 	
-	@OnClick(value = { R.id.name_layout, R.id.sign_layout,R.id.company_layout,R.id.phone_layout,
+	@OnClick(value = { R.id.name_layout, R.id.sign_layout,R.id.company_layout,R.id.phone_layout,R.id.version_text_view,
 			R.id.address_layout,R.id.email_layout,R.id.logout_button,R.id.rl_switch_sound,R.id.rl_switch_vibrate,
 			R.id.sex_layout, R.id.head_image_view,R.id.head_layout, R.id.job_layout, R.id.clear_cache_text_view})
 	private void clickEvent(View view) {
@@ -211,6 +213,10 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 		case R.id.logout_button:
 			//退出
 			logout();
+			break;
+		case R.id.version_text_view:
+			//版本检测
+			checkVersion();
 			break;
 		case R.id.rl_switch_sound:
 			//声音
@@ -887,4 +893,16 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 					}
 				});	  
 	}
+	
+	//检测版本
+	private void checkVersion() {
+		
+		showLoading(getString(R.string.downloading), true);
+		new NewVersionCheckManager(this, this).checkNewVersion(true, new VersionCallBack() {
+			@Override
+			public void finish() {
+				hideLoading();
+			}
+		});
+	} 
 }

@@ -30,7 +30,6 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.app.khclub.R;
-import com.app.khclub.base.app.KHApplication;
 import com.app.khclub.base.easeim.Constant;
 import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.easeim.utils.UserUtils;
@@ -63,7 +62,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 	
 	private static class ViewHolder {
 	    ImageView avatar;
-	    TextView unreadMsgView;
+	    ImageView unreadMsgView;
 	    TextView nameTextview;
 	    TextView tvHeader;
     }
@@ -74,7 +73,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
  		    holder = new ViewHolder();
 			convertView = layoutInflater.inflate(res, null);
 			holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
-			holder.unreadMsgView = (TextView) convertView.findViewById(R.id.unread_msg_number);
+			holder.unreadMsgView = (ImageView) convertView.findViewById(R.id.unread_msg_number);
 			holder.nameTextview = (TextView) convertView.findViewById(R.id.name);
 			holder.tvHeader = (TextView) convertView.findViewById(R.id.header);
 			convertView.setTag(holder);

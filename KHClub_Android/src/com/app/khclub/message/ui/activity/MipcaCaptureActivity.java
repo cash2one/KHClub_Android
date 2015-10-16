@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.app.khclub.R;
 import com.app.khclub.base.manager.ActivityManager;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.message.ui.view.qrcodeView.camera.CameraManager;
 import com.app.khclub.message.ui.view.qrcodeView.decoding.CaptureActivityHandler;
 import com.app.khclub.message.ui.view.qrcodeView.decoding.InactivityTimer;
@@ -213,7 +214,7 @@ public class MipcaCaptureActivity extends BaseActivityWithTopBar implements Call
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
-		setBarText("扫描");
+		setBarText(getString(R.string.message_scan));
 	}
 	
 	public void finishWithRight() {

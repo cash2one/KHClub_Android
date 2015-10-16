@@ -6,7 +6,7 @@
     
     <!-- Loading -->
     <string name="uploading">Uploading..</string>
-    <string name="downloading">Downloading</string>
+    <string name="downloading">Loading</string>
     <string name="uploading_success">Upload Completed</string>
     <string name="downloading_success">Download Completed</string>
     <string name="uploading_fail">Upload Fail</string>
@@ -83,6 +83,8 @@
 	<string name="personal_version">Version</string>
 	<string name="personal_clear_ok">Clear OK</string>
 	<string name="personal_confirm_logout">Log out？</string>
+	<string name="personal_new_version">New version found</string>
+	<string name="personal_is_lastest_version">Is the lastest version</string>
     <!-- Personal -->
     
     <!-- News -->
@@ -398,5 +400,7 @@
     <string name="im_in_black_list">User in the black list, please remove</string>
     <string name="personal_collect_card">Card</string>
     <string name="log_out">Log out</string>
-
+    
+    <string name="message_scan">Scan</string>
+    
 </resources>

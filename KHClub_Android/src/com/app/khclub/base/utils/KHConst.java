@@ -19,6 +19,7 @@ public interface KHConst {
 
 	// IM和推送 公用前缀
 	public static final String KH = "kh";
+	public static final String KH_GROUP = "khGroup";
 	// IM通用密码
 	public static final String IM_PWD = "123456";
 

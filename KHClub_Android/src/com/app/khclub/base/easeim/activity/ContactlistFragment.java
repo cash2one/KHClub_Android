@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -69,12 +70,14 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.message.ui.activity.MipcaCaptureActivity;
 import com.app.khclub.message.ui.activity.SearchActivity;
 import com.app.khclub.personal.ui.activity.CollectCardActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.chat.EMContactManager;
+import com.easemob.chat.EMGroupInfo;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
 import com.lidroid.xutils.exception.HttpException;
@@ -312,13 +315,9 @@ public class ContactlistFragment extends Fragment {
 						@Override
 						public void scanQRcodeClick() {
 							// 扫描二维码
-							// 扫描二维码
 							Intent intent = new Intent();
-							intent.setClass(getActivity(),
-									MipcaCaptureActivity.class);
-							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							startActivityForResult(intent,
-									SCANNIN_GREQUEST_CODE);
+							intent.setClass(getActivity(),MipcaCaptureActivity.class);
+							startActivityForResult(intent,SCANNIN_GREQUEST_CODE);
 						}
 
 						@Override
@@ -688,5 +687,41 @@ public class ContactlistFragment extends Fragment {
 			outState.putBoolean(Constant.ACCOUNT_REMOVED, true);
 		}
 
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+			case SCANNIN_GREQUEST_CODE:
+				Bundle bundle = data.getExtras();
+				String resultString = bundle.getString("result");
+				
+				// 如果是可以用的
+				if (resultString.contains(KHConst.KH_GROUP)) {
+					String baseUid = resultString.replace(KHConst.KH_GROUP, "");
+					// 跳转到群结果页面
+					EMGroupInfo	group = new EMGroupInfo(baseUid, "");
+					Intent intent = new Intent(getActivity(), GroupSimpleDetailActivity.class).
+	                putExtra("groupinfo", group);
+					startActivity(intent);
+					return;
+				}
+				
+				// 如果是可以用的
+				if (resultString.contains(KHConst.KH)) {
+					String baseUid = resultString.substring(2);
+					int uid = KHUtils.stringToInt(new String(Base64.decode(
+							baseUid, Base64.DEFAULT)));
+					Intent intent = new Intent(getActivity(), OtherPersonalActivity.class);
+					intent.putExtra(OtherPersonalActivity.INTENT_KEY, uid);
+					startActivity(intent);
+					return;
+				}
+				
+				ToastUtil.show(getActivity(), "'" + resultString + "'");
+				break;
+		}
 	}
 }

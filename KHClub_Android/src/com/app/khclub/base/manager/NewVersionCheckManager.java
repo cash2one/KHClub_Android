@@ -1,16 +1,13 @@
 package com.app.khclub.base.manager;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 
 import com.alibaba.fastjson.JSONObject;
+import com.app.khclub.R;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.ui.view.CustomAlertDialog;
@@ -56,10 +53,8 @@ public class NewVersionCheckManager {
 							final String versionPath = jResult.getString("version_path");
 							
 							if (0 != localVersion && remoteVersion > localVersion) {
-//								createNewVersionDialog(summary, fileAbsolutePath, isForceUpdate, isClearData);
-								
 								final CustomAlertDialog confirmDialog = new CustomAlertDialog(
-										context, "发现新版本？", "确定", "取消");
+										context, context.getString(R.string.personal_new_version) , context.getString(R.string.alert_confirm), context.getString(R.string.alert_cancel));
 								confirmDialog.show();
 								confirmDialog.setClicklistener(new CustomAlertDialog.ClickListenerInterface() {
 											@Override
@@ -77,13 +72,13 @@ public class NewVersionCheckManager {
 										});								
 							}else{
 								if (showToast) {
-									ToastUtil.show(context, "已经是最新版本");	
+									ToastUtil.show(context, R.string.personal_is_lastest_version);	
 								}
 							}
 							
 						}else {
 							if (showToast) {
-								ToastUtil.show(context, "服务器异常 sad");	
+								ToastUtil.show(context, R.string.net_error);	
 							}
 						}
 					}
@@ -93,7 +88,7 @@ public class NewVersionCheckManager {
 							String flag) {
 						super.onFailure(arg0, arg1, flag);
 						if (showToast) {
-							ToastUtil.show(context, "网络环境不太好。。。");	
+							ToastUtil.show(context, R.string.net_error);	
 						}
 						//回调
 						if (null != callBack) {
@@ -110,55 +105,4 @@ public class NewVersionCheckManager {
 		public void finish();
 	}
 
-//	private void createNewVersionDialog(String summary, final String downloadUrl, int isForceUpdate,
-//			final int isClearData) {
-//		if (null == context) {
-//			return;
-//		}
-//		final AlertDialog dialog = new AlertDialog.Builder(context).create();
-//		dialog.setCancelable(false);
-//		dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//		View v = View.inflate(context, R.layout.update_layout, null);
-//		TextView tv_summary = (TextView) v.findViewById(R.id.tv_summary);
-//		if (isClearData == 1) {
-//			summary = "由于本次更新强化本地数据加密，防止用户数据泄露，因此无法兼容老数据，更新后将清除本地数据，对您造成的不便请谅解，\n" + summary;
-//		}
-//		tv_summary.setText(summary);
-//		Button btn_cancle = (Button) v.findViewById(R.id.btn_cancle);
-//		Button btn_update = (Button) v.findViewById(R.id.btn_update);
-//		if (isForceUpdate == 1) {
-//			// 强制更新
-//			btn_cancle.setVisibility(View.GONE);
-//		}
-//		btn_cancle.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				dialog.dismiss();
-//			}
-//		});
-//		btn_update.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				dialog.dismiss();
-//				if (isClearData == 1) {
-//					// 清空数据库
-//					try {
-//						// DBHelper.getInstence(context).clearDb();
-//						DBHelper.getInstence(context).dropDatabase();
-//					} catch (DbException e) {
-//						e.printStackTrace();
-//					}
-//					// 清空首选项
-//					UbabyPrefUtil.clear(context);
-//				}
-//				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl));
-//				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//				activity.startActivity(intent);
-//			}
-//		});
-//		dialog.setView(v, 0, 0, 0, 0);
-//		dialog.show();
-//	}
 }

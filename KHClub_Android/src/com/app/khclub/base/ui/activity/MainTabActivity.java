@@ -48,6 +48,7 @@ import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
+import com.app.khclub.base.manager.NewVersionCheckManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.NewsPushModel;
 import com.app.khclub.base.model.UserModel;
@@ -76,21 +77,20 @@ import com.easemob.chat.EMMessage.Type;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.util.EMLog;
 import com.easemob.util.HanziToPinyin;
+import com.easemob.util.NetUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class MainTabActivity extends BaseActivity implements EMEventListener{
 
-	private final static int SCANNIN_GREQUEST_CODE = 1;
-
 	// FragmentTabHost对象
 	@ViewInject(android.R.id.tabhost)
 	public FragmentTabHost mTabHost;
-
+	
 	private LayoutInflater layoutInflater;	
 	
 	private Class<?> fragmentArray[] = { NewsListFragment.class,
-			ContactlistFragment.class, ChatAllHistoryFragment.class,
+			ChatAllHistoryFragment.class, ContactlistFragment.class,
 			PersonalFragment.class };
 
 	private int mImageViewArray[] = { R.drawable.tab_home_btn,R.drawable.tab_message_btn,R.drawable.tab_contact_btn,
@@ -106,11 +106,13 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 	public boolean isConflict = false;
 	// 账号被移除
 	private boolean isCurrentAccountRemoved = false;
+	private ContactlistFragment contactListFragment;
+	private ChatAllHistoryFragment chatHistoryFragment;
 	
 	
 	// im未读数量
 	public void initTab() {
-
+		
 		layoutInflater = LayoutInflater.from(this);
 
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
@@ -139,7 +141,7 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 //			} 
 
 		}
-
+		
 		// 注册通知
 		registerNotify();
 	}
@@ -174,9 +176,9 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 	}
 
 	// 获取最新版本号
-//	private void getLastVersion() {
-//		new NewVersionCheckManager(this, this).checkNewVersion(false, null);
-//	}
+	private void getLastVersion() {
+		new NewVersionCheckManager(this, this).checkNewVersion(false, null);
+	}
 
 	@SuppressLint("InflateParams")
 	private View getTabItemView(int index) {
@@ -231,8 +233,10 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		// 初始化云巴
 		initYunBa();
 		// 获取最新版本
-//		getLastVersion();
+		getLastVersion();
 		init();
+		//更新iOS push
+		EMChatManager.getInstance().updateCurrentUserNick(UserManager.getInstance().getUser().getName());
 	}
 	
 	private void init() {     
@@ -285,21 +289,24 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		//每次进入 都更新自己的信息到IM 这里不用单例 先用原版
 		UserProfileManager manager = new UserProfileManager();
 		manager.asyncGetCurrentUserInfo();
+		
+		if (!isConflict && !isCurrentAccountRemoved) {
+			updateUnreadLabel();
+			updateUnreadAddressLable();
+			EMChatManager.getInstance().activityResumed();
+		}
+
+		// unregister this event listener when this activity enters the
+		KHHXSDKHelper sdkHelper = (KHHXSDKHelper) KHHXSDKHelper.getInstance();
+		sdkHelper.pushActivity(this);
+		// register the event listener when enter the foreground
+		EMChatManager.getInstance().registerEventListener(this,
+				new EMNotifierEvent.Event[] { EMNotifierEvent.Event.EventNewMessage ,EMNotifierEvent.Event.EventOfflineMessage, EMNotifierEvent.Event.EventConversationListChanged});
 	}
 
 	public void onPause() {
 		super.onPause();
 		// MobclickAgent.onPause(this);
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-		case SCANNIN_GREQUEST_CODE:
-			
-			break;
-		}
 	}
 
 	// //////////////////////////////private
@@ -327,14 +334,9 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		View newsView = mTabHost.getTabWidget().getChildAt(0);
 		TextView newsUnreadTextView = (TextView) newsView
 				.findViewById(R.id.unread_text_view);
-		// 聊天页面
-		// 新好友请求未读
-//		int newFriendsCount = 0;
-		// 徽标 最多显示99
 		// 未读推送
 		int newsUnreadCount = 0;
 		try {
-//			newFriendsCount = IMModel.unReadNewFriendsCount();
 			newsUnreadCount = NewsPushModel.findUnreadCount().size();
 		} catch (Exception e) {
 		}
@@ -345,32 +347,6 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 			newsUnreadTextView.setVisibility(View.VISIBLE);
 		}
 	}
-
-	// @Override
-	// protected void onSaveInstanceState(Bundle outState) {
-	// // TODO Auto-generated method stub
-	// outState.putBoolean("isConnect", isConnect);
-	// LogUtils.i("on save" + " "+ isConnect, 1);
-	//
-	// super.onSaveInstanceState(outState);
-	// }
-
-	// @Override
-	// public void onConfigurationChanged(android.content.res.Configuration
-	// newConfig) {
-	// super.onConfigurationChanged(newConfig);
-	//
-	// };
-	//
-	// @Override
-	// protected void onRestoreInstanceState(Bundle savedInstanceState) {
-	//
-	// isConnect = savedInstanceState.getBoolean("isConnect");
-	// LogUtils.i("on restroe" + " "+ isConnect, 1);
-	// isConnect = true;
-	//
-	// super.onRestoreInstanceState(savedInstanceState);
-	// }
 
 	// 杀死进程
 	public static void killThisPackageIfRunning(final Context context,
@@ -501,15 +477,53 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 	
 	
 	@Override
-	public void onEvent(EMNotifierEvent arg0) {
+	public void onEvent(EMNotifierEvent event) {
 		// TODO Auto-generated method stub
+		switch (event.getEvent()) {
+		case EventNewMessage: // 普通消息
+		{
+			EMMessage message = (EMMessage) event.getData();
+
+			// 提示新消息
+			HXSDKHelper.getInstance().getNotifier().onNewMsg(message);
+			refreshUI();
+			break;
+		}
+		case EventOfflineMessage: {
+			refreshUI();
+			break;
+		}
+		case EventConversationListChanged: {
+		    refreshUI();
+		    break;
+		}
 		
+		default:
+			break;
+		}
+	}
+	
+	private void refreshUI() {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				// 刷新bottom bar消息未读数
+				updateUnreadLabel();
+				if (mTabHost.getCurrentTab() == 1) {
+					// 当前页面如果为聊天历史页面，刷新此页面
+					chatHistoryFragmentRefresh();
+				}
+			}
+		});
 	}
 	
 	public void updateUnreadLabel() {
 		int count = getUnreadMsgCountTotal();
+		View messageView = mTabHost.getTabWidget().getChildAt(1);
+		TextView unreadTextView = (TextView) messageView.findViewById(R.id.unread_text_view);
 		if (count > 0) {
+			unreadTextView.setVisibility(View.VISIBLE);
 		} else {
+			unreadTextView.setVisibility(View.GONE);
 		}
 	}
 	
@@ -521,9 +535,12 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		runOnUiThread(new Runnable() {
 			public void run() {
 				int count = getUnreadAddressCountTotal();
+				View messageView = mTabHost.getTabWidget().getChildAt(2);
+				TextView unreadTextView = (TextView) messageView.findViewById(R.id.unread_text_view);
 				if (count > 0) {
-//					unreadAddressLable.setText(String.valueOf(count));
+					unreadTextView.setVisibility(View.VISIBLE);
 				} else {
+					unreadTextView.setVisibility(View.GONE);
 				}
 			}
 		});
@@ -639,11 +656,8 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 					}, null));
 				}
 			}
-			
 			// 刷新ui
-//			if (currentTabIndex == 1)
-//				contactListFragment.refresh();
-
+			contactListFragmentRefresh();
 		}
 
 		@Override
@@ -667,8 +681,8 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 					}
 					updateUnreadLabel();
 					// 刷新ui
-//					contactListFragment.refresh();
-//					chatHistoryFragment.refresh();
+					contactListFragmentRefresh();
+					chatHistoryFragmentRefresh();
 				}
 			});
 
@@ -761,7 +775,7 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 
 				@Override
 				public void run() {
-//					chatHistoryFragment.errorItem.setVisibility(View.GONE);
+					chatHistoryFragmentRefresh();
 				}
 
 			});
@@ -782,12 +796,13 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 						// 显示帐号在其他设备登陆dialog
 						showConflictDialog();
 					} else {
-//						chatHistoryFragment.errorItem.setVisibility(View.VISIBLE);
-//						if (NetUtils.hasNetwork(MainActivity.this))
-//							chatHistoryFragment.errorText.setText(st1);
-//						else
-//							chatHistoryFragment.errorText.setText(st2);
-
+						if (chatHistoryFragment != null) {
+							chatHistoryFragment.errorItem.setVisibility(View.VISIBLE);
+							if (NetUtils.hasNetwork(MainTabActivity.this))
+								chatHistoryFragment.errorText.setText(st1);
+							else
+								chatHistoryFragment.errorText.setText(st2);	
+						}
 					}
 				}
 
@@ -831,9 +846,9 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 			runOnUiThread(new Runnable() {
 				public void run() {
 					updateUnreadLabel();
+					
 					// 刷新ui
-//					if (currentTabIndex == 0)
-//						chatHistoryFragment.refresh();
+					chatHistoryFragmentRefresh();
 //					if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
 //						GroupsActivity.instance.onResume();
 //					}
@@ -861,8 +876,7 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 				public void run() {
 					try {
 						updateUnreadLabel();
-//						if (currentTabIndex == 0)
-//							chatHistoryFragment.refresh();
+						chatHistoryFragmentRefresh();
 //						if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
 //							GroupsActivity.instance.onResume();
 //						}
@@ -882,8 +896,8 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 			runOnUiThread(new Runnable() {
 				public void run() {
 					updateUnreadLabel();
-//					if (currentTabIndex == 0)
-//						chatHistoryFragment.refresh();
+					chatHistoryFragmentRefresh();
+					
 //					if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
 //						GroupsActivity.instance.onResume();
 //					}
@@ -927,9 +941,9 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 			runOnUiThread(new Runnable() {
 				public void run() {
 					updateUnreadLabel();
-//					// 刷新ui
-//					if (currentTabIndex == 0)
-//						chatHistoryFragment.refresh();
+					// 刷新ui
+					chatHistoryFragmentRefresh();
+					
 //					if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
 //						GroupsActivity.instance.onResume();
 //					}
@@ -949,7 +963,6 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 	 * @param msg
 	 */
 	private void notifyNewIviteMessage(InviteMessage msg) {
-		LogUtils.i("111111111", 1);
 		saveInviteMsg(msg);
 		// 提示有新消息
 		HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(null);
@@ -957,8 +970,8 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		// 刷新bottom bar消息未读数
 		updateUnreadAddressLable();
 		// 刷新好友页面ui
-//		if (currentTabIndex == 1)
-//			contactListFragment.refresh();
+		contactListFragmentRefresh();
+		
 	}
 
 	/**
@@ -1084,5 +1097,26 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 //
 //	}
 
+	private void contactListFragmentRefresh(){
+		if (contactListFragment != null) {
+			contactListFragment.refresh();
+		}else {
+			contactListFragment = (ContactlistFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[2]);
+			if (contactListFragment != null) {
+				contactListFragment.refresh();
+			}	
+		}
+	}
+	
+	private void chatHistoryFragmentRefresh(){
+		if (chatHistoryFragment != null) {
+			chatHistoryFragment.refresh();
+		}else {
+			chatHistoryFragment = (ChatAllHistoryFragment) getSupportFragmentManager().findFragmentByTag(mTextviewArray[1]);
+			if (chatHistoryFragment != null) {
+				chatHistoryFragment.refresh();
+			}	
+		}
+	}
 
 }
