@@ -62,6 +62,7 @@
     <string name="personal_signature">个人说明</string>
     <string name="personal_icon">头像</string>
     <string name="personal_name">昵称</string>
+    <string name="personal_remark">备注</string>
     <string name="personal_job">职位</string>
     <string name="personal_company">公司</string>
     <string name="personal_address">地址</string>
@@ -69,6 +70,7 @@
     <string name="personal_email">邮箱</string>
     <string name="personal_phone">电话</string>
     <string name="personal_enter_name">请输入昵称</string>
+    <string name="personal_enter_remark">请输入备注</string>
     <string name="personal_enter_job">请输入职位</string>
     <string name="personal_enter_company">请输入公司</string>
     <string name="personal_enter_sign">请输入签名</string>
@@ -79,6 +81,7 @@
     <string name="personal_sex_female">女</string>
     <string name="personal_name_not_null">昵称不能为空</string>
     <string name="personal_name_too_long">名字太长</string>
+    <string name="personal_remark_too_long">备注太长</string>
     <string name="personal_none">暂无</string>
     <string name="personal_friends_can_see">仅好友可见</string>
     <string name="personal_no_person">不存在此人</string>

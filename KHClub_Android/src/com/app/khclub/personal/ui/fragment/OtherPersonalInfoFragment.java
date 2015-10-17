@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
-import com.app.khclub.base.easeim.KHHXSDKHelper;
-import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
@@ -32,6 +30,9 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 	// 姓名
 	@ViewInject(R.id.name_text_view)
 	private TextView nameTextView;
+	// 二级姓名
+	@ViewInject(R.id.second_name_text_view)
+	private TextView secondNameTextView;
 	// 职业
 	@ViewInject(R.id.job_text_view)
 	private TextView jobTextView;
@@ -100,7 +101,7 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 	}
 
 	// 设置内容
-	public void setUIWithModel(UserModel userModel, boolean isFriend, int isCollect) {
+	public void setUIWithModel(UserModel userModel, boolean isFriend, int isCollect, String remark) {
 		// 获取uid
 		userId = userModel.getUid();
 		if (isCollect == 0) {
@@ -120,6 +121,11 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 			nameTextView.setText(userModel.getName());
 		} else {
 			nameTextView.setText(R.string.personal_none);
+		}
+		//备注
+		if (null != remark && remark.length() > 0) {
+			nameTextView.setText(remark);
+			secondNameTextView.setText(userModel.getName());
 		}
 
 		// 职业
@@ -186,6 +192,18 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 		} else {
 			collectTextViewBtn.setText("未收藏");
 		}
+	}
+	//设置姓名部分 PS：这个位置也显示备注	
+	public void setNameTextView(String name, String secondName){
+		// 姓名部分
+		if (null != name && name.length() > 0) {
+			nameTextView.setText(name);
+		} else {
+			nameTextView.setText(R.string.personal_none);
+		}
+		//二级
+		secondNameTextView.setText(secondName);
+		
 	}
 
 	/**

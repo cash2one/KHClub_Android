@@ -29,7 +29,12 @@ import android.os.Build;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 
+import com.app.khclub.base.easeim.KHHXSDKHelper;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
+import com.app.khclub.base.easeim.domain.User;
+import com.app.khclub.base.easeim.utils.UserUtils;
+import com.app.khclub.base.utils.ConfigUtils;
+import com.app.khclub.base.utils.LogUtils;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.util.EMLog;
@@ -180,6 +185,12 @@ public class HXNotifier {
      */
     protected void sendNotification(EMMessage message, boolean isForeground, boolean numIncrease) {
         String username = message.getFrom();
+        String nick = UserUtils.getUserName(username);
+        if (nick != null && nick.length() > 0) {
+			username = nick;
+		}else {
+			username = "";
+		}
         try {
             String notifyText = username + " ";
             switch (message.getType()) {

@@ -95,7 +95,8 @@
         <activity
             android:name="com.app.khclub.personal.ui.activity.PersonalDescActivity"
             android:theme="@android:style/Theme.Holo.Light" />
-        <activity android:name="com.app.khclub.personal.ui.activity.OtherPersonalActivity" >
+        <activity android:name="com.app.khclub.personal.ui.activity.OtherPersonalActivity"
+             android:theme="@android:style/Theme.Holo.Light" >
         </activity>
         <activity android:name="com.app.khclub.personal.ui.activity.PersonalNewsActivity" >
         </activity>

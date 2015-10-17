@@ -23,6 +23,16 @@
         android:layout_marginTop="5dip"
         android:layout_toRightOf="@+id/head_image_view"
         android:textSize="@dimen/font_size_large" />
+    
+    <TextView
+        android:id="@+id/second_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/head_image_view"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="5dip"
+        android:layout_toRightOf="@+id/name_text_view"
+        android:textSize="@dimen/font_size_medium" />    
 
     <TextView
         android:id="@+id/text_collect_btn"

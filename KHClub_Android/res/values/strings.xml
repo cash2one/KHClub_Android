@@ -57,6 +57,7 @@
     <string name="personal_signature">Signature</string>
     <string name="personal_icon">Icon</string>
     <string name="personal_name">Name</string>
+    <string name="personal_remark">Remark</string>
     <string name="personal_job">Job</string>
     <string name="personal_company">Company</string>
     <string name="personal_address">Address</string>
@@ -64,6 +65,7 @@
     <string name="personal_email">Email</string>
     <string name="personal_phone">Phone</string>
     <string name="personal_enter_name">Please enter name</string>
+    <string name="personal_enter_remark">Please enter remark</string>
     <string name="personal_enter_job">Please enter job</string>
     <string name="personal_enter_sign">Please enter sign</string>
     <string name="personal_enter_address">Please enter address</string>
@@ -73,6 +75,7 @@
     <string name="personal_sex_female">Woman</string>
     <string name="personal_name_not_null">Name can\'t be empty</string>
     <string name="personal_name_too_long">Name too long</string>
+    <string name="personal_remark_too_long">Remark too long</string>
     <string name="personal_none">None</string>
     <string name="personal_friends_can_see">Only friends can see</string>
     <string name="personal_no_person">Don\'t exist</string>

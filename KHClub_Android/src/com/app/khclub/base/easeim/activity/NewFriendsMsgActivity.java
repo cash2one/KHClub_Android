@@ -15,8 +15,11 @@ package com.app.khclub.base.easeim.activity;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.app.khclub.R;
@@ -26,6 +29,9 @@ import com.app.khclub.base.easeim.adapter.NewFriendsMsgAdapter;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.app.khclub.base.easeim.db.InviteMessgeDao;
 import com.app.khclub.base.easeim.domain.InviteMessage;
+import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 
 /**
  * 申请与通知
@@ -33,7 +39,8 @@ import com.app.khclub.base.easeim.domain.InviteMessage;
  */
 public class NewFriendsMsgActivity extends BaseActivity {
 	private ListView listView;
-
+	private List<InviteMessage> msgs;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,11 +48,25 @@ public class NewFriendsMsgActivity extends BaseActivity {
 
 		listView = (ListView) findViewById(R.id.list);
 		InviteMessgeDao dao = new InviteMessgeDao(this);
-		List<InviteMessage> msgs = dao.getMessagesList();
+		msgs = dao.getMessagesList();
 		//设置adapter
 		NewFriendsMsgAdapter adapter = new NewFriendsMsgAdapter(this, 1, msgs); 
 		listView.setAdapter(adapter);
 		((KHHXSDKHelper)HXSDKHelper.getInstance()).getContactList().get(Constant.NEW_FRIENDS_USERNAME).setUnreadMsgCount(0);
+		//点击事件
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				InviteMessage msg = msgs.get(position);
+				Intent intent = new Intent(NewFriendsMsgActivity.this,OtherPersonalActivity.class);
+				intent.putExtra(
+						OtherPersonalActivity.INTENT_KEY,
+						KHUtils.stringToInt(msg.getFrom().replace(KHConst.KH, "")));
+				startActivity(intent);
+				overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+			}
+		});
 		
 	}
 

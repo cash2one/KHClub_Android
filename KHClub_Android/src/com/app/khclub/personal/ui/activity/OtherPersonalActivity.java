@@ -3,6 +3,8 @@ package com.app.khclub.personal.ui.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,7 +14,9 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,10 +24,13 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
+import com.app.khclub.base.app.KHApplication;
 import com.app.khclub.base.easeim.KHHXSDKHelper;
 import com.app.khclub.base.easeim.activity.AlertDialog;
 import com.app.khclub.base.easeim.activity.ChatActivity;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
+import com.app.khclub.base.easeim.db.InviteMessgeDao;
+import com.app.khclub.base.easeim.db.UserDao;
 import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
@@ -41,6 +48,7 @@ import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.easemob.chat.EMContactManager;
 import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -83,12 +91,18 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	private OtherPersonalQrcodeFragment otherPersonalQRFragment;
 	// 用户ID
 	private int uid;
+	//查看者的模型
+	private UserModel otherUserModel;
+	//如果是好友的话备注
+	private String remark = "";
 	// 是否是好友
 	private boolean isFriend;
 	// 私有dialog
 	private ProgressDialog progressDialog;
 	// 底部操作弹出菜单
 	private PersonalBottomPopupMenu shareMenu;
+	//imUser
+	private User imUser; 
 
 	@OnClick({ R.id.image_cover_layout, R.id.add_send_btn })
 	private void clickEvent(View view) {
@@ -143,9 +157,9 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		getPersonalInformation();
 
 		// 是否是好友
-		User user = ((KHHXSDKHelper) KHHXSDKHelper.getInstance())
+		imUser = ((KHHXSDKHelper) KHHXSDKHelper.getInstance())
 				.getContactList().get(KHConst.KH + uid);
-		if (user != null) {
+		if (imUser != null) {
 			isFriend = true;
 			addSendButton.setText(R.string.personal_send_message);
 			shareMenu = new PersonalBottomPopupMenu(this, true);
@@ -154,6 +168,14 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			addSendButton.setText(R.string.personal_add_friend);
 			shareMenu = new PersonalBottomPopupMenu(this, false);
 		}
+
+		initPopupListener();
+	}
+
+	/**
+	 * 初始化操作菜单事件
+	 */
+	private void initPopupListener() {
 
 		// 添加右边操作按钮
 		ImageView rightBtn = addRightImgBtn(R.layout.right_image_button,
@@ -166,13 +188,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				shareMenu.showPopupWindow(titleBar);
 			}
 		});
-		initPopupListener();
-	}
-
-	/**
-	 * 初始化操作菜单事件
-	 */
-	private void initPopupListener() {
+		
+		
 		// 分享菜单的事件
 		shareMenu.setListener(new BottomClickListener() {
 
@@ -214,14 +231,20 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void editRemarkClick() {
-				// 设置备注
-
+				if (isFriend) {
+					if (otherUserModel != null) {
+						// 设置备注
+						remarkUpdate();										
+					}
+				}
 			}
 
 			@Override
 			public void deleteFriendClick() {
-				// 删除好友
-
+				if (imUser != null) {
+					// 删除好友
+					deleteContact(imUser);					
+				}
 			}
 
 			@Override
@@ -311,7 +334,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	// 处理数据
 	private void handleData(JSONObject jsonObject) {
 
-		UserModel otherUserModel = new UserModel();
+		otherUserModel = new UserModel();
 		otherUserModel.setContentWithJson(jsonObject);
 		// 签名
 		if (null != otherUserModel.getSignature()
@@ -320,9 +343,6 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		} else {
 			signTextView.setText(R.string.personal_none);
 		}
-		otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend,
-				jsonObject.getIntValue("isCollected"));
-		otherPersonalQRFragment.setQRcode(otherUserModel);
 		// 标题
 		setBarText(otherUserModel.getName());
 
@@ -356,7 +376,15 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			}
 			imageView.setVisibility(View.VISIBLE);
 		}
+		
+		//备注
+		if (jsonObject.containsKey("remark")) {
+			remark = jsonObject.getString("remark");
+		}
 
+		otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend,
+				jsonObject.getIntValue("isCollected"), remark);
+		otherPersonalQRFragment.setQRcode(otherUserModel);
 	}
 
 	/**
@@ -424,6 +452,188 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				}
 			}
 		}).start();
+	}
+	
+	
+	/**
+	 * 删除联系人
+	 * 
+	 * @param toDeleteUser
+	 */
+	public void deleteContact(final User tobeDeleteUser) {
+		
+		String st1 = getResources().getString(R.string.deleting);
+		final String st2 = getResources().getString(R.string.Delete_failed);
+		final ProgressDialog pd = new ProgressDialog(this);
+		pd.setMessage(st1);
+		pd.setCanceledOnTouchOutside(false);
+		pd.show();
+
+		// 参数设置
+		RequestParams params = new RequestParams();
+		params.addBodyParameter("user_id", UserManager.getInstance().getUser().getUid()+ "");
+		params.addBodyParameter("target_id", tobeDeleteUser.getUsername().replace(KHConst.KH, ""));
+
+		HttpManager.post(KHConst.DELETE_FRIEND, params,
+				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						if (status == KHConst.STATUS_SUCCESS) {
+							new Thread(new Runnable() {
+								public void run() {
+									try {
+										EMContactManager.getInstance()
+												.deleteContact(
+														tobeDeleteUser
+																.getUsername());
+										// 删除db和内存中此用户的数据
+										UserDao dao = new UserDao(OtherPersonalActivity.this);
+										dao.deleteContact(tobeDeleteUser
+												.getUsername());
+										((KHHXSDKHelper) HXSDKHelper.getInstance()).getContactList().remove(
+														tobeDeleteUser.getUsername());
+										runOnUiThread(
+												new Runnable() {
+													public void run() {
+														pd.dismiss();
+														//UI修改
+														shareMenu = new PersonalBottomPopupMenu(OtherPersonalActivity.this, false);
+														initPopupListener();
+														isFriend = false;
+														addSendButton.setText(R.string.personal_add_friend);
+													}
+												});
+										// 删除相关的邀请消息
+										InviteMessgeDao msgDao = new InviteMessgeDao(
+												OtherPersonalActivity.this);
+										msgDao.deleteMessage(tobeDeleteUser.getUsername());
+
+									} catch (final Exception e) {
+										runOnUiThread(
+												new Runnable() {
+													public void run() {
+														pd.dismiss();
+														Toast.makeText(OtherPersonalActivity.this,st2+ e.getMessage(),1).show();
+													}
+												});
+									}
+								}
+							}).start();
+						} else {
+							ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+							pd.dismiss();
+						}
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						super.onFailure(arg0, arg1, flag);
+						ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+						pd.dismiss();
+					}
+				}, null));
+	}
+	
+	// 备注点击
+	private void remarkUpdate() {
+
+		// dialog
+		Builder nameAlertDialog = new Builder(this);
+		LinearLayout textViewLayout = (LinearLayout) View.inflate(
+				this, R.layout.dialog_text_view, null);
+		nameAlertDialog.setView(textViewLayout);
+		final EditText et_search = (EditText) textViewLayout
+				.findViewById(R.id.name_edit_text);
+		et_search.setHint(R.string.personal_enter_remark);
+		TextView etTextView = (TextView) textViewLayout.findViewById(R.id.name_text_view);
+		etTextView.setText(R.string.personal_remark);
+		//备注
+		et_search.setText(remark);
+		et_search.setSelection(et_search.getText().length());
+
+		final Dialog dialog = nameAlertDialog.show();
+		TextView cancelTextView = (TextView) textViewLayout
+				.findViewById(R.id.tv_custom_alert_dialog_cancel);
+		cancelTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		TextView confirmTextView = (TextView) textViewLayout
+				.findViewById(R.id.tv_custom_alert_dialog_confirm);
+		confirmTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String remark = et_search.getText().toString().trim();
+				if (remark.length() > 64) {
+					ToastUtil.show(OtherPersonalActivity.this, R.string.personal_remark_too_long);
+					return;
+				}
+				addRemark(remark);
+				dialog.dismiss();
+			}
+		});
+
+	}
+	
+	//上传信息
+	private void addRemark(final String remark) {
+
+		// 参数设置
+		RequestParams params = new RequestParams();
+		params.addBodyParameter("user_id", UserManager.getInstance().getUser().getUid()+"");
+		params.addBodyParameter("target_id", uid+"");
+		params.addBodyParameter("friend_remark", remark);
+
+		showLoading(getString(R.string.uploading), false);
+		HttpManager.post(KHConst.ADD_REMARK, params,
+				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+					
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						
+						hideLoading();
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse.getInteger(KHConst.HTTP_STATUS);
+						if (status == KHConst.STATUS_SUCCESS) {
+							
+							OtherPersonalActivity.this.remark = remark;
+							
+							String secondName = "";
+							if (remark.length() > 0) {
+								//设置名
+								imUser.setNick(remark);
+								secondName = otherUserModel.getName();
+							}else {
+								//为空恢复
+								imUser.setNick(otherUserModel.getName());
+							}
+							//缓存
+							UserDao userDao = new UserDao(KHApplication.getInstance());
+							userDao.saveContact(imUser);
+							//更新UI
+							otherPersonalInfoFragment.setNameTextView(imUser.getNick(), secondName);
+							
+						}
+						if (status == KHConst.STATUS_FAIL) {
+							ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+						}
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						hideLoading();
+						super.onFailure(arg0, arg1, flag);
+						ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+					}
+				}, null));
 	}
 
 }

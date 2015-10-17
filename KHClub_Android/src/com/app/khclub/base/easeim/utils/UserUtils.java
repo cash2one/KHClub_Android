@@ -14,6 +14,7 @@ import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
+import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
@@ -63,7 +64,7 @@ public class UserUtils {
         final User tmpUser = user;
         //是否是好友
         final boolean tmpIsFriend = isFriend;
-		String path = KHConst.GET_IMAGE_AND_NAME+"?user_id="+username.replace(KHConst.KH, "");
+		String path = KHConst.GET_IMAGE_AND_NAME+"?user_id="+username.replace(KHConst.KH, "")+"&self_id="+UserManager.getInstance().getUser().getUid();
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>(){
 			@Override
 			public void onSuccess(JSONObject jsonResponse, String flag) {
@@ -95,6 +96,16 @@ public class UserUtils {
         
         return user;
     }
+    
+    //获取名字
+    public static String getUserName(String username) {
+    	User user = ((KHHXSDKHelper)KHHXSDKHelper.getInstance()).getContactList().get(username);
+          if (user != null) {
+  			return user.getNick();
+  		}else {
+  			return ConfigUtils.getStringConfig(username+NAMEKEY);
+  		}
+	}
     
     /**
      * 设置用户头像

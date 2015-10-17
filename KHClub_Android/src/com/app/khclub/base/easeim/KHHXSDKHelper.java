@@ -29,6 +29,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.app.khclub.R;
+import com.app.khclub.base.easeim.activity.ChatActivity;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.app.khclub.base.easeim.applib.model.HXNotifier;
 import com.app.khclub.base.easeim.applib.model.HXNotifier.HXNotificationInfoProvider;
@@ -37,6 +38,7 @@ import com.app.khclub.base.easeim.domain.RobotUser;
 import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.easeim.receiver.CallReceiver;
 import com.app.khclub.base.easeim.utils.CommonUtils;
+import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.easemob.EMCallBack;
 import com.easemob.EMChatRoomChangeListener;
@@ -295,6 +297,12 @@ public class KHHXSDKHelper extends HXSDKHelper{
             
             @Override
             public String getDisplayedText(EMMessage message) {
+            	String ticket = "";
+            	String localNick = UserUtils.getUserName(message.getFrom());
+                if (localNick != null && localNick.length() > 0) {
+                	ticket = localNick+ ": ";
+        		}
+            	
                 // 设置状态栏的消息提示，可以根据message的类型做相应提示
                 String ticker = CommonUtils.getMessageDigest(message, appContext);
                 if(message.getType() == Type.TXT){
@@ -306,10 +314,10 @@ public class KHHXSDKHelper extends HXSDKHelper{
     				if(!TextUtils.isEmpty(nick)){
     					return nick + ": " + ticker;
     				}else{
-    					return message.getFrom() + ": " + ticker;
+    					return ticket + ticker;
     				}
     			}else{
-    				return message.getFrom() + ": " + ticker;
+    				return ticket + ticker;
     			}
             }
             
@@ -323,27 +331,27 @@ public class KHHXSDKHelper extends HXSDKHelper{
             public Intent getLaunchIntent(EMMessage message) {
                 //设置点击通知栏跳转事件
                 Intent intent = new Intent(appContext, MainTabActivity.class);
-//                //有电话时优先跳转到通话页面
-//                if(isVideoCalling){
+                //有电话时优先跳转到通话页面
+                if(isVideoCalling){
 //                    intent = new Intent(appContext, VideoCallActivity.class);
-//                }else if(isVoiceCalling){
+                }else if(isVoiceCalling){
 //                    intent = new Intent(appContext, VoiceCallActivity.class);
-//                }else{
-//                    ChatType chatType = message.getChatType();
-//                    if (chatType == ChatType.Chat) { // 单聊信息
-//                        intent.putExtra("userId", message.getFrom());
-//                        intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
-//                    } else { // 群聊信息
-//                        // message.getTo()为群聊id
-//                        intent.putExtra("groupId", message.getTo());
-//                        if(chatType == ChatType.GroupChat){
-//                            intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
-//                        }else{
-//                            intent.putExtra("chatType", ChatActivity.CHATTYPE_CHATROOM);
-//                        }
-//                        
-//                    }
-//                }
+                }else{
+                    ChatType chatType = message.getChatType();
+                    if (chatType == ChatType.Chat) { // 单聊信息
+                        intent.putExtra("userId", message.getFrom());
+                        intent.putExtra("chatType", ChatActivity.CHATTYPE_SINGLE);
+                    } else { // 群聊信息
+                        // message.getTo()为群聊id
+                        intent.putExtra("groupId", message.getTo());
+                        if(chatType == ChatType.GroupChat){
+                            intent.putExtra("chatType", ChatActivity.CHATTYPE_GROUP);
+                        }else{
+                            intent.putExtra("chatType", ChatActivity.CHATTYPE_CHATROOM);
+                        }
+                        
+                    }
+                }
                 return intent;
             }
         };
