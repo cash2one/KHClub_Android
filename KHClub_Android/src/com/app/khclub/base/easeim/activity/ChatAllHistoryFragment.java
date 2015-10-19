@@ -222,7 +222,12 @@ public class ChatAllHistoryFragment extends Fragment implements
 						@Override
 						public void createGroupClick() {
 							// 创建群聊
-
+							startActivity(new Intent(getActivity(),
+									NewGroupActivity.class));
+							getActivity()
+									.overridePendingTransition(
+											R.anim.push_right_in,
+											R.anim.push_right_out);
 						}
 
 						@Override

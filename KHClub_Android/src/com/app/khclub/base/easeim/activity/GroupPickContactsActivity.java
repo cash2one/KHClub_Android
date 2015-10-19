@@ -41,6 +41,9 @@ import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 
 public class GroupPickContactsActivity extends BaseActivity {
+	
+	//是否是单选
+	public static String INTENT_SINGLE_KEY = "isSingle";
 	private ListView listView;
 	/** 是否为一个新建的群组 */
 	protected boolean isCreatingNewGroup;
@@ -54,7 +57,8 @@ public class GroupPickContactsActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_group_pick_contacts);
-
+		
+		isSignleChecked = getIntent().getBooleanExtra(INTENT_SINGLE_KEY, false);
 		// String groupName = getIntent().getStringExtra("groupName");
 		String groupId = getIntent().getStringExtra("groupId");
 		if (groupId == null) {// 创建群组

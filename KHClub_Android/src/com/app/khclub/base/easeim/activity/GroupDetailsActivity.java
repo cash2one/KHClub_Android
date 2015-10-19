@@ -961,15 +961,15 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						convertView.setVisibility(View.VISIBLE);
 						convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
 					}
-					final String st11 = getResources().getString(R.string.Add_a_button_was_clicked);
+//					final String st11 = getResources().getString(R.string.Add_a_button_was_clicked);
 					button.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							EMLog.d(TAG, st11);
+							Intent intent = new Intent(GroupDetailsActivity.this, GroupPickContactsActivity.class).putExtra("groupId", groupId);
+//							intent.putExtra(GroupPickContactsActivity.INTENT_SINGLE_KEY, true);
+//							intent.putExtra();
 							// 进入选人页面
-							startActivityForResult(
-									(new Intent(GroupDetailsActivity.this, GroupPickContactsActivity.class).putExtra("groupId", groupId)),
-									REQUEST_CODE_ADD_USER);
+							startActivityForResult(intent,REQUEST_CODE_ADD_USER);
 						}
 					});
 				}

@@ -6,6 +6,7 @@ package com.app.khclub.message.ui.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,12 +23,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
 import com.app.khclub.base.adapter.HelloHaAdapter;
 import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
+import com.app.khclub.base.easeim.KHHXSDKHelper;
+import com.app.khclub.base.easeim.activity.AlertDialog;
+import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
+import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
@@ -40,6 +46,7 @@ import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.message.model.IMModel;
 import com.app.khclub.message.ui.model.PersonModel;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
+import com.easemob.chat.EMContactManager;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -134,7 +141,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 
 			@Override
 			protected void convert(final HelloHaBaseAdapterHelper helper,
-					PersonModel item) {
+					final PersonModel item) {
 				final PersonModel currentPerson = item;
 				// 绑定头像图片
 				ImageView headImageView = helper.getView(R.id.iv_contacts_head);
@@ -147,6 +154,10 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 				}
 				// 绑定昵称
 				helper.setText(R.id.tv_contact_user_name, item.getUserName());
+				if (item.getUserName() == null || item.getUserName().length() < 1) {
+					helper.setText(R.id.tv_contact_user_name, getString(R.string.personal_none));	
+				}
+				
 				// 通讯录名称
 				String contactName = "";
 				if (mContactsNumber.contains(item.getPhoneNumber())) {
@@ -173,8 +184,11 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 						});
 
 				Button addButton = helper.getView(R.id.btn_contacts_add);
-				if (null != item.getIsFriend()
-						&& "1".equals(item.getIsFriend())) {
+				
+				User imUser = ((KHHXSDKHelper) KHHXSDKHelper.getInstance())
+						.getContactList().get(KHConst.KH + item.getUerId());
+				
+				if (null != imUser) {
 					addButton.setText("已添加");
 					addButton.setBackgroundResource(R.color.main_gary);
 					addButton.setTextColor(getResources().getColorStateList(
@@ -195,6 +209,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 							@Override
 							public void onClick(View v) {
 								// 点击添加按钮
+								addContact(item.getUerId());
 							}
 						});
 			}
@@ -431,47 +446,70 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 	}
 
 	// 添加好友
-	private void addFriend(final IMModel imModel, final int index) {
+	/**
+	 * 添加contact
+	 * 
+	 * @param view
+	 */
+	public void addContact(String uid) {
 
-		// 参数设置
-		RequestParams params = new RequestParams();
-		params.addBodyParameter("user_id", UserManager.getInstance().getUser()
-				.getUid()
-				+ "");
-		// params.addBodyParameter("friend_id",
-		// imModel.getTargetId().replace(KHConst.JLXC, "") + "");
+		final String targetIMID = KHConst.KH + uid;
+		if (KHUtils.selfCommonIMID().equals(targetIMID)) {
+			String str = getString(R.string.not_add_myself);
+			startActivity(new Intent(this, AlertDialog.class).putExtra("msg",
+					str));
+			return;
+		}
+		if (((KHHXSDKHelper) HXSDKHelper.getInstance()).getContactList()
+				.containsKey(targetIMID)) {
+			// 提示已在好友列表中，无需添加
+			if (EMContactManager.getInstance().getBlackListUsernames()
+					.contains(targetIMID)) {
+				startActivity(new Intent(this, AlertDialog.class).putExtra(
+						"msg", R.string.im_in_black_list));
+				return;
+			}
+			String strin = getString(R.string.This_user_is_already_your_friend);
+			startActivity(new Intent(this, AlertDialog.class).putExtra("msg",
+					strin));
+			return;
+		}
 
-		showLoading("添加中^_^", false);
-		HttpManager.post(KHConst.Add_FRIEND, params,
-				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+		final ProgressDialog progressDialog = new ProgressDialog(this);
+		String stri = getResources().getString(R.string.Is_sending_a_request);
+		progressDialog.setMessage(stri);
+		progressDialog.setCanceledOnTouchOutside(false);
+		progressDialog.show();
 
-					@Override
-					public void onSuccess(JSONObject jsonResponse, String flag) {
-						super.onSuccess(jsonResponse, flag);
+		new Thread(new Runnable() {
+			public void run() {
 
-						hideLoading();
-						int status = jsonResponse
-								.getInteger(KHConst.HTTP_STATUS);
-						ToastUtil.show(ContactsUserActivity.this,
-								jsonResponse.getString(KHConst.HTTP_MESSAGE));
-
-						if (status == KHConst.STATUS_SUCCESS) {
-							// 添加好友
-							// MessageAddFriendHelper.addFriend(imModel);
-							// // 更新
-							// PersonModel personModel = dataList.get(index);
-							// personModel.setIsFriend("1");
-							// contactsAdapter.replaceAll(dataList);
+				try {
+					// demo写死了个reason，实际应该让用户手动填入
+					// 先就用DEMO这个死的
+					String s = getResources().getString(R.string.Add_a_friend);
+					EMContactManager.getInstance().addContact(targetIMID, s);
+					runOnUiThread(new Runnable() {
+						public void run() {
+							progressDialog.dismiss();
+							String s1 = getResources().getString(
+									R.string.send_successful);
+							Toast.makeText(getApplicationContext(), s1, 1)
+									.show();
 						}
-					}
-
-					@Override
-					public void onFailure(HttpException arg0, String arg1,
-							String flag) {
-						super.onFailure(arg0, arg1, flag);
-						hideLoading();
-						ToastUtil.show(ContactsUserActivity.this, "网络异常");
-					}
-				}, null));
+					});
+				} catch (final Exception e) {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							progressDialog.dismiss();
+							String s2 = getResources().getString(
+									R.string.Request_add_buddy_failure);
+							Toast.makeText(getApplicationContext(),
+									s2 + e.getMessage(), 1).show();
+						}
+					});
+				}
+			}
+		}).start();
 	}
 }
