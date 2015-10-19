@@ -3,6 +3,8 @@ package com.app.khclub.base.app;
 import io.yunba.android.manager.YunBaManager;
 import android.app.Application;
 
+import cn.sharesdk.framework.ShareSDK;
+
 import com.app.khclub.base.easeim.KHHXSDKHelper;
 import com.app.khclub.base.manager.DBManager;
 import com.app.khclub.base.manager.UserManager;
@@ -31,6 +33,8 @@ public class KHApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		
+		ShareSDK.initSDK(this);
 		application = (KHApplication) getApplicationContext();
 		//数据库初始化
 		DBManager.getInstance(); 
@@ -46,6 +50,8 @@ public class KHApplication extends Application {
         ImageLoader.getInstance().init(
 				ImageLoaderConfiguration.createDefault(getApplicationContext()));
         hxSDKHelper.onInit(application);
+        //初始化share
+        ShareSDK.initSDK(this);
 	}  
 
 	

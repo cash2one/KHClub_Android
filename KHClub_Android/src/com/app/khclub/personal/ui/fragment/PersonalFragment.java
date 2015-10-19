@@ -1,6 +1,7 @@
 package com.app.khclub.personal.ui.fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Intent;
@@ -11,8 +12,16 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.Platform.ShareParams;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -24,9 +33,8 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.base.utils.LogUtils;
+import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.personal.ui.activity.CollectCardActivity;
-import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.app.khclub.personal.ui.activity.PersonalNewsActivity;
 import com.app.khclub.personal.ui.activity.PersonalSettingActivity;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
@@ -148,25 +156,52 @@ public class PersonalFragment extends BaseFragment {
 			@Override
 			public void shareToWeiboClick() {
 				// 分享到微博
-
+				ShareParams sp = new ShareParams();
+				sp.setText(UserManager.getInstance().getUser().getName());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+				weibo.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				weibo.SSOSetting(true);
+				// 执行图文分享
+				weibo.share(sp);
 			}
 
 			@Override
 			public void shareToWeChatClick() {
 				// 分享到微信
-
+				ShareParams sp = new ShareParams();
+				sp.setText(UserManager.getInstance().getUser().getName());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
+				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				wexin.share(sp);
 			}
 
 			@Override
 			public void shareToQzoneClick() {
 				// 分享到qq空间
-
+				ShareParams sp = new ShareParams();
+				sp.setText(UserManager.getInstance().getUser().getName());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
+				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				wexin.share(sp);
 			}
 
 			@Override
 			public void shareToQQFriendsClick() {
 				// 分享给qq好友
-
+				ShareParams sp = new ShareParams();
+				sp.setTitle("KHClub");
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setText(UserManager.getInstance().getUser().getName());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				Platform qq = ShareSDK.getPlatform(QQ.NAME);
+				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				qq.share(sp);
 			}
 
 			@Override
@@ -178,7 +213,15 @@ public class PersonalFragment extends BaseFragment {
 			@Override
 			public void shareToCircleofFriendsClick() {
 				// 分享到朋友圈
-
+				ShareParams sp = new ShareParams();
+				sp.setTitle("KHClub");
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setText(UserManager.getInstance().getUser().getName());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				Platform qq = ShareSDK.getPlatform(QZone.NAME);
+				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				qq.share(sp);
 			}
 
 			@Override
@@ -214,6 +257,21 @@ public class PersonalFragment extends BaseFragment {
 		// 获取图片
 		getNewsImages();
 	}
+	
+	//分享监听
+	PlatformActionListener platformActionListener = new PlatformActionListener() {
+		@Override
+		public void onError(Platform arg0, int arg1, Throwable arg2) {
+			ToastUtil.show(getActivity(), R.string.personal_share_fail);
+		}
+		@Override
+		public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+//			ToastUtil.show(getActivity(), R.string.personal_share_ok);
+		}
+		@Override
+		public void onCancel(Platform arg0, int arg1) {
+		}
+	};
 
 	/**
 	 * 初始化ViewPager

@@ -88,6 +88,8 @@
 	<string name="personal_confirm_logout">Log out？</string>
 	<string name="personal_new_version">New version found</string>
 	<string name="personal_is_lastest_version">Is the lastest version</string>
+	<string name="personal_share_ok">Share OK</string>
+	<string name="personal_share_fail">Share Fail</string>
     <!-- Personal -->
     
     <!-- News -->
