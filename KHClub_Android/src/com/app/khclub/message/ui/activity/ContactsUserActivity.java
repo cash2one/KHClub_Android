@@ -1,5 +1,8 @@
 package com.app.khclub.message.ui.activity;
 
+/**
+ * 添加联系人好友
+ * */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +35,7 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.message.model.IMModel;
 import com.app.khclub.message.ui.model.PersonModel;
@@ -136,8 +140,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 				ImageView headImageView = helper.getView(R.id.iv_contacts_head);
 				if (null != item.getHeadSubImage()
 						&& item.getHeadSubImage().length() > 0) {
-					imgLoader.displayImage(
-							KHConst.ATTACHMENT_ADDR + item.getHeadSubImage(),
+					imgLoader.displayImage(item.getHeadSubImage(),
 							headImageView, options);
 				} else {
 					headImageView.setImageResource(R.drawable.ic_launcher);
@@ -172,13 +175,13 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 				Button addButton = helper.getView(R.id.btn_contacts_add);
 				if (null != item.getIsFriend()
 						&& "1".equals(item.getIsFriend())) {
-					addButton.setText("已关注");
+					addButton.setText("已添加");
 					addButton.setBackgroundResource(R.color.main_gary);
 					addButton.setTextColor(getResources().getColorStateList(
 							R.color.main_white));
 					addButton.setEnabled(false);
 				} else {
-					addButton.setText("关注");
+					addButton.setText("添加");
 					addButton.setBackgroundResource(R.color.main_yellow);
 					addButton.setTextColor(getResources().getColorStateList(
 							R.color.main_brown));
@@ -192,19 +195,6 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 							@Override
 							public void onClick(View v) {
 								// 点击添加按钮
-//								IMModel imModel = new IMModel();
-//								imModel.setTargetId(KHConst.JLXC
-//										+ currentPerson.getUerId());
-//								imModel.setTitle(currentPerson.getUserName());
-//								String headImage = currentPerson.getHeadImage();
-//								if (headImage != null) {
-//									headImage = headImage.replace(
-//											KHConst.ATTACHMENT_ADDR, "");
-//								} else {
-//									headImage = "";
-//								}
-//								imModel.setAvatarPath(headImage);
-//								addFriend(imModel, helper.getPosition());
 							}
 						});
 			}
@@ -345,7 +335,6 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("user_id", userId);
 		params.addBodyParameter("contact", contact);
-
 		HttpManager.post(KHConst.GET_CONTACT_USER, params,
 				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
@@ -380,9 +369,8 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 						super.onFailure(arg0, arg1, flag);
 						hideLoading();
 						promptTextView.setVisibility(View.VISIBLE);
-						promptTextView.setText("网络故障(´•︵•`)");
-						ToastUtil.show(ContactsUserActivity.this,
-								"网络故障，请检查");
+						promptTextView.setText(R.string.downloading_fail);
+						ToastUtil.show(ContactsUserActivity.this, "网络故障，请检查");
 					}
 
 				}, null));
@@ -403,7 +391,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 
 		if (contactsAdapter.getCount() == 0) {
 			promptTextView.setVisibility(View.VISIBLE);
-			promptTextView.setText("真替你感到寂寞，一个好友都没有 (´•︵•`)");
+			promptTextView.setText("没有未添加好友");
 		} else {
 			promptTextView.setVisibility(View.GONE);
 		}
@@ -451,7 +439,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 				.getUid()
 				+ "");
 		// params.addBodyParameter("friend_id",
-		//		imModel.getTargetId().replace(KHConst.JLXC, "") + "");
+		// imModel.getTargetId().replace(KHConst.JLXC, "") + "");
 
 		showLoading("添加中^_^", false);
 		HttpManager.post(KHConst.Add_FRIEND, params,

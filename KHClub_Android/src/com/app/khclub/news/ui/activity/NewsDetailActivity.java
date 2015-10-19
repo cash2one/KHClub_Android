@@ -80,6 +80,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	private final static String PUBLISH_TIME = "publish_time";
 	private final static String COMMENT_CONTENT = "comment_content";
 	private final static String TARGET_NAME = "target_name";
+	private final static String TARGET_ID = "target_id";
 	// 当前显示的是否为评论数据(可以显示点赞数据)
 	private boolean isCurrentShowComment = true;
 	// 当前操作是发布评论还是回复评论
@@ -198,7 +199,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 						if (KeyboardLayout.KEYBOARD_STATE_HIDE == state) {
 							// 评论框内容为空并且，软键盘隐藏时
 							if (commentContentStr.length() <= 0) {
-								commentEditText.setHint("输入评论内容...");
+								commentEditText
+										.setHint(R.string.news_enter_comment_content);
 								isPublishComment = true;
 							}
 						}
@@ -267,7 +269,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	 * 数据的初始化
 	 * */
 	private void init() {
-		setBarText("详情");
+		setBarText(getResources().getString(R.string.news_detail_title));
 		commentDataList = new ArrayList<CommentModel>();
 		likeDataList = new ArrayList<LikeModel>();
 		itemViewClickListener = new ItemViewClick();
@@ -313,7 +315,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					break;
 
 				case NewsOperate.OP_Type_Add_Comment:
-					showLoading("发布中...", true);
+					showLoading(
+							getResources().getString(
+									R.string.news_publish_commenting), true);
 					break;
 
 				case NewsOperate.OP_Type_Delete_Comment:
@@ -331,12 +335,14 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				switch (operateType) {
 				case NewsOperate.OP_Type_Delete_News:
 					if (isSucceed) {
-						ToastUtil.show(NewsDetailActivity.this, "删除成功");
+						ToastUtil.show(NewsDetailActivity.this, getResources()
+								.getString(R.string.news_delete_success));
 						// 返回上一页
 						actionType = NewsConstants.OPERATE_DELETET;
 						finishWithRight();
 					} else {
-						ToastUtil.show(NewsDetailActivity.this, "删除失败,请检查网络");
+						ToastUtil.show(NewsDetailActivity.this, getResources()
+								.getString(R.string.news_delete_fail));
 					}
 					break;
 
@@ -364,6 +370,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 								resultmModel.getCommentContent());
 						tempMap.put(TARGET_NAME,
 								resultmModel.getTargetUserName());
+						tempMap.put(TARGET_ID, resultmModel.getTargetUserId());
 
 						// 更新数据
 						detailAdapter.add(tempMap);
@@ -374,12 +381,14 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 						// 更新数据
 						currentNews.setCommentQuantity(String
 								.valueOf(currentNews.getCommentQuantity() + 1));
-						newsCommentCount.setText("评论 "
+						newsCommentCount.setText(getResources().getString(
+								R.string.news_comment)
 								+ currentNews.getCommentQuantity());
 						hideLoading();
 					} else {
 						hideLoading();
-						ToastUtil.show(NewsDetailActivity.this, "发布失败,请检查网络");
+						ToastUtil.show(NewsDetailActivity.this, getResources()
+								.getString(R.string.news_publish_fail));
 					}
 					break;
 
@@ -387,13 +396,15 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					if (isSucceed) {
 						// 删除评论
 						detailAdapter.remove(currentOperateIndex);
-						ToastUtil.show(NewsDetailActivity.this, "删除成功");
+						ToastUtil.show(NewsDetailActivity.this, getResources()
+								.getString(R.string.news_delete_success));
 						currentNews.setCommentQuantity(String
 								.valueOf(currentNews.getCommentQuantity() - 1));
 						newsCommentCount.setText("评论 "
 								+ currentNews.getCommentQuantity());
 					} else {
-						ToastUtil.show(NewsDetailActivity.this, "删除失败，请检查网络");
+						ToastUtil.show(NewsDetailActivity.this, getResources()
+								.getString(R.string.news_delete_fail));
 					}
 					break;
 
@@ -583,7 +594,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 			@Override
 			protected void convert(HelloHaBaseAdapterHelper helper,
-					Map<String, String> item) {
+					final Map<String, String> item) {
 				// 设置评论与点赞的数据
 				imgLoader.displayImage(item.get(USER_HEAD), (ImageView) helper
 						.getView(R.id.img_news_reply_user_head), options);
@@ -617,7 +628,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 							@Override
 							public void onClick(View widget) {
-								LogUtils.i("onTextClick........");
+								// 跳转至用户的主页
+								JumpToHomepage(KHUtils.stringToInt(item
+										.get(TARGET_ID)));
 							}
 						}, 0, item.get(TARGET_NAME).length(),
 								Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

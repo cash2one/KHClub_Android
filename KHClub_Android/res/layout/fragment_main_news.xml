@@ -12,23 +12,25 @@
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <RelativeLayout 
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-	        <ImageView
-	            android:id="@+id/img_notice_btn"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:padding="5dp"
-	            android:src="@drawable/notice_icon" />            
-            <ImageView 
-                android:visibility="gone"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="47dp"
-                android:id="@+id/news_unread_image_view"
-                android:src="@drawable/small_unread"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/img_notice_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/news_notice_icon" />
+
+            <ImageView
+                android:id="@+id/news_unread_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="47dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/small_unread"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <TextView
@@ -45,7 +47,7 @@
             android:id="@+id/img_news_publish_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/publish_btn" />
+            android:src="@drawable/news_publish" />
     </LinearLayout>
     <!-- 主页动态的listview -->
 

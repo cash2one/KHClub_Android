@@ -1,4 +1,4 @@
-package com.app.khclub.personal.ui.activity;
+package com.app.khclub.message.ui.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,6 +40,7 @@ import com.app.khclub.news.ui.activity.NewsDetailActivity;
 import com.app.khclub.news.ui.activity.NewsDetailActivity.ItemViewClick;
 import com.app.khclub.news.ui.model.CommentModel;
 import com.app.khclub.news.ui.model.LikeModel;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;

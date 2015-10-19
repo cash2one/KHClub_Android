@@ -89,11 +89,11 @@
     <string name="personal_send_message">发送消息</string>
     <string name="personal_moments">动态列表</string>
     <string name="personal_clear_cache">清空缓存</string>
-	<string name="personal_version">版本检测</string>
-	<string name="personal_clear_ok">清除成功</string>
-	<string name="personal_confirm_logout">确定退出该账号吗？</string>
-	<string name="personal_new_version">发现新版本</string>
-	<string name="personal_is_lastest_version">已经是最新版</string>
+    <string name="personal_version">版本检测</string>
+    <string name="personal_clear_ok">清除成功</string>
+    <string name="personal_confirm_logout">确定退出该账号吗？</string>
+    <string name="personal_new_version">发现新版本</string>
+    <string name="personal_is_lastest_version">已经是最新版</string>
     <!-- Personal -->
 
 
@@ -107,6 +107,13 @@
     <string name="news_publish">发布</string>
     <string name="news_push_delete">删除内容</string>
     <string name="news_push_like">为你点了赞</string>
+    <string name="news_enter_comment_content">输入评论内容</string>
+    <string name="news_detail_title">详情</string>
+    <string name="news_publish_commenting">发布中</string>
+    <string name="news_delete_success">删除成功</string>
+    <string name="news_delete_fail">删除失败</string>
+    <string name="news_comment">评论</string>
+    <string name="news_like">赞</string>
     <!-- News -->
 
     <string name="text_ack_msg">已读</string>
@@ -414,9 +421,8 @@
     <string name="toast_group_not_isnull">群名不能为空！</string>
     <string name="toast_group_too_long">群名太长</string>
     <string name="im_in_black_list">此用户已是你好友(被拉黑状态)，从黑名单列表中移出即可</string>
-	<string name="personal_collect_card">收藏的名片</string>
-	<string name="log_out">退出</string>
-	
-	<string name="message_scan">扫描</string>
-	
+    <string name="personal_collect_card">收藏的名片</string>
+    <string name="log_out">退出</string>
+    <string name="message_scan">扫描</string>
+
 </resources>

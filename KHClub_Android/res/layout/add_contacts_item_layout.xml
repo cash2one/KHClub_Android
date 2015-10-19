@@ -45,7 +45,7 @@
         android:layout_width="75dip"
         android:layout_height="wrap_content"
         android:padding="7dip"
-	    android:text="关注"
+	    android:text="添加"
 	    android:background="@color/main_orange"  
 	    android:textColor="@color/main_white"
 	    android:textSize="@dimen/font_size_small"/>
