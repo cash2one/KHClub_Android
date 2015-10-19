@@ -89,11 +89,13 @@
     <string name="personal_send_message">发送消息</string>
     <string name="personal_moments">动态列表</string>
     <string name="personal_clear_cache">清空缓存</string>
-    <string name="personal_version">版本检测</string>
-    <string name="personal_clear_ok">清除成功</string>
-    <string name="personal_confirm_logout">确定退出该账号吗？</string>
-    <string name="personal_new_version">发现新版本</string>
-    <string name="personal_is_lastest_version">已经是最新版</string>
+	<string name="personal_version">版本检测</string>
+	<string name="personal_clear_ok">清除成功</string>
+	<string name="personal_confirm_logout">确定退出该账号吗？</string>
+	<string name="personal_new_version">发现新版本</string>
+	<string name="personal_is_lastest_version">已经是最新版</string>
+	<string name="personal_share_ok">分享成功</string>
+	<string name="personal_share_fail">分享失败</string>	
     <!-- Personal -->
 
 

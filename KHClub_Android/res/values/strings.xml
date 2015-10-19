@@ -87,11 +87,13 @@
     <string name="personal_send_message">Send Message</string>
     <string name="personal_moments">Moments</string>
     <string name="personal_clear_cache">Clear Cache</string>
-    <string name="personal_version">Version</string>
-    <string name="personal_clear_ok">Clear OK</string>
-    <string name="personal_confirm_logout">Log out？</string>
-    <string name="personal_new_version">New version found</string>
-    <string name="personal_is_lastest_version">Is the lastest version</string>
+	<string name="personal_version">Version</string>
+	<string name="personal_clear_ok">Clear OK</string>
+	<string name="personal_confirm_logout">Log out？</string>
+	<string name="personal_new_version">New version found</string>
+	<string name="personal_is_lastest_version">Is the lastest version</string>
+	<string name="personal_share_ok">Share OK</string>
+	<string name="personal_share_fail">Share Fail</string>
     <!-- Personal -->
 
 

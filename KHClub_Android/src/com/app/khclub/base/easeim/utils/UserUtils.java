@@ -224,7 +224,43 @@ public class UserUtils {
 					ConfigUtils.saveConfig(group.getGroupId()+GROUP_AVATARKEY, KHConst.ATTACHMENT_ADDR+avatar);
 					ConfigUtils.saveConfig(group.getGroupId()+GROUP_QRCODEKEY, KHConst.ROOT_PATH+qrcode);
 					if(avatar.length() > 0){
-			            Picasso.with(context).load(KHConst.ATTACHMENT_ADDR+avatar).placeholder(R.drawable.default_avatar).into(imageView);
+			            Picasso.with(context).load(KHConst.ATTACHMENT_ADDR+avatar).placeholder(R.drawable.group_icon).into(imageView);
+			        }
+				}
+			}
+			@Override
+			public void onFailure(HttpException arg0, String arg1, String flag) {
+				super.onFailure(arg0, arg1, flag);
+			}
+		}, null));
+
+    }
+    
+    /**
+     * 设置群组二维码
+     * @param username
+     */
+    public static void setGroupQRCode(final Context context, final String groupid,final ImageView imageView){
+    	//本地缓存
+    	String avatarPath = ConfigUtils.getStringConfig(groupid+GROUP_QRCODEKEY);
+        if(avatarPath.length() > 0){
+            Picasso.with(context).load(avatarPath).placeholder(R.drawable.group_icon).into(imageView);
+        }
+    	String path = KHConst.GET_GROUP_IMAGE_AND_NAME_AND_QRCODE+"?group_id="+groupid;
+		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>(){
+			@Override
+			public void onSuccess(JSONObject jsonResponse, String flag) {
+				super.onSuccess(jsonResponse, flag);
+				if (jsonResponse.getInteger(KHConst.HTTP_STATUS) == KHConst.STATUS_SUCCESS) {
+					JSONObject resultObject = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
+					//获取信息
+					String avatar = resultObject.getString("group_cover");
+					String qrcode = resultObject.getString("group_qr_code");
+					//缓存二维码和图片
+					ConfigUtils.saveConfig(groupid+GROUP_AVATARKEY, KHConst.ATTACHMENT_ADDR+avatar);
+					ConfigUtils.saveConfig(groupid+GROUP_QRCODEKEY, KHConst.ROOT_PATH+qrcode);
+					if(qrcode.length() > 0){
+			            Picasso.with(context).load(KHConst.ROOT_PATH+qrcode).placeholder(R.drawable.group_icon).into(imageView);
 			        }
 				}
 			}

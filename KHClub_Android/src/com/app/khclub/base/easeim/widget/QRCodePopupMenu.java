@@ -14,11 +14,11 @@ import android.widget.PopupWindow;
 
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
+import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
-import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.ToastUtil;
 import com.lidroid.xutils.exception.HttpException;
@@ -38,6 +38,8 @@ public class QRCodePopupMenu extends PopupWindow {
 	private DisplayImageOptions options;
 	//
 	private Context mContext;
+	//地址
+	private String groupID;
 
 	@SuppressLint("NewApi")
 	public QRCodePopupMenu(final Context context) {
@@ -111,7 +113,10 @@ public class QRCodePopupMenu extends PopupWindow {
 	 * 设置群的二维码
 	 * */
 	private void setGroupQRCode() {
-
+//		// 本地缓存
+//		ImageLoader.getInstance()
+//				.displayImage(KHConst.ROOT_PATH + qrcodePath,qrView, options);
+		UserUtils.setGroupQRCode(mContext, groupID, qrView);
 	}
 
 	/**
@@ -153,4 +158,15 @@ public class QRCodePopupMenu extends PopupWindow {
 					}
 				}, null));
 	}
+
+	public String getGroupID() {
+		return groupID;
+	}
+
+	public void setGroupID(String groupID) {
+		this.groupID = groupID;
+	}
+	
+	
+	
 }

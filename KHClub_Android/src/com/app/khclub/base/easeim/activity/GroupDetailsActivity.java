@@ -15,6 +15,7 @@ package com.app.khclub.base.easeim.activity;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.ProgressDialog;
@@ -42,13 +43,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.framework.Platform.ShareParams;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
+
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
 import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.easeim.widget.ExpandGridView;
+import com.app.khclub.base.easeim.widget.QRCodePopupMenu;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
+import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.view.CustomSelectPhotoDialog;
 import com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity;
 import com.app.khclub.base.utils.ConfigUtils;
@@ -57,6 +70,9 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
+import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
+import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
@@ -96,6 +112,10 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private ProgressDialog progressDialog;
 
 	private RelativeLayout rl_switch_block_groupmsg;
+	// 底部操作弹出菜单
+	private PersonalBottomPopupMenu shareMenu;
+	// 二维码显示控件
+	private QRCodePopupMenu qrImageView;
 	/**
 	 * 屏蔽群消息imageView
 	 */
@@ -123,6 +143,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    
+	    shareMenu = new PersonalBottomPopupMenu(this, false);
+		// 二维码显示控件
+		qrImageView = new QRCodePopupMenu(this);
 	    // 获取传过来的groupid
         groupId = getIntent().getStringExtra("groupId");
         group = EMGroupManager.getInstance().getGroup(groupId);
@@ -217,6 +240,98 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		coverLayout.setOnClickListener(this);
 		qrcodeLayout.setOnClickListener(this);
 		shareLayout.setOnClickListener(this);
+		
+		// 分享菜单的事件
+		shareMenu.setListener(new BottomClickListener() {
+
+			@Override
+			public void shareToWeiboClick() {
+				// 分享到微博
+				ShareParams sp = new ShareParams();
+				sp.setText(UserManager.getInstance().getUser().getName());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+				weibo.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				weibo.SSOSetting(true);
+				// 执行图文分享
+				weibo.share(sp);
+			}
+
+			@Override
+			public void shareToWeChatClick() {
+				// 分享到微信
+				ShareParams sp = new ShareParams();
+				sp.setText(UserManager.getInstance().getUser().getName());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
+				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				wexin.share(sp);
+			}
+
+			@Override
+			public void shareToQzoneClick() {
+				// 分享到qq空间
+				ShareParams sp = new ShareParams();
+				sp.setText(UserManager.getInstance().getUser().getName());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
+				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				wexin.share(sp);
+			}
+
+			@Override
+			public void shareToQQFriendsClick() {
+				// 分享给qq好友
+				ShareParams sp = new ShareParams();
+				sp.setTitle("KHClub");
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setText(UserManager.getInstance().getUser().getName());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				Platform qq = ShareSDK.getPlatform(QQ.NAME);
+				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				qq.share(sp);
+			}
+
+			@Override
+			public void shareToFriendClick() {
+				// 分享给好友
+
+			}
+
+			@Override
+			public void shareToCircleofFriendsClick() {
+				// 分享到朋友圈
+				ShareParams sp = new ShareParams();
+				sp.setTitle("KHClub");
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setText(UserManager.getInstance().getUser().getName());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				Platform qq = ShareSDK.getPlatform(QZone.NAME);
+				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				qq.share(sp);
+			}
+
+			@Override
+			public void editRemarkClick() {
+				// 设置备注
+
+			}
+
+			@Override
+			public void deleteFriendClick() {
+				// 删除好友
+
+			}
+
+			@Override
+			public void cancelClick() {
+				// 取消操作
+			}
+		});		
 	}
 
 	@Override
@@ -750,11 +865,17 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			startActivityForResult(new Intent(this, EditActivity.class).putExtra("data", group.getGroupName()), REQUEST_CODE_EDIT_GROUPNAME);
 			break;
 		case R.id.rl_qrcode_layout:
+			// TODO 我的二维码
+			qrImageView.setGroupID(groupId);
+			qrImageView.setQRcode(true);
+			qrImageView.showPopupWindow(findViewById(R.id.group_name));
 			break;
 		case R.id.rl_cover_layout:
 			showChoiceImageAlert();			
 			break;
 		case R.id.rl_share_layout:
+			// 分享点击
+			shareMenu.showPopupWindow(findViewById(R.id.group_name));
 			break;			
 		default:
 			break;
@@ -1035,5 +1156,20 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	    TextView textView;
 	    ImageView badgeDeleteView;
 	}
+	
+	//分享监听
+	PlatformActionListener platformActionListener = new PlatformActionListener() {
+		@Override
+		public void onError(Platform arg0, int arg1, Throwable arg2) {
+			ToastUtil.show(GroupDetailsActivity.this, R.string.personal_share_fail);
+		}
+		@Override
+		public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+//			ToastUtil.show(getActivity(), R.string.personal_share_ok);
+		}
+		@Override
+		public void onCancel(Platform arg0, int arg1) {
+		}
+	};	
 
 }
