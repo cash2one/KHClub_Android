@@ -28,6 +28,8 @@ public interface KHConst {
 	public static final String BROADCAST_NEW_MESSAGE_PUSH = "com.khclub.broadcastreceiver.newsPush";
 	public static final String BROADCAST_NEWS_LIST_REFRESH = "com.khclub.broadcastreceiver.newsPush";
 	public static final String BROADCAST_TAB_BADGE = "com.khclub.broadcastreceiver.tabBadge";
+	//群组邀请
+	public static final String BROADCAST_GROUP_INVITE = "com.khclub.broadcastreceiver.groupInvite";
 
 	// 匹配网页
 	public static final String URL_PATTERN = "[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*";

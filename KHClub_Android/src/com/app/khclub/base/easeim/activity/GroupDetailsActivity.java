@@ -13,10 +13,17 @@
  */
 package com.app.khclub.base.easeim.activity;
 
+import io.yunba.android.manager.YunBaManager;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.json.JSONException;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -42,11 +49,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
@@ -62,6 +68,7 @@ import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
+import com.app.khclub.base.model.NewsPushModel;
 import com.app.khclub.base.ui.view.CustomSelectPhotoDialog;
 import com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity;
 import com.app.khclub.base.utils.ConfigUtils;
@@ -70,7 +77,6 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
-import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.easemob.chat.EMChatManager;
@@ -91,6 +97,8 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private static final int REQUEST_CODE_CLEAR_ALL_HISTORY = 3;
 	private static final int REQUEST_CODE_ADD_TO_BALCKLIST = 4;
 	private static final int REQUEST_CODE_EDIT_GROUPNAME = 5;
+	//定制邀请
+	private static final int REQUEST_CODE_INVITE_USER = 6;
 	
 	public static final int TAKE_PHOTO = 10;// 拍照
 	public static final int ALBUM_SELECT = 20;// 相册选取
@@ -377,7 +385,14 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				progressDialog.show();
 				clearGroupHistory();
 				break;
-
+			case REQUEST_CODE_INVITE_USER:
+				//成员邀请成员
+			{
+				String[] newmembers1 = data.getStringArrayExtra("newmembers");
+				inviteMembersToGroup(newmembers1);
+			}
+				
+				break;
 			case REQUEST_CODE_EDIT_GROUPNAME: //修改群名称
 				final String returnData = data.getStringExtra("data");
 				if(!TextUtils.isEmpty(returnData)){
@@ -774,6 +789,66 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		}).start();
 	}
 
+	/**
+	 * 成员邀请群成员
+	 * 
+	 * @param newmembers
+	 */
+	private void inviteMembersToGroup(String[] newmembers) {
+		if(newmembers.length < 1){
+			return;
+		}
+		
+		org.json.JSONObject opts = new org.json.JSONObject();
+		org.json.JSONObject apn_json = new org.json.JSONObject();
+		org.json.JSONObject aps = new org.json.JSONObject();
+		try {
+			aps.put("sound", "bingbong.aiff");
+			aps.put("badge", 1);
+			aps.put("alert", "有一条新消息");
+			apn_json.put("aps", aps);
+			opts.put("apn_json", apn_json);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		JSONObject content = new JSONObject();
+		content.put("type", ""+NewsPushModel.PushGroupInvite);
+		JSONObject msg = new JSONObject();
+		msg.put("uid", ""+UserManager.getInstance().getUser().getUid());
+		msg.put("name", UserManager.getInstance().getUser().getName());
+		msg.put("targetid", newmembers[0]);
+		msg.put("groupid", groupId);
+		msg.put("groupname", group.getGroupName());
+		content.put("content", msg);
+		
+		//发给群主
+		YunBaManager.publish2(this, group.getOwner(), content.toJSONString(), aps, new IMqttActionListener() {
+	        @Override
+	        public void onSuccess(IMqttToken asyncActionToken) {
+	        	runOnUiThread(new Runnable() {
+					public void run() {
+						ToastUtil.show(GroupDetailsActivity.this, R.string.im_invite_ok);		
+					}
+				});
+	        	
+	        }
+	        @Override
+	        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+	           if (exception instanceof MqttException) {
+	        	   runOnUiThread(new Runnable() {
+						public void run() {
+							ToastUtil.show(GroupDetailsActivity.this, R.string.net_error);	
+						}
+	        	   });
+	           }
+	        }
+	    });	
+		
+	}
+	
+	
 	@Override
 	public void onClick(View v) {
 		String st6 = getResources().getString(R.string.Is_unblock);
@@ -950,29 +1025,35 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			    holder.imageView.setImageResource(R.drawable.smiley_add_btn);
 //				button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.smiley_add_btn, 0, 0);
 				// 如果不是创建者或者没有相应权限
-				if (!group.isAllowInvites() && !group.getOwner().equals(EMChatManager.getInstance().getCurrentUser())) {
-					// if current user is not group admin, hide add/remove btn
+//				if (!group.isAllowInvites() && !group.getOwner().equals(EMChatManager.getInstance().getCurrentUser())) {
+//					// if current user is not group admin, hide add/remove btn
+//					convertView.setVisibility(View.INVISIBLE);
+//				} else {
+				// 正处于删除模式下,隐藏添加按钮
+				if (isInDeleteMode) {
 					convertView.setVisibility(View.INVISIBLE);
 				} else {
-					// 正处于删除模式下,隐藏添加按钮
-					if (isInDeleteMode) {
-						convertView.setVisibility(View.INVISIBLE);
-					} else {
-						convertView.setVisibility(View.VISIBLE);
-						convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
-					}
-//					final String st11 = getResources().getString(R.string.Add_a_button_was_clicked);
-					button.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							Intent intent = new Intent(GroupDetailsActivity.this, GroupPickContactsActivity.class).putExtra("groupId", groupId);
-//							intent.putExtra(GroupPickContactsActivity.INTENT_SINGLE_KEY, true);
-//							intent.putExtra();
-							// 进入选人页面
-							startActivityForResult(intent,REQUEST_CODE_ADD_USER);
-						}
-					});
+					convertView.setVisibility(View.VISIBLE);
+					convertView.findViewById(R.id.badge_delete).setVisibility(View.INVISIBLE);
 				}
+//					final String st11 = getResources().getString(R.string.Add_a_button_was_clicked);
+				button.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(GroupDetailsActivity.this, GroupPickContactsActivity.class).putExtra("groupId", groupId);
+						//如果不是群主 那么视为邀请	
+						if(!group.getOwner().equals(EMChatManager.getInstance().getCurrentUser())){
+							intent.putExtra(GroupPickContactsActivity.INTENT_INVITE_KEY, true);
+							// 进入选人页面
+							startActivityForResult(intent,REQUEST_CODE_INVITE_USER);							
+						}else{
+							// 进入选人页面
+							startActivityForResult(intent,REQUEST_CODE_ADD_USER);							
+						}
+					}
+				});
+				
+//				}
 			} else { // 普通item，显示群组成员
 				final String username = getItem(position);
 				convertView.setVisibility(View.VISIBLE);

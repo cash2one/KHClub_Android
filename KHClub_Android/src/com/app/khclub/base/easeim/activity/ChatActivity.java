@@ -44,6 +44,7 @@ import android.text.ClipboardManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -65,6 +66,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
 import com.app.khclub.base.easeim.KHHXSDKHelper;
 import com.app.khclub.base.easeim.adapter.ExpressionAdapter;
@@ -74,13 +76,16 @@ import com.app.khclub.base.easeim.adapter.VoicePlayClickListener;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.app.khclub.base.easeim.applib.model.GroupRemoveListener;
 import com.app.khclub.base.easeim.domain.RobotUser;
+import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.easeim.utils.CommonUtils;
 import com.app.khclub.base.easeim.utils.ImageUtils;
 import com.app.khclub.base.easeim.utils.SmileUtils;
 import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.easeim.widget.ExpandGridView;
 import com.app.khclub.base.easeim.widget.PasteEditText;
+import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.base.utils.LogUtils;
 import com.easemob.EMChatRoomChangeListener;
 import com.easemob.EMError;
 import com.easemob.EMEventListener;
@@ -135,6 +140,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 	public static final int REQUEST_CODE_SELECT_VIDEO = 23;
 	public static final int REQUEST_CODE_SELECT_FILE = 24;
 	public static final int REQUEST_CODE_ADD_TO_BLACKLIST = 25;
+	private static final int REQUEST_CODE_CARD = 0;
 
 	public static final int RESULT_CODE_COPY = 1;
 	public static final int RESULT_CODE_DELETE = 2;
@@ -161,7 +167,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 	// private ViewPager expressionViewpager;
 	private LinearLayout emojiIconContainer;
 	private LinearLayout btnContainer;
-	private ImageView locationImgview;
+//	private ImageView locationImgview;
+	private ImageView cardImgview;
 	private View more;
 	private int position;
 	private ClipboardManager clipboard;
@@ -231,6 +238,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 		emojiIconContainer = (LinearLayout) findViewById(R.id.ll_face_container);
 		btnContainer = (LinearLayout) findViewById(R.id.ll_btn_container);
 //		locationImgview = (ImageView) findViewById(R.id.btn_location);
+		cardImgview = (ImageView) findViewById(R.id.btn_card); 
 		iv_emoticons_normal = (ImageView) findViewById(R.id.iv_emoticons_normal);
 		iv_emoticons_checked = (ImageView) findViewById(R.id.iv_emoticons_checked);
 		loadmorePB = (ProgressBar) findViewById(R.id.pb_load_more);
@@ -595,7 +603,6 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 				startActivity(intent);
 				
 				break;
-
 			default:
 				break;
 			}
@@ -696,6 +703,29 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 				setResult(RESULT_OK);
 			} else if (requestCode == REQUEST_CODE_GROUP_DETAIL) {
 				adapter.refresh();
+			} else if (requestCode == REQUEST_CODE_CARD) {
+				//发送名片
+				String[] newmembers = data.getStringArrayExtra("newmembers");
+				if(newmembers.length < 1){
+					return;
+				}
+				//名片通过json格式发送 因为没有自定义格式 所以使用text
+				JSONObject object = new JSONObject();
+				
+				if (chatType == CHATTYPE_SINGLE) {
+					//单聊
+					object.put("type", ""+EMMessage.ChatType.Chat.ordinal());
+					User user = UserUtils.getUserInfo(toChatUsername);
+					object.put("title",user.getNick());
+					object.put("avatar", user.getAvatar());
+				}else {
+					//群聊
+					object.put("type", ""+EMMessage.ChatType.GroupChat.ordinal());
+					object.put("title",group.getGroupName());
+					object.put("avatar", ConfigUtils.getStringConfig(group.getGroupId()+UserUtils.GROUP_AVATARKEY));
+				}
+				
+				sendText("###card"+object.toJSONString()+"card###");
 			}
 		}
 	}
@@ -730,7 +760,13 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 			emojiIconContainer.setVisibility(View.GONE);
 			more.setVisibility(View.GONE);
 
-		}  
+		} else if (id == R.id.btn_card) {
+			//名片
+			Intent intent = new Intent(ChatActivity.this, CardContactsActivity.class);
+			// 进入选人页面
+			startActivityForResult(intent,REQUEST_CODE_CARD);	
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+		} 
 //		else if (id == R.id.btn_location) { // 位置
 //			
 //		}

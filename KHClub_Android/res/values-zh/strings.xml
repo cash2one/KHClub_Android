@@ -128,6 +128,7 @@
     <string name="attach_picture">图片</string>
     <string name="attach_take_pic">拍照</string>
     <string name="attach_location">位置</string>
+    <string name="attach_Card">名片</string>
     <string name="attach_video">视频</string>
     <string name="attach_file">文件</string>
     <string name="attach_voice_call">语音电话</string>
@@ -426,5 +427,6 @@
     <string name="personal_collect_card">收藏的名片</string>
     <string name="log_out">退出</string>
     <string name="message_scan">扫描</string>
+    <string name="im_invite_ok">邀请成功，等待群主验证</string>
 
 </resources>

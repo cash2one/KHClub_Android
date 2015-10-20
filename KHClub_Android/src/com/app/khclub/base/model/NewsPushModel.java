@@ -19,6 +19,8 @@ public class NewsPushModel {
 	public final static int PushSecondComment = 3;
 	//点赞
 	public final static int PushLikeNews = 4;
+	//成员邀请成员 发给群主的通知
+	public final static int PushGroupInvite = 5;	
 	
 	//本条数据的id
 	private int pid;

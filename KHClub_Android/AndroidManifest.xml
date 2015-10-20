@@ -203,6 +203,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide" >
         </activity>
+        <!-- 名片 -->
+        <activity
+            android:name=".base.easeim.activity.CardContactsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide" >            
+        </activity>
         <!-- 转发消息用户列表页面 -->
         <activity
             android:name=".base.easeim.activity.ForwardMessageActivity"

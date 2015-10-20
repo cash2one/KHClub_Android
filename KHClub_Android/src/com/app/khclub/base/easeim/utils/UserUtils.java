@@ -46,20 +46,14 @@ public class UserUtils {
             //获取缓存
             if (null != name && name.length() > 0) {
             	user.setNick(name);	
+			}else {
+				user.setNick(KHApplication.getInstance().getResources().getString(R.string.personal_none));
 			}
             if (null != avatar && avatar.length() > 0) {
             	user.setAvatar(avatar);	
 			}
         }
             
-        if(user != null){
-            //没有就是暂无
-        	if(TextUtils.isEmpty(user.getNick())){
-//        		user.setNick(username);
-        		user.setNick(KHApplication.getInstance().getResources().getString(R.string.personal_none));        		
-        	}
-        }
-        
         //每次获取都更新一次
         final User tmpUser = user;
         //是否是好友

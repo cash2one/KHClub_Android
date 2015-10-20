@@ -75,6 +75,7 @@ import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Type;
 import com.easemob.chat.TextMessageBody;
+import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
 import com.easemob.util.HanziToPinyin;
 import com.easemob.util.NetUtils;
@@ -320,13 +321,22 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		newMessageReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
+				if (intent.hasExtra("type")) {
+					if (intent.getIntExtra("type", 0) == NewsPushModel.PushGroupInvite) {
+						//如果是邀请
+						notifyNewIviteMessage(null);
+						return;
+					}
+				}
 				// 刷新tab
 				refreshTab();
 			}
 		};
-		IntentFilter intentFilter = new IntentFilter(
-				KHConst.BROADCAST_TAB_BADGE);
+		
+		IntentFilter intentFilter = new IntentFilter(KHConst.BROADCAST_TAB_BADGE);
+		IntentFilter intentFilter2 = new IntentFilter(KHConst.BROADCAST_GROUP_INVITE);
 		registerReceiver(newMessageReceiver, intentFilter);
+		registerReceiver(newMessageReceiver, intentFilter2);
 	}
 
 	// 刷新tab 未读标志
@@ -675,7 +685,7 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 					String st10 = getResources().getString(R.string.have_you_removed);
 					if (ChatActivity.activityInstance != null
 							&& usernameList.contains(ChatActivity.activityInstance.getToChatUsername())) {
-						Toast.makeText(MainTabActivity.this, ChatActivity.activityInstance.getToChatUsername() + st10, 1)
+						Toast.makeText(MainTabActivity.this, st10, 1)
 								.show();
 						ChatActivity.activityInstance.finish();
 					}
@@ -693,10 +703,15 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 			
 			// 接到邀请的消息，如果不处理(同意或拒绝)，掉线后，服务器会自动再发过来，所以客户端不需要重复提醒
 			List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
-
 			for (InviteMessage inviteMessage : msgs) {
 				if (inviteMessage.getGroupId() == null && inviteMessage.getFrom().equals(username)) {
-//					inviteMessgeDao.deleteMessage(username);
+//					//保存一次拒绝
+//					try {
+//						EMChatManager.getInstance().refuseInvitation(username);
+//					} catch (EaseMobException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 					return;
 				}
 			}
@@ -710,6 +725,13 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 			msg.setStatus(InviteMesageStatus.BEINVITEED);
 			notifyNewIviteMessage(msg);
 
+			//保存一次拒绝
+//			try {
+//				EMChatManager.getInstance().refuseInvitation(username);
+//			} catch (EaseMobException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 
 		@Override
@@ -908,6 +930,13 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 
 		@Override
 		public void onApplicationReceived(String groupId, String groupName, String applyer, String reason) {
+//			//申请过了 不添加
+//			List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
+//			for (InviteMessage inviteMessage : msgs) {
+//				if (inviteMessage.getGroupId() != null && inviteMessage.getFrom().equals(applyer)) {
+//					return;
+//				}
+//			}
 			
 			// 用户申请加入群聊
 			InviteMessage msg = new InviteMessage();
@@ -980,6 +1009,9 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 	 * @param msg
 	 */
 	private void saveInviteMsg(InviteMessage msg) {
+		if (null == msg) {
+			return;
+		}
 		// 保存msg
 		inviteMessgeDao.saveMessage(msg);
 		//获取缓存信息

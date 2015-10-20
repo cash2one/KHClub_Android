@@ -7,10 +7,19 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
+import com.app.khclub.base.easeim.Constant;
+import com.app.khclub.base.easeim.KHHXSDKHelper;
+import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
+import com.app.khclub.base.easeim.db.InviteMessgeDao;
+import com.app.khclub.base.easeim.domain.InviteMessage;
+import com.app.khclub.base.easeim.domain.User;
+import com.app.khclub.base.easeim.domain.InviteMessage.InviteMesageStatus;
+import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.NewsPushModel;
 import com.app.khclub.base.utils.KHConst;
@@ -64,6 +73,9 @@ public class PushReceiver extends BroadcastReceiver {
 				case NewsPushModel.PushLikeNews:
 		            //如果是点赞			
 					handleNewsPush(obj, context);
+					break;
+				case NewsPushModel.PushGroupInvite:
+					handleGroupPush(obj, context);
 					break;
 				default:
 					break;
@@ -183,6 +195,33 @@ public class PushReceiver extends BroadcastReceiver {
 		
 	}
 	
+	//群组推送 处理消息
+	private void handleGroupPush(JSONObject jsonObject, Context context) {
+		
+		JSONObject pushObject = jsonObject.getJSONObject("content");
+		
+		// 用户申请加入群聊
+		InviteMessage msg = new InviteMessage();
+		msg.setFrom(pushObject.getString("target_id"));
+		msg.setTime(System.currentTimeMillis());
+		msg.setGroupId(pushObject.getString("groupid"));
+		msg.setGroupName(pushObject.getString("groupname"));
+		msg.setReason(pushObject.getString("name")+"邀请加入");
+		msg.setStatus(InviteMesageStatus.BEAPPLYED);
+		
+		InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(context);
+		inviteMessgeDao.saveMessage(msg);
+		//获取缓存信息
+		UserUtils.getUserInfo(msg.getFrom());
+		// 未读数加1
+		User user = ((KHHXSDKHelper)HXSDKHelper.getInstance()).getContactList().get(Constant.NEW_FRIENDS_USERNAME);
+		if (user.getUnreadMsgCount() == 0)
+			user.setUnreadMsgCount(user.getUnreadMsgCount() + 1);
+		//发通知
+		Intent newsPushIntent = new Intent(KHConst.BROADCAST_GROUP_INVITE);
+		newsPushIntent.putExtra("type", NewsPushModel.PushGroupInvite);
+		context.sendBroadcast(newsPushIntent);
+	}
 	
 	/**
 	 * 显示通知
