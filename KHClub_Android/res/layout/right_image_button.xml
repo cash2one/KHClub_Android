@@ -10,10 +10,9 @@
         android:id="@+id/img_btn_right_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_deep_white"
         android:paddingLeft="10dp"
         android:paddingRight="20dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/btn_comment_delete" />
 
 </LinearLayout>

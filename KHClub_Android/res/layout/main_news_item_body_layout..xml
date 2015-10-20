@@ -36,10 +36,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/item_interior_space_small"
-        android:drawableStart="@drawable/news_location"
+        android:drawableStart="@drawable/location_icon"
         android:paddingTop="@dimen/news_item_margins_top"
         android:text="地理位置"
-        android:textColor="@color/main_gary"
-        android:textSize="@dimen/font_size_small" />
+        android:textColor="@color/main_light_black"
+        android:textSize="@dimen/font_size_tiny" />
 
 </LinearLayout>

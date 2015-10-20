@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -110,8 +111,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	private MultiImageView newsPictures;
 	private TextView newsLocation;
 	private TextView newsPublishTime;
-	private TextView newsShareBtn;
-	private TextView newsLikeBtn;
+	private ImageView newsShareBtn;
+	private ImageView newsLikeBtn;
 	private TextView newsCommentCount;
 	private TextView newsLikeCount;
 	private LikeImageListView likeControl;
@@ -348,48 +349,54 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 				case NewsOperate.OP_Type_Add_Comment:
 					if (isSucceed) {
-						// 发布成功则更新评论列表
-						CommentModel resultmModel = (CommentModel) resultValue;
-						if (currentOperateIndex >= 0) {
-							resultmModel.setTargetUserId(commentDataList.get(
-									currentOperateIndex).getTargetUserId());
-							resultmModel.setTargetUserName(commentDataList.get(
-									currentOperateIndex).getTargetUserName());
-						} else {
-							resultmModel.setTargetUserId("");
-							resultmModel.setTargetUserName("");
+						if (isCurrentShowComment) {
+							// 发布成功,并且在显示评论列表的情况下 则更新评论列表
+							CommentModel resultmModel = (CommentModel) resultValue;
+							if (currentOperateIndex >= 0) {
+								resultmModel.setTargetUserId(commentDataList
+										.get(currentOperateIndex)
+										.getTargetUserId());
+								resultmModel.setTargetUserName(commentDataList
+										.get(currentOperateIndex)
+										.getTargetUserName());
+							} else {
+								resultmModel.setTargetUserId("");
+								resultmModel.setTargetUserName("");
+							}
+
+							// 返回回来的评论对象
+							Map<String, String> tempMap = new HashMap<String, String>();
+							tempMap.put(USER_HEAD,
+									resultmModel.getHeadSubImage());
+							tempMap.put(USER_NAME,
+									resultmModel.getPublishName());
+							tempMap.put(PUBLISH_TIME, resultmModel.getAddDate());
+							tempMap.put(USER_JOB, resultmModel.getUserJob());
+							tempMap.put(COMMENT_CONTENT,
+									resultmModel.getCommentContent());
+							tempMap.put(TARGET_NAME,
+									resultmModel.getTargetUserName());
+							tempMap.put(TARGET_ID,
+									resultmModel.getTargetUserId());
+
+							// 更新数据
+							detailAdapter.add(tempMap);
+							commentDataList.add(resultmModel);
+							// 滚动到底部
+							newsDetailListView.getRefreshableView()
+									.setSelection(detailAdapter.getCount() - 1);
+							// 更新数据
+							currentNews.setCommentQuantity(String
+									.valueOf(currentNews.getCommentQuantity() + 1));
+							newsCommentCount.setText(getResources().getString(
+									R.string.news_comment)
+									+ " " + currentNews.getCommentQuantity());
 						}
-
-						// 返回回来的评论对象
-						Map<String, String> tempMap = new HashMap<String, String>();
-						tempMap.put(USER_HEAD, resultmModel.getHeadSubImage());
-						tempMap.put(USER_NAME, resultmModel.getPublishName());
-						tempMap.put(PUBLISH_TIME, resultmModel.getAddDate());
-						tempMap.put(USER_JOB, resultmModel.getUserJob());
-						tempMap.put(COMMENT_CONTENT,
-								resultmModel.getCommentContent());
-						tempMap.put(TARGET_NAME,
-								resultmModel.getTargetUserName());
-						tempMap.put(TARGET_ID, resultmModel.getTargetUserId());
-
-						// 更新数据
-						detailAdapter.add(tempMap);
-						commentDataList.add(resultmModel);
-						// 滚动到底部
-						newsDetailListView.getRefreshableView().setSelection(
-								detailAdapter.getCount() - 1);
-						// 更新数据
-						currentNews.setCommentQuantity(String
-								.valueOf(currentNews.getCommentQuantity() + 1));
-						newsCommentCount.setText(getResources().getString(
-								R.string.news_comment)
-								+ currentNews.getCommentQuantity());
-						hideLoading();
 					} else {
-						hideLoading();
 						ToastUtil.show(NewsDetailActivity.this, getResources()
 								.getString(R.string.news_publish_fail));
 					}
+					hideLoading();
 					break;
 
 				case NewsOperate.OP_Type_Delete_Comment:
@@ -400,8 +407,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 								.getString(R.string.news_delete_success));
 						currentNews.setCommentQuantity(String
 								.valueOf(currentNews.getCommentQuantity() - 1));
-						newsCommentCount.setText("评论 "
-								+ currentNews.getCommentQuantity());
+						newsCommentCount.setText(getResources().getString(
+								R.string.news_comment)
+								+ " " + currentNews.getCommentQuantity());
 					} else {
 						ToastUtil.show(NewsDetailActivity.this, getResources()
 								.getString(R.string.news_delete_fail));
@@ -440,9 +448,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				.findViewById(R.id.txt_news_detail_location);
 		newsPublishTime = (TextView) contenteader
 				.findViewById(R.id.txt_news_detail_publish_time);
-		newsShareBtn = (TextView) contenteader
+		newsShareBtn = (ImageView) contenteader
 				.findViewById(R.id.btn_news_detail_share);
-		newsLikeBtn = (TextView) contenteader
+		newsLikeBtn = (ImageView) contenteader
 				.findViewById(R.id.btn_news_detail_like);
 		newsCommentCount = (TextView) contenteader
 				.findViewById(R.id.txt_news_detail_comment_count);
@@ -490,6 +498,17 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			@Override
 			public void onClick(View arg0) {
 				showCommentData();
+				Drawable drawable = getResources().getDrawable(
+						R.drawable.comment_list_flag);
+				newsCommentCount.setCompoundDrawablesWithIntrinsicBounds(null,
+						null, null, drawable);
+				newsLikeCount.setCompoundDrawablesWithIntrinsicBounds(null,
+						null, null, null);
+				// 设置字体颜色
+				newsCommentCount.setTextColor(getResources().getColor(
+						R.color.main_deep_black));
+				newsLikeCount.setTextColor(getResources().getColor(
+						R.color.main_light_black));
 			}
 		});
 		// 点击查看所有点赞的人
@@ -498,6 +517,17 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			@Override
 			public void onClick(View arg0) {
 				showLikeData();
+				Drawable drawable = getResources().getDrawable(
+						R.drawable.comment_list_flag);
+				newsLikeCount.setCompoundDrawablesWithIntrinsicBounds(null,
+						null, null, drawable);
+				newsCommentCount.setCompoundDrawablesWithIntrinsicBounds(null,
+						null, null, null);
+				// 设置字体颜色
+				newsCommentCount.setTextColor(getResources().getColor(
+						R.color.main_light_black));
+				newsLikeCount.setTextColor(getResources().getColor(
+						R.color.main_deep_black));
 			}
 		});
 
@@ -518,8 +548,22 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		imgLoader.displayImage(data.getUserHeadSubImage(), newsUserHeadImgView,
 				options);
 		newsUserName.setText(data.getUserName());
-		newsUserJob.setText(data.getUserJob());
-		newsUserCompany.setText(data.getUserCompany());
+		if (data.getUserJob().equals("")) {
+			// 未填写则隐藏
+			newsUserJob.setVisibility(View.GONE);
+		} else {
+			newsUserJob.setVisibility(View.VISIBLE);
+			newsUserJob.setText(data.getUserJob() + " | ");
+		}
+
+		if (data.getUserCompany().equals("")) {
+			// 未填写则隐藏
+			newsUserCompany.setVisibility(View.GONE);
+		} else {
+			newsUserCompany.setVisibility(View.VISIBLE);
+			newsUserCompany.setText(data.getUserCompany());
+		}
+
 		if (data.getNewsContent().equals("")) {
 			newsContent.setVisibility(View.GONE);
 		} else {
@@ -549,13 +593,17 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				.setText(TimeHandle.getShowTimeFormat(data.getSendTime()));
 		// 点赞按钮状态设置
 		if (data.getIsLike()) {
-			newsLikeBtn.setText("已赞 ");
+			newsLikeBtn.setImageResource(R.drawable.like_btn_press);
 		} else {
-			newsLikeBtn.setText("点赞 ");
+			newsLikeBtn.setImageResource(R.drawable.like_btn_normal);
 		}
 
-		newsCommentCount.setText("评论 " + data.getCommentQuantity());
-		newsLikeCount.setText("赞" + data.getLikeQuantity());
+		newsCommentCount.setText(getResources()
+				.getString(R.string.news_comment)
+				+ " "
+				+ currentNews.getCommentQuantity());
+		newsLikeCount.setText(getResources().getString(R.string.news_like)
+				+ " " + data.getLikeQuantity());
 		// 绑定点赞的头像
 		likeControl.listDataBindSet(likeDataList);
 	}
@@ -749,6 +797,15 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		newsContentDataSet(currentNews);
 		// 显示评论数据
 		showCommentData();
+		Drawable drawable = getResources().getDrawable(
+				R.drawable.comment_list_flag);
+		newsCommentCount.setCompoundDrawablesWithIntrinsicBounds(null, null,
+				null, drawable);
+		// 设置字体颜色
+		newsCommentCount.setTextColor(getResources().getColor(
+				R.color.main_deep_black));
+		newsLikeCount.setTextColor(getResources().getColor(
+				R.color.main_light_black));
 	}
 
 	/**
@@ -914,7 +971,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					currentNews.setLikeQuantity(String.valueOf(currentNews
 							.getLikeQuantity() + 1));
 					currentNews.setIsLike("1");
-					((TextView) view).setText("已赞");
+					((ImageView) view)
+							.setImageResource(R.drawable.like_btn_press);
 					// 插入用户
 					LikeModel myModel = new LikeModel();
 					myModel.setUserID(String.valueOf(UserManager.getInstance()
@@ -941,7 +999,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					currentNews.setLikeQuantity(String.valueOf(currentNews
 							.getLikeQuantity() - 1));
 					currentNews.setIsLike("0");
-					((TextView) view).setText("点赞");
+					((ImageView) view)
+							.setImageResource(R.drawable.like_btn_normal);
 					// 移除头像
 					likeControl.removeHeadImg();
 					if (!isCurrentShowComment) {
@@ -958,12 +1017,14 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					currentNews.setLikeQuantity(String.valueOf(currentNews
 							.getLikeQuantity() - 1));
 					currentNews.setIsLike("0");
-					((TextView) view).setText("点赞");
+					((ImageView) view)
+							.setImageResource(R.drawable.like_btn_normal);
 				} else {
 					currentNews.setLikeQuantity(String.valueOf(currentNews
 							.getLikeQuantity() + 1));
 					currentNews.setIsLike("1");
-					((TextView) view).setText("已赞");
+					((ImageView) view)
+							.setImageResource(R.drawable.like_btn_press);
 				}
 				newsLikeCount.setText("赞 " + currentNews.getLikeQuantity());
 			}

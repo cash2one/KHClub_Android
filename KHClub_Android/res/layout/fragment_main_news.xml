@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_height_size"
-        android:background="@color/main_yellow"
+        android:background="@drawable/title_bar_background"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="广场"
-            android:textColor="@color/main_brown"
+            android:textColor="@color/main_light_white"
             android:textSize="@dimen/font_size_huge" />
 
         <ImageView
