@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -173,17 +174,35 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 							newsData.getLocation());
 				}
 
-				// 点赞按钮状态设置
+				// ////////////// 点赞按钮状态设置////////////////////////////////
+				TextView likeBtn = helper.getView(R.id.btn_personal_news_like);
+				Drawable drawable = null;
 				if (newsData.getIsLike()) {
-					helper.setText(R.id.btn_personal_news_like,
-							"已赞" + newsData.getLikeQuantity());
+					drawable = getResources().getDrawable(
+							R.drawable.like_btn_press);
 				} else {
-					helper.setText(R.id.btn_personal_news_like,
-							"点赞" + newsData.getLikeQuantity());
+					drawable = getResources().getDrawable(
+							R.drawable.like_btn_normal);
 				}
-				// 评论
-				helper.setText(R.id.btn_personal_news_comment,
-						"评论" + newsData.getCommentQuantity());
+				likeBtn.setCompoundDrawablesWithIntrinsicBounds(drawable, null,
+						null, null);
+
+				if (newsData.getLikeQuantity() > 0) {
+					helper.setText(R.id.btn_personal_news_like,
+							String.valueOf(newsData.getLikeQuantity()));
+				} else {
+					helper.setText(R.id.btn_personal_news_like, getResources()
+							.getString(R.string.news_like));
+				}
+
+				// ///////////////// 评论///////////////////////////////////
+				if (newsData.getCommentQuantity() > 0) {
+					helper.setText(R.id.btn_personal_news_comment,
+							getResources().getString(R.string.news_comment));
+				} else {
+					helper.setText(R.id.btn_personal_news_comment,
+							String.valueOf(newsData.getCommentQuantity()));
+				}
 
 				// 设置item点击事件
 				final int postion = helper.getPosition();
@@ -294,8 +313,7 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 							String flag) {
 						hideLoading();
 						super.onFailure(arg0, arg1, flag);
-						ToastUtil.show(PersonalNewsActivity.this,
-								"网络故障，请检查");
+						ToastUtil.show(PersonalNewsActivity.this, "网络故障，请检查");
 						newsListView.onRefreshComplete();
 						if (!islastPage) {
 							newsListView.setMode(Mode.BOTH);
@@ -316,35 +334,60 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onLikeStart(boolean isLike) {
+				Drawable drawable = null;
 				if (isLike) {
 					// 点赞操作
+					drawable = getResources().getDrawable(
+							R.drawable.like_btn_press);
 					newsData.setLikeQuantity(String.valueOf(newsData
 							.getLikeQuantity() + 1));
-					oprtView.setText("已赞 " + newsData.getLikeQuantity());
 					newsData.setIsLike("1");
 				} else {
 					// 取消点赞
+					drawable = getResources().getDrawable(
+							R.drawable.like_btn_normal);
 					newsData.setLikeQuantity(String.valueOf(newsData
 							.getLikeQuantity() - 1));
-					oprtView.setText("点赞 " + newsData.getLikeQuantity());
 					newsData.setIsLike("0");
+				}
+				oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable,
+						null, null, null);
+
+				if (newsData.getLikeQuantity() > 0) {
+					oprtView.setText(String.valueOf(newsData.getLikeQuantity()));
+				} else {
+					oprtView.setText(getResources().getString(
+							R.string.news_like));
 				}
 			}
 
 			@Override
 			public void onLikeFail(boolean isLike) {
 				// 撤销上次
+				Drawable drawable = null;
 				if (isLike) {
+					drawable = getResources().getDrawable(
+							R.drawable.like_btn_normal);
 					newsData.setLikeQuantity(String.valueOf(newsData
 							.getLikeQuantity() - 1));
-					oprtView.setText("点赞 " + newsData.getLikeQuantity());
 					newsData.setIsLike("0");
 				} else {
+					drawable = getResources().getDrawable(
+							R.drawable.like_btn_press);
 					newsData.setLikeQuantity(String.valueOf(newsData
 							.getLikeQuantity() + 1));
-					oprtView.setText("已赞 " + newsData.getLikeQuantity());
 					newsData.setIsLike("1");
 				}
+				oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable,
+						null, null, null);
+
+				if (newsData.getLikeQuantity() > 0) {
+					oprtView.setText(String.valueOf(newsData.getLikeQuantity()));
+				} else {
+					oprtView.setText(getResources().getString(
+							R.string.news_like));
+				}
+
 			}
 		});
 		if (newsData.getIsLike()) {

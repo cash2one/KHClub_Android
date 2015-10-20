@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -148,38 +149,38 @@ public class NewsListFragment extends BaseFragment {
 				startActivityWithLeft(intentCampusInfo);
 			}
 		});
-		
-		//设置点击事件回调
+
+		// 设置点击事件回调
 		shareMenu.setListener(new NewsBottomClickListener() {
-			
+
 			@Override
 			public void shareToWeiboClick() {
 				// 分享到微博
-				
+
 			}
-			
+
 			@Override
 			public void shareToWeChatClick() {
 				// 分享到微信
-				
+
 			}
-			
+
 			@Override
 			public void shareToQzoneClick() {
 				// 分享到qq空间
-				
+
 			}
-			
+
 			@Override
 			public void shareToCircleofFriendsClick() {
 				// 分享到朋友圈
-				
+
 			}
-			
+
 			@Override
 			public void cancelClick() {
 				// 取消操作
-				
+
 			}
 		});
 		registerNotify();
@@ -394,9 +395,22 @@ public class NewsListFragment extends BaseFragment {
 
 		// 设置用户名，职位，公司
 		helper.setText(R.id.txt_main_news_user_name, titleData.getUserName());
-		helper.setText(R.id.txt_main_news_user_job, titleData.getUserJob());
-		helper.setText(R.id.txt_main_news_user_company,
-				titleData.getUserCompany());
+		// 绑定职位
+		if (titleData.getUserJob().equals("")) {
+			helper.setVisible(R.id.txt_main_news_user_job, false);
+		} else {
+			helper.setVisible(R.id.txt_main_news_user_job, true);
+			helper.setText(R.id.txt_main_news_user_job, titleData.getUserJob()
+					+ " | ");
+		}
+		// 绑定公司名
+		if (titleData.getUserJob().equals("")) {
+			helper.setVisible(R.id.txt_main_news_user_company, true);
+		} else {
+			helper.setVisible(R.id.txt_main_news_user_company, true);
+			helper.setText(R.id.txt_main_news_user_company,
+					titleData.getUserCompany());
+		}
 
 		// 设置事件监听
 		final int postion = helper.getPosition();
@@ -477,20 +491,36 @@ public class NewsListFragment extends BaseFragment {
 	private void setOperateItemView(HelloHaBaseAdapterHelper helper,
 			NewsItemModel item) {
 		OperateItem opData = (OperateItem) item;
-		// 绑定时间
+		// ///////////////// 绑定时间///////////////////////////////////////
 		helper.setText(R.id.txt_main_news_publish_time,
 				TimeHandle.getShowTimeFormat(opData.getSendTime()));
-		// 绑定评论
-		helper.setText(R.id.btn_mian_reply, "评论" + opData.getCommentCount());
-		// 点赞按钮
-		TextView likeBtn = helper.getView(R.id.btn_news_like);
-		if (opData.getIsLike()) {
-			likeBtn.setText("已赞 " + opData.getLikeCount());
+
+		// /////////////////// 绑定评论/////////////////////////////////////////
+		if (opData.getCommentCount() > 0) {
+			helper.setText(R.id.btn_mian_reply,
+					String.valueOf(opData.getCommentCount()));
 		} else {
-			likeBtn.setText("点赞 " + opData.getLikeCount());
+			helper.setText(R.id.btn_mian_reply, "评论");
 		}
 
-		// 设置事件监听
+		// /////////////////////点赞按钮///////////////////////////////////
+		TextView likeBtn = helper.getView(R.id.btn_news_like);
+		Drawable drawable = null;
+		if (opData.getIsLike()) {
+			drawable = getResources().getDrawable(R.drawable.like_btn_press);
+		} else {
+			drawable = getResources().getDrawable(R.drawable.like_btn_normal);
+		}
+		likeBtn.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null,
+				null);
+		// 点赞数大于0才显示点赞数量
+		if (opData.getLikeCount() > 0) {
+			likeBtn.setText(String.valueOf(opData.getLikeCount()));
+		} else {
+			likeBtn.setText("赞");
+		}
+
+		// /////////////////////////设置事件监听///////////////////////////////
 		final int postion = helper.getPosition();
 		OnClickListener listener = new OnClickListener() {
 
@@ -513,7 +543,6 @@ public class NewsListFragment extends BaseFragment {
 	private void getNewsData(int userID, int desPage, String lastTime) {
 		String path = KHConst.NEWS_LIST + "?" + "user_id=" + userID + "&page="
 				+ desPage + "&frist_time=" + lastTime;
-		LogUtils.i("path=" + path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(
 				new LoadDataHandler<String>() {
 
@@ -605,7 +634,6 @@ public class NewsListFragment extends BaseFragment {
 							null);
 				} else {
 					// 跳转至用户主页
-					LogUtils.i("----1" + titleData.getUserID());
 					jumpToHomepage(KHUtils.stringToInt(titleData.getUserID()));
 				}
 				break;
@@ -664,31 +692,56 @@ public class NewsListFragment extends BaseFragment {
 
 			@Override
 			public void onLikeStart(boolean isLike) {
+				Drawable drawable = null;
 				if (isLike) {
 					// 点赞操作
 					operateData.setLikeCount(operateData.getLikeCount() + 1);
-					oprtView.setText("已赞 " + operateData.getLikeCount());
+					drawable = getResources().getDrawable(
+							R.drawable.like_btn_press);
 					operateData.setIsLike(true);
 				} else {
 					// 取消点赞
+					drawable = getResources().getDrawable(
+							R.drawable.like_btn_normal);
 					operateData.setLikeCount(operateData.getLikeCount() - 1);
-					oprtView.setText("点赞 " + operateData.getLikeCount());
 					operateData.setIsLike(false);
 				}
+
+				// 点赞数大于0才显示点赞数量
+				if (operateData.getLikeCount() > 0) {
+					oprtView.setText(String.valueOf(operateData.getLikeCount()));
+				} else {
+					oprtView.setText("赞");
+				}
+				oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable,
+						null, null, null);
 			}
 
 			@Override
 			public void onLikeFail(boolean isLike) {
 				// 撤销上次
+				Drawable drawable = null;
 				if (isLike) {
+					// 取消点赞
+					drawable = getResources().getDrawable(
+							R.drawable.like_btn_normal);
 					operateData.setLikeCount(operateData.getLikeCount() - 1);
-					oprtView.setText("点赞 " + operateData.getLikeCount());
 					operateData.setIsLike(false);
 				} else {
+					// 点赞操作
 					operateData.setLikeCount(operateData.getLikeCount() + 1);
-					oprtView.setText("已赞 " + operateData.getLikeCount());
+					drawable = getResources().getDrawable(
+							R.drawable.like_btn_press);
 					operateData.setIsLike(true);
 				}
+				// 点赞数大于0才显示点赞数量
+				if (operateData.getLikeCount() > 0) {
+					oprtView.setText(String.valueOf(operateData.getLikeCount()));
+				} else {
+					oprtView.setText("赞");
+				}
+				oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable,
+						null, null, null);
 			}
 		});
 		if (operateData.getIsLike()) {

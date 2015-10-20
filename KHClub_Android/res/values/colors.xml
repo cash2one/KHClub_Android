@@ -20,7 +20,7 @@
     <!-- 主橘色 -->
     <color name="main_orange">#ff8400</color>
     <!-- 纯白色 -->
-    <color name="main_deep_white">#FFFFFF</color>
+    <color name="main_deep_white">#ffffff</color>
     <!-- 微白色 -->
     <color name="main_thin_white">#e0e0e0</color>
     <!-- 浅白色 -->
@@ -63,8 +63,7 @@
     <color name="main_clear">#00000000</color>
     <!-- 登录部分editText颜色 -->
     <color name="login_edit_hint_color">#f2f2f2</color>
-
-        <color name="common_top_bar_blue">#4ebcd3</color>
+    <color name="common_top_bar_blue">#4ebcd3</color>
     <color name="btn_login_normal">#00acff</color>
     <color name="btn_login_pressed">#46678d</color>
     <color name="btn_logout_normal">#d33f3f</color>
@@ -99,5 +98,5 @@
     <color name="black_deep">#FF000000</color>
     <color name="btn_answer_pressed">#4ebcd3</color>
     <color name="btn_answer_normal">#2dafa3</color>
-    
+
 </resources>
