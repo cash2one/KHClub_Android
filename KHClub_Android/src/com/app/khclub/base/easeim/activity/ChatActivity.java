@@ -86,6 +86,7 @@ import com.app.khclub.base.easeim.widget.PasteEditText;
 import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
+import com.app.khclub.contact.ui.activity.ShareContactsActivity;
 import com.easemob.EMChatRoomChangeListener;
 import com.easemob.EMError;
 import com.easemob.EMEventListener;
@@ -140,7 +141,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 	public static final int REQUEST_CODE_SELECT_VIDEO = 23;
 	public static final int REQUEST_CODE_SELECT_FILE = 24;
 	public static final int REQUEST_CODE_ADD_TO_BLACKLIST = 25;
-	private static final int REQUEST_CODE_CARD = 0;
+	private static final int REQUEST_CODE_CARD = 26;
 
 	public static final int RESULT_CODE_COPY = 1;
 	public static final int RESULT_CODE_DELETE = 2;
@@ -428,6 +429,11 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 	            forwardMessage(forward_msg_id);
 	        }
 		}
+		
+		//发送名片
+		if(getIntent().hasExtra(ShareContactsActivity.INTENT_CARD_KEY)){
+			sendText("###card"+getIntent().getStringExtra(ShareContactsActivity.INTENT_CARD_KEY)+"card###");
+		}
 	}
 
 	protected void onConversationInit(){
@@ -577,6 +583,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		
 		if (resultCode == RESULT_CODE_EXIT_GROUP) {
 			setResult(RESULT_OK);
 			finish();
@@ -608,6 +615,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 			}
 		}
 		if (resultCode == RESULT_OK) { // 清空消息
+			LogUtils.i("!!! "+requestCode+" "+resultCode, 1);
 			if (requestCode == REQUEST_CODE_EMPTY_HISTORY) {
 				// 清空会话
 				EMChatManager.getInstance().clearConversation(toChatUsername);
@@ -703,31 +711,39 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 				setResult(RESULT_OK);
 			} else if (requestCode == REQUEST_CODE_GROUP_DETAIL) {
 				adapter.refresh();
-			} else if (requestCode == REQUEST_CODE_CARD) {
+			}
+			
+			if (requestCode == REQUEST_CODE_CARD) {
 				//发送名片
 				String[] newmembers = data.getStringArrayExtra("newmembers");
-				if(newmembers.length < 1){
-					return;
+				LogUtils.i(newmembers.toString(), 1);
+				if(newmembers.length > 0){
+					sendCard(EMMessage.ChatType.Chat.ordinal(), newmembers[0], "");
 				}
-				//名片通过json格式发送 因为没有自定义格式 所以使用text
-				JSONObject object = new JSONObject();
-				
-				if (chatType == CHATTYPE_SINGLE) {
-					//单聊
-					object.put("type", ""+EMMessage.ChatType.Chat.ordinal());
-					User user = UserUtils.getUserInfo(toChatUsername);
-					object.put("title",user.getNick());
-					object.put("avatar", user.getAvatar());
-				}else {
-					//群聊
-					object.put("type", ""+EMMessage.ChatType.GroupChat.ordinal());
-					object.put("title",group.getGroupName());
-					object.put("avatar", ConfigUtils.getStringConfig(group.getGroupId()+UserUtils.GROUP_AVATARKEY));
-				}
-				
-				sendText("###card"+object.toJSONString()+"card###");
 			}
 		}
+	}
+	
+	//发名片
+	private void sendCard(int type , String targetID, String groupName) {
+		//名片通过json格式发送 因为没有自定义格式 所以使用text
+		JSONObject object = new JSONObject();
+		
+		if (type == EMMessage.ChatType.Chat.ordinal()) {
+			//单聊
+			object.put("type", ""+EMMessage.ChatType.Chat.ordinal());
+			User user = UserUtils.getUserInfo(targetID);
+			object.put("id", targetID);
+			object.put("title",user.getNick());
+			object.put("avatar", user.getAvatar());
+		}else {
+			//群聊
+			object.put("type", ""+EMMessage.ChatType.GroupChat.ordinal());
+			object.put("id", targetID);
+			object.put("title",targetID);
+			object.put("avatar", ConfigUtils.getStringConfig(targetID+UserUtils.GROUP_AVATARKEY));
+		}
+		sendText("###card"+object.toJSONString()+"card###");
 	}
 
 	/**
@@ -765,7 +781,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 			Intent intent = new Intent(ChatActivity.this, CardContactsActivity.class);
 			// 进入选人页面
 			startActivityForResult(intent,REQUEST_CODE_CARD);	
-			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+			overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 		} 
 //		else if (id == R.id.btn_location) { // 位置
 //			

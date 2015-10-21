@@ -113,7 +113,8 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 					UserManager.getInstance().getUser().setContentWithJson(result);
 					//数据持久化
 					UserManager.getInstance().saveAndUpdate();
-					hxLogin();
+					//IM登录
+					IMLogin();
 					break; 
 				case KHConst.STATUS_FAIL:
 					//1为封禁 2为黑名单
@@ -139,45 +140,45 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 	}
 	
 	//环信登录
-	public void hxLogin() {
-		
-		///测试环境下直接注册！！！！
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					// 调用sdk注册方法
-					EMChatManager.getInstance().createAccountOnServer(KHConst.KH + UserManager.getInstance().getUser().getUid(), KHConst.IM_PWD);
-					runOnUiThread(new Runnable() {
-						public void run() {
-							Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), 0).show();
-							IMTestLogin();
-						}
-					});
-				} catch (final EaseMobException e) {
-					runOnUiThread(new Runnable() {
-						public void run() {
-							int errorCode=e.getErrorCode();
-							if(errorCode==EMError.NONETWORK_ERROR){
-								Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
-							}else if(errorCode == EMError.USER_ALREADY_EXISTS){
-								Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
-							}else if(errorCode == EMError.UNAUTHORIZED){
-								Toast.makeText(getApplicationContext(), getResources().getString(R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
-							}else if(errorCode == EMError.ILLEGAL_USER_NAME){
-							    Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name),Toast.LENGTH_SHORT).show();
-							}else{
-								Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed) + e.getMessage(), Toast.LENGTH_SHORT).show();
-							}
-							
-							IMTestLogin();
-						}
-					});
-				}
-			}
-		}).start();
-	}
+//	public void hxLogin() {
+//		
+//		///测试环境下直接注册！！！！
+//		new Thread(new Runnable() {
+//			public void run() {
+//				try {
+//					// 调用sdk注册方法
+//					EMChatManager.getInstance().createAccountOnServer(KHConst.KH + UserManager.getInstance().getUser().getUid(), KHConst.IM_PWD);
+//					runOnUiThread(new Runnable() {
+//						public void run() {
+//							Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registered_successfully), 0).show();
+//							IMTestLogin();
+//						}
+//					});
+//				} catch (final EaseMobException e) {
+//					runOnUiThread(new Runnable() {
+//						public void run() {
+//							int errorCode=e.getErrorCode();
+//							if(errorCode==EMError.NONETWORK_ERROR){
+//								Toast.makeText(getApplicationContext(), getResources().getString(R.string.network_anomalies), Toast.LENGTH_SHORT).show();
+//							}else if(errorCode == EMError.USER_ALREADY_EXISTS){
+//								Toast.makeText(getApplicationContext(), getResources().getString(R.string.User_already_exists), Toast.LENGTH_SHORT).show();
+//							}else if(errorCode == EMError.UNAUTHORIZED){
+//								Toast.makeText(getApplicationContext(), getResources().getString(R.string.registration_failed_without_permission), Toast.LENGTH_SHORT).show();
+//							}else if(errorCode == EMError.ILLEGAL_USER_NAME){
+//							    Toast.makeText(getApplicationContext(), getResources().getString(R.string.illegal_user_name),Toast.LENGTH_SHORT).show();
+//							}else{
+//								Toast.makeText(getApplicationContext(), getResources().getString(R.string.Registration_failed) + e.getMessage(), Toast.LENGTH_SHORT).show();
+//							}
+//							
+//							IMTestLogin();
+//						}
+//					});
+//				}
+//			}
+//		}).start();
+//	}
 	
-	private void IMTestLogin(){
+	private void IMLogin(){
 		// 调用sdk登陆方法登陆聊天服务器
 		EMChatManager.getInstance().login(KHUtils.selfCommonIMID(), KHConst.IM_PWD, new EMCallBack() {
 
@@ -198,7 +199,6 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 					//提示用
 					runOnUiThread(new Runnable() {
 						public void run() {
-							Toast.makeText(getApplicationContext(), "success", 1).show();
 						}
 					});
 				} catch (Exception e) {

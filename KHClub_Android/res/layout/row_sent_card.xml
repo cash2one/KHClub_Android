@@ -27,7 +27,7 @@
             android:background="@drawable/mini_avatar_shadow"
             android:scaleType="fitXY" />
 
-       <TextView
+<!--        <TextView
             android:id="@+id/tv_chatcontent"
             style="@style/chat_content_date_style"
             android:layout_width="wrap_content"
@@ -40,7 +40,56 @@
             android:lineSpacingExtra="2dp"
             android:maxWidth="225.0dip"
             android:paddingLeft="8dip"
-            android:textSize="15sp" />
+            android:textSize="15sp" /> -->
+        <RelativeLayout 
+            android:id="@+id/rl_chatcontent"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:background="@drawable/chatto_bg"
+            android:layout_marginLeft="@dimen/margin_chat_activity"
+            android:layout_toLeftOf="@id/iv_userhead">
+            
+            <TextView 
+                android:id="@+id/name_card_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="12dp"
+                android:paddingTop="5dp"
+                android:textSize="14sp"
+                android:textColor="@color/main_deep_gary"/>
+            <TextView 
+                android:layout_below="@+id/name_card_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/main_gary"/>
+            
+	       <ImageView
+	            android:layout_below="@+id/name_card_title_text_view"
+	            android:id="@+id/name_card_image_view"
+	            android:layout_width="45dp"
+	            android:layout_height="45dp"
+	            android:layout_marginTop="11dp"
+	            android:layout_marginLeft="12dp"
+	            android:background="@drawable/mini_avatar_shadow"
+	            android:scaleType="fitXY" />
+	       
+            <TextView 
+                android:id="@+id/name_card_text_view"
+                android:layout_below="@+id/name_card_title_text_view"
+                android:layout_toRightOf="@+id/name_card_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="14sp"
+                android:textColor="@color/main_deep_black"/>
+            
+        </RelativeLayout>            
+            
 
         <!--
              <TextView
@@ -57,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_chatcontent"
+            android:layout_toLeftOf="@id/rl_chatcontent"
             android:clickable="true"
             android:src="@drawable/msg_state_failed_resend"
             android:visibility="gone" />
@@ -68,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_chatcontent"
+            android:layout_toLeftOf="@id/rl_chatcontent"
             android:text="@string/text_ack_msg"
             android:textSize="12sp"
             android:visibility="invisible" />
@@ -79,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_chatcontent"
+            android:layout_toLeftOf="@id/rl_chatcontent"
             android:text="@string/text_delivered_msg"
             android:textSize="12sp"
             android:visibility="invisible" />
@@ -89,7 +138,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/tv_chatcontent"
+            android:layout_toLeftOf="@id/rl_chatcontent"
             android:visibility="visible" />
     </RelativeLayout>
 

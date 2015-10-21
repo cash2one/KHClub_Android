@@ -53,11 +53,13 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.contact.ui.activity.ShareContactsActivity;
 import com.app.khclub.personal.ui.fragment.OtherPersonalInfoFragment;
 import com.app.khclub.personal.ui.fragment.OtherPersonalQrcodeFragment;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.easemob.chat.EMContactManager;
+import com.easemob.chat.EMMessage;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -257,8 +259,18 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void shareToFriendClick() {
-				// 分享给好友
-
+				if (otherUserModel != null) {
+					// 分享给好友
+					JSONObject object = new JSONObject();
+					//单聊
+					object.put("type", ""+EMMessage.ChatType.Chat.ordinal());
+					object.put("id", KHConst.KH+otherUserModel.getUid());
+					object.put("title",otherUserModel.getName());
+					object.put("avatar", KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());
+					Intent intent = new Intent(OtherPersonalActivity.this, ShareContactsActivity.class);
+					intent.putExtra(ShareContactsActivity.INTENT_CARD_KEY, object.toJSONString());
+					startActivityWithRight(intent);
+				}
 			}
 
 			@Override

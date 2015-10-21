@@ -47,20 +47,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.app.khclub.R;
 import com.app.khclub.base.easeim.Constant;
 import com.app.khclub.base.easeim.KHHXSDKHelper;
 import com.app.khclub.base.easeim.activity.AlertDialog;
 import com.app.khclub.base.easeim.activity.ChatActivity;
 import com.app.khclub.base.easeim.activity.ContextMenu;
+import com.app.khclub.base.easeim.activity.GroupSimpleDetailActivity;
 import com.app.khclub.base.easeim.activity.ShowBigImage;
 import com.app.khclub.base.easeim.activity.ShowNormalFileActivity;
 import com.app.khclub.base.easeim.activity.ShowVideoActivity;
-import com.app.khclub.base.easeim.activity.UserProfileActivity;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.app.khclub.base.easeim.task.LoadImageTask;
 import com.app.khclub.base.easeim.task.LoadVideoImageTask;
@@ -71,6 +73,7 @@ import com.app.khclub.base.easeim.utils.SmileUtils;
 import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.message.ui.activity.SearchActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
@@ -80,6 +83,7 @@ import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Direct;
 import com.easemob.chat.EMMessage.Type;
+import com.easemob.chat.EMGroupInfo;
 import com.easemob.chat.FileMessageBody;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.LocationMessageBody;
@@ -93,6 +97,7 @@ import com.easemob.util.EMLog;
 import com.easemob.util.FileUtils;
 import com.easemob.util.LatLng;
 import com.easemob.util.TextFormater;
+import com.squareup.picasso.Picasso;
 
 public class MessageAdapter extends BaseAdapter{
 
@@ -309,12 +314,18 @@ public class MessageAdapter extends BaseAdapter{
 			else if (((KHHXSDKHelper)HXSDKHelper.getInstance()).isRobotMenuMessage(message))
 				return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(R.layout.row_received_menu, null)
 						: inflater.inflate(R.layout.row_sent_message, null);
-			else
+			else{
+				TextMessageBody txtBody = (TextMessageBody) message.getBody();
+				if (txtBody.getMessage().startsWith("###card") && txtBody.getMessage().endsWith("card###")) {
+					return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(R.layout.row_received_card,
+							null) : inflater.inflate(R.layout.row_sent_card, null);
+				}
 				return message.direct == EMMessage.Direct.RECEIVE ? inflater.inflate(R.layout.row_received_message,
 						null) : inflater.inflate(R.layout.row_sent_message, null);
+			}
+				
 		}
 	}
-
 	@SuppressLint("NewApi")
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final EMMessage message = getItem(position);
@@ -343,6 +354,11 @@ public class MessageAdapter extends BaseAdapter{
 					// 这里是文字内容
 					holder.tv = (TextView) convertView.findViewById(R.id.tv_chatcontent);
 					holder.tv_usernick = (TextView) convertView.findViewById(R.id.tv_userid);
+					//这里是名片	
+					holder.cardLayout = (RelativeLayout) convertView.findViewById(R.id.rl_chatcontent);
+					holder.cardTitleTextView = (TextView) convertView.findViewById(R.id.name_card_title_text_view);
+					holder.cardTextView = (TextView) convertView.findViewById(R.id.name_card_text_view);
+					holder.cardImageView = (ImageView) convertView.findViewById(R.id.name_card_image_view);
 					
 					holder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
 					holder.tvList = (LinearLayout) convertView.findViewById(R.id.ll_layout);
@@ -433,7 +449,9 @@ public class MessageAdapter extends BaseAdapter{
 					if (holder.tv_delivered != null) {
 						holder.tv_delivered.setVisibility(View.INVISIBLE);
 					}
-					holder.tv_ack.setVisibility(View.VISIBLE);
+					//不显示
+//					holder.tv_ack.setVisibility(View.VISIBLE);
+					holder.tv_ack.setVisibility(View.INVISIBLE);
 				} else {
 					holder.tv_ack.setVisibility(View.INVISIBLE);
 
@@ -528,22 +546,22 @@ public class MessageAdapter extends BaseAdapter{
 			});
 
 		} else {
-			final String st = context.getResources().getString(R.string.Into_the_blacklist);
-			if(!((ChatActivity)activity).isRobot && chatType != ChatType.ChatRoom){
-				// 长按头像，移入黑名单
-				holder.iv_avatar.setOnLongClickListener(new OnLongClickListener() {
-
-					@Override
-					public boolean onLongClick(View v) {
-						Intent intent = new Intent(activity, AlertDialog.class);
-						intent.putExtra("msg", st);
-						intent.putExtra("cancel", true);
-						intent.putExtra("position", position);
-						activity.startActivityForResult(intent, ChatActivity.REQUEST_CODE_ADD_TO_BLACKLIST);
-						return true;
-					}
-				});
-			}
+//			final String st = context.getResources().getString(R.string.Into_the_blacklist);
+//			if(!((ChatActivity)activity).isRobot && chatType != ChatType.ChatRoom){
+//				// 长按头像，移入黑名单
+//				holder.iv_avatar.setOnLongClickListener(new OnLongClickListener() {
+//
+//					@Override
+//					public boolean onLongClick(View v) {
+//						Intent intent = new Intent(activity, AlertDialog.class);
+//						intent.putExtra("msg", st);
+//						intent.putExtra("cancel", true);
+//						intent.putExtra("position", position);
+//						activity.startActivityForResult(intent, ChatActivity.REQUEST_CODE_ADD_TO_BLACKLIST);
+//						return true;
+//					}
+//				});
+//			}
 		}
 
 		TextView timestamp = (TextView) convertView.findViewById(R.id.timestamp);
@@ -604,20 +622,69 @@ public class MessageAdapter extends BaseAdapter{
 	 */
 	private void handleTextMessage(EMMessage message, ViewHolder holder, final int position) {
 		TextMessageBody txtBody = (TextMessageBody) message.getBody();
-		Spannable span = SmileUtils.getSmiledText(context, txtBody.getMessage());
-		// 设置内容
-		holder.tv.setText(span, BufferType.SPANNABLE);
-		// 设置长按事件监听
-		holder.tv.setOnLongClickListener(new OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View v) {
-				activity.startActivityForResult(
-						(new Intent(activity, ContextMenu.class)).putExtra("position", position).putExtra("type",
-								EMMessage.Type.TXT.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
-				return true;
+		if (txtBody.getMessage().startsWith("###card") && txtBody.getMessage().endsWith("card###")) {
+			//名片
+			String content = txtBody.getMessage().replace("###card", "").replace("card###", "");
+			try {
+				final com.alibaba.fastjson.JSONObject jsonObject = JSON.parseObject(content);
+				if (jsonObject.containsKey("type")) {
+					if (jsonObject.getIntValue("type") == EMMessage.ChatType.Chat.ordinal()) {
+						holder.cardTitleTextView.setText(R.string.im_name_card);
+						if (jsonObject.containsKey("id")) {
+							holder.cardLayout.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									Intent intent = new Intent(context, OtherPersonalActivity.class);
+									intent.putExtra(OtherPersonalActivity.INTENT_KEY,KHUtils.stringToInt(jsonObject.getString("id").replace(KHConst.KH, "")));
+									context.startActivity(intent);
+									((Activity) context).overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+								}
+							});
+						}
+					}else {
+						holder.cardTitleTextView.setText(R.string.im_group_name_card);
+						if (jsonObject.containsKey("id")) {
+							holder.cardLayout.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									// 跳转到群结果页面
+									EMGroupInfo	group = new EMGroupInfo(jsonObject.getString("id"), jsonObject.getString("title"));
+									Intent intent = new Intent(context, GroupSimpleDetailActivity.class).putExtra("groupinfo", group);
+									context.startActivity(intent);
+									((Activity) context).overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+								}
+							});							
+						}
+					}
+				}
+				if (jsonObject.containsKey("title")) {
+					holder.cardTextView.setText(jsonObject.getString("title"));
+				}				
+				if (jsonObject.containsKey("avatar")) {
+					String avatar = jsonObject.getString("avatar");
+					if (avatar.length() > 0) {
+						Picasso.with(context).load(avatar).placeholder(R.drawable.mini_avatar_shadow).into(holder.cardImageView);
+					}
+				}				
+			} catch (Exception e) {
 			}
-		});
-
+			
+		}else {
+			Spannable span = SmileUtils.getSmiledText(context, txtBody.getMessage());
+			// 设置内容
+			holder.tv.setText(span, BufferType.SPANNABLE);
+			// 设置长按事件监听
+			holder.tv.setOnLongClickListener(new OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View v) {
+					activity.startActivityForResult(
+							(new Intent(activity, ContextMenu.class)).putExtra("position", position).putExtra("type",
+									EMMessage.Type.TXT.ordinal()), ChatActivity.REQUEST_CODE_CONTEXT_MENU);
+					return true;
+				}
+			});
+		}
+		
 		if (message.direct == EMMessage.Direct.SEND) {
 			switch (message.status) {
 			case SUCCESS: // 发送成功
@@ -1541,6 +1608,10 @@ public class MessageAdapter extends BaseAdapter{
 		ProgressBar pb;
 		ImageView staus_iv;
 		ImageView iv_avatar;
+		RelativeLayout cardLayout;
+		ImageView cardImageView;
+		TextView cardTextView;
+		TextView cardTitleTextView;
 		TextView tv_usernick;
 		ImageView playBtn;
 		TextView timeLength;

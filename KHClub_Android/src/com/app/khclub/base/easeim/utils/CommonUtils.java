@@ -99,6 +99,9 @@ public class CommonUtils {
                 TextMessageBody txtBody = (TextMessageBody) message.getBody();
                 digest = getString(context, R.string.voice_call) + txtBody.getMessage();
             }
+			if (digest.startsWith("###card") && digest.endsWith("card###")) {
+				digest = context.getString(R.string.im_a_card);
+			}
             break;
         case FILE: //普通文件消息
             digest = getString(context, R.string.file);

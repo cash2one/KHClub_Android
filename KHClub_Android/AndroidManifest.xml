@@ -82,6 +82,9 @@
         </activity>
         <activity android:name="com.app.khclub.news.ui.activity.NoticeActivity" >
         </activity>
+        <!-- Contact -->
+        <activity android:name="com.app.khclub.contact.ui.activity.ShareContactsActivity" >
+        </activity>
         <!-- Menu -->
         <activity android:name="com.app.khclub.message.ui.activity.SearchActivity" >
         </activity>

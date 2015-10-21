@@ -77,11 +77,13 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.contact.ui.activity.ShareContactsActivity;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
+import com.easemob.chat.EMMessage;
 import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
 import com.easemob.util.NetUtils;
@@ -306,7 +308,18 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void shareToFriendClick() {
 				// 分享给好友
-
+				JSONObject object = new JSONObject();
+				//单聊
+				object.put("type", ""+EMMessage.ChatType.GroupChat.ordinal());
+				object.put("id", groupId);
+				object.put("title",group.getGroupName());
+				String avatarPath = ConfigUtils.getStringConfig(group.getGroupId()+UserUtils.GROUP_AVATARKEY);
+				object.put("avatar", avatarPath);
+				
+				Intent intent = new Intent(GroupDetailsActivity.this, ShareContactsActivity.class);
+				intent.putExtra(ShareContactsActivity.INTENT_CARD_KEY, object.toJSONString());
+				startActivity(intent);
+				overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 			}
 
 			@Override

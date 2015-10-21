@@ -200,6 +200,9 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			}else{
 				TextMessageBody txtBody = (TextMessageBody) message.getBody();
 				digest = txtBody.getMessage();
+				if (txtBody.getMessage().startsWith("###card") && txtBody.getMessage().endsWith("card###")) {
+					digest = context.getString(R.string.im_a_card);
+				}
 			}
 			break;
 		case FILE: // 普通文件消息

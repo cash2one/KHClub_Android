@@ -26,6 +26,8 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
+import com.app.khclub.base.easeim.domain.User;
+import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
@@ -33,8 +35,10 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.contact.ui.activity.ShareContactsActivity;
 import com.app.khclub.message.ui.activity.CollectCardActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.app.khclub.personal.ui.activity.PersonalNewsActivity;
@@ -43,6 +47,8 @@ import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.app.khclub.personal.ui.view.PersonalPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalPopupMenu.OperateListener;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMMessage;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -209,7 +215,16 @@ public class PersonalFragment extends BaseFragment {
 			@Override
 			public void shareToFriendClick() {
 				// 分享给好友
-
+				JSONObject object = new JSONObject();
+				//单聊
+				object.put("type", ""+EMMessage.ChatType.Chat.ordinal());
+				object.put("id", KHUtils.selfCommonIMID());
+				object.put("title",UserManager.getInstance().getUser().getName());
+				object.put("avatar", KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				
+				Intent intent = new Intent(getActivity(), ShareContactsActivity.class);
+				intent.putExtra(ShareContactsActivity.INTENT_CARD_KEY, object.toJSONString());
+				startActivityWithRight(intent);
 			}
 
 			@Override
