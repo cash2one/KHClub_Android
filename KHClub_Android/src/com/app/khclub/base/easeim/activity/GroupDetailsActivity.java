@@ -633,9 +633,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							}
 							//换图片
 							if (result.getString("group_cover") != null) {
-								Picasso.with(GroupDetailsActivity.this).load(KHConst.ATTACHMENT_ADDR+result.getString("group_cover")).placeholder(R.drawable.group_icon).into(coverImageView);
+								Picasso.with(GroupDetailsActivity.this).load(KHConst.ATTACHMENT_ADDR+result.getString("group_cover")).placeholder(R.drawable.groups_icon).into(coverImageView);
 							} else {
-								Picasso.with(GroupDetailsActivity.this).load(R.drawable.group_icon).into(coverImageView);
+								Picasso.with(GroupDetailsActivity.this).load(R.drawable.groups_icon).into(coverImageView);
 							}
 						}
 						if (status == KHConst.STATUS_FAIL) {

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Pair;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -45,10 +46,13 @@ import com.app.khclub.base.easeim.widget.QRCodePopupMenu;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.message.ui.activity.MipcaCaptureActivity;
 import com.app.khclub.message.ui.activity.SearchActivity;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMGroupInfo;
 import com.easemob.chat.EMConversation.EMConversationType;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -393,5 +397,41 @@ public class ChatAllHistoryFragment extends Fragment implements
 
 	@Override
 	public void onClick(View v) {
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+			case SCANNIN_GREQUEST_CODE:
+				Bundle bundle = data.getExtras();
+				String resultString = bundle.getString("result");
+				
+				// 如果是可以用的
+				if (resultString.contains(KHConst.KH_GROUP)) {
+					String baseUid = resultString.replace(KHConst.KH_GROUP, "");
+					// 跳转到群结果页面
+					EMGroupInfo	group = new EMGroupInfo(baseUid, "");
+					Intent intent = new Intent(getActivity(), GroupSimpleDetailActivity.class).
+	                putExtra("groupinfo", group);
+					startActivity(intent);
+					return;
+				}
+				
+				// 如果是可以用的
+				if (resultString.contains(KHConst.KH)) {
+					String baseUid = resultString.substring(2);
+					int uid = KHUtils.stringToInt(new String(Base64.decode(
+							baseUid, Base64.DEFAULT)));
+					Intent intent = new Intent(getActivity(), OtherPersonalActivity.class);
+					intent.putExtra(OtherPersonalActivity.INTENT_KEY, uid);
+					startActivity(intent);
+					return;
+				}
+				
+				ToastUtil.show(getActivity(), "'" + resultString + "'");
+				break;
+		}
 	}
 }

@@ -132,6 +132,14 @@ public class UserUtils {
     public static void setUserNick(String username,TextView textView){
     	User user = getUserInfo(username);
     	if(user != null){
+    		if (user.getNick().equals(user.getUsername())) {
+    			textView.setText(R.string.personal_none);
+    			return;
+			}
+    		if (user.getNick() == null || user.getNick().length() < 1) {
+    			textView.setText(R.string.personal_none);
+    			return;
+			}
     		textView.setText(user.getNick());
     	}else{
     		textView.setText(R.string.personal_none);
@@ -201,7 +209,7 @@ public class UserUtils {
     	//本地缓存
     	String avatarPath = ConfigUtils.getStringConfig(group.getGroupId()+GROUP_AVATARKEY);
         if(avatarPath.length() > 0){
-            Picasso.with(context).load(avatarPath).placeholder(R.drawable.group_icon).into(imageView);
+            Picasso.with(context).load(avatarPath).placeholder(R.drawable.groups_icon).into(imageView);
         }
     	
     	String path = KHConst.GET_GROUP_IMAGE_AND_NAME_AND_QRCODE+"?group_id="+group.getGroupId();
@@ -218,7 +226,7 @@ public class UserUtils {
 					ConfigUtils.saveConfig(group.getGroupId()+GROUP_AVATARKEY, KHConst.ATTACHMENT_ADDR+avatar);
 					ConfigUtils.saveConfig(group.getGroupId()+GROUP_QRCODEKEY, KHConst.ROOT_PATH+qrcode);
 					if(avatar.length() > 0){
-			            Picasso.with(context).load(KHConst.ATTACHMENT_ADDR+avatar).placeholder(R.drawable.group_icon).into(imageView);
+			            Picasso.with(context).load(KHConst.ATTACHMENT_ADDR+avatar).placeholder(R.drawable.groups_icon).into(imageView);
 			        }
 				}
 			}
@@ -238,7 +246,7 @@ public class UserUtils {
     	//本地缓存
     	String avatarPath = ConfigUtils.getStringConfig(groupid+GROUP_QRCODEKEY);
         if(avatarPath.length() > 0){
-            Picasso.with(context).load(avatarPath).placeholder(R.drawable.group_icon).into(imageView);
+            Picasso.with(context).load(avatarPath).placeholder(R.drawable.groups_icon).into(imageView);
         }
     	String path = KHConst.GET_GROUP_IMAGE_AND_NAME_AND_QRCODE+"?group_id="+groupid;
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>(){
@@ -254,7 +262,7 @@ public class UserUtils {
 					ConfigUtils.saveConfig(groupid+GROUP_AVATARKEY, KHConst.ATTACHMENT_ADDR+avatar);
 					ConfigUtils.saveConfig(groupid+GROUP_QRCODEKEY, KHConst.ROOT_PATH+qrcode);
 					if(qrcode.length() > 0){
-			            Picasso.with(context).load(KHConst.ROOT_PATH+qrcode).placeholder(R.drawable.group_icon).into(imageView);
+			            Picasso.with(context).load(KHConst.ROOT_PATH+qrcode).placeholder(R.drawable.groups_icon).into(imageView);
 			        }
 				}
 			}

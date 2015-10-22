@@ -205,11 +205,11 @@ public class NewsListFragment extends BaseFragment {
 				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
+	private LocalBroadcastManager mLocalBroadcastManager;
 	/**
 	 * 初始化广播信息
 	 * */
 	private void initBoradcastReceiver() {
-		LocalBroadcastManager mLocalBroadcastManager;
 		mLocalBroadcastManager = LocalBroadcastManager
 				.getInstance(getActivity());
 		IntentFilter myIntentFilter = new IntentFilter();
@@ -787,6 +787,18 @@ public class NewsListFragment extends BaseFragment {
 		startActivityForResult(intentToNewsDetail, 1);
 		getActivity().overridePendingTransition(R.anim.push_right_in,
 				R.anim.push_right_out);
+	}
+	
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (mBroadcastReceiver != null && mLocalBroadcastManager!= null) {
+			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
+		}
+		if (newMessageReceiver != null) {
+			getActivity().unregisterReceiver(newMessageReceiver);
+		}
 	}
 
 	/**

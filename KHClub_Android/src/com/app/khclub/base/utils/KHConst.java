@@ -116,6 +116,8 @@ public interface KHConst {
 	public static final String UPDATE_GROUP_NAME = DOMIN + "/updateGroupName";
 	// 更新群组封面
 	public static final String UPDATE_GROUP_COVER = DOMIN + "/updateGroupCover";
+	//同步全部好友
+	public static final String GET_ALL_FRIENDS_LIST = DOMIN + "/getAllFriendsList";
 
 	// //////////////////////////////////////发现模块//////////////////////////////////////////
 	// http://localhost/jlxc_php/index.php/Home/MobileApi/getContactUser

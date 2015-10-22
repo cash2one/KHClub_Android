@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -36,10 +38,8 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.Md5Utils;
 import com.easemob.EMCallBack;
-import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
-import com.easemob.exceptions.EaseMobException;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -219,9 +219,10 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 					Log.e("LoginActivity", "update current user nick fail");
 				}
 				//跳转主页
-				Intent intent = new Intent(SecondLoginActivity.this, MainTabActivity.class);
+				final Intent intent = new Intent(SecondLoginActivity.this, MainTabActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
+				startActivity(intent);		
+				
 				
 				finish();
 				//把前面的finish掉

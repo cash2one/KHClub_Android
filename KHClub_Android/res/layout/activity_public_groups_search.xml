@@ -63,7 +63,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="11dp"
             android:scaleType="fitXY"
-            android:src="@drawable/group_icon" />
+            android:src="@drawable/groups_icon" />
 
         <TextView
             android:id="@+id/name"

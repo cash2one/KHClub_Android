@@ -861,7 +861,7 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 						                Intent exit = new Intent(PersonalSettingActivity.this, LoginActivity.class);
 						                exit.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
 										startActivity(exit);
-										ActivityManager.getInstence().exitApplication();
+//										ActivityManager.getInstence().exitApplication();
 										
 									}
 								});

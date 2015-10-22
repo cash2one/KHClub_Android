@@ -107,7 +107,7 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 //			holder.name.setText(group != null ? group.getGroupName() : username);
 			UserUtils.setGroupNick(group, holder.name);
 		} else if(conversation.getType() == EMConversationType.ChatRoom){
-		    holder.avatar.setImageResource(R.drawable.group_icon);
+		    holder.avatar.setImageResource(R.drawable.groups_icon);
             EMChatRoom room = EMChatManager.getInstance().getChatRoom(username);
             holder.name.setText(room != null && !TextUtils.isEmpty(room.getName()) ? room.getName() : username);
 		}else {

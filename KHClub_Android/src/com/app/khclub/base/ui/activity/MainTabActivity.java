@@ -30,6 +30,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
 import com.app.khclub.base.easeim.Constant;
@@ -64,6 +65,7 @@ import com.easemob.EMEventListener;
 import com.easemob.EMGroupChangeListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.EMValueCallBack;
+import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactListener;
 import com.easemob.chat.EMContactManager;
@@ -75,7 +77,6 @@ import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Type;
 import com.easemob.chat.TextMessageBody;
-import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.EMLog;
 import com.easemob.util.HanziToPinyin;
 import com.easemob.util.NetUtils;
@@ -109,7 +110,6 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 	private boolean isCurrentAccountRemoved = false;
 	private ContactlistFragment contactListFragment;
 	private ChatAllHistoryFragment chatHistoryFragment;
-	
 	
 	// im未读数量
 	public void initTab() {
@@ -229,6 +229,25 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 			startActivity(new Intent(this, LoginActivity.class));
 			return;
 		}
+		
+		
+//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): java.lang.NullPointerException
+//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): 	at com.app.khclub.base.easeim.activity.ContactlistFragment$HXBlackListSyncListener.onSyncSucess(ContactlistFragment.java:151)
+//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): 	at com.app.khclub.base.easeim.applib.controller.HXSDKHelper.notifyBlackListSyncListener(HXSDKHelper.java:631)
+//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): 	at com.app.khclub.base.ui.activity.MainTabActivity$4.onSuccess(MainTabActivity.java:469)
+//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): 	at com.app.khclub.base.ui.activity.MainTabActivity$4.onSuccess(MainTabActivity.java:1)
+//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): 	at com.app.khclub.base.easeim.applib.controller.HXSDKHelper$5.run(HXSDKHelper.java:611)
+//		10-22 18:05:46.784: E/Environment(22675): tzyl---update PrimaryVolume everytime
+//		10-22 18:05:46.784: E/Environment(22675): tzyl---getPrimaryVolume StorageVolume [mStorageId=65537 mPath=/storage/sdcard0 mDescriptionId=17040671 mPrimary=true mRemovable=false mEmulated=true mMtpReserveSpace=100 mAllowMassStorage=false mMaxFileSize=0 mOwner=UserHandle{0}]
+//		10-22 18:05:46.784: W/Environment(22675): tzyl---getExternalStorageStatemounted
+//		10-22 18:05:46.784: E/AndroidRuntime(22675): FATAL EXCEPTION: Thread-24729
+//		10-22 18:05:46.784: E/AndroidRuntime(22675): java.lang.NullPointerException
+//		10-22 18:05:46.784: E/AndroidRuntime(22675): 	at com.app.khclub.base.easeim.activity.ContactlistFragment$HXContactSyncListener.onSyncSucess(ContactlistFragment.java:121)
+//		10-22 18:05:46.784: E/AndroidRuntime(22675): 	at com.app.khclub.base.easeim.applib.controller.HXSDKHelper.notifyContactsSyncListener(HXSDKHelper.java:582)
+//		10-22 18:05:46.784: E/AndroidRuntime(22675): 	at com.app.khclub.base.ui.activity.MainTabActivity$3.onSuccess(MainTabActivity.java:435)
+//		10-22 18:05:46.784: E/AndroidRuntime(22675): 	at com.app.khclub.base.ui.activity.MainTabActivity$3.onSuccess(MainTabActivity.java:1)
+//		10-22 18:05:46.784: E/AndroidRuntime(22675): 	at com.app.khclub.base.easeim.applib.controller.HXSDKHelper$4.run(HXSDKHelper.java:564)
+
 	}
 
 	@Override
@@ -256,6 +275,8 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		init();
 		//更新iOS push
 		EMChatManager.getInstance().updateCurrentUserNick(UserManager.getInstance().getUser().getName());
+		
+		asycContact();
 	}
 	
 	private void init() {     
@@ -390,7 +411,7 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
             @Override
             public void onSuccess(List<String> usernames) {
                 Context context = HXSDKHelper.getInstance().getAppContext();
-                
+                 
                 System.out.println("----------------"+usernames.toString());
                 EMLog.d("roster", "contacts size: " + usernames.size());
                 Map<String, User> userlist = new HashMap<String, User>();
@@ -1167,6 +1188,71 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 				chatHistoryFragment.refresh();
 			}	
 		}
+	}
+
+	
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(arg0, arg1, arg2);
+	}
+
+	private void asycContact() {
+		// 同步
+		String path = KHConst.GET_ALL_FRIENDS_LIST + "?" + "user_id="
+				+ UserManager.getInstance().getUser().getUid();
+
+		HttpManager.get(path, new JsonRequestCallBack<String>(
+				new LoadDataHandler<String>() {
+
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						if (status == KHConst.STATUS_SUCCESS) {
+							JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
+							JSONArray jsonArray = jResult.getJSONArray(KHConst.HTTP_LIST);
+							List<User> users = new ArrayList<User>();
+							// 建立模型数组
+							for (int i = 0; i < jsonArray.size(); i++) {
+								JSONObject jsonObject = jsonArray
+										.getJSONObject(i);
+								User user = new User();
+								user.setUsername(KHConst.KH + jsonObject.getIntValue("user_id"));
+								user.setAvatar(KHConst.ATTACHMENT_ADDR + jsonObject.getString("head_sub_image"));
+								user.setNick(jsonObject.getString("name"));
+								if (jsonObject.getString("friend_remark").length() > 0) {
+									user.setNick(jsonObject.getString("friend_remark"));
+								}
+								
+								if (user.getNick().length() < 1) {
+									user.setHeader("k");
+								}else if (Character.isDigit(user.getNick().charAt(0))) {
+						            user.setHeader("#");
+						        } else {
+						            user.setHeader(HanziToPinyin.getInstance().get(user.getNick().substring(0, 1)).get(0).target.substring(0, 1)
+						                    .toUpperCase());
+						            char header = user.getHeader().toLowerCase().charAt(0);
+						            if (header < 'a' || header > 'z') {
+						                user.setHeader("#");
+						            }
+						        }
+								
+								users.add(user);
+							}
+							((KHHXSDKHelper)HXSDKHelper.getInstance()).updateContactList(users);
+						}
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						super.onFailure(arg0, arg1, flag);
+					}
+
+				}, null));	
+		
 	}
 
 }

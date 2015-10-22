@@ -5,14 +5,23 @@ import java.util.List;
 
 import android.content.Context;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper.HXSyncListener;
 import com.app.khclub.base.easeim.applib.utils.HXPreferenceUtils;
 import com.app.khclub.base.easeim.domain.User;
+import com.app.khclub.base.helper.JsonRequestCallBack;
+import com.app.khclub.base.helper.LoadDataHandler;
+import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.LogUtils;
+import com.app.khclub.message.model.IMModel;
 import com.easemob.EMValueCallBack;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
+import com.easemob.util.HanziToPinyin;
+import com.lidroid.xutils.exception.HttpException;
 
 public class UserProfileManager {
 
@@ -71,6 +80,73 @@ public class UserProfileManager {
 			return;
 		}
 		isSyncingContactInfosWithServer = true;
+		// 同步
+		String path = KHConst.GET_ALL_FRIENDS_LIST + "?" + "user_id="
+				+ UserManager.getInstance().getUser().getUid();
+		HttpManager.get(path, new JsonRequestCallBack<String>(
+				new LoadDataHandler<String>() {
+
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						if (status == KHConst.STATUS_SUCCESS) {
+							JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
+							JSONArray jsonArray = jResult.getJSONArray(KHConst.HTTP_LIST);
+							List<User> users = new ArrayList<User>();
+							// 建立模型数组
+							for (int i = 0; i < jsonArray.size(); i++) {
+								JSONObject jsonObject = jsonArray
+										.getJSONObject(i);
+								User user = new User();
+								user.setUsername(KHConst.KH + jsonObject.getIntValue("user_id"));
+								user.setAvatar(KHConst.ATTACHMENT_ADDR + jsonObject.getString("head_sub_image"));
+								user.setNick(jsonObject.getString("name"));
+								if (jsonObject.getString("friend_remark").length() > 0) {
+									user.setNick(jsonObject.getString("friend_remark"));
+								}
+								
+								if (user.getNick().length() < 1) {
+									user.setHeader("k");
+								}else if (Character.isDigit(user.getNick().charAt(0))) {
+						            user.setHeader("#");
+						        } else {
+						            user.setHeader(HanziToPinyin.getInstance().get(user.getNick().substring(0, 1)).get(0).target.substring(0, 1)
+						                    .toUpperCase());
+						            char header = user.getHeader().toLowerCase().charAt(0);
+						            if (header < 'a' || header > 'z') {
+						                user.setHeader("#");
+						            }
+						        }
+								
+								users.add(user);
+							}
+							
+							isSyncingContactInfosWithServer = false;
+							// in case that logout already before server returns,we should
+							// return immediately
+							if (!EMChat.getInstance().isLoggedIn()) {
+								return;
+							}
+							if (callback != null) {
+								callback.onSuccess(users);
+							}
+						}
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						super.onFailure(arg0, arg1, flag);
+						isSyncingContactInfosWithServer = false;
+						if (callback != null) {
+							callback.onError(0, "");
+						}
+					}
+
+				}, null));		
+		
 //		ParseManager.getInstance().getContactInfos(usernames, new EMValueCallBack<List<User>>() {
 //
 //			@Override
