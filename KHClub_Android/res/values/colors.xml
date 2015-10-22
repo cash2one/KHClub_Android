@@ -13,6 +13,12 @@
     <color name="possible_result_points">#c0ffff00</color>
 
     <!-- 上面都是测试用的颜色 下面是正常UI配色 -->
+    
+    
+    <!-- 主黑色 -->
+    <color name="main_black">#3b3b3b</color>	    
+    <!-- 主金色 -->
+    <color name="main_gold">#dfb574</color>	
     <!-- 主黄色 -->
     <color name="main_yellow">#ffc400</color>
     <!-- 主褐色 -->
@@ -29,6 +35,7 @@
     <color name="main_deep_black">#4d4d4d</color>
     <!-- 主浅黑 -->
     <color name="main_light_black">#7c7c7c</color>
+    
 
     <!-- 辅灰色 -->
     <color name="main_gary">#cccccc</color>
