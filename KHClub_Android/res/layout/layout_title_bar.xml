@@ -3,7 +3,7 @@
     android:id="@+id/layout_base_title"
     android:layout_width="match_parent"
     android:layout_height="@dimen/action_bar_height_size"
-    android:background="@drawable/title_bar_background"
+    android:background="@color/main_gold"
     android:gravity="center_vertical" >
 
     <TextView
