@@ -15,7 +15,6 @@
         android:layout_width="@dimen/head_image_size_large"
         android:layout_height="@dimen/head_image_size_large"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher"
         app:rect_adius="2dp" />
 
     <LinearLayout

@@ -8,11 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_height_size"
-        android:background="@drawable/title_bar_background"
+        android:background="@color/main_gold"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
 
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
@@ -20,18 +22,16 @@
                 android:id="@+id/img_notice_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:src="@drawable/news_notice_icon" />
+                android:src="@drawable/news_notice_btn_selector" />
 
             <ImageView
                 android:id="@+id/news_unread_image_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="47dp"
-                android:layout_marginTop="10dp"
+                android:layout_gravity="right|top"
                 android:src="@drawable/small_unread"
                 android:visibility="gone" />
-        </RelativeLayout>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tv_square_title"
@@ -46,8 +46,8 @@
         <ImageView
             android:id="@+id/img_news_publish_btn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/news_publish" />
+            android:layout_height="match_parent"
+            android:src="@drawable/news_publish_btn_selector" />
     </LinearLayout>
     <!-- 主页动态的listview -->
 

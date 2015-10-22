@@ -64,7 +64,7 @@ public class LikeImageListView extends LinearLayout {
 		// 显示图片的配置
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.loading_default)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
+				.showImageOnFail(R.drawable.icon).cacheInMemory(true)
 				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
@@ -169,7 +169,7 @@ public class LikeImageListView extends LinearLayout {
 							options);
 				} else {
 					likeImageViews.get(index).setImageResource(
-							R.drawable.ic_launcher);
+							R.drawable.icon);
 				}
 			} else {
 				tpImageView.setVisibility(View.GONE);

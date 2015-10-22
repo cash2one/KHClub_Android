@@ -280,8 +280,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		imgLoader = ImageLoader.getInstance();
 		// 显示图片的配置
 		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
+				.showImageOnLoading(R.color.main_light_white)
+				.showImageOnFail(R.drawable.icon).cacheInMemory(true)
 				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 

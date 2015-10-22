@@ -413,7 +413,7 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 			newsAdapter.replaceAll(newsList);
 		} else {
 			newsList.addAll(newDatas);
-			newsAdapter.addAll(newsList);
+			newsAdapter.addAll(newDatas);
 		}
 		// 提示状态
 		if (newsAdapter.getCount() <= 0) {
@@ -434,7 +434,7 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 		case R.id.btn_personal_news_comment:
 			// 跳转至动态详情
 			jumpToNewsDetail(newsList.get(postion).getNewsID(),
-					NewsConstants.KEY_BOARD_CLOSE, null);
+					NewsConstants.KEY_BOARD_CLOSE);
 			break;
 
 		case R.id.btn_personal_news_share:
@@ -443,7 +443,6 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 
 		case R.id.btn_personal_news_like:
 			// 点赞操作
-			LogUtils.i("postion=" + postion);
 			likeOperate(postion, view, newsList.get(postion));
 			break;
 
@@ -455,8 +454,7 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 	/***
 	 * 跳转至动态相详情
 	 */
-	private void jumpToNewsDetail(String newsId, int keyBoardMode,
-			String commentId) {
+	private void jumpToNewsDetail(String newsId, int keyBoardMode) {
 		// 跳转到动态详情
 		Intent intentToNewsDetail = new Intent(PersonalNewsActivity.this,
 				NewsDetailActivity.class);

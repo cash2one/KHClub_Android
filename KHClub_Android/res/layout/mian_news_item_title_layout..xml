@@ -19,7 +19,7 @@
         android:layout_width="@dimen/head_image_size_large"
         android:layout_height="@dimen/head_image_size_large"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher"
+        android:src="@color/main_light_white"
         app2:rect_adius="2dp" />
     <!-- 昵称 -->
 

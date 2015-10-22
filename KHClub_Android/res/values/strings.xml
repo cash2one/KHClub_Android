@@ -11,6 +11,10 @@
     <string name="downloading_success">Download Completed</string>
     <string name="uploading_fail">Upload Fail</string>
     <string name="downloading_fail">Download Fail</string>
+    <string name="edit_remark">Edit Remark</string>
+    <string name="share_card"> Share Business Card</string>
+     <string name="switch_style">Switch Style</string>
+   
     <!-- Loading -->
 
 
@@ -27,6 +31,7 @@
     <string name="alert_close">Close</string>
     <string name="alert_finish">Finish</string>
     <string name="next">Next</string>
+    <string name="delete_friend">Remove Friend</string>
     <!-- Alert -->
 
 
@@ -55,12 +60,14 @@
     <string name="login_password_length" tools:ignore="TypographyDashes">Password length 6-32 characters</string>
     <!-- Login -->
 
-	<!-- Main -->
-	<string name="main_home_title">Home</string>
-	<string name="main_msg_title">Message</string>
-	<string name="main_contact_title">Contact</string>
-	<string name="main_me_title">Me</string>
-	<!-- Main -->
+
+    <!-- Main -->
+    <string name="main_home_title">Home</string>
+    <string name="main_msg_title">Message</string>
+    <string name="main_contact_title">Contact</string>
+    <string name="main_me_title">Me</string>
+    <!-- Main -->
+
 
     <!-- Personal -->
     <string name="personal_me_title">Me</string>
@@ -93,14 +100,14 @@
     <string name="personal_send_message">Send Message</string>
     <string name="personal_moments">Moments</string>
     <string name="personal_clear_cache">Clear Cache</string>
-	<string name="personal_version">Version</string>
-	<string name="personal_clear_ok">Clear OK</string>
-	<string name="personal_confirm_logout">Log out？</string>
-	<string name="personal_new_version">New version found</string>
-	<string name="personal_is_lastest_version">Is the lastest version</string>
-	<string name="personal_share_ok">Share OK</string>
-	<string name="personal_share_fail">Share Fail</string>
-	<string name="personal_setting">Setting</string>
+    <string name="personal_version">Version</string>
+    <string name="personal_clear_ok">Clear OK</string>
+    <string name="personal_confirm_logout">Log out？</string>
+    <string name="personal_new_version">New version found</string>
+    <string name="personal_is_lastest_version">Is the lastest version</string>
+    <string name="personal_share_ok">Share OK</string>
+    <string name="personal_share_fail">Share Fail</string>
+    <string name="personal_setting">Setting</string>
     <!-- Personal -->
 
 
@@ -117,7 +124,7 @@
     <string name="news_enter_comment_content">Please enter content</string>
     <string name="news_detail_title">Detail</string>
     <string name="news_publish_commenting">Loading</string>
-      <string name="news_delete_success">Delete success</string>
+    <string name="news_delete_success">Delete success</string>
     <string name="news_delete_fail">Delete fail</string>
     <!-- News -->
 
@@ -426,7 +433,6 @@
     <string name="im_a_card">A Card</string>
     <string name="im_name_card">Name Card</string>
     <string name="im_group_name_card">Group Name Card</string>
-    
     <string name="push_a_message">A new message</string>
     <string name="push_like">A Like for you</string>
     <string name="push_invite">invite to join</string>

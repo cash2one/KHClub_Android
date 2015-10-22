@@ -105,7 +105,7 @@ public class CollectCardActivity extends BaseActivityWithTopBar {
 		// 显示图片的配置
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.loading_default)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
+				.showImageOnFail(R.drawable.icon).cacheInMemory(true)
 				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
@@ -133,7 +133,7 @@ public class CollectCardActivity extends BaseActivityWithTopBar {
 				} else {
 					((ImageView) helper
 							.getView(R.id.img_collect_card_user_head))
-							.setImageResource(R.drawable.ic_launcher);
+							.setImageResource(R.drawable.icon);
 				}
 				// 绑定昵称
 				helper.setText(R.id.txt_collect_card_user_name,

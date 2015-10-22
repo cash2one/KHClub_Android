@@ -28,14 +28,20 @@
     <string name="alert_close">关闭</string>
     <string name="alert_finish">完成</string>
     <string name="next">下一步</string>
+    <string name="delete_friend">删除好友</string>
+    <string name="edit_remark">修改备注</string>
+    <string name="share_card">分享名片</string>
+    <string name="switch_style">切换样式</string>
     <!-- Alert -->
-    
-	<!-- Main -->
-	<string name="main_home_title">主页</string>
-	<string name="main_msg_title">消息</string>
-	<string name="main_contact_title">通讯录</string>
-	<string name="main_me_title">我</string>
-	<!-- Main -->
+
+
+    <!-- Main -->
+    <string name="main_home_title">主页</string>
+    <string name="main_msg_title">消息</string>
+    <string name="main_contact_title">通讯录</string>
+    <string name="main_me_title">我</string>
+    <!-- Main -->
+
 
     <!-- Login -->
     <string name="login_please_enter_phonenum">请输入手机号码</string>
@@ -95,14 +101,14 @@
     <string name="personal_send_message">发送消息</string>
     <string name="personal_moments">动态列表</string>
     <string name="personal_clear_cache">清空缓存</string>
-	<string name="personal_version">版本检测</string>
-	<string name="personal_clear_ok">清除成功</string>
-	<string name="personal_confirm_logout">确定退出该账号吗？</string>
-	<string name="personal_new_version">发现新版本</string>
-	<string name="personal_is_lastest_version">已经是最新版</string>
-	<string name="personal_share_ok">分享成功</string>
-	<string name="personal_share_fail">分享失败</string>
-	<string name="personal_setting">设置</string>	
+    <string name="personal_version">版本检测</string>
+    <string name="personal_clear_ok">清除成功</string>
+    <string name="personal_confirm_logout">确定退出该账号吗？</string>
+    <string name="personal_new_version">发现新版本</string>
+    <string name="personal_is_lastest_version">已经是最新版</string>
+    <string name="personal_share_ok">分享成功</string>
+    <string name="personal_share_fail">分享失败</string>
+    <string name="personal_setting">设置</string>
     <!-- Personal -->
 
 
@@ -435,12 +441,11 @@
     <string name="log_out">退出</string>
     <string name="message_scan">扫描</string>
     <string name="im_invite_ok">邀请成功，等待群主验证</string>
-	<string name="im_a_card">一张名片</string>
+    <string name="im_a_card">一张名片</string>
     <string name="im_name_card">名片</string>
-    <string name="im_group_name_card">群名片</string>	
-	
+    <string name="im_group_name_card">群名片</string>
     <string name="push_a_message">一条新消息</string>
     <string name="push_like">赞了你</string>
     <string name="push_invite">邀请加入</string>
-    
+
 </resources>

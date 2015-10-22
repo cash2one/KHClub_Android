@@ -74,6 +74,7 @@ public class NewsListFragment extends BaseFragment {
 	// 通知按钮
 	@ViewInject(R.id.img_notice_btn)
 	private ImageView noticeBtn;
+	//未读提示（小红点）
 	@ViewInject(R.id.news_unread_image_view)
 	private ImageView unreadImageView;
 	// 原始数据源
@@ -146,7 +147,7 @@ public class NewsListFragment extends BaseFragment {
 				// 跳转至通知页面
 				Intent intentCampusInfo = new Intent(mContext,
 						NoticeActivity.class);
-				startActivityWithLeft(intentCampusInfo);
+				startActivityWithRight(intentCampusInfo);
 			}
 		});
 
@@ -200,7 +201,7 @@ public class NewsListFragment extends BaseFragment {
 		// 显示图片的配置
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.loading_default)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
+				.showImageOnFail(R.drawable.icon).cacheInMemory(true)
 				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
@@ -390,7 +391,7 @@ public class NewsListFragment extends BaseFragment {
 					options);
 		} else {
 			((ImageView) helper.getView(R.id.img_mian_news_user_head))
-					.setImageResource(R.drawable.ic_launcher);
+					.setImageResource(R.drawable.icon);
 		}
 
 		// 设置用户名，职位，公司

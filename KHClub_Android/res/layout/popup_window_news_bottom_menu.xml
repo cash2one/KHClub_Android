@@ -24,7 +24,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/iconfont_weixin" />
 
         <ImageView
             android:id="@+id/img_news_pop_win_share_to_circel_of_friends"
@@ -33,7 +33,7 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/iconfont_pengyouquan" />
 
         <ImageView
             android:id="@+id/img_news_pop_win_share_to_qzone"
@@ -41,7 +41,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/iconfont_qqkongjian" />
 
         <ImageView
             android:id="@+id/img_news_pop_win_share_to_weibo"
@@ -49,21 +49,26 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/iconfont_weibo" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#66000000"
+        android:gravity="center"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/txt_news_pop_win_cancel"
-            android:layout_width="match_parent"
+            android:layout_width="240dp"
             android:layout_height="40dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/main_gold"
             android:gravity="center"
-            android:text="取消"
+            android:textSize="@dimen/font_size_small"
+            android:text="@string/alert_cancel"
             android:textColor="@color/main_deep_white" />
     </LinearLayout>
 

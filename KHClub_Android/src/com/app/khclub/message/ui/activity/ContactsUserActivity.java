@@ -124,7 +124,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 		// 显示图片的配置
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.loading_default)
-				.showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true)
+				.showImageOnFail(R.drawable.icon).cacheInMemory(true)
 				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
@@ -150,7 +150,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 					imgLoader.displayImage(item.getHeadSubImage(),
 							headImageView, options);
 				} else {
-					headImageView.setImageResource(R.drawable.ic_launcher);
+					headImageView.setImageResource(R.drawable.icon);
 				}
 				// 绑定昵称
 				helper.setText(R.id.tv_contact_user_name, item.getUserName());

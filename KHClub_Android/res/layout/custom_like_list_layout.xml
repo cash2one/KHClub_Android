@@ -13,7 +13,6 @@
         android:layout_height="@dimen/head_image_size_small"
         android:layout_marginLeft="4dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher"
         app2:rect_adius="1dp" />
 
     <com.app.khclub.base.ui.view.RoundImageView
@@ -22,7 +21,6 @@
         android:layout_height="@dimen/head_image_size_small"
         android:layout_marginLeft="4dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher"
         app2:rect_adius="1dp" />
 
     <com.app.khclub.base.ui.view.RoundImageView
@@ -31,7 +29,6 @@
         android:layout_height="@dimen/head_image_size_small"
         android:layout_marginLeft="4dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher"
         app2:rect_adius="1dp" />
 
 </LinearLayout>
