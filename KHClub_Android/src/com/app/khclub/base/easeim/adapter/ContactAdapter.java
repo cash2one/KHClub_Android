@@ -114,11 +114,11 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 		}else if(username.equals(Constant.CHAT_ROOM)){
             //群聊item
             holder.nameTextview.setText(user.getNick());
-            holder.avatar.setImageResource(R.drawable.groups_icon);
+            holder.avatar.setImageResource(R.drawable.card_icon);
 		}else if(username.equals(Constant.CHAT_ROBOT)){
 			//Robot item
 			holder.nameTextview.setText(user.getNick());
-			holder.avatar.setImageResource(R.drawable.groups_icon);
+			holder.avatar.setImageResource(R.drawable.card_icon);
 		}else{
 		    //设置用户头像
 			UserUtils.setUserAvatar(getContext(), username, holder.avatar);
