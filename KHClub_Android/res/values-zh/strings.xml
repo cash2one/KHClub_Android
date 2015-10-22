@@ -29,7 +29,13 @@
     <string name="alert_finish">完成</string>
     <string name="next">下一步</string>
     <!-- Alert -->
-
+    
+	<!-- Main -->
+	<string name="main_home_title">主页</string>
+	<string name="main_msg_title">消息</string>
+	<string name="main_contact_title">通讯录</string>
+	<string name="main_me_title">我</string>
+	<!-- Main -->
 
     <!-- Login -->
     <string name="login_please_enter_phonenum">请输入手机号码</string>
@@ -432,4 +438,8 @@
     <string name="im_name_card">名片</string>
     <string name="im_group_name_card">群名片</string>	
 	
+    <string name="push_a_message">一条新消息</string>
+    <string name="push_like">赞了你</string>
+    <string name="push_invite">邀请加入</string>
+    
 </resources>

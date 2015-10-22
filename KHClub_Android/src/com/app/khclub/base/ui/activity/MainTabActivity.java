@@ -188,7 +188,25 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
 		imageView.setImageResource(mImageViewArray[index]);
 		TextView textView = (TextView) view.findViewById(R.id.textview);
-		textView.setText(mTextviewArray[index]);
+		String title = "";
+		switch (index) {
+		case 0:
+			title = getString(R.string.main_home_title);
+			break;
+		case 1:
+			title = getString(R.string.main_msg_title);
+			break;
+		case 2:
+			title = getString(R.string.main_contact_title);
+			break;
+		case 3:
+			title = getString(R.string.main_me_title);
+			break;			
+
+		default:
+			break;
+		}
+		textView.setText(title);
 
 		return view;
 	}

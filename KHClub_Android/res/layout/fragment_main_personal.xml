@@ -11,7 +11,7 @@
         android:id="@+id/layout_base_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_height_size"
-        android:background="@color/main_blue"
+        android:background="@color/main_gold"
         android:gravity="center_vertical" >
 
         <TextView
@@ -24,7 +24,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="@string/personal_me_title"
-            android:textColor="@color/main_brown"
+            android:textColor="@color/main_white"
             android:textSize="@dimen/action_bar_title_size" />
 
         <TextView
@@ -33,22 +33,23 @@
             android:layout_height="50dip"
             android:layout_centerVertical="true" />
 
-        <!-- clickable暂时关闭 "@drawable/back_click_selector" -->
-
         <ImageView
-            android:layout_width="35dip"
-            android:layout_height="20dip"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/back_btn" />
+            android:src="@drawable/personal_setting" />
 
         <ImageButton
             android:id="@+id/btn_more_operate"
             android:layout_width="50dip"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="@color/main_brown"
-            android:paddingRight="20dp" />
+            android:src="@drawable/personal_more"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:padding="10dp" />
     </RelativeLayout>
 
     <com.app.khclub.base.ui.view.CustomerScrollView
@@ -68,7 +69,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/vPager"
                 android:layout_width="match_parent"
-                android:layout_height="220dip"
+                android:layout_height="200dip"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:persistentDrawingCache="animation" />
@@ -87,8 +88,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
                     android:layout_weight="1"
+                    android:textColor="@color/main_deep_black"
                     android:text="@string/personal_moments"
-                    android:textSize="@dimen/font_size_large" />
+                    android:textSize="@dimen/font_size_medium" />
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view3"
@@ -137,7 +139,8 @@
                     android:layout_marginLeft="10dip"
                     android:layout_marginTop="10dp"
                     android:text="@string/personal_signature"
-                    android:textSize="@dimen/font_size_large" />
+                    android:textColor="@color/main_deep_black"
+                    android:textSize="@dimen/font_size_medium" />
 
                 <TextView
                     android:id="@+id/sign_text_view"
@@ -145,15 +148,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="11dp"
                     android:inputType="textMultiLine"
-                    android:textSize="@dimen/font_size_medium"
+                    android:textColor="@color/main_deep_black"
+                    android:textSize="@dimen/font_size_secondary"
                     tools:ignore="TextViewEdits" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button_collect_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="收藏的名片" />
         </LinearLayout>
     </com.app.khclub.base.ui.view.CustomerScrollView>
 

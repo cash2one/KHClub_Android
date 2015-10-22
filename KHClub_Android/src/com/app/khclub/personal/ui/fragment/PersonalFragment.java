@@ -86,8 +86,7 @@ public class PersonalFragment extends BaseFragment {
 	// 分享弹出菜单
 	private PersonalBottomPopupMenu shareMenu;
 
-	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout,
-			R.id.button_collect_card, R.id.btn_more_operate })
+	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout, R.id.btn_more_operate })
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.base_tv_back:
@@ -102,13 +101,6 @@ public class PersonalFragment extends BaseFragment {
 			intentToNewsList.putExtra(PersonalNewsActivity.INTNET_KEY_UID,
 					UserManager.getInstance().getUser().getUid());
 			startActivityWithRight(intentToNewsList);
-			break;
-
-		case R.id.button_collect_card:
-			// 收藏的名片
-			Intent intentToCardList = new Intent(this.getActivity(),
-					CollectCardActivity.class);
-			startActivityWithRight(intentToCardList);
 			break;
 
 		case R.id.btn_more_operate:

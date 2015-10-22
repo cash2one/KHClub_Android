@@ -8,11 +8,11 @@
 
     <ImageView
         android:id="@+id/head_image_view"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:background="@color/main_gary" />
+        android:src="@drawable/default_avatar" />
 
     <TextView
         android:id="@+id/name_text_view"
@@ -20,9 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/head_image_view"
         android:layout_marginLeft="15dip"
-        android:layout_marginTop="5dip"
+        android:layout_marginTop="3dip"
+        android:textColor="@color/main_deep_black"
         android:layout_toRightOf="@+id/head_image_view"
-        android:textSize="@dimen/font_size_large" />
+        android:textSize="17sp" />
     
     <TextView
         android:id="@+id/second_name_text_view"
@@ -31,8 +32,9 @@
         android:layout_alignTop="@+id/head_image_view"
         android:layout_marginLeft="10dip"
         android:layout_marginTop="5dip"
+        android:textColor="@color/main_deep_black"
         android:layout_toRightOf="@+id/name_text_view"
-        android:textSize="@dimen/font_size_medium" />    
+        android:textSize="15sp" />    
 
     <TextView
         android:id="@+id/text_collect_btn"
@@ -42,7 +44,6 @@
         android:layout_alignTop="@+id/head_image_view"
         android:background="@color/main_blue"
         android:padding="10dp"
-        android:text="收藏"
         android:textSize="@dimen/font_size_large"
         android:visibility="gone" />
 
@@ -52,9 +53,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/name_text_view"
         android:layout_marginLeft="15dip"
-        android:layout_marginTop="3dip"
+        android:layout_marginTop="2dip"
         android:layout_toRightOf="@+id/head_image_view"
-        android:textSize="@dimen/font_size_medium" />
+        android:textColor="@color/main_deep_black"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/company_text_view"
@@ -62,9 +64,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/job_text_view"
         android:layout_marginLeft="15dip"
-        android:layout_marginTop="3dip"
+        android:layout_marginTop="2dip"
         android:layout_toRightOf="@+id/head_image_view"
-        android:textSize="@dimen/font_size_medium" />
+        android:textColor="@color/main_deep_black"
+        android:textSize="15sp" />
 
     <LinearLayout
         android:id="@+id/phone_number_layout"
@@ -77,12 +80,14 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/main_brown" />
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/card_phone" />
 
         <TextView
             android:id="@+id/phone_number_text_view"
+            android:textColor="@color/main_deep_black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dip"
@@ -100,14 +105,16 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/main_brown" />
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/card_email"  />
 
         <TextView
             android:id="@+id/email_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/main_deep_black"
             android:layout_marginLeft="15dip"
             android:textSize="@dimen/font_size_medium" />
     </LinearLayout>
@@ -124,12 +131,14 @@
         android:paddingBottom="10dip" >
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@color/main_brown" />
+            android:layout_marginLeft="13dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/card_location"  />
 
         <TextView
             android:id="@+id/address_text_view"
+            android:textColor="@color/main_deep_black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dip"

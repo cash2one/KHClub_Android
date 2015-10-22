@@ -51,8 +51,8 @@ public class PersonalInfoFragment extends BaseFragment {
 	public void loadLayout(View rootView) {
 		// 显示头像的配置
 		headImageOptions = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.loading_default)
-				.showImageOnFail(R.drawable.loading_default)
+				.showImageOnLoading(R.drawable.default_avatar)
+				.showImageOnFail(R.drawable.default_avatar)
 				.cacheInMemory(true).cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 	}

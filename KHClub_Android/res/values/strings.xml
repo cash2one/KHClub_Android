@@ -55,6 +55,12 @@
     <string name="login_password_length" tools:ignore="TypographyDashes">Password length 6-32 characters</string>
     <!-- Login -->
 
+	<!-- Main -->
+	<string name="main_home_title">Home</string>
+	<string name="main_msg_title">Message</string>
+	<string name="main_contact_title">Contact</string>
+	<string name="main_me_title">Me</string>
+	<!-- Main -->
 
     <!-- Personal -->
     <string name="personal_me_title">Me</string>
@@ -419,5 +425,9 @@
     <string name="im_a_card">A Card</string>
     <string name="im_name_card">Name Card</string>
     <string name="im_group_name_card">Group Name Card</string>
+    
+    <string name="push_a_message">A new message</string>
+    <string name="push_like">A Like for you</string>
+    <string name="push_invite">invite to join</string>
 
 </resources>

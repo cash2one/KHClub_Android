@@ -147,20 +147,17 @@ public class PushReceiver extends BroadcastReceiver {
 		JSONObject pushObject = jsonObject.getJSONObject("content");
 		
 		int type = jsonObject.getIntValue("type");
-		String title = "";
+		String title = context.getString(R.string.push_a_message);
 		String content = "";
 		switch (type) {
 		case NewsPushModel.PushNewsAnwser:
-			title = "有人为你评论";
 			content = pushObject.getString("name")+":"+pushObject.getString("comment_content");
 			break;
 		case NewsPushModel.PushSecondComment:
-			title = "有人为你评论";
 			content = pushObject.getString("name")+":"+pushObject.getString("comment_content");
 			break;
 		case NewsPushModel.PushLikeNews:
-			title = "有人为你点赞";
-			content = pushObject.getString("name")+"赞了你";
+			content = pushObject.getString("name")+context.getString(R.string.push_like);
 			break;
 		default:
 			break;
@@ -206,7 +203,7 @@ public class PushReceiver extends BroadcastReceiver {
 		msg.setTime(System.currentTimeMillis());
 		msg.setGroupId(pushObject.getString("groupid"));
 		msg.setGroupName(pushObject.getString("groupname"));
-		msg.setReason(pushObject.getString("name")+"邀请加入");
+		msg.setReason(pushObject.getString("name")+context.getString(R.string.push_invite));
 		msg.setStatus(InviteMesageStatus.BEAPPLYED);
 		
 		InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(context);
