@@ -264,6 +264,7 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 
 	@Override
 	protected void setUpView() {
+		setBarText(getString(R.string.personal_setting));
 		userModel = UserManager.getInstance().getUser();
 		// 显示头像的配置
 		headImageOptions = new DisplayImageOptions.Builder()
