@@ -11,6 +11,7 @@
     <string name="downloading_success">获取成功</string>
     <string name="uploading_fail">上传失败</string>
     <string name="downloading_fail">获取失败</string>
+    <string name="loading">加载中..</string>
 
     <!-- Loading -->
 
@@ -109,6 +110,7 @@
     <string name="personal_share_ok">分享成功</string>
     <string name="personal_share_fail">分享失败</string>
     <string name="personal_setting">设置</string>
+    <string name="personal_news">个人动态</string>
     <!-- Personal -->
 
 

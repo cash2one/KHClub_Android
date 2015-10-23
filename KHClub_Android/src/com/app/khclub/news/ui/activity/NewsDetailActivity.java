@@ -548,7 +548,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		imgLoader.displayImage(data.getUserHeadSubImage(), newsUserHeadImgView,
 				options);
 		newsUserName.setText(data.getUserName());
-		if (data.getUserJob().equals("")) {
+		if (null == data.getUserJob() || data.getUserJob().equals("")) {
 			// 未填写则隐藏
 			newsUserJob.setVisibility(View.GONE);
 		} else {
@@ -556,7 +556,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			newsUserJob.setText(data.getUserJob() + " | ");
 		}
 
-		if (data.getUserCompany().equals("")) {
+		if (null == data.getUserCompany() || data.getUserCompany().equals("")) {
 			// 未填写则隐藏
 			newsUserCompany.setVisibility(View.GONE);
 		} else {
@@ -564,7 +564,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			newsUserCompany.setText(data.getUserCompany());
 		}
 
-		if (data.getNewsContent().equals("")) {
+		if (null == data.getNewsContent() || data.getNewsContent().equals("")) {
 			newsContent.setVisibility(View.GONE);
 		} else {
 			newsContent.setVisibility(View.VISIBLE);

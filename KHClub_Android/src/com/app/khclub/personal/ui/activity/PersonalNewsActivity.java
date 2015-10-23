@@ -80,7 +80,7 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 		newsListViewSet();
 
 		// ////////// 首次获取数据 ////////////////
-		showLoading("加载中...", true);
+		showLoading(getResources().getString(R.string.loading), true);
 		getMyNewsData(currentUid, String.valueOf(currentPage));
 	}
 
@@ -187,22 +187,26 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 				likeBtn.setCompoundDrawablesWithIntrinsicBounds(drawable, null,
 						null, null);
 
-				if (newsData.getLikeQuantity() > 0) {
+				helper.setText(R.id.btn_personal_news_like,
+						String.valueOf(newsData.getLikeQuantity()));
+				/*if (newsData.getLikeQuantity() > 0) {
 					helper.setText(R.id.btn_personal_news_like,
 							String.valueOf(newsData.getLikeQuantity()));
 				} else {
 					helper.setText(R.id.btn_personal_news_like, getResources()
 							.getString(R.string.news_like));
-				}
+				}*/
 
 				// ///////////////// 评论///////////////////////////////////
-				if (newsData.getCommentQuantity() > 0) {
-					helper.setText(R.id.btn_personal_news_comment,
-							getResources().getString(R.string.news_comment));
-				} else {
+				helper.setText(R.id.btn_personal_news_comment,
+						String.valueOf(newsData.getCommentQuantity()));
+				/*if (newsData.getCommentQuantity() > 0) {
 					helper.setText(R.id.btn_personal_news_comment,
 							String.valueOf(newsData.getCommentQuantity()));
-				}
+				} else {
+					 helper.setText(R.id.btn_personal_news_comment,
+					 getResources().getString(R.string.news_comment));
+				}*/
 
 				// 设置item点击事件
 				final int postion = helper.getPosition();
@@ -234,7 +238,7 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 	 * 数据的初始化
 	 * */
 	private void init() {
-		setBarText("个人动态");
+		setBarText(getResources().getString(R.string.personal_news));
 		newsOPerate = new NewsOperate(PersonalNewsActivity.this);
 
 		Intent intent = this.getIntent();
@@ -265,7 +269,6 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 	private void getMyNewsData(String userID, String page) {
 		String path = KHConst.USER_NEWS_LIST + "?" + "user_id=" + userID
 				+ "&page=" + page + "&size=" + "";
-		LogUtils.i("path=" + path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(
 				new LoadDataHandler<String>() {
 
@@ -313,7 +316,9 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 							String flag) {
 						hideLoading();
 						super.onFailure(arg0, arg1, flag);
-						ToastUtil.show(PersonalNewsActivity.this, "网络故障，请检查");
+						ToastUtil.show(PersonalNewsActivity.this,
+								getResources()
+										.getString(R.string.Network_error));
 						newsListView.onRefreshComplete();
 						if (!islastPage) {
 							newsListView.setMode(Mode.BOTH);
@@ -433,8 +438,7 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 		case R.id.txt_personal_news_content:
 		case R.id.btn_personal_news_comment:
 			// 跳转至动态详情
-			jumpToNewsDetail(newsList.get(postion).getNewsID(),
-					NewsConstants.KEY_BOARD_CLOSE);
+			jumpToNewsDetail(postion);
 			break;
 
 		case R.id.btn_personal_news_share:
@@ -454,26 +458,23 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 	/***
 	 * 跳转至动态相详情
 	 */
-	private void jumpToNewsDetail(String newsId, int keyBoardMode) {
-		// 跳转到动态详情
-		Intent intentToNewsDetail = new Intent(PersonalNewsActivity.this,
-				NewsDetailActivity.class);
-		// 当前操作的动态id
-		intentToNewsDetail.putExtra(NewsConstants.INTENT_KEY_NEWS_ID, newsId);
-
-		// 找到当前的动态对象
-		for (int index = 0; index < newsList.size(); ++index) {
-			if (newsList.get(index).getNewsID().equals(newsId)) {
-				intentToNewsDetail.putExtra(NewsConstants.INTENT_KEY_NEWS_OBJ,
-						newsList.get(index));
-				break;
-			}
+	private void jumpToNewsDetail(int index) {
+		if (index < newsList.size()) {
+			// 跳转到动态详情
+			Intent intentToNewsDetail = new Intent(PersonalNewsActivity.this,
+					NewsDetailActivity.class);
+			// 当前操作的动态id
+			intentToNewsDetail.putExtra(NewsConstants.INTENT_KEY_NEWS_ID,
+					newsList.get(index).getNewsID());
+			intentToNewsDetail.putExtra(NewsConstants.INTENT_KEY_NEWS_OBJ,
+					newsList.get(index));
+			// 带有返回参数的跳转至动态详情
+			startActivityForResult(intentToNewsDetail, 1);
+			PersonalNewsActivity.this.overridePendingTransition(
+					R.anim.push_right_in, R.anim.push_right_out);
+		} else {
+			LogUtils.e("数据错误");
 		}
-
-		// 带有返回参数的跳转至动态详情
-		startActivityForResult(intentToNewsDetail, 1);
-		PersonalNewsActivity.this.overridePendingTransition(
-				R.anim.push_right_in, R.anim.push_right_out);
 	}
 
 	/**

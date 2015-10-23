@@ -79,27 +79,27 @@
 
         <TextView
             android:id="@+id/btn_personal_news_comment"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:drawableLeft="@drawable/btn_comment_selector"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:gravity="center"
-            android:text="评论"
+            android:text="@string/news_comment"
             android:textColor="@color/main_light_black"
             android:textSize="@dimen/font_size_tiny" />
         <!-- 点赞按钮 -->
 
         <TextView
             android:id="@+id/btn_personal_news_like"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:drawableLeft="@drawable/like_btn_normal"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:gravity="center"
-            android:text="赞"
+            android:text="@string/news_like"
             android:textColor="@color/main_light_black"
             android:textSize="@dimen/font_size_tiny" />
     </LinearLayout>
