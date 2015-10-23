@@ -157,7 +157,7 @@ public class ContactAdapter extends ArrayAdapter<User>  implements SectionIndexe
 		list.add(getContext().getString(R.string.search_header));
 		positionOfSection.put(0, 0);
 		sectionOfPosition.put(0, 0);
-		for (int i = 1; i < count; i++) {
+		for (int i = 0; i < count; i++) {
 
 			String letter = getItem(i).getHeader();
 			EMLog.d(TAG, "contactadapter getsection getHeader:" + letter + " name:" + getItem(i).getUsername());

@@ -16,7 +16,7 @@
         android:singleLine="true"
         android:layout_marginRight="110dp"
         android:text="@string/app_name"
-        android:textColor="@color/main_brown"
+        android:textColor="@color/main_white"
         android:textSize="@dimen/action_bar_title_size" />
     <TextView
         android:id="@+id/base_tv_back"

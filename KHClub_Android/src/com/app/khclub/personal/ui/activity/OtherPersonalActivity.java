@@ -110,6 +110,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	private String remark = "";
 	// 是否是好友
 	private boolean isFriend;
+	// 是否收藏
+	private int isCollected = 0;	
 	// 私有dialog
 	private ProgressDialog progressDialog;
 	// 底部操作弹出菜单
@@ -167,8 +169,6 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			return;
 		}
 
-		getPersonalInformation();
-
 		// 是否是好友
 		imUser = ((KHHXSDKHelper) KHHXSDKHelper.getInstance())
 				.getContactList().get(KHConst.KH + uid);
@@ -183,6 +183,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		}
 
 		initPopupListener();
+		
+		getPersonalInformation();
 	}
 
 	/**
@@ -454,10 +456,17 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		if (jsonObject.containsKey("remark")) {
 			remark = jsonObject.getString("remark");
 		}
-
-		otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend,
-				jsonObject.getIntValue("isCollected"), remark);
-		otherPersonalQRFragment.setQRcode(otherUserModel);
+		if (jsonObject.containsKey("isCollected")) {
+			isCollected = jsonObject.getIntValue("isCollected");			
+		}
+		
+		if (otherPersonalInfoFragment != null) {
+			otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend,
+					isCollected, remark);
+			otherPersonalQRFragment.setQRcode(otherUserModel);	
+		}else {
+		}
+		
 	}
 
 	/**

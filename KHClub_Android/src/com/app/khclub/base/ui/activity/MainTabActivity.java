@@ -1192,9 +1192,13 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 
 	
 	@Override
-	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+	protected void onActivityResult(int arg0, int arg1, Intent data) {
 		// TODO Auto-generated method stub
-		super.onActivityResult(arg0, arg1, arg2);
+		if (data == null) {
+			return;
+		}
+		super.onActivityResult(arg0, arg1, data);
+		
 	}
 
 	private void asycContact() {
@@ -1227,7 +1231,7 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 								}
 								
 								if (user.getNick().length() < 1) {
-									user.setHeader("k");
+									user.setHeader("K");
 								}else if (Character.isDigit(user.getNick().charAt(0))) {
 						            user.setHeader("#");
 						        } else {

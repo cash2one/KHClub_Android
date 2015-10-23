@@ -122,6 +122,7 @@ public class NewFriendsMsgActivity extends BaseActivity {
 
 	public void back(View view) {
 		finish();
+		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
 	
 	
