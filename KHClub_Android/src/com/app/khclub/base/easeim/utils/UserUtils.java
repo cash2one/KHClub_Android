@@ -35,6 +35,10 @@ public class UserUtils {
      * @return
      */
     public static User getUserInfo(String username){
+    	if (null == username) {
+			return null;
+		}
+    	
         User user = ((KHHXSDKHelper)KHHXSDKHelper.getInstance()).getContactList().get(username);
         boolean isFriend = true;
         if(user == null){

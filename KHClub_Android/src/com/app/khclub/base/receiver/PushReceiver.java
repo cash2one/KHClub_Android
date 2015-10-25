@@ -199,12 +199,16 @@ public class PushReceiver extends BroadcastReceiver {
 		
 		// 用户申请加入群聊
 		InviteMessage msg = new InviteMessage();
-		msg.setFrom(pushObject.getString("target_id"));
+		msg.setFrom(pushObject.getString("targetid"));
 		msg.setTime(System.currentTimeMillis());
 		msg.setGroupId(pushObject.getString("groupid"));
 		msg.setGroupName(pushObject.getString("groupname"));
 		msg.setReason(pushObject.getString("name")+context.getString(R.string.push_invite));
 		msg.setStatus(InviteMesageStatus.BEAPPLYED);
+		
+		if (null == msg.getFrom()) {
+			return;
+		}
 		
 		InviteMessgeDao inviteMessgeDao = new InviteMessgeDao(context);
 		inviteMessgeDao.saveMessage(msg);

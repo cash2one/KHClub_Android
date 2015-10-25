@@ -1051,6 +1051,9 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		if (null == msg) {
 			return;
 		}
+		if(null == msg.getFrom()){
+			return;
+		}
 		// 保存msg
 		inviteMessgeDao.saveMessage(msg);
 		//获取缓存信息
