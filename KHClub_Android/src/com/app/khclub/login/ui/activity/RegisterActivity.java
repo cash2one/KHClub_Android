@@ -266,8 +266,9 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 			titletTextView.setText(getString(R.string.login_register_title));	
 		}
 		
-		RelativeLayout rlBar = (RelativeLayout) findViewById(R.id.layout_base_title);
-		rlBar.setBackgroundResource(R.color.main_clear);
+		// RelativeLayout rlBar = (RelativeLayout)
+		// findViewById(R.id.layout_base_title);
+		// rlBar.setBackgroundResource(R.color.main_clear);
 		
 		// 填写从短信SDK应用后台注册得到的APPKEY 
 		String APPKEY = "94025949f2d3";//463db7238681  27fe7909f8e8

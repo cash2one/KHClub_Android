@@ -4,7 +4,7 @@
     android:id="@+id/layout_area_code_rootview"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="@color/main_deep_white"
+    android:background="@drawable/selector_deep_white_click"
     android:clickable="true"
     android:orientation="horizontal"
     android:padding="10dp" >
@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@color/main_deep_black"
+        android:textColor="@color/main_light_black"
         android:textSize="@dimen/font_size_medium" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:textColor="@color/main_deep_black"
-        android:textSize="@dimen/font_size_medium" />
+        android:textColor="@color/main_light_black"
+        android:textSize="@dimen/font_size_secondary" />
 
 </LinearLayout>
