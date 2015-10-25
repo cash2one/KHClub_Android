@@ -16,8 +16,10 @@ package com.app.khclub.base.easeim.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.View;
 
+import com.app.khclub.R;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.umeng.analytics.MobclickAgent;
 
@@ -54,4 +56,14 @@ public class BaseActivity extends FragmentActivity {
     public void back(View view) {
         finish();
     }
+    
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+			finish();
+			overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+			return true;
+		} else
+			return super.onKeyDown(keyCode, event);
+	}
 }

@@ -72,9 +72,9 @@
         <TextView
             android:id="@+id/floating_header"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/show_head_toast_bg"
+            android:background="#993b3b3b"
             android:gravity="center"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"

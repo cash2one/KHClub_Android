@@ -30,7 +30,6 @@ import com.app.khclub.base.easeim.KHHXSDKModel;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
-import com.app.khclub.base.manager.ActivityManager;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.NewVersionCheckManager;
 import com.app.khclub.base.manager.NewVersionCheckManager.VersionCallBack;

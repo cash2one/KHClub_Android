@@ -108,7 +108,7 @@ public class UserProfileManager {
 								}
 								
 								if (user.getNick().length() < 1) {
-									user.setHeader("k");
+									user.setHeader("K");
 								}else if (Character.isDigit(user.getNick().charAt(0))) {
 						            user.setHeader("#");
 						        } else {

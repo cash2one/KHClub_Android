@@ -193,13 +193,13 @@
                     android:layout_marginRight="10dip"
                     android:background="#E6E6E6" />
                 
-                <ImageView 
+  <!--               <ImageView 
                     android:background="@color/main_blue"
                     android:layout_marginRight="20dp"
                     android:layout_width="38dp"
                     android:layout_height="38dp"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_alignParentRight="true"/> -->
             </RelativeLayout>            
             
             <RelativeLayout

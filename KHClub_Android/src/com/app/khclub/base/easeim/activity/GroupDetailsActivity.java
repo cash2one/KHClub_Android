@@ -281,14 +281,16 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 			@Override
 			public void shareToQzoneClick() {
-				// 分享到qq空间
+				// 分享到朋友圈
 				ShareParams sp = new ShareParams();
+				sp.setTitle("KHClub");
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
-				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
-				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				Platform qq = ShareSDK.getPlatform(QZone.NAME);
+				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
-				wexin.share(sp);
+				qq.share(sp);
 			}
 
 			@Override
@@ -324,16 +326,14 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 
 			@Override
 			public void shareToCircleofFriendsClick() {
-				// 分享到朋友圈
+				// 分享到qq空间
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
-				Platform qq = ShareSDK.getPlatform(QZone.NAME);
-				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
+				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
-				qq.share(sp);
+				wexin.share(sp);
 			}
 
 			@Override
