@@ -219,6 +219,37 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 		activityInstance = this;
 		initView();
 		setUpView();
+		
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): java.lang.NullPointerException
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at com.app.khclub.base.easeim.adapter.MessageAdapter.handleTextMessage(MessageAdapter.java:675)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at com.app.khclub.base.easeim.adapter.MessageAdapter.getView(MessageAdapter.java:501)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.AbsListView.obtainView(AbsListView.java:2171)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.ListView.makeAndAddView(ListView.java:1840)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.ListView.fillUp(ListView.java:709)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.ListView.layoutChildren(ListView.java:1636)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.AbsListView.onLayout(AbsListView.java:2022)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.View.layout(View.java:14289)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.ViewGroup.layout(ViewGroup.java:4562)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.support.v4.widget.SwipeRefreshLayout.onLayout(SwipeRefreshLayout.java:561)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.View.layout(View.java:14289)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.ViewGroup.layout(ViewGroup.java:4562)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.RelativeLayout.onLayout(RelativeLayout.java:1076)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.View.layout(View.java:14289)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.ViewGroup.layout(ViewGroup.java:4562)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.RelativeLayout.onLayout(RelativeLayout.java:1076)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.View.layout(View.java:14289)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.ViewGroup.layout(ViewGroup.java:4562)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:448)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.View.layout(View.java:14289)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.ViewGroup.layout(ViewGroup.java:4562)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1671)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1525)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.LinearLayout.onLayout(LinearLayout.java:1434)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.View.layout(View.java:14289)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.view.ViewGroup.layout(ViewGroup.java:4562)
+//		10-25 12:24:53.376: A/MobUncaughtExceptionHandler(26196): 	at android.widget.FrameLayout.onLayout(FrameLayout.java:448)
+
+		
 	}
 
 	/**
@@ -958,7 +989,6 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 	 *            boolean resend
 	 */
 	public void sendText(String content) {
-
 		if (content.length() > 0) {
 			EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
 			// 如果是群聊，设置chattype,默认是单聊
