@@ -73,6 +73,7 @@ import com.app.khclub.base.easeim.utils.SmileUtils;
 import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.message.ui.activity.SearchActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.EMCallBack;
@@ -121,6 +122,8 @@ public class MessageAdapter extends BaseAdapter{
 	private static final int MESSAGE_TYPE_RECV_VIDEO_CALL = 15;
 	private static final int MESSAGE_TYPE_SENT_ROBOT_MENU = 16;
 	private static final int MESSAGE_TYPE_RECV_ROBOT_MENU = 17;
+	private static final int MESSAGE_TYPE_RECV_CARD = 18;
+	private static final int MESSAGE_TYPE_SENT_CARD = 19;
 
 	public static final String IMAGE_DIR = "chat/image/";
 	public static final String VOICE_DIR = "chat/audio/";
@@ -241,7 +244,7 @@ public class MessageAdapter extends BaseAdapter{
 	 * 获取item类型数
 	 */
 	public int getViewTypeCount() {
-        return 18;
+        return 20;
     }
 
 	/**
@@ -259,8 +262,13 @@ public class MessageAdapter extends BaseAdapter{
 			    return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL : MESSAGE_TYPE_SENT_VIDEO_CALL;
 			else if(((KHHXSDKHelper)HXSDKHelper.getInstance()).isRobotMenuMessage(message))
 				return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_ROBOT_MENU : MESSAGE_TYPE_SENT_ROBOT_MENU;
-			else
+			else{
+				TextMessageBody txtBody = (TextMessageBody) message.getBody();
+				if (txtBody.getMessage().startsWith("###card") && txtBody.getMessage().endsWith("card###")) {
+					return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_CARD : MESSAGE_TYPE_SENT_CARD;
+				}
 				return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_TXT : MESSAGE_TYPE_SENT_TXT;
+			}
 		}
 		if (message.getType() == EMMessage.Type.IMAGE) {
 			return message.direct == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_IMAGE : MESSAGE_TYPE_SENT_IMAGE;
@@ -497,8 +505,10 @@ public class MessageAdapter extends BaseAdapter{
 			else if(((KHHXSDKHelper)HXSDKHelper.getInstance()).isRobotMenuMessage(message))
 				//含有列表的消息
 				handleRobotMenuMessage(message, holder, position);
-			else
-			    handleTextMessage(message, holder, position);
+			else{
+			    handleTextMessage(message, holder, position);				
+			}
+
 			break;
 		case LOCATION: // 位置
 			handleLocationMessage(message, holder, position, convertView);

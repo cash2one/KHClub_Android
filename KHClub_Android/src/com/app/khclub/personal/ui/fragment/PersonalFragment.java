@@ -259,7 +259,7 @@ public class PersonalFragment extends BaseFragment {
 		// 签名
 		if (null != userModel.getSignature()
 				&& userModel.getSignature().length() > 0) {
-			signTextView.setText(userModel.getName());
+			signTextView.setText(userModel.getSignature());
 		} else {
 			signTextView.setText(R.string.personal_none);
 		}

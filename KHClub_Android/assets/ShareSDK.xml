@@ -77,10 +77,17 @@
     <QZone
         Id="3"
         SortId="3"
-        AppId="100371282"
-        AppKey="aed9b0303e3ed1e27bae87c33761161d"
-        ShareByAppClient="false"
+        AppId="1104849343"
+        AppKey="OgQIsj3IiczvcXz2"
+        ShareByAppClient="true"
         Enable="true" />
+	<QQ
+        Id="7"
+        SortId="7"
+        AppId="1104849343"
+        AppKey="OgQIsj3IiczvcXz2"
+        ShareByAppClient="true"
+        Enable="true" />    
     
     <!-- 
     	Wechat微信和WechatMoments微信朋友圈的appid是一样的；
@@ -118,13 +125,6 @@
         Enable="true" />
     
 	<!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
-	<QQ
-        Id="7"
-        SortId="7"
-        AppId="100371282"
-        AppKey="aed9b0303e3ed1e27bae87c33761161d"
-        ShareByAppClient="true"
-        Enable="true" />
     
     <Facebook
         Id="8"
