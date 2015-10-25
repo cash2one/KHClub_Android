@@ -91,7 +91,8 @@ public class GalleyActivity extends BaseActivityWithTopBar implements
 	@Override
 	protected void setUpView() {
 		// 添加完成按钮
-		addRightBtn("完成");
+		addRightBtn(getString(R.string.alert_finish)).setTextColor(
+				getResources().getColor(R.color.main_white));
 
 		DisplayMetrics outMetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
@@ -103,9 +104,10 @@ public class GalleyActivity extends BaseActivityWithTopBar implements
 		}
 		isSingle = intent.getBooleanExtra(INTENT_KEY_ONE, false);
 		if (isSingle) {
-			setBarText("选取照片");
+			setBarText(getString(R.string.select_picture));
 		} else {
-			setBarText("选取照片 (" + selectedCount + "/9)");
+			setBarText(getString(R.string.select_picture) + "(" + selectedCount
+					+ "/9)");
 		}
 
 		GalleyAdapter.clearSelectedImageList();
@@ -128,8 +130,8 @@ public class GalleyActivity extends BaseActivityWithTopBar implements
 	 */
 	private void data2View() {
 		if (mImgDir == null) {
-			Toast.makeText(getApplicationContext(), "擦，一张图片没扫描到",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),
+					getString(R.string.no_pictures), Toast.LENGTH_SHORT).show();
 			return;
 		}
 
@@ -184,12 +186,13 @@ public class GalleyActivity extends BaseActivityWithTopBar implements
 	private void getImages() {
 		if (!Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
-			Toast.makeText(this, "暂无外部存储", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, getString(R.string.no_external_storage),
+					Toast.LENGTH_SHORT).show();
 			return;
 		}
 
 		// 显示进度条
-		showLoading("正在加载...", true);
+		showLoading(getString(R.string.loading), true);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -372,9 +375,10 @@ public class GalleyActivity extends BaseActivityWithTopBar implements
 		@Override
 		public void OnItemClick(int count) {
 			if (isSingle) {
-				setBarText("选取照片poi~");
+				setBarText(getString(R.string.select_picture));
 			} else {
-				setBarText("选取照片 (" + count + "/9)");
+				setBarText(getString(R.string.select_picture) + "(" + count
+						+ "/9)");
 			}
 		}
 	};

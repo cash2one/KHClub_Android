@@ -29,6 +29,7 @@
         android:id="@+id/layout_galley_bottom_ly"
         android:layout_width="match_parent"
         android:layout_height="50dip"
+        android:background="@color/main_gold"
         android:clickable="true" >
 
         <TextView
@@ -39,8 +40,8 @@
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:paddingLeft="10dip"
-            android:text="所有图片"
-            android:textColor="@color/main_brown" />
+            android:text="@string/all_picture"
+            android:textColor="@color/main_white" />
 
     </RelativeLayout>
 

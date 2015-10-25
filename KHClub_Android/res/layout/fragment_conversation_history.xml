@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-         android:id="@+id/title_bar"
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_top_bar"
         android:background="@color/main_gold"
@@ -41,11 +41,11 @@
 
     <ListView
         android:id="@+id/list"
-        android:listSelector="@color/main_light_gary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         android:cacheColorHint="#00000000"
-        android:divider="@null" />
+        android:divider="@null"
+        android:listSelector="@color/main_light_gary" />
 
 </LinearLayout>

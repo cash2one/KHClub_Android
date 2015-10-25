@@ -47,7 +47,7 @@
     </RelativeLayout>
 
     <EditText
-        android:background="@drawable/comment_box_background" 
+        android:background="@drawable/edittext_bkgrnd" 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

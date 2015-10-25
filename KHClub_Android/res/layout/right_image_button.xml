@@ -10,6 +10,7 @@
         android:id="@+id/img_btn_right_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/common_tab_bg"
         android:paddingLeft="10dp"
         android:paddingRight="20dp"
         android:scaleType="centerInside"

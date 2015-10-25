@@ -1,45 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dialog_interior_size_large"
+    android:layout_height="wrap_content"
     android:background="@color/main_light_white"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/tv_btn_camera"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dialog_interior_size_large"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/selector_deep_white_click"
-        android:gravity="center" >
+        android:gravity="center_vertical"
+        android:padding="10dp" >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:src="@drawable/select_photos_camera_normal" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/camera"
+            android:textColor="@color/main_light_black"
+            android:textSize="@dimen/font_size_medium" />
     </LinearLayout>
 
     <View
         android:id="@+id/view_dividing"
-        android:layout_width="1px"
-        android:layout_height="@dimen/dialog_interior_size_large"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
         android:background="@color/main_light_white" />
 
     <LinearLayout
         android:id="@+id/tv_btn_galley"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dialog_interior_size_large"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/selector_deep_white_click"
         android:clickable="true"
-        android:gravity="center" >
+        android:gravity="center_vertical"
+        android:padding="10dp" >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:src="@drawable/select_photos_gallery_normal" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/gallery"
+            android:textColor="@color/main_light_black"
+            android:textSize="@dimen/font_size_medium" />
     </LinearLayout>
 
 </LinearLayout>

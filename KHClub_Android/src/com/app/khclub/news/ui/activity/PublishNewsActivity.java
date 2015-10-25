@@ -312,15 +312,15 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 						switch (status) {
 						case KHConst.STATUS_SUCCESS:
 							// toast
-							ToastUtil.show(PublishNewsActivity.this,R.string.news_publish_success);
+							ToastUtil.show(PublishNewsActivity.this,
+									R.string.news_publish_success);
 							hideLoading();
 							finishWithRight();
 							publishFinishBroadcast();
 							break;
 						case KHConst.STATUS_FAIL:
 							hideLoading();
-							Toast.makeText(
-									PublishNewsActivity.this,
+							Toast.makeText(PublishNewsActivity.this,
 									R.string.news_publish_fail,
 									Toast.LENGTH_SHORT).show();
 							break;
@@ -332,10 +332,8 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 							String flag) {
 						super.onFailure(arg0, arg1, flag);
 						hideLoading();
-						Toast.makeText(
-								PublishNewsActivity.this,
-								R.string.net_error,
-								Toast.LENGTH_SHORT).show();
+						Toast.makeText(PublishNewsActivity.this,
+								R.string.net_error, Toast.LENGTH_SHORT).show();
 					}
 				}, null));
 	}
@@ -350,9 +348,9 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void setUpView() {
-		//标题
+		// 标题
 		setBarText(getResources().getString(R.string.news_publish));
-		
+
 		// 设置初始间隔
 		MarginLayoutParams oriLp = (MarginLayoutParams) addImageView
 				.getLayoutParams();
@@ -364,7 +362,9 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 				.getDefaultDisplay().getWidth() - space * 3 - oriMarginLeft * 2) / 4;
 		addImageView.setLayoutParams(rlParams);
 		// 添加完成按钮
-		addRightBtn(getResources().getString(R.string.alert_finish));
+		TextView sendBtn = addRightBtn(getResources().getString(
+				R.string.publish_news));
+		sendBtn.setTextColor(getResources().getColor(R.color.main_white));
 		locationString = "";
 		// bitmap初始化
 		headImageOptions = new DisplayImageOptions.Builder()

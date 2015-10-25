@@ -23,7 +23,8 @@
         android:id="@+id/base_tv_back"
         android:layout_width="50dip"
         android:layout_height="50dip"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:background="@drawable/common_tab_bg" />
 
     <!-- clickable暂时关闭 "@drawable/back_click_selector" -->
 
@@ -38,13 +39,13 @@
         android:id="@+id/base_ll_right_btns"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:background="@drawable/common_tab_bg"
         android:layout_alignParentRight="true"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
     </LinearLayout>
 
-</RelativeLayout>
-<!--
+</RelativeLayout><!--
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -83,6 +84,5 @@
         android:textColor="#ffffff"
         android:textSize="22sp" />
 
-</RelativeLayout>
--->
+</RelativeLayout>-->
 

@@ -10,18 +10,19 @@
         android:layout_height="@dimen/action_bar_height_size"
         android:background="@color/main_gold"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp" >
+        android:orientation="horizontal" >
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="match_parent" >
 
             <ImageView
                 android:id="@+id/img_notice_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/common_tab_bg"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:src="@drawable/news_notice_btn_selector" />
 
             <ImageView
@@ -29,8 +30,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|top"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/small_unread"
-                android:visibility="gone" />
+                android:visibility="invisible" />
         </FrameLayout>
 
         <TextView
@@ -47,6 +50,9 @@
             android:id="@+id/img_news_publish_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@drawable/common_tab_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:src="@drawable/news_publish_btn_selector" />
     </LinearLayout>
     <!-- 主页动态的listview -->

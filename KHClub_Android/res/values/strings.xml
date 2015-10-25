@@ -33,6 +33,12 @@
     <string name="alert_finish">Finish</string>
     <string name="next">Next</string>
     <string name="delete_friend">Remove Friend</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="all_picture">All picture</string>
+    <string name="select_picture">Select no_pictures</string>
+    <string name="no_pictures">No pictures</string>
+    <string name="no_external_storage">No external storage</string>
     <!-- Alert -->
 
 
@@ -59,7 +65,7 @@
     <string name="login_verification_error">Verification code or phone number error</string>
     <string name="login_please_enter_verification">Please enter verification</string>
     <string name="login_password_length" tools:ignore="TypographyDashes">Password length 6-32 characters</string>
-     <string name="select_area_code">Select area code</string>
+    <string name="select_area_code">Select area code</string>
     <!-- Login -->
 
 
@@ -115,7 +121,7 @@
     <string name="collect_fail">Collect fail</string>
     <string name="cancel_collect_success">Cancel the collection success</string>
     <string name="cancel_collect_fail">Cancel the collection fail</string>
-   <string name="person_qrcode_prompt">Scan and exchange business cards</string>
+    <string name="person_qrcode_prompt">Scan and exchange business cards</string>
     <!-- Personal -->
 
 
@@ -135,7 +141,7 @@
     <string name="news_delete_success">Delete success</string>
     <string name="news_delete_fail">Delete fail</string>
     <!-- News -->
-
+    <string name="publish_news">Send</string>
     <string name="text_ack_msg">Read</string>
     <string name="text_delivered_msg">Delivered</string>
     <string name="back">Back</string>

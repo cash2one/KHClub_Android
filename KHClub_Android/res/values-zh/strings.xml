@@ -33,6 +33,12 @@
     <string name="edit_remark">修改备注</string>
     <string name="share_card">分享名片</string>
     <string name="switch_style">切换样式</string>
+    <string name="camera">相机</string>
+    <string name="gallery">相册</string>
+    <string name="all_picture">所有图片</string>
+    <string name="select_picture">选取照片</string>
+    <string name="no_pictures">没有扫描到任何图片</string>
+    <string name="no_external_storage">暂无外部存储</string>
     <!-- Alert -->
 
 
@@ -127,7 +133,7 @@
     <string name="news_content_too_long">内容不能超过140个字</string>
     <string name="news_publish_success">发布成功</string>
     <string name="news_publish_fail">发布失败</string>
-    <string name="news_publish">发布</string>
+    <string name="news_publish">发布动态</string>
     <string name="news_push_delete">删除内容</string>
     <string name="news_push_like">为你点了赞</string>
     <string name="news_enter_comment_content">输入评论内容</string>
@@ -138,7 +144,7 @@
     <string name="news_comment">评论</string>
     <string name="news_like">赞</string>
     <!-- News -->
-
+    <string name="publish_news">发送</string>
     <string name="text_ack_msg">已读</string>
     <string name="text_delivered_msg">送达</string>
     <string name="back">返回</string>
