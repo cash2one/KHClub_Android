@@ -30,15 +30,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="220dip"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
                 android:persistentDrawingCache="animation" />
 
             <LinearLayout
                 android:id="@+id/image_cover_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:background="@color/main_white"
+                android:background="@drawable/selector_deep_white_click"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -48,7 +46,7 @@
                     android:layout_marginLeft="10dip"
                     android:layout_weight="1"
                     android:text="@string/personal_moments"
-                    android:textSize="@dimen/font_size_large" />
+                    android:textSize="@dimen/font_size_medium" />
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view3"
@@ -97,7 +95,7 @@
                     android:layout_marginLeft="10dip"
                     android:layout_marginTop="10dp"
                     android:text="@string/personal_signature"
-                    android:textSize="@dimen/font_size_large" />
+                    android:textSize="@dimen/font_size_medium" />
 
                 <TextView
                     android:id="@+id/sign_text_view"
@@ -105,18 +103,24 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="11dp"
                     android:inputType="textMultiLine"
-                    android:textSize="@dimen/font_size_medium"
+                    android:textColor="@color/main_light_black"
+                    android:textSize="@dimen/font_size_secondary"
                     tools:ignore="TextViewEdits" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/add_send_btn"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/main_gold"
+                android:text="@string/personal_add_friend"
+                android:textColor="@color/main_white"
+                android:textSize="@dimen/font_size_secondary" />
         </LinearLayout>
     </com.app.khclub.base.ui.view.CustomerScrollView>
-
-    <Button
-        android:id="@+id/add_send_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_light_black"
-        android:padding="10dp"
-        android:text="@string/personal_add_friend" />
 
 </LinearLayout>

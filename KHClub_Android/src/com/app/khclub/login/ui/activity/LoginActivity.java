@@ -19,112 +19,134 @@ import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.ui.activity.BaseActivity;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.news.ui.activity.NewsDetailActivity;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-@SuppressLint("ResourceAsColor") 
+@SuppressLint("ResourceAsColor")
 public class LoginActivity extends BaseActivity {
 
-	//用户名输入框
+	// 用户名输入框
 	@ViewInject(R.id.usernameEt)
 	private EditText usernameEt;
-	//登录注册按钮
+	// 登录注册按钮
 	@ViewInject(R.id.loginRegisterBtn)
 	private Button loginRegisterBtn;
-	//布局文件
+	// 布局文件
 	@ViewInject(R.id.login_activity)
 	private RelativeLayout loginLayout;
-	
-	@OnClick(value={R.id.loginRegisterBtn,R.id.login_activity})
+
+	@OnClick(value = { R.id.loginRegisterBtn, R.id.login_activity,
+			R.id.area_code_btn })
 	public void loginOrRegisterClick(View v) {
-		
+
 		switch (v.getId()) {
-		//登录或者注册判断
+		// 登录或者注册判断
 		case R.id.loginRegisterBtn:
 			loginOrRegister();
 			break;
 		case R.id.login_activity:
 			try {
-				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);  
-		        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+						0);
 			} catch (Exception e) {
 			}
-			
-	        break;
+			break;
+		case R.id.area_code_btn:
+			// 跳转到动态详情
+			Intent intentToAreaCode = new Intent(LoginActivity.this,
+					AreaCodeActivity.class);
+			startActivityForResult(intentToAreaCode, 1);
+			LoginActivity.this.overridePendingTransition(R.anim.push_right_in,
+					R.anim.push_right_out);
+			break;
 		default:
 			break;
 		}
 	}
-	
+
 	/**
 	 * 登录或者注册跳转
 	 */
 	public void loginOrRegister() {
 		final String username = usernameEt.getText().toString().trim();
-		if(username.length() < 1){
+		if (username.length() < 1) {
 			ToastUtil.show(this, getString(R.string.login_username_not_null));
 			return;
 		}
-		
-		//网络请求 hud
+
+		// 网络请求 hud
 		showLoading(getString(R.string.login_wait_a_minute), true);
-		
+
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("username", username);
-				
-		HttpManager.post(KHConst.IS_USER, params, new JsonRequestCallBack<String>(new LoadDataHandler<String>(){
-			
-			@Override
-			public void onSuccess(JSONObject jsonResponse, String flag) {
-				// TODO Auto-generated method stub
-				super.onSuccess(jsonResponse, flag);
-				
-				int status = jsonResponse.getInteger(KHConst.HTTP_STATUS);
-				switch (status) {
-				case KHConst.STATUS_SUCCESS:
-					hideLoading();
-					
-					JSONObject result = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
-					//登录
-			        int loginDirection    = 1;
-			        //注册
-			        int registerDirection = 2;
-			        int direction = result.getIntValue("direction");
-		            if (direction == loginDirection) {
-		            	//登录
-		            	Intent intent = new Intent(LoginActivity.this, SecondLoginActivity.class);
-		            	intent.putExtra("username", username);
-		            	startActivityWithRight(intent);
-		            }
-		            
-		            if (direction == registerDirection) {
-		            	//注册
-		        		Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-		            	intent.putExtra("username", usernameEt.getText().toString().trim());
-		            	startActivityWithRight(intent);	
-		            }
-					
-					break;
-				case KHConst.STATUS_FAIL:
-					hideLoading();
-					Toast.makeText(LoginActivity.this, jsonResponse.getString(getString(R.string.net_error)),
-							Toast.LENGTH_SHORT).show();
-				}
-			}
-			@Override
-			public void onFailure(HttpException arg0, String arg1, String flag) {
-				// TODO Auto-generated method stub
-				super.onFailure(arg0, arg1, flag);
-				hideLoading();
-				Toast.makeText(LoginActivity.this, getString(R.string.net_error),
-						Toast.LENGTH_SHORT).show();
-			}
-			
-		}, null)); 
+
+		HttpManager.post(KHConst.IS_USER, params,
+				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						// TODO Auto-generated method stub
+						super.onSuccess(jsonResponse, flag);
+
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						switch (status) {
+						case KHConst.STATUS_SUCCESS:
+							hideLoading();
+
+							JSONObject result = jsonResponse
+									.getJSONObject(KHConst.HTTP_RESULT);
+							// 登录
+							int loginDirection = 1;
+							// 注册
+							int registerDirection = 2;
+							int direction = result.getIntValue("direction");
+							if (direction == loginDirection) {
+								// 登录
+								Intent intent = new Intent(LoginActivity.this,
+										SecondLoginActivity.class);
+								intent.putExtra("username", username);
+								startActivityWithRight(intent);
+							}
+
+							if (direction == registerDirection) {
+								// 注册
+								Intent intent = new Intent(LoginActivity.this,
+										RegisterActivity.class);
+								intent.putExtra("username", usernameEt
+										.getText().toString().trim());
+								startActivityWithRight(intent);
+							}
+
+							break;
+						case KHConst.STATUS_FAIL:
+							hideLoading();
+							Toast.makeText(
+									LoginActivity.this,
+									jsonResponse
+											.getString(getString(R.string.net_error)),
+									Toast.LENGTH_SHORT).show();
+						}
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						// TODO Auto-generated method stub
+						super.onFailure(arg0, arg1, flag);
+						hideLoading();
+						Toast.makeText(LoginActivity.this,
+								getString(R.string.net_error),
+								Toast.LENGTH_SHORT).show();
+					}
+
+				}, null));
 	}
-	
+
 	/**
 	 * 重写返回操作
 	 */
@@ -136,7 +158,7 @@ public class LoginActivity extends BaseActivity {
 		} else
 			return super.onKeyDown(keyCode, event);
 	}
-	
+
 	@Override
 	public int setLayoutId() {
 		// TODO Auto-generated method stub
@@ -151,17 +173,17 @@ public class LoginActivity extends BaseActivity {
 	@Override
 	protected void setUpView() {
 	}
-	
+
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
 	}
+
 	@Override
 	public void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
 	}
-	
 
 }

@@ -50,7 +50,7 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 	private TextView addressTextView;
 	// 收藏按钮
 	@ViewInject(R.id.text_collect_btn)
-	private TextView collectTextViewBtn;
+	private ImageView collectBtn;
 	// 新图片缓存工具 头像
 	DisplayImageOptions headImageOptions;
 	// 是否正在传输数据
@@ -90,9 +90,8 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 		// 显示头像的配置
 		headImageOptions = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.default_avatar)
-				.showImageOnFail(R.drawable.default_avatar)
-				.cacheInMemory(true).cacheOnDisk(true)
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
+				.showImageOnFail(R.drawable.default_avatar).cacheInMemory(true)
+				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
 	@Override
@@ -101,15 +100,16 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 	}
 
 	// 设置内容
-	public void setUIWithModel(UserModel userModel, boolean isFriend, int isCollect, String remark) {
+	public void setUIWithModel(UserModel userModel, boolean isFriend,
+			int isCollect, String remark) {
 		// 获取uid
 		userId = userModel.getUid();
 		if (isCollect == 0) {
-			isCollected = false;	
-		}else {
+			isCollected = false;
+		} else {
 			isCollected = true;
 		}
-		
+
 		// 头像不为空
 		if (null != userModel.getHead_image()) {
 			ImageLoader.getInstance().displayImage(
@@ -122,7 +122,7 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 		} else {
 			nameTextView.setText(R.string.personal_none);
 		}
-		//备注
+		// 备注
 		if (null != remark && remark.length() > 0) {
 			nameTextView.setText(remark);
 			secondNameTextView.setText(userModel.getName());
@@ -142,7 +142,6 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 			companyTextView.setText(R.string.personal_none);
 		}
 
-		
 		// 电话
 		if (null != userModel.getPhone_num()
 				&& userModel.getPhone_num().length() > 0) {
@@ -151,8 +150,7 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 			phoneTextView.setText(R.string.personal_none);
 		}
 		// 邮件
-		if (null != userModel.getE_mail()
-				&& userModel.getE_mail().length() > 0) {
+		if (null != userModel.getE_mail() && userModel.getE_mail().length() > 0) {
 			emailTextView.setText(userModel.getE_mail());
 		} else {
 			emailTextView.setText(R.string.personal_none);
@@ -164,46 +162,47 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 		} else {
 			addressTextView.setText(R.string.personal_none);
 		}
-		
-		//不是好友
+
+		// 不是好友
 		if (!isFriend) {
 			if (userModel.getPhone_state() == UserModel.SeeOnlyFriends) {
 				// 电话不可见
-				phoneTextView.setText("xxx");				
+				phoneTextView.setText("xxx");
 			}
 			if (userModel.getEmail_state() == UserModel.SeeOnlyFriends) {
 				// 邮件
-				emailTextView.setText("xxx");				
-			}	
+				emailTextView.setText("xxx");
+			}
 			if (userModel.getAddress_state() == UserModel.SeeOnlyFriends) {
 				// 地址
-				addressTextView.setText("xxx");			
-			}			
-		}		
+				addressTextView.setText("xxx");
+			}
+		}
 
 		// 收藏按钮
 		if (userId != UserManager.getInstance().getUser().getUid()) {
-			//不是自己的主页
-			collectTextViewBtn.setVisibility(View.VISIBLE);
+			// 不是自己的主页
+			collectBtn.setVisibility(View.VISIBLE);
 		}
 		if (isCollected) {
 			// 如果未收藏
-			collectTextViewBtn.setText("已收藏");
+			collectBtn.setImageResource(R.drawable.iconfont_collected);
 		} else {
-			collectTextViewBtn.setText("未收藏");
+			collectBtn.setImageResource(R.drawable.iconfont_collect);
 		}
 	}
-	//设置姓名部分 PS：这个位置也显示备注	
-	public void setNameTextView(String name, String secondName){
+
+	// 设置姓名部分 PS：这个位置也显示备注
+	public void setNameTextView(String name, String secondName) {
 		// 姓名部分
 		if (null != name && name.length() > 0) {
 			nameTextView.setText(name);
 		} else {
 			nameTextView.setText(R.string.personal_none);
 		}
-		//二级
+		// 二级
 		secondNameTextView.setText(secondName);
-		
+
 	}
 
 	/**
@@ -214,7 +213,7 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 	private void collectCard(String targetId) {
 		if (!isUploadData) {
 			isUploadData = true;
-			collectTextViewBtn.setText("已收藏");
+			collectBtn.setImageResource(R.drawable.iconfont_collected);
 			// 参数设置
 			RequestParams params = new RequestParams();
 			params.addBodyParameter("user_id", String.valueOf(UserManager
@@ -232,13 +231,21 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 									int status = jsonResponse
 											.getInteger(KHConst.HTTP_STATUS);
 									if (status == KHConst.STATUS_SUCCESS) {
-										// 点赞成功
-										ToastUtil.show(getActivity(), "收藏成功");
+										// 收藏成功
+										ToastUtil
+												.show(getActivity(),
+														getResources()
+																.getString(
+																		R.string.collect_success));
 									}
 
 									if (status == KHConst.STATUS_FAIL) {
-										collectTextViewBtn.setText("收藏");
-										ToastUtil.show(getActivity(), "收藏失败");
+										collectBtn
+												.setImageResource(R.drawable.iconfont_collect);
+										ToastUtil.show(
+												getActivity(),
+												getResources().getString(
+														R.string.collect_fail));
 									}
 									isUploadData = false;
 								}
@@ -247,8 +254,12 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 								public void onFailure(HttpException arg0,
 										String arg1, String flag) {
 									super.onFailure(arg0, arg1, flag);
-									collectTextViewBtn.setText("收藏");
-									ToastUtil.show(getActivity(), "收藏失败");
+									collectBtn
+											.setImageResource(R.drawable.iconfont_collect);
+									ToastUtil.show(
+											getActivity(),
+											getResources().getString(
+													R.string.collect_fail));
 									isUploadData = false;
 								}
 							}, null));
@@ -262,7 +273,7 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 
 		if (!isUploadData) {
 			isUploadData = true;
-			collectTextViewBtn.setText("收藏");
+			collectBtn.setImageResource(R.drawable.iconfont_collect);
 			// 参数设置
 			RequestParams params = new RequestParams();
 			params.addBodyParameter("user_id", String.valueOf(UserManager
@@ -280,12 +291,21 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 									int status = jsonResponse
 											.getInteger(KHConst.HTTP_STATUS);
 									if (status == KHConst.STATUS_SUCCESS) {
-										ToastUtil.show(getActivity(), "取消收藏成功");
+										ToastUtil
+												.show(getActivity(),
+														getResources()
+																.getString(
+																		R.string.cancel_collect_success));
 									}
 
 									if (status == KHConst.STATUS_FAIL) {
-										collectTextViewBtn.setText("已收藏");
-										ToastUtil.show(getActivity(), "取消收藏失败");
+										collectBtn
+												.setImageResource(R.drawable.iconfont_collect);
+										ToastUtil
+												.show(getActivity(),
+														getResources()
+																.getString(
+																		R.string.cancel_collect_fail));
 									}
 									isUploadData = false;
 								}
@@ -294,8 +314,13 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 								public void onFailure(HttpException arg0,
 										String arg1, String flag) {
 									super.onFailure(arg0, arg1, flag);
-									collectTextViewBtn.setText("已收藏");
-									ToastUtil.show(getActivity(), "取消收藏失败");
+									collectBtn
+											.setImageResource(R.drawable.iconfont_collected);
+									ToastUtil
+											.show(getActivity(),
+													getResources()
+															.getString(
+																	R.string.cancel_collect_fail));
 									isUploadData = false;
 								}
 							}, null));

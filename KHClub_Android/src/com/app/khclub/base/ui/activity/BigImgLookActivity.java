@@ -128,7 +128,7 @@ public class BigImgLookActivity extends BaseActivity {
 		// 显示图片的配置
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(android.R.color.black)
-				.showImageOnFail(R.drawable.image_load_fail)
+				.showImageOnFail(R.color.main_light_white)
 				.cacheInMemory(true).cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 
@@ -390,7 +390,7 @@ public class BigImgLookActivity extends BaseActivity {
 				FailReason failReason) {
 			loadingDialog.dismiss();
 			imageViewList.get(currentPage).setImageResource(
-					R.drawable.image_load_fail);
+					R.color.main_light_white);
 		}
 
 		@Override

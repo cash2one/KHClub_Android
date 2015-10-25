@@ -86,7 +86,7 @@ public class MultiImageView extends RelativeLayout {
 		options = new DisplayImageOptions.Builder()
 				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
 				.showImageOnLoading(R.drawable.loading_default)
-				.showImageOnFail(R.drawable.image_load_fail)
+				.showImageOnFail(R.color.main_light_white)
 				.cacheInMemory(true).cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 	}

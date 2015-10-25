@@ -107,9 +107,14 @@
     <string name="personal_new_version">New version found</string>
     <string name="personal_is_lastest_version">Is the lastest version</string>
     <string name="personal_share_ok">Share OK</string>
-    <string name="personal_share_fail">Share Fail</string>
+    <string name="personal_share_fail">Share fail</string>
     <string name="personal_setting">Setting</string>
     <string name="personal_news">Personal News</string>
+    <string name="collect_success">Collect success</string>
+    <string name="collect_fail">Collect fail</string>
+    <string name="cancel_collect_success">Cancel the collection success</string>
+    <string name="cancel_collect_fail">Cancel the collection fail</string>
+   <string name="person_qrcode_prompt">Scan and exchange business cards</string>
     <!-- Personal -->
 
 

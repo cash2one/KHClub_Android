@@ -111,6 +111,11 @@
     <string name="personal_share_fail">分享失败</string>
     <string name="personal_setting">设置</string>
     <string name="personal_news">个人动态</string>
+    <string name="collect_success">名片已收藏</string>
+    <string name="collect_fail">收藏失败</string>
+    <string name="cancel_collect_success">取消收藏成功</string>
+    <string name="cancel_collect_fail">取消收藏失败</string>
+    <string name="person_qrcode_prompt">扫描二维码交换名片</string>
     <!-- Personal -->
 
 

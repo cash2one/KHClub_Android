@@ -34,10 +34,10 @@
             android:layout_centerVertical="true" />
 
         <ImageView
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/personal_setting" />
 
@@ -46,10 +46,10 @@
             android:layout_width="50dip"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:src="@drawable/personal_more"
             android:background="@null"
-            android:scaleType="fitCenter"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/personal_more" />
     </RelativeLayout>
 
     <com.app.khclub.base.ui.view.CustomerScrollView
@@ -69,16 +69,14 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/vPager"
                 android:layout_width="match_parent"
-                android:layout_height="200dip"
+                android:layout_height="220dip"
                 android:layout_gravity="center"
-                android:layout_margin="10dp"
                 android:persistentDrawingCache="animation" />
 
             <LinearLayout
                 android:id="@+id/image_cover_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
                 android:background="@color/main_white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
@@ -88,8 +86,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
                     android:layout_weight="1"
-                    android:textColor="@color/main_deep_black"
                     android:text="@string/personal_moments"
+                    android:textColor="@color/main_deep_black"
                     android:textSize="@dimen/font_size_medium" />
 
                 <ImageView
@@ -131,13 +129,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:background="@color/main_white"
-                android:orientation="vertical" >
+                android:orientation="horizontal"
+                android:padding="10dp" >
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center"
                     android:text="@string/personal_signature"
                     android:textColor="@color/main_deep_black"
                     android:textSize="@dimen/font_size_medium" />
@@ -146,13 +144,10 @@
                     android:id="@+id/sign_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="11dp"
-                    android:inputType="textMultiLine"
-                    android:textColor="@color/main_deep_black"
-                    android:textSize="@dimen/font_size_secondary"
-                    tools:ignore="TextViewEdits" />
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/main_light_black"
+                    android:textSize="@dimen/font_size_secondary" />
             </LinearLayout>
-
         </LinearLayout>
     </com.app.khclub.base.ui.view.CustomerScrollView>
 

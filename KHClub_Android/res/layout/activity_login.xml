@@ -1,50 +1,70 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/login_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_deep_white"
     android:clickable="true"
     android:focusable="true"
-    android:gravity="center_horizontal" >
+    android:gravity="center" >
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/login_back_image" />
+        android:src="@drawable/regist_login_bkgrnd" />
 
-    <EditText
-        android:id="@+id/usernameEt"
-        android:layout_width="280dip"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dip"
-        android:background="@color/main_clear"
-        android:drawablePadding="10dp"
-        android:hint="@string/login_please_enter_phonenum"
-        android:inputType="number"
-        android:padding="5dip"
-        android:singleLine="true"
-        android:textColor="@color/main_deep_black"
-        android:textColorHint="@color/login_edit_hint_color"
-        android:textSize="@dimen/font_size_medium" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical" >
 
-    <ImageView
-        android:layout_width="280dip"
-        android:layout_height="1dip"
-        android:layout_alignLeft="@+id/usernameEt"
-        android:layout_below="@+id/usernameEt"
-        android:background="@drawable/login_edit_text_view" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/loginRegisterBtn"
-        android:layout_width="280dip"
-        android:layout_height="45dip"
-        android:layout_below="@id/usernameEt"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dip"
-        android:background="@drawable/login_button"
-        android:text="@string/login_login_register"
-        android:textColor="@color/main_brown"
-        android:textSize="@dimen/font_size_small" />
+            <TextView
+                android:id="@+id/area_code_btn"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@color/main_deep_white"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/main_light_black"
+                android:textSize="@dimen/font_size_small" />
 
-</RelativeLayout>
+            <EditText
+                android:id="@+id/usernameEt"
+                android:layout_width="220dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/regist_phone_edittext_bkgrnd"
+                android:ems="10"
+                android:hint="@string/login_please_enter_phonenum"
+                android:inputType="number"
+                android:padding="5dip"
+                android:singleLine="true"
+                android:textColor="@color/main_deep_black"
+                android:textColorHint="@color/login_edit_hint_color"
+                android:textSize="@dimen/font_size_medium" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/loginRegisterBtn"
+            android:layout_width="280dip"
+            android:layout_height="45dip"
+            android:layout_marginTop="30dip"
+            android:background="@drawable/login_btn_bkgrnd"
+            android:text="@string/login_login_register"
+            android:textColor="@color/main_white"
+            android:textSize="@dimen/font_size_small" />
+    </LinearLayout>
+
+</FrameLayout>

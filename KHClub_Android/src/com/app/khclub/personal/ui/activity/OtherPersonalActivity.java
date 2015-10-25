@@ -193,7 +193,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		// 添加右边操作按钮
 		ImageView rightBtn = addRightImgBtn(R.layout.right_image_button,
 				R.id.layout_top_btn_root_view, R.id.img_btn_right_top);
-		rightBtn.setImageResource(R.drawable.icon);
+		rightBtn.setImageResource(R.drawable.personal_more);
 		rightBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
