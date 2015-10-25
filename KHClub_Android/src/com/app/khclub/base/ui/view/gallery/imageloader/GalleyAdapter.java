@@ -26,6 +26,7 @@ public class GalleyAdapter extends CommonAdapter<String> {
 	private Context mContext;
 	//当前选中的ImageView 单张模式使用
 	private ImageView currentSelectImageView;
+	private ImageView currentMSelect;
 	
 	/**
 	 * 文件夹路径
@@ -62,12 +63,12 @@ public class GalleyAdapter extends CommonAdapter<String> {
 
 		final ImageView mImageView = helper.getView(R.id.img_galley_item);
 		final ImageView mSelect = helper.getView(R.id.btn_galley_item_select);
-		if (MAX_SELECT_COUNT == 1) {
+		if(MAX_SELECT_COUNT == 1){
 			mSelect.setVisibility(View.GONE);
 		}else {
 			mSelect.setVisibility(View.VISIBLE);
 		}
-
+		
 		mImageView.setColorFilter(null);
 		// 设置ImageView的点击事件
 		mImageView.setOnClickListener(new OnClickListener() {
@@ -86,17 +87,22 @@ public class GalleyAdapter extends CommonAdapter<String> {
 					//单张模式
 					if (MAX_SELECT_COUNT == 1) {
 						currentSelectImageView = mImageView;
+						currentMSelect = mSelect;
+						mSelect.setVisibility(View.VISIBLE);
 					}
 				}else if(MAX_SELECT_COUNT == 1){
 					//如果是单选的时候 点击哪个就确认哪个
 					if (mSelectedImage.size()>0) {
+						currentMSelect.setVisibility(View.GONE);
 						//前面那个清空
 						currentSelectImageView.setColorFilter(null);	
 						mSelectedImage.clear();
 						mSelectedImage.add(mDirPath + "/" + item);
 						mSelect.setImageResource(R.drawable.pictures_selected);
+						mSelect.setVisibility(View.VISIBLE);
 						mImageView.setColorFilter(Color.parseColor("#77000000"));
 						currentSelectImageView = mImageView;
+						currentMSelect = mSelect;
 					}
 				}
 				onItemClickClass.OnItemClick(mSelectedImage.size()
