@@ -78,6 +78,7 @@ import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.easemob.chat.EMChatManager;
@@ -215,7 +216,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		
 		((TextView) findViewById(R.id.group_name)).setText(group.getGroupName() + "(" + group.getAffiliationsCount() + st);
 		
-		List<String> members = new ArrayList<String>();
+		final List<String> members = new ArrayList<String>();
 		members.addAll(group.getMembers());
 		
 		adapter = new GridAdapter(this, R.layout.grid, members);
@@ -818,7 +819,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		try {
 			aps.put("sound", "bingbong.aiff");
 			aps.put("badge", 1);
-			aps.put("alert", "有一条新消息");
+			aps.put("alert", getString(R.string.push_a_message));
 			apn_json.put("aps", aps);
 			opts.put("apn_json", apn_json);
 		} catch (JSONException e) {
@@ -1109,7 +1110,10 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							// Intent(GroupDetailsActivity.this,
 							// ChatActivity.class).putExtra("userId",
 							// user.getUsername()));
-
+							Intent intent = new Intent(GroupDetailsActivity.this, OtherPersonalActivity.class);
+							intent.putExtra(OtherPersonalActivity.INTENT_KEY, KHUtils.stringToInt(username.replace(KHConst.KH, "")));
+							startActivity(intent);
+							overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 						}
 					}
 
