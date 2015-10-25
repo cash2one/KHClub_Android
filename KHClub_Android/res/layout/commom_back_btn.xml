@@ -7,11 +7,11 @@
     android:onClick="back" >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dip"
+        android:layout_height="20dip"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="11dp"
+        android:layout_marginLeft="0dp"
         android:scaleType="centerInside"
-        android:src="@drawable/mm_title_back" />
+        android:src="@drawable/back_btn" />
 
 </LinearLayout>
