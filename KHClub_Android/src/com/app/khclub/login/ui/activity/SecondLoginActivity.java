@@ -308,8 +308,9 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 		Intent intent =	getIntent();
 		setUsername(intent.getStringExtra("username"));
 		setBarText(getString(R.string.login_login_title));
-		RelativeLayout rlBar = (RelativeLayout) findViewById(R.id.layout_base_title);
-		rlBar.setBackgroundResource(R.color.main_clear);
+		// RelativeLayout rlBar = (RelativeLayout)
+		// findViewById(R.id.layout_base_title);
+		// rlBar.setBackgroundResource(R.color.main_clear);
 		
 	}
 	

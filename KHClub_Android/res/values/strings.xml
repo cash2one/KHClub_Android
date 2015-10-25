@@ -59,6 +59,7 @@
     <string name="login_verification_error">Verification code or phone number error</string>
     <string name="login_please_enter_verification">Please enter verification</string>
     <string name="login_password_length" tools:ignore="TypographyDashes">Password length 6-32 characters</string>
+     <string name="select_area_code">Select area code</string>
     <!-- Login -->
 
 

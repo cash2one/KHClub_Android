@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -13,10 +14,12 @@ import com.app.khclub.base.adapter.HelloHaAdapter;
 import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class AreaCodeActivity extends BaseActivityWithTopBar {
 
+	public final static String BACK_DATA = "Area Code";
 	// 数据key
 	private final static String AREA_NAME = "area_name";
 	private final static String AREA_PHONE_NUM = "area_code";
@@ -36,17 +39,20 @@ public class AreaCodeActivity extends BaseActivityWithTopBar {
 
 	@Override
 	protected void setUpView() {
-		dataInit(false);
+		setBarText(getResources().getString(R.string.select_area_code));
+		dataInit();
 		lisviewSet();
 	}
 
 	/**
 	 * 数据初始化
 	 * */
-	private void dataInit(boolean isChinese) {
+	private void dataInit() {
 		dataList = new ArrayList<Map<String, String>>();
 		Map<String, String> tempMap1 = new HashMap<String, String>();
-		if (isChinese) {
+		if (getResources().getConfiguration().locale.getCountry().equals("CN")
+				|| getResources().getConfiguration().locale.getCountry()
+						.equals("TW")) {
 			// 中国
 			tempMap1.put(AREA_NAME, "中国大陆");
 			tempMap1.put(AREA_PHONE_NUM, "+86");
@@ -73,6 +79,9 @@ public class AreaCodeActivity extends BaseActivityWithTopBar {
 	 * 数据绑定
 	 * */
 	private void lisviewSet() {
+		// 设置刷新模式
+		codeListview.setMode(Mode.DISABLED);
+		//
 		listAdapter = new HelloHaAdapter<Map<String, String>>(
 				AreaCodeActivity.this, R.layout.area_code_item, dataList) {
 
@@ -88,7 +97,11 @@ public class AreaCodeActivity extends BaseActivityWithTopBar {
 					@Override
 					public void onClick(View view) {
 						// 点击
-
+						Intent intent = new Intent();
+						intent.putExtra(BACK_DATA,
+								dataList.get(postion).get(AREA_PHONE_NUM));
+						setResult(RESULT_OK, intent);
+						finishWithRight();
 					}
 				};
 				helper.setOnClickListener(R.id.layout_area_code_rootview,

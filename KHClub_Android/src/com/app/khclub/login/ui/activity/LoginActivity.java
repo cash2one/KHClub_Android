@@ -2,12 +2,14 @@ package com.app.khclub.login.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -37,6 +39,9 @@ public class LoginActivity extends BaseActivity {
 	// 布局文件
 	@ViewInject(R.id.login_activity)
 	private RelativeLayout loginLayout;
+	// 区号
+	@ViewInject(R.id.area_code_btn)
+	private TextView areatTView;
 
 	@OnClick(value = { R.id.loginRegisterBtn, R.id.login_activity,
 			R.id.area_code_btn })
@@ -160,6 +165,18 @@ public class LoginActivity extends BaseActivity {
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (resultCode) {
+		case RESULT_OK:
+			areatTView.setText(data.getStringExtra(AreaCodeActivity.BACK_DATA));
+			break;
+		default:
+			break;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
 	public int setLayoutId() {
 		// TODO Auto-generated method stub
 		return R.layout.activity_login;
@@ -172,6 +189,7 @@ public class LoginActivity extends BaseActivity {
 
 	@Override
 	protected void setUpView() {
+		areatTView.setText("+86");
 	}
 
 	@Override

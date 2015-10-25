@@ -67,6 +67,7 @@
     <string name="login_verification_error">验证码错误或者手机号码有误</string>
     <string name="login_please_enter_verification">请输入验证码</string>
     <string name="login_password_length">密码长度只能是6到32位</string>
+    <string name="select_area_code">选择区号</string>
     <!-- Login -->
 
 

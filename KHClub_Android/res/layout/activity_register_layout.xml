@@ -3,7 +3,7 @@
     android:id="@+id/register_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/regist_login_bkgrnd"
+    android:background="@color/main_light_white"
     android:gravity="center_horizontal" >
 
     <include layout="@layout/layout_title_bar" />
@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="110dip"
         android:text="@string/login_verification_send"
-        android:textColor="@color/main_deep_black"
+        android:textColor="@color/main_light_black"
         android:textSize="@dimen/font_size_medium" />
 
     <LinearLayout
