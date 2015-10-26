@@ -12,7 +12,7 @@
         android:paddingLeft="20dip"
         android:paddingTop="10dip"
         android:text="@string/personal_sex"
-        android:textColor="@color/main_brown"
+        android:textColor="@color/main_deep_black"
         android:textSize="@dimen/font_size_large" />
 
     <View

@@ -55,7 +55,7 @@ public class SearchActivity extends BaseActivityWithTopBar {
 
 	@Override
 	protected void setUpView() {
-		setBarText("查找好友/群");
+		setBarText(getString(R.string.search));
 	}
 
 	@Override
@@ -85,13 +85,13 @@ public class SearchActivity extends BaseActivityWithTopBar {
 		// 当前的ID
 		final String currentID = searchEditText.getText().toString().trim();
 		if (currentID.equals("")) {
-			ToastUtil.show(getApplicationContext(), "内容不能为空");
+			// ToastUtil.show(getApplicationContext(), "内容不能为空");
 			return;
 		}
 		String path = KHConst.SEARCH_USER_OR_GROUP + "?" + "target_id="
 				+ currentID;
 		LogUtils.i(path, 1);
-		showLoading("正在查找...", false);
+		showLoading(getString(R.string.searching), false);
 		HttpManager.get(path, new JsonRequestCallBack<String>(
 				new LoadDataHandler<String>() {
 
@@ -106,9 +106,11 @@ public class SearchActivity extends BaseActivityWithTopBar {
 							String type = jResult.getString("type");
 							if (type.equals("1")) {
 								// 跳转到群结果页面
-								EMGroupInfo	group = new EMGroupInfo(currentID, jResult.getString("group_name"));
-								Intent intent = new Intent(SearchActivity.this, GroupSimpleDetailActivity.class).
-		                        putExtra("groupinfo", group);
+								EMGroupInfo group = new EMGroupInfo(currentID,
+										jResult.getString("group_name"));
+								Intent intent = new Intent(SearchActivity.this,
+										GroupSimpleDetailActivity.class)
+										.putExtra("groupinfo", group);
 								startActivityWithRight(intent);
 							} else if (type.equals("0")) {
 								// 跳转到其他人页面
@@ -121,7 +123,8 @@ public class SearchActivity extends BaseActivityWithTopBar {
 								startActivityWithRight(intent);
 							}
 						} else {
-							ToastUtil.show(SearchActivity.this, "查询失败");
+							ToastUtil.show(SearchActivity.this,
+									getString(R.string.search_fail));
 						}
 
 					}
@@ -131,7 +134,8 @@ public class SearchActivity extends BaseActivityWithTopBar {
 							String flag) {
 						super.onFailure(arg0, arg1, flag);
 						hideLoading();
-						ToastUtil.show(SearchActivity.this, "网络故障请检查");
+						ToastUtil.show(SearchActivity.this,
+								getString(R.string.network_unavailable));
 					}
 				}, null));
 	}

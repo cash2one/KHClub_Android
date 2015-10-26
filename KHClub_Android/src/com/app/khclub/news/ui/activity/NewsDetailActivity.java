@@ -232,25 +232,25 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		shareMenu.setListener(new NewsBottomClickListener() {
 
 			@Override
-			public void shareToWeiboClick() {
+			public void shareToWeiboClick(NewsModel news) {
 				// 分享到微博
 
 			}
 
 			@Override
-			public void shareToWeChatClick() {
+			public void shareToWeChatClick(NewsModel news) {
 				// 分享到微信
 
 			}
 
 			@Override
-			public void shareToQzoneClick() {
+			public void shareToQzoneClick(NewsModel news) {
 				// 分享到qq空间
 
 			}
 
 			@Override
-			public void shareToCircleofFriendsClick() {
+			public void shareToCircleofFriendsClick(NewsModel news) {
 				// 分享到朋友圈
 
 			}
@@ -469,7 +469,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onClick(View arg0) {
-				shareMenu.showPopupWindow(titleBar);
+				shareMenu.showPopupWindow(titleBar, currentNews);
 			}
 		});
 		// 点击点赞按钮
@@ -657,7 +657,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 							@Override
 							public void updateDrawState(TextPaint ds) {
 								// 设置文件颜色
-								ds.setColor(getResources().getColor(R.color.main_light_blue));
+								ds.setColor(getResources().getColor(
+										R.color.main_light_blue));
 								// 设置下划线
 								ds.setUnderlineText(false);
 							}

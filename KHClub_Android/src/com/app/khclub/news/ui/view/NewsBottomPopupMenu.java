@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.app.khclub.R;
 import com.app.khclub.base.utils.LogUtils;
+import com.app.khclub.news.ui.model.NewsModel;
 
 /**
  * 动态分享底部弹出菜单
@@ -22,6 +23,8 @@ public class NewsBottomPopupMenu extends PopupWindow {
 
 	// 布局
 	private View conentView;
+	// 当前分享的动态
+	private NewsModel currentNews;
 	// onclick
 	private NewsBottomClickListener listener;
 
@@ -51,7 +54,7 @@ public class NewsBottomPopupMenu extends PopupWindow {
 
 					@Override
 					public void onClick(View arg0) {
-						listener.shareToWeChatClick();
+						listener.shareToWeChatClick(currentNews);
 						NewsBottomPopupMenu.this.dismiss();
 					}
 				});
@@ -63,7 +66,7 @@ public class NewsBottomPopupMenu extends PopupWindow {
 
 					@Override
 					public void onClick(View arg0) {
-						listener.shareToCircleofFriendsClick();
+						listener.shareToCircleofFriendsClick(currentNews);
 						NewsBottomPopupMenu.this.dismiss();
 					}
 				});
@@ -74,7 +77,7 @@ public class NewsBottomPopupMenu extends PopupWindow {
 
 					@Override
 					public void onClick(View arg0) {
-						listener.shareToWeiboClick();
+						listener.shareToWeiboClick(currentNews);
 						NewsBottomPopupMenu.this.dismiss();
 					}
 				});
@@ -86,7 +89,7 @@ public class NewsBottomPopupMenu extends PopupWindow {
 
 					@Override
 					public void onClick(View arg0) {
-						listener.shareToQzoneClick();
+						listener.shareToQzoneClick(currentNews);
 						NewsBottomPopupMenu.this.dismiss();
 					}
 				});
@@ -120,7 +123,8 @@ public class NewsBottomPopupMenu extends PopupWindow {
 	/**
 	 * 显示窗体
 	 */
-	public void showPopupWindow(View parent) {
+	public void showPopupWindow(View parent, NewsModel crentNews) {
+		currentNews = crentNews;
 		if (!this.isShowing()) {
 			this.showAsDropDown(parent, 0, 0);
 		} else {
@@ -132,16 +136,16 @@ public class NewsBottomPopupMenu extends PopupWindow {
 	public interface NewsBottomClickListener {
 
 		// 分享给微信
-		public void shareToWeChatClick();
+		public void shareToWeChatClick(NewsModel news);
 
 		// 分享到朋友圈
-		public void shareToCircleofFriendsClick();
+		public void shareToCircleofFriendsClick(NewsModel news);
 
 		// 分享到微博
-		public void shareToWeiboClick();
+		public void shareToWeiboClick(NewsModel news);
 
 		// 分享到qq空间
-		public void shareToQzoneClick();
+		public void shareToQzoneClick(NewsModel news);
 
 		// 取消
 		public void cancelClick();

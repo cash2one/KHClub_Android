@@ -12,6 +12,7 @@
     <string name="uploading_fail">上传失败</string>
     <string name="downloading_fail">获取失败</string>
     <string name="loading">加载中..</string>
+    <string name="search_fail">未查询到相关信息</string>
 
     <!-- Loading -->
 
@@ -230,6 +231,7 @@
     <string name="group_chat">群聊</string>
     <string name="chat_room">聊天室</string>
     <string name="add_friend">添加好友</string>
+    <string name="add_contacts_friend">添加通讯录好友</string>
     <string name="search">搜索</string>
     <string name="black_item">黑名单</string>
     <string name="diagnose">诊断</string>
@@ -466,5 +468,6 @@
     <string name="push_like">赞了你</string>
     <string name="push_invite">邀请加入</string>
     <string name="delete_comment">删除评论</string>
+    <string name="search_prompt">输入手机号、群ID号</string>
 
 </resources>

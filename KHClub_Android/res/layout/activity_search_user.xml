@@ -25,9 +25,9 @@
             android:layout_weight="1"
             android:background="@color/main_white"
             android:focusable="true"
-            android:hint="输入手机号、群ID号"
+            android:hint="@string/search_prompt"
             android:imeOptions="actionSearch"
-            android:padding="2dp"
+            android:padding="5dp"
             android:singleLine="true"
             android:textSize="@dimen/font_size_small" />
 
@@ -36,10 +36,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
-            android:background="@color/main_gary"
+            android:background="@color/main_gold"
             android:padding="8dip"
-            android:text="搜索"
-            android:textColor="@color/main_deep_black"
+            android:text="@string/search"
+            android:textColor="@color/main_white"
             android:textSize="@dimen/font_size_medium" />
     </LinearLayout>
 
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="添加通讯录好友" />
+            android:text="@string/add_contacts_friend" />
     </LinearLayout>
 
 </LinearLayout>
