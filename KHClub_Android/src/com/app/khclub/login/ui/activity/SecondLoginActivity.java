@@ -184,7 +184,6 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onSuccess() {
-				hideLoading();
 				// 登陆成功，保存用户名密码
 				KHApplication.getInstance().setUserName(KHUtils.selfCommonIMID());
 				KHApplication.getInstance().setPassword(KHConst.IM_PWD);
@@ -199,6 +198,7 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 					//提示用
 					runOnUiThread(new Runnable() {
 						public void run() {
+							hideLoading();
 						}
 					});
 				} catch (Exception e) {
@@ -206,6 +206,7 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
 					// 取好友或者群聊失败，不让进入主页面
 					runOnUiThread(new Runnable() {
 						public void run() {
+							hideLoading();
 							KHHXSDKHelper.getInstance().logout(true,null);
 							Toast.makeText(getApplicationContext(), R.string.login_failure_failed, 1).show();
 						}
@@ -292,6 +293,12 @@ public class SecondLoginActivity extends BaseActivityWithTopBar {
     	Intent intent = new Intent(SecondLoginActivity.this, RegisterActivity.class);
     	intent.putExtra("username", username);
     	intent.putExtra("isFindPwd", true);
+    	if (getIntent().hasExtra(LoginActivity.INTENT_AREA_KEY)) {
+			intent.putExtra(LoginActivity.INTENT_AREA_KEY, getIntent().getStringExtra(LoginActivity.INTENT_AREA_KEY));
+		}else {
+			intent.putExtra(LoginActivity.INTENT_AREA_KEY, "+86");
+		}
+    	
     	startActivityWithRight(intent);			
 		
 	}

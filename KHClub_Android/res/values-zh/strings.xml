@@ -66,6 +66,7 @@
     <string name="login_verification_not_null">验证码不能为空</string>
     <string name="login_password_length_six">密码长度至少六位</string>
     <string name="login_register_successful">注册成功</string>
+    <string name="pwd_update_successful">修改成功</string>
     <string name="login_modify_password">修改密码</string>
     <string name="login_register_title">注册</string>
     <string name="login_verification_send">验证码已经发送至</string>
@@ -480,6 +481,7 @@
     <string name="push_a_message">一条新消息</string>
     <string name="push_like">赞了你</string>
     <string name="push_invite">邀请加入</string>
+    <string name="personal_official_business_manager">官方商务管家</string>
     <string name="delete_comment">删除评论</string>
     <string name="search_prompt">输入手机号、群ID号</string>
     <string name="scan_qr_code">扫描二维码</string>

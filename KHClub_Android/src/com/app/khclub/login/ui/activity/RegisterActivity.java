@@ -1,6 +1,12 @@
 package com.app.khclub.login.ui.activity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -11,23 +17,36 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 import com.alibaba.fastjson.JSONObject;
+import com.amap.api.mapcore2d.ar;
 import com.app.khclub.R;
+import com.app.khclub.base.app.KHApplication;
+import com.app.khclub.base.easeim.Constant;
+import com.app.khclub.base.easeim.KHHXSDKHelper;
+import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
+import com.app.khclub.base.easeim.db.UserDao;
+import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
+import com.app.khclub.base.manager.ActivityManager;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.Md5Utils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroupManager;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -41,6 +60,8 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 	private Boolean isFindPwd;
 	// 用户 的电话号码
 	private String userPhoneNumber;
+	// 用户 区号
+	private String areaNumber;	
 	// 当前倒计时的值
 	private int countdownValue = 0;
 	// 倒计时对象
@@ -73,7 +94,7 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 
 	// 点击事件绑定
 	@OnClick({ R.id.base_tv_back, R.id.next_button,
-			R.id.register_activity })
+			R.id.register_activity, R.id.revalidated_textview })
 	public void viewCickListener(View view) {
 		switch (view.getId()) {
 		case R.id.base_tv_back:
@@ -100,6 +121,12 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 		Intent intent = getIntent();
 		userPhoneNumber = intent.getStringExtra(INTENT_KEY);
 		isFindPwd = intent.getBooleanExtra("isFindPwd", false);
+		if (intent.hasExtra(LoginActivity.INTENT_AREA_KEY)) {
+			areaNumber = intent.getStringExtra(LoginActivity.INTENT_AREA_KEY).trim();
+			areaNumber = areaNumber.replace("+", "");
+		}else {
+			areaNumber = "86";
+		}
 	}
 
 	// 点击返回
@@ -135,7 +162,7 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 		showLoading(getString(R.string.uploading), false);
 		try {
 			//先验证验证码
-			SMSSDK.submitVerificationCode("86", userPhoneNumber, verifycodeEditText.getText().toString().trim());			
+			SMSSDK.submitVerificationCode(areaNumber, userPhoneNumber, verifycodeEditText.getText().toString().trim());			
 		} catch (Exception e) {
 			hideLoading();
 			ToastUtil.show(this, getString(R.string.net_error));
@@ -163,14 +190,9 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 							UserModel userMd = new UserModel();
 							userMd.setContentWithJson(result);
 							UserManager.getInstance().setUser(userMd);
-							ToastUtil.show(RegisterActivity.this, "修改成功");
 							// 数据持久化
 							UserManager.getInstance().saveAndUpdate();
-							// 跳转主页
-							Intent intent = new Intent(RegisterActivity.this,
-									MainTabActivity.class);
-							startActivity(intent);
-
+							IMLogin();
 						}
 
 						if (status == KHConst.STATUS_FAIL) {
@@ -194,7 +216,7 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 		RegisterActivity.this.showLoading(getString(R.string.uploading), false);
 		try {
 			//先验证验证码 测试注释掉
-			SMSSDK.submitVerificationCode("86", userPhoneNumber, verifycodeEditText.getText().toString().trim());			
+			SMSSDK.submitVerificationCode(areaNumber, userPhoneNumber, verifycodeEditText.getText().toString().trim());			
 		} catch (Exception e) {
 			hideLoading();
 			ToastUtil.show(RegisterActivity.this, getString(R.string.net_error));
@@ -227,11 +249,7 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 							UserManager.getInstance().setUser(userMd);
 							// 数据持久化
 							UserManager.getInstance().saveAndUpdate();
-							ToastUtil.show(RegisterActivity.this, getString(R.string.login_register_successful));
-							// 进入主页
-							Intent intent = new Intent(RegisterActivity.this,
-									MainTabActivity.class);
-							startActivity(intent);
+							IMLogin();
 						}
 
 						if (status == KHConst.STATUS_FAIL) {
@@ -271,13 +289,13 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 		// rlBar.setBackgroundResource(R.color.main_clear);
 		
 		// 填写从短信SDK应用后台注册得到的APPKEY 
-		String APPKEY = "94025949f2d3";//463db7238681  27fe7909f8e8
+		String APPKEY = "b87c4ca25bcb";
 		// 填写从短信SDK应用后台注册得到的APPSECRET
-		String APPSECRET = "f3d6e97c5b3a1872336ff370a08d1aeb";
+		String APPSECRET = "675c44e12327b136c3f99c07c43ff82a";
 		//初始化验证码
 		SMSSDK.initSDK(this,APPKEY,APPSECRET);
 		//初始化获取一次验证码
-		SMSSDK.getVerificationCode("86",userPhoneNumber);	
+		SMSSDK.getVerificationCode(areaNumber,userPhoneNumber);	
 		phonePromptTextView.setText(getString(R.string.login_verification_send)+"：" + userPhoneNumber);
 		revalidatedTextView.setEnabled(false);
 		verifyCountdownTimer = new CountDownTimer(60000, 1000) {
@@ -339,7 +357,7 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 		
 		try {
 			//发送验证码
-			SMSSDK.getVerificationCode("86",userPhoneNumber);	
+			SMSSDK.getVerificationCode(areaNumber,userPhoneNumber);	
 			verifyCountdownTimer.start();
 			showLoading(getString(R.string.downloading), true);
 		} catch (Exception e) {
@@ -394,6 +412,120 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 			return true;
 		} else
 			return super.onKeyDown(keyCode, event);
+	}
+	
+	private void IMLogin(){
+		// 调用sdk登陆方法登陆聊天服务器
+		EMChatManager.getInstance().login(KHUtils.selfCommonIMID(), KHConst.IM_PWD, new EMCallBack() {
+
+			@Override
+			public void onSuccess() {
+				// 登陆成功，保存用户名密码
+				KHApplication.getInstance().setUserName(KHUtils.selfCommonIMID());
+				KHApplication.getInstance().setPassword(KHConst.IM_PWD);
+				
+				try {
+					// ** 第一次登录或者之前logout后再登录，加载所有本地群和回话
+					// ** manually load all local groups and
+				    EMGroupManager.getInstance().loadAllGroups();
+					EMChatManager.getInstance().loadAllConversations();
+					// 处理好友和群组
+					initializeContacts();
+					//提示用
+					runOnUiThread(new Runnable() {
+						public void run() {
+							hideLoading();
+							if (!isFindPwd) {
+								ToastUtil.show(RegisterActivity.this, getString(R.string.login_register_successful));					
+							}else {
+								ToastUtil.show(RegisterActivity.this, getString(R.string.pwd_update_successful));
+							}
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+					// 取好友或者群聊失败，不让进入主页面
+					runOnUiThread(new Runnable() {
+						public void run() {
+							hideLoading();
+							KHHXSDKHelper.getInstance().logout(true,null);
+							Toast.makeText(getApplicationContext(), R.string.login_failure_failed, 1).show();
+						}
+					});
+					return;
+				}
+				// 更新当前用户的nickname 此方法的作用是在ios离线推送时能够显示用户nick
+				boolean updatenick = EMChatManager.getInstance().updateCurrentUserNick(
+						UserManager.getInstance().getUser().getName());
+				if (!updatenick) {
+					Log.e("LoginActivity", "update current user nick fail");
+				}
+				
+				//跳转主页
+				final Intent intent = new Intent(RegisterActivity.this, MainTabActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);		
+				
+				finish();
+				//把前面的finish掉
+				for (Activity activity:ActivityManager.getActivityStack()) {
+					if (activity.getClass().equals(LoginActivity.class)) {
+						activity.finish();
+						break;
+					}
+				}
+			}
+
+			@Override
+			public void onProgress(int progress, String status) {
+			}
+
+			@Override
+			public void onError(final int code, final String message) {
+				hideLoading();
+				runOnUiThread(new Runnable() {
+					public void run() {
+						Toast.makeText(getApplicationContext(), getString(R.string.Login_failed) + message,
+								Toast.LENGTH_SHORT).show();
+					}
+				});
+			}
+		});
+	}
+	
+	private void initializeContacts() {
+		//HX用User的方式 设计通知请求
+		Map<String, User> userlist = new HashMap<String, User>();
+		// 添加user"申请与通知"
+		User newFriends = new User();
+		newFriends.setUsername(Constant.NEW_FRIENDS_USERNAME);
+		String strChat = getResources().getString(
+				R.string.Application_and_notify);
+		newFriends.setNick(strChat);
+
+		userlist.put(Constant.NEW_FRIENDS_USERNAME, newFriends);
+		// 添加"群聊"
+		User groupUser = new User();
+		String strGroup = getResources().getString(R.string.group_chat);
+		groupUser.setUsername(Constant.GROUP_USERNAME);
+		groupUser.setNick(strGroup);
+		groupUser.setHeader("");
+		userlist.put(Constant.GROUP_USERNAME, groupUser);
+		
+		// 添加"Robot" 更换为 名片列表
+		User robotUser = new User();
+//		String strRobot = getResources().getString(R.string.robot_chat);
+		String strRobot = getResources().getString(R.string.personal_collect_card);
+		robotUser.setUsername(Constant.CHAT_ROBOT);
+		robotUser.setNick(strRobot);
+		robotUser.setHeader("");
+		userlist.put(Constant.CHAT_ROBOT, robotUser);
+		// 存入内存
+		((KHHXSDKHelper)HXSDKHelper.getInstance()).setContactList(userlist);
+		// 存入db
+		UserDao dao = new UserDao(this);
+		List<User> users = new ArrayList<User>(userlist.values());
+		dao.saveContactList(users);
 	}
 	
 }

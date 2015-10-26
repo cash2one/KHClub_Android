@@ -2,7 +2,6 @@ package com.app.khclub.login.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -21,7 +20,6 @@ import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.ui.activity.BaseActivity;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.ToastUtil;
-import com.app.khclub.news.ui.activity.NewsDetailActivity;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -30,6 +28,8 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 @SuppressLint("ResourceAsColor")
 public class LoginActivity extends BaseActivity {
 
+	//area key
+	public static String INTENT_AREA_KEY = "areaKey"; 
 	// 用户名输入框
 	@ViewInject(R.id.usernameEt)
 	private EditText usernameEt;
@@ -115,6 +115,7 @@ public class LoginActivity extends BaseActivity {
 								Intent intent = new Intent(LoginActivity.this,
 										SecondLoginActivity.class);
 								intent.putExtra("username", username);
+								intent.putExtra(INTENT_AREA_KEY, areatTView.getText().toString());
 								startActivityWithRight(intent);
 							}
 
@@ -124,6 +125,7 @@ public class LoginActivity extends BaseActivity {
 										RegisterActivity.class);
 								intent.putExtra("username", usernameEt
 										.getText().toString().trim());
+								intent.putExtra(INTENT_AREA_KEY, areatTView.getText().toString());
 								startActivityWithRight(intent);
 							}
 
