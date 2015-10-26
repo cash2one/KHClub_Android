@@ -15,6 +15,7 @@
     <string name="share_card"> Share Business Card</string>
     <string name="switch_style">Switch Style</string>
     <string name="loading">Loading..</string>
+    <string name="search_fail">No result</string>
 
     <!-- Loading -->
 
@@ -71,10 +72,10 @@
 
 
     <!-- Main -->
-    <string name="main_home_title">Home</string>
+    <string name="main_home_title">Square</string>
     <string name="main_msg_title">Message</string>
     <string name="main_contact_title">Contact</string>
-    <string name="main_me_title">Me</string>
+    <string name="main_me_title">Business card</string>
     <!-- Main -->
 
 
@@ -127,6 +128,9 @@
 
 
     <!-- News -->
+    <string name="confirm">Confirm</string>
+    <string name="confirm_delete">Confirm delete？</string>
+    <string name="reply">reply</string>
     <string name="news_enter_content">Please enter content</string>
     <string name="news_where">Where</string>
     <string name="news_content_image_empty">Pictures and content both empty!</string>
@@ -222,6 +226,7 @@
     <string name="save_new_nickname">Save new nickname</string>
     <string name="group_chat">Group chat</string>
     <string name="add_friend">Add friends</string>
+    <string name="add_contacts_friend">Contacts</string>
     <string name="search">Search</string>
     <string name="black_item">Black list</string>
     <string name="diagnose">Diagnose</string>
@@ -452,5 +457,7 @@
     <string name="push_like">A Like for you</string>
     <string name="push_invite">invite to join</string>
     <string name="personal_official_business_manager">Official business manager</string>
+    <string name="delete_comment">Delete comment</string>
+    <string name="search_prompt">Input phone number or group id</string>
 
 </resources>

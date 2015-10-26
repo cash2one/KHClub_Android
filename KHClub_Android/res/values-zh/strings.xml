@@ -12,6 +12,7 @@
     <string name="uploading_fail">上传失败</string>
     <string name="downloading_fail">获取失败</string>
     <string name="loading">加载中..</string>
+    <string name="search_fail">未查询到相关信息</string>
 
     <!-- Loading -->
 
@@ -43,10 +44,10 @@
 
 
     <!-- Main -->
-    <string name="main_home_title">主页</string>
+    <string name="main_home_title">广场</string>
     <string name="main_msg_title">消息</string>
     <string name="main_contact_title">通讯录</string>
-    <string name="main_me_title">我</string>
+    <string name="main_me_title">名片</string>
     <!-- Main -->
 
 
@@ -145,6 +146,10 @@
     <string name="news_comment">评论</string>
     <string name="news_like">赞</string>
     <!-- News -->
+
+    <string name="reply">回复</string>
+    <string name="confirm_delete">确认删除信息？</string>
+    <string name="confirm">确认</string>
     <string name="publish_news">发送</string>
     <string name="text_ack_msg">已读</string>
     <string name="text_delivered_msg">送达</string>
@@ -227,6 +232,7 @@
     <string name="group_chat">群聊</string>
     <string name="chat_room">聊天室</string>
     <string name="add_friend">添加好友</string>
+    <string name="add_contacts_friend">添加通讯录好友</string>
     <string name="search">搜索</string>
     <string name="black_item">黑名单</string>
     <string name="diagnose">诊断</string>
@@ -463,5 +469,7 @@
     <string name="push_like">赞了你</string>
     <string name="push_invite">邀请加入</string>
     <string name="personal_official_business_manager">官方商务管家</string>
+    <string name="delete_comment">删除评论</string>
+    <string name="search_prompt">输入手机号、群ID号</string>
 
 </resources>

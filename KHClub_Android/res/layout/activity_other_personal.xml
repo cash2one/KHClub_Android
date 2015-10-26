@@ -50,8 +50,8 @@
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_marginBottom="10dip"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dip"
@@ -61,8 +61,8 @@
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_marginBottom="10dip"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dip"
@@ -72,8 +72,8 @@
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_marginBottom="10dip"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dip"
@@ -87,21 +87,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:background="@color/main_white"
-                android:orientation="vertical" >
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp" >
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center"
                     android:text="@string/personal_signature"
                     android:textSize="@dimen/font_size_medium" />
 
                 <TextView
                     android:id="@+id/sign_text_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="11dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
                     android:inputType="textMultiLine"
                     android:textColor="@color/main_light_black"
                     android:textSize="@dimen/font_size_secondary"

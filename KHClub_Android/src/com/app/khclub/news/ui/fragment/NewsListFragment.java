@@ -74,7 +74,7 @@ public class NewsListFragment extends BaseFragment {
 	// 通知按钮
 	@ViewInject(R.id.img_notice_btn)
 	private ImageView noticeBtn;
-	//未读提示（小红点）
+	// 未读提示（小红点）
 	@ViewInject(R.id.news_unread_image_view)
 	private ImageView unreadImageView;
 	// 原始数据源
@@ -155,25 +155,25 @@ public class NewsListFragment extends BaseFragment {
 		shareMenu.setListener(new NewsBottomClickListener() {
 
 			@Override
-			public void shareToWeiboClick() {
+			public void shareToWeiboClick(NewsModel news) {
 				// 分享到微博
-
+				LogUtils.i("-----"+news.getUserName());
 			}
 
 			@Override
-			public void shareToWeChatClick() {
+			public void shareToWeChatClick(NewsModel news) {
 				// 分享到微信
 
 			}
 
 			@Override
-			public void shareToQzoneClick() {
+			public void shareToQzoneClick(NewsModel news) {
 				// 分享到qq空间
 
 			}
 
 			@Override
-			public void shareToCircleofFriendsClick() {
+			public void shareToCircleofFriendsClick(NewsModel news) {
 				// 分享到朋友圈
 
 			}
@@ -206,6 +206,7 @@ public class NewsListFragment extends BaseFragment {
 	}
 
 	private LocalBroadcastManager mLocalBroadcastManager;
+
 	/**
 	 * 初始化广播信息
 	 * */
@@ -659,7 +660,15 @@ public class NewsListFragment extends BaseFragment {
 					likeOperate(postion, view, operateData);
 				} else if (R.id.btn_mian_share == viewID) {
 					// 分享操作
-					shareMenu.showPopupWindow(publishBtn);
+					for (int index = 0; index < newsList.size(); index++) {
+						if (operateData.getNewsID().equals(
+								newsList.get(index).getNewsID())) {
+							shareMenu.showPopupWindow(publishBtn,
+									newsList.get(index));
+							break;
+						}
+					}
+
 				} else {
 					// 跳转到动态详情
 					jumpToNewsDetail(operateData,
@@ -788,12 +797,12 @@ public class NewsListFragment extends BaseFragment {
 		getActivity().overridePendingTransition(R.anim.push_right_in,
 				R.anim.push_right_out);
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		if (mBroadcastReceiver != null && mLocalBroadcastManager!= null) {
+		if (mBroadcastReceiver != null && mLocalBroadcastManager != null) {
 			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
 		}
 		if (newMessageReceiver != null) {

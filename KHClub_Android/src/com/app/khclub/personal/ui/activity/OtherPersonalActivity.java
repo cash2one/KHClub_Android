@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.opengl.Visibility;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -36,6 +37,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.amap.api.services.core.v;
 import com.app.khclub.R;
 import com.app.khclub.base.app.KHApplication;
 import com.app.khclub.base.easeim.KHHXSDKHelper;
@@ -106,20 +108,20 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	private OtherPersonalQrcodeFragment otherPersonalQRFragment;
 	// 用户ID
 	private int uid;
-	//查看者的模型
+	// 查看者的模型
 	private UserModel otherUserModel;
-	//如果是好友的话备注
+	// 如果是好友的话备注
 	private String remark = "";
 	// 是否是好友
 	private boolean isFriend;
 	// 是否收藏
-	private int isCollected = 0;	
+	private int isCollected = 0;
 	// 私有dialog
 	private ProgressDialog progressDialog;
 	// 底部操作弹出菜单
 	private PersonalBottomPopupMenu shareMenu;
-	//imUser
-	private User imUser; 
+	// imUser
+	private User imUser;
 
 	@OnClick({ R.id.image_cover_layout, R.id.add_send_btn })
 	private void clickEvent(View view) {
@@ -172,8 +174,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		}
 
 		// 是否是好友
-		imUser = ((KHHXSDKHelper) KHHXSDKHelper.getInstance())
-				.getContactList().get(KHConst.KH + uid);
+		imUser = ((KHHXSDKHelper) KHHXSDKHelper.getInstance()).getContactList()
+				.get(KHConst.KH + uid);
 		if (imUser != null) {
 			isFriend = true;
 			addSendButton.setText(R.string.personal_send_message);
@@ -184,8 +186,12 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			shareMenu = new PersonalBottomPopupMenu(this, false);
 		}
 
+		//如果是本人，则隐藏添加按钮
+		if (uid == UserManager.getInstance().getUser().getUid()) {
+			addSendButton.setVisibility(View.GONE);
+		}
 		initPopupListener();
-		
+
 		getPersonalInformation();
 	}
 
@@ -205,8 +211,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				shareMenu.showPopupWindow(titleBar);
 			}
 		});
-		
-		
+
 		// 分享菜单的事件
 		shareMenu.setListener(new BottomClickListener() {
 
@@ -219,7 +224,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(otherUserModel.getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR
+						+ otherUserModel.getHead_sub_image());
 				Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
 				weibo.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				weibo.SSOSetting(true);
@@ -236,7 +242,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(otherUserModel.getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR
+						+ otherUserModel.getHead_sub_image());
 				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -264,7 +271,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				sp.setTitle("KHClub");
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(otherUserModel.getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());
+				sp.setImageUrl(KHConst.ATTACHMENT_ADDR
+						+ otherUserModel.getHead_sub_image());
 				Platform qq = ShareSDK.getPlatform(QQ.NAME);
 				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -276,13 +284,16 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				if (otherUserModel != null) {
 					// 分享给好友
 					JSONObject object = new JSONObject();
-					//单聊
-					object.put("type", ""+EMMessage.ChatType.Chat.ordinal());
-					object.put("id", KHConst.KH+otherUserModel.getUid());
-					object.put("title",otherUserModel.getName());
-					object.put("avatar", KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());
-					Intent intent = new Intent(OtherPersonalActivity.this, ShareContactsActivity.class);
-					intent.putExtra(ShareContactsActivity.INTENT_CARD_KEY, object.toJSONString());
+					// 单聊
+					object.put("type", "" + EMMessage.ChatType.Chat.ordinal());
+					object.put("id", KHConst.KH + otherUserModel.getUid());
+					object.put("title", otherUserModel.getName());
+					object.put("avatar", KHConst.ATTACHMENT_ADDR
+							+ otherUserModel.getHead_sub_image());
+					Intent intent = new Intent(OtherPersonalActivity.this,
+							ShareContactsActivity.class);
+					intent.putExtra(ShareContactsActivity.INTENT_CARD_KEY,
+							object.toJSONString());
 					startActivityWithRight(intent);
 				}
 			}
@@ -309,7 +320,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				if (isFriend) {
 					if (otherUserModel != null) {
 						// 设置备注
-						remarkUpdate();										
+						remarkUpdate();
 					}
 				}
 			}
@@ -318,7 +329,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			public void deleteFriendClick() {
 				if (imUser != null) {
 					// 删除好友
-					deleteContact(imUser);					
+					deleteContact(imUser);
 				}
 			}
 
@@ -328,17 +339,21 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			}
 		});
 	}
-	
-	//分享监听
+
+	// 分享监听
 	PlatformActionListener platformActionListener = new PlatformActionListener() {
 		@Override
 		public void onError(Platform arg0, int arg1, Throwable arg2) {
-			ToastUtil.show(OtherPersonalActivity.this, R.string.personal_share_fail);
+			ToastUtil.show(OtherPersonalActivity.this,
+					R.string.personal_share_fail);
 		}
+
 		@Override
-		public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
-//			ToastUtil.show(getActivity(), R.string.personal_share_ok);
+		public void onComplete(Platform arg0, int arg1,
+				HashMap<String, Object> arg2) {
+			// ToastUtil.show(getActivity(), R.string.personal_share_ok);
 		}
+
 		@Override
 		public void onCancel(Platform arg0, int arg1) {
 		}
@@ -466,15 +481,15 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			}
 			imageView.setVisibility(View.VISIBLE);
 		}
-		
-		//备注
+
+		// 备注
 		if (jsonObject.containsKey("remark")) {
 			remark = jsonObject.getString("remark");
 		}
 		if (jsonObject.containsKey("isCollected")) {
-			isCollected = jsonObject.getIntValue("isCollected");			
+			isCollected = jsonObject.getIntValue("isCollected");
 		}
-		
+
 		if (otherPersonalInfoFragment != null) {
 			otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend,
 					isCollected, remark);
@@ -489,9 +504,9 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 					
 				}
 			}, 1000);
-			
+			otherPersonalQRFragment.setQRcode(otherUserModel);
 		}
-		
+
 	}
 
 	/**
@@ -560,15 +575,14 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			}
 		}).start();
 	}
-	
-	
+
 	/**
 	 * 删除联系人
 	 * 
 	 * @param toDeleteUser
 	 */
 	public void deleteContact(final User tobeDeleteUser) {
-		
+
 		String st1 = getResources().getString(R.string.deleting);
 		final String st2 = getResources().getString(R.string.Delete_failed);
 		final ProgressDialog pd = new ProgressDialog(this);
@@ -578,8 +592,11 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 
 		// 参数设置
 		RequestParams params = new RequestParams();
-		params.addBodyParameter("user_id", UserManager.getInstance().getUser().getUid()+ "");
-		params.addBodyParameter("target_id", tobeDeleteUser.getUsername().replace(KHConst.KH, ""));
+		params.addBodyParameter("user_id", UserManager.getInstance().getUser()
+				.getUid()
+				+ "");
+		params.addBodyParameter("target_id", tobeDeleteUser.getUsername()
+				.replace(KHConst.KH, ""));
 
 		HttpManager.post(KHConst.DELETE_FRIEND, params,
 				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
@@ -597,40 +614,50 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 														tobeDeleteUser
 																.getUsername());
 										// 删除db和内存中此用户的数据
-										UserDao dao = new UserDao(OtherPersonalActivity.this);
+										UserDao dao = new UserDao(
+												OtherPersonalActivity.this);
 										dao.deleteContact(tobeDeleteUser
 												.getUsername());
-										((KHHXSDKHelper) HXSDKHelper.getInstance()).getContactList().remove(
-														tobeDeleteUser.getUsername());
-										runOnUiThread(
-												new Runnable() {
-													public void run() {
-														pd.dismiss();
-														//UI修改
-														shareMenu = new PersonalBottomPopupMenu(OtherPersonalActivity.this, false);
-														initPopupListener();
-														isFriend = false;
-														addSendButton.setText(R.string.personal_add_friend);
-													}
-												});
+										((KHHXSDKHelper) HXSDKHelper
+												.getInstance())
+												.getContactList().remove(
+														tobeDeleteUser
+																.getUsername());
+										runOnUiThread(new Runnable() {
+											public void run() {
+												pd.dismiss();
+												// UI修改
+												shareMenu = new PersonalBottomPopupMenu(
+														OtherPersonalActivity.this,
+														false);
+												initPopupListener();
+												isFriend = false;
+												addSendButton
+														.setText(R.string.personal_add_friend);
+											}
+										});
 										// 删除相关的邀请消息
 										InviteMessgeDao msgDao = new InviteMessgeDao(
 												OtherPersonalActivity.this);
-										msgDao.deleteMessage(tobeDeleteUser.getUsername());
+										msgDao.deleteMessage(tobeDeleteUser
+												.getUsername());
 
 									} catch (final Exception e) {
-										runOnUiThread(
-												new Runnable() {
-													public void run() {
-														pd.dismiss();
-														Toast.makeText(OtherPersonalActivity.this,st2+ e.getMessage(),1).show();
-													}
-												});
+										runOnUiThread(new Runnable() {
+											public void run() {
+												pd.dismiss();
+												Toast.makeText(
+														OtherPersonalActivity.this,
+														st2 + e.getMessage(), 1)
+														.show();
+											}
+										});
 									}
 								}
 							}).start();
 						} else {
-							ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+							ToastUtil.show(OtherPersonalActivity.this,
+									R.string.net_error);
 							pd.dismiss();
 						}
 					}
@@ -639,26 +666,28 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 					public void onFailure(HttpException arg0, String arg1,
 							String flag) {
 						super.onFailure(arg0, arg1, flag);
-						ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+						ToastUtil.show(OtherPersonalActivity.this,
+								R.string.net_error);
 						pd.dismiss();
 					}
 				}, null));
 	}
-	
+
 	// 备注点击
 	private void remarkUpdate() {
 
 		// dialog
 		Builder nameAlertDialog = new Builder(this);
-		LinearLayout textViewLayout = (LinearLayout) View.inflate(
-				this, R.layout.dialog_text_view, null);
+		LinearLayout textViewLayout = (LinearLayout) View.inflate(this,
+				R.layout.dialog_text_view, null);
 		nameAlertDialog.setView(textViewLayout);
 		final EditText et_search = (EditText) textViewLayout
 				.findViewById(R.id.name_edit_text);
 		et_search.setHint(R.string.personal_enter_remark);
-		TextView etTextView = (TextView) textViewLayout.findViewById(R.id.name_text_view);
+		TextView etTextView = (TextView) textViewLayout
+				.findViewById(R.id.name_text_view);
 		etTextView.setText(R.string.personal_remark);
-		//备注
+		// 备注
 		et_search.setText(remark);
 		et_search.setSelection(et_search.getText().length());
 
@@ -679,7 +708,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			public void onClick(View v) {
 				String remark = et_search.getText().toString().trim();
 				if (remark.length() > 64) {
-					ToastUtil.show(OtherPersonalActivity.this, R.string.personal_remark_too_long);
+					ToastUtil.show(OtherPersonalActivity.this,
+							R.string.personal_remark_too_long);
 					return;
 				}
 				addRemark(remark);
@@ -688,48 +718,54 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		});
 
 	}
-	
-	//上传信息
+
+	// 上传信息
 	private void addRemark(final String remark) {
 
 		// 参数设置
 		RequestParams params = new RequestParams();
-		params.addBodyParameter("user_id", UserManager.getInstance().getUser().getUid()+"");
-		params.addBodyParameter("target_id", uid+"");
+		params.addBodyParameter("user_id", UserManager.getInstance().getUser()
+				.getUid()
+				+ "");
+		params.addBodyParameter("target_id", uid + "");
 		params.addBodyParameter("friend_remark", remark);
 
 		showLoading(getString(R.string.uploading), false);
 		HttpManager.post(KHConst.ADD_REMARK, params,
 				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
-					
+
 					@Override
 					public void onSuccess(JSONObject jsonResponse, String flag) {
-						
+
 						hideLoading();
 						super.onSuccess(jsonResponse, flag);
-						int status = jsonResponse.getInteger(KHConst.HTTP_STATUS);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
 						if (status == KHConst.STATUS_SUCCESS) {
-							
+
 							OtherPersonalActivity.this.remark = remark;
-							
+
 							String secondName = "";
 							if (remark.length() > 0) {
-								//设置名
+								// 设置名
 								imUser.setNick(remark);
 								secondName = otherUserModel.getName();
-							}else {
-								//为空恢复
+							} else {
+								// 为空恢复
 								imUser.setNick(otherUserModel.getName());
 							}
-							//缓存
-							UserDao userDao = new UserDao(KHApplication.getInstance());
+							// 缓存
+							UserDao userDao = new UserDao(KHApplication
+									.getInstance());
 							userDao.saveContact(imUser);
-							//更新UI
-							otherPersonalInfoFragment.setNameTextView(imUser.getNick(), secondName);
-							
+							// 更新UI
+							otherPersonalInfoFragment.setNameTextView(
+									imUser.getNick(), secondName);
+
 						}
 						if (status == KHConst.STATUS_FAIL) {
-							ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+							ToastUtil.show(OtherPersonalActivity.this,
+									R.string.net_error);
 						}
 					}
 
@@ -738,7 +774,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 							String flag) {
 						hideLoading();
 						super.onFailure(arg0, arg1, flag);
-						ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+						ToastUtil.show(OtherPersonalActivity.this,
+								R.string.net_error);
 					}
 				}, null));
 	}

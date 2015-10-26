@@ -3,6 +3,8 @@ package com.app.khclub.news.ui.utils;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSONObject;
+import com.app.khclub.R;
+import com.app.khclub.R.string;
 import com.app.khclub.base.adapter.HelloHaAdapter;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
@@ -78,8 +80,8 @@ public class NewsOperate {
 						if (status == KHConst.STATUS_FAIL) {
 							callInterface.onFinish(OP_Type_Delete_News, false,
 									null);
-							ToastUtil.show(mContext, jsonResponse
-									.getString(KHConst.HTTP_MESSAGE));
+							ToastUtil.show(mContext, mContext
+									.getString(R.string.network_unavailable));
 						}
 					}
 
@@ -89,7 +91,8 @@ public class NewsOperate {
 						super.onFailure(arg0, arg1, flag);
 						callInterface
 								.onFinish(OP_Type_Delete_News, false, null);
-						ToastUtil.show(mContext, "删除失败，请检查网络");
+						ToastUtil.show(mContext, mContext
+								.getString(R.string.network_unavailable));
 					}
 				}, null));
 	}
@@ -109,15 +112,20 @@ public class NewsOperate {
 	 *            目标用户的id（被回复者，评论时可省略）
 	 * */
 
-	public void publishComment(final UserModel user, String... parameter) {
+	public void publishComment(final UserModel user, final String... parameter) {
+
 		lastOperateType = OP_Type_Add_Comment;
 		callInterface.onStart(OP_Type_Add_Comment);
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("user_id", String.valueOf(user.getUid()));
 		params.addBodyParameter("news_id", parameter[0]);
 		params.addBodyParameter("comment_content", parameter[1]);
+
 		if (parameter.length >= 3) {
 			params.addBodyParameter("target_id", parameter[2]);
+		}
+		if (parameter.length >= 4) {
+			params.addBodyParameter("target_name", parameter[3]);
 		}
 
 		HttpManager.post(KHConst.SEND_COMMENT, params,
@@ -138,6 +146,17 @@ public class NewsOperate {
 							temMode.setHeadSubImage(KHConst.ATTACHMENT_ADDR
 									+ user.getHead_sub_image());
 							temMode.setUserJob(user.getJob());
+							if (parameter.length >= 3) {
+								temMode.setTargetUserId(parameter[2]);
+							} else {
+								temMode.setTargetUserId("");
+							}
+							if (parameter.length >= 4) {
+								temMode.setTargetUserName(parameter[3]);
+							} else {
+								temMode.setTargetUserName("");
+							}
+
 							callInterface.onFinish(OP_Type_Add_Comment, true,
 									temMode);
 						}
@@ -145,8 +164,8 @@ public class NewsOperate {
 						if (status == KHConst.STATUS_FAIL) {
 							callInterface.onFinish(OP_Type_Add_Comment, false,
 									null);
-							ToastUtil.show(mContext, jsonResponse
-									.getString(KHConst.HTTP_MESSAGE));
+							ToastUtil.show(mContext, mContext
+									.getString(R.string.network_unavailable));
 						}
 					}
 
@@ -156,7 +175,8 @@ public class NewsOperate {
 						super.onFailure(arg0, arg1, flag);
 						callInterface
 								.onFinish(OP_Type_Add_Comment, false, null);
-						ToastUtil.show(mContext, "评论失败，请检查网络");
+						ToastUtil.show(mContext, mContext
+								.getString(R.string.network_unavailable));
 					}
 				}, null));
 	}
@@ -192,7 +212,8 @@ public class NewsOperate {
 						if (status == KHConst.STATUS_FAIL) {
 							callInterface.onFinish(OP_Type_Delete_Comment,
 									false, null);
-							ToastUtil.show(mContext, "error");
+							ToastUtil.show(mContext, mContext
+									.getString(R.string.network_unavailable));
 						}
 					}
 
@@ -255,7 +276,9 @@ public class NewsOperate {
 										} else {
 											likeCallInterface.onLikeFail(false);
 										}
-										ToastUtil.show(mContext, "error");
+										ToastUtil
+												.show(mContext,
+														mContext.getString(R.string.network_unavailable));
 										isUploadData = false;
 									}
 								}

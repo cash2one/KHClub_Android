@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
+import com.app.khclub.R.color;
 import com.app.khclub.base.adapter.HelloHaAdapter;
 import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
 import com.app.khclub.base.helper.JsonRequestCallBack;
@@ -231,25 +232,25 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		shareMenu.setListener(new NewsBottomClickListener() {
 
 			@Override
-			public void shareToWeiboClick() {
+			public void shareToWeiboClick(NewsModel news) {
 				// 分享到微博
 
 			}
 
 			@Override
-			public void shareToWeChatClick() {
+			public void shareToWeChatClick(NewsModel news) {
 				// 分享到微信
 
 			}
 
 			@Override
-			public void shareToQzoneClick() {
+			public void shareToQzoneClick(NewsModel news) {
 				// 分享到qq空间
 
 			}
 
 			@Override
-			public void shareToCircleofFriendsClick() {
+			public void shareToCircleofFriendsClick(NewsModel news) {
 				// 分享到朋友圈
 
 			}
@@ -352,19 +353,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 						if (isCurrentShowComment) {
 							// 发布成功,并且在显示评论列表的情况下 则更新评论列表
 							CommentModel resultmModel = (CommentModel) resultValue;
-							if (currentOperateIndex >= 0) {
-								resultmModel.setTargetUserId(commentDataList
-										.get(currentOperateIndex)
-										.getTargetUserId());
-								resultmModel.setTargetUserName(commentDataList
-										.get(currentOperateIndex)
-										.getTargetUserName());
-							} else {
-								resultmModel.setTargetUserId("");
-								resultmModel.setTargetUserName("");
-							}
-
-							// 返回回来的评论对象
+							// 返回来的评论对象
 							Map<String, String> tempMap = new HashMap<String, String>();
 							tempMap.put(USER_HEAD,
 									resultmModel.getHeadSubImage());
@@ -480,7 +469,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onClick(View arg0) {
-				shareMenu.showPopupWindow(titleBar);
+				shareMenu.showPopupWindow(titleBar, currentNews);
 			}
 		});
 		// 点击点赞按钮
@@ -660,25 +649,28 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 							.getView(R.id.txt_news_reply_content);
 					if (!item.get(TARGET_NAME).equals("")) {
 						// 有回复的人时
-						commentView.setText("回复 ");
+						commentView.setText(getString(R.string.reply));
 						SpannableString spStr = new SpannableString(
 								item.get(TARGET_NAME) + " : ");
 
 						spStr.setSpan(new ClickableSpan() {
 							@Override
 							public void updateDrawState(TextPaint ds) {
-								super.updateDrawState(ds);
 								// 设置文件颜色
-								ds.setColor(Color.BLUE);
+								ds.setColor(getResources().getColor(
+										R.color.main_light_blue));
 								// 设置下划线
 								ds.setUnderlineText(false);
 							}
 
 							@Override
 							public void onClick(View widget) {
+								LogUtils.i("TARGET_ID=" + item.get(TARGET_ID));
 								// 跳转至用户的主页
-								JumpToHomepage(KHUtils.stringToInt(item
-										.get(TARGET_ID)));
+								if (!item.get(TARGET_ID).equals("")) {
+									JumpToHomepage(KHUtils.stringToInt(item
+											.get(TARGET_ID)));
+								}
 							}
 						}, 0, item.get(TARGET_NAME).length(),
 								Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -738,6 +730,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					.getCommentContent());
 			tempMap.put(TARGET_NAME, commentDataList.get(index)
 					.getTargetUserName());
+			tempMap.put(TARGET_ID, commentDataList.get(index).getTargetUserId());
 			dataList.add(tempMap);
 		}
 		isCurrentShowComment = true;
@@ -843,7 +836,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 							String flag) {
 						super.onFailure(arg0, arg1, flag);
 						newsDetailListView.onRefreshComplete();
-						ToastUtil.show(NewsDetailActivity.this, "网络故障，请检查");
+						ToastUtil.show(NewsDetailActivity.this,
+								getString(R.string.network_unavailable));
 					}
 
 				}, null));
@@ -854,7 +848,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	 * */
 	private void deleteCurrentNews() {
 		final CustomAlertDialog confirmDialog = new CustomAlertDialog(
-				NewsDetailActivity.this, "确定删除该动态？", "确认", "取消");
+				NewsDetailActivity.this, getString(R.string.confirm_delete),
+				getString(R.string.confirm), getString(R.string.cancel));
 		confirmDialog.show();
 		confirmDialog
 				.setClicklistener(new CustomAlertDialog.ClickListenerInterface() {
@@ -877,7 +872,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			String tempContent = commentContentStr;
 			// 清空输入内容
 			commentEditText.setText("");
-			commentEditText.setHint("输入评论内容...");
+			commentEditText
+					.setHint(getString(R.string.news_enter_comment_content));
 			// 隐藏输入键盘
 			setKeyboardStatu(false);
 
@@ -894,7 +890,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				// 发布回复
 				newsOPerate.publishComment(UserManager.getInstance().getUser(),
 						currentNews.getNewsID(), tempContent, commentDataList
-								.get(currentOperateIndex).getUserId());
+								.get(currentOperateIndex).getUserId(),
+						commentDataList.get(currentOperateIndex)
+								.getPublishName());
 			}
 			isPublishComment = true;
 		}
@@ -918,7 +916,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 									.getUser().getUid()))) {
 						// 如果是自己发布的评论，则删除评论
 						List<String> menuList = new ArrayList<String>();
-						menuList.add("删除评论");
+						menuList.add(getString(R.string.delete_comment));
 						final CustomListViewDialog downDialog = new CustomListViewDialog(
 								NewsDetailActivity.this, menuList);
 						downDialog.setClickCallBack(new ClickCallBack() {
@@ -938,7 +936,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 						// 发布回复别人的评论
 						commentEditText.requestFocus();
 						commentEditText.setText("");
-						commentEditText.setHint("回复："
+						commentEditText.setHint(getString(R.string.reply)
+								+ ":"
 								+ commentDataList.get(currentOperateIndex)
 										.getPublishName());
 						isPublishComment = false;
@@ -1007,7 +1006,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 						showLikeData();
 					}
 				}
-				newsLikeCount.setText("赞 " + currentNews.getLikeQuantity());
+				newsLikeCount.setText(getString(R.string.news_like)
+						+ currentNews.getLikeQuantity());
 			}
 
 			@Override
@@ -1026,7 +1026,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					((ImageView) view)
 							.setImageResource(R.drawable.like_btn_press);
 				}
-				newsLikeCount.setText("赞 " + currentNews.getLikeQuantity());
+				newsLikeCount.setText(getString(R.string.news_like)
+						+ currentNews.getLikeQuantity());
 			}
 		});
 		if (currentNews.getIsLike()) {

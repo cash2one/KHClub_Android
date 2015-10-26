@@ -31,7 +31,8 @@
             android:id="@+id/base_tv_back"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:background="@drawable/common_tab_bg" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -46,7 +47,7 @@
             android:layout_width="50dip"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="@null"
+            android:background="@drawable/common_tab_bg"
             android:padding="10dp"
             android:scaleType="centerInside"
             android:src="@drawable/personal_more" />
@@ -77,7 +78,7 @@
                 android:id="@+id/image_cover_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/main_white"
+                android:background="@drawable/selector_deep_white_click"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
@@ -92,8 +93,8 @@
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_marginBottom="10dip"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dip"
@@ -103,8 +104,8 @@
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_marginBottom="10dip"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dip"
@@ -114,8 +115,8 @@
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
                     android:layout_marginBottom="10dip"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dip"
