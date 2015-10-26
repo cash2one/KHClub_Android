@@ -104,7 +104,7 @@ public class NotifyNewsFragment extends BaseFragment {
 
 				// 时间
 				helper.setText(R.id.time_text_view,
-						TimeHandle.getShowTimeFormat(item.getPush_time()));
+						TimeHandle.getShowTimeFormat(item.getPush_time(),getActivity()));
 				// 内容
 				if (item.getType() == NewsPushModel.PushLikeNews) {
 					helper.setText(R.id.content_text_view, getActivity().getString(R.string.news_push_like));

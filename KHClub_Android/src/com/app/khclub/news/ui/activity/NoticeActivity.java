@@ -11,7 +11,7 @@ public class NoticeActivity extends BaseActivityWithTopBar{
 	}
 	@Override
 	protected void setUpView() {
-		
+		setBarText(getString(R.string.notification));
 	}
 
 }

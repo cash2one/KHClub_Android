@@ -12,8 +12,8 @@
     <string name="uploading_fail">Upload Fail</string>
     <string name="downloading_fail">Download Fail</string>
     <string name="edit_remark">Edit Remark</string>
-    <string name="share_card"> Share Business Card</string>
-    <string name="switch_style">Switch Style</string>
+    <string name="share_card">Share Card</string>
+    <string name="switch_style">Switch style</string>
     <string name="loading">Loading..</string>
     <string name="search_fail">No result</string>
 
@@ -61,6 +61,7 @@
     <string name="login_modify_password">Password</string>
     <string name="login_register_title">Register</string>
     <string name="login_verification_send">Sent to</string>
+    <string name="notification">Notification</string>
     <string name="login_resend">resend</string>
     <string name="login_verification_arrivied">Verification code has arrived</string>
     <string name="login_verification_error">Verification code or phone number error</string>
@@ -70,16 +71,28 @@
     <!-- Login -->
 
 
+    <!-- time -->
+    <string name="just_recently">Just now</string>
+    <string name="minutes_ago">Minutes ago</string>
+    <string name="hour_ago">Hours ago</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="day_before_yesterday">Day before yesterday</string>
+    <string name="month">Month</string>
+    <string name="day">Day</string>
+    <string name="year">Year</string>
+    <!-- time -->
+
+
     <!-- Main -->
     <string name="main_home_title">Square</string>
     <string name="main_msg_title">Message</string>
     <string name="main_contact_title">Contact</string>
-    <string name="main_me_title">Business card</string>
+    <string name="main_me_title">Card</string>
     <!-- Main -->
 
 
     <!-- Personal -->
-    <string name="personal_me_title">Me</string>
+    <string name="personal_me_title">Card</string>
     <string name="personal_signature">Signature</string>
     <string name="personal_icon">Icon</string>
     <string name="personal_name">Name</string>
@@ -144,6 +157,8 @@
     <string name="news_publish_commenting">Loading</string>
     <string name="news_delete_success">Delete success</string>
     <string name="news_delete_fail">Delete fail</string>
+    <string name="news_comment">Comment</string>
+    <string name="news_like">Like</string>
     <!-- News -->
     <string name="publish_news">Send</string>
     <string name="text_ack_msg">Read</string>
@@ -171,6 +186,7 @@
     <string name="copy_message">Copy message</string>
     <string name="delete_voice">Delete voice</string>
     <string name="delete_video">Delete video</string>
+    <string name="scan_text">Put the QR code into the box</string>
     <string name="delete">Delete</string>
     <string name="resend">Resend</string>
     <string name="confirm_resend">Confirm to resend？</string>
@@ -457,5 +473,10 @@
     <string name="push_invite">invite to join</string>
     <string name="delete_comment">Delete comment</string>
     <string name="search_prompt">Input phone number or group id</string>
+    <string name="scan_qr_code">Scan QR code</string>
+    <string name="search_to_add">Search</string>
+    <string name="new_group">New group</string>
+    <string name="my_qr_code">My QR code</string>
+    <string name="my_collect_code">Collection of cards</string>
 
 </resources>

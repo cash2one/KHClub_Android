@@ -141,8 +141,9 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 			@Override
 			protected void convert(HelloHaBaseAdapterHelper helper,
 					NewsModel newsData) {
-				helper.setText(R.id.txt_personal_news_publish_time,
-						TimeHandle.getShowTimeFormat(newsData.getSendTime()));
+				helper.setText(R.id.txt_personal_news_publish_time, TimeHandle
+						.getShowTimeFormat(newsData.getSendTime(),
+								getApplicationContext()));
 
 				// 绑定内容
 				if (newsData.getNewsContent().equals("")) {
@@ -189,24 +190,24 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 
 				helper.setText(R.id.btn_personal_news_like,
 						String.valueOf(newsData.getLikeQuantity()));
-				/*if (newsData.getLikeQuantity() > 0) {
-					helper.setText(R.id.btn_personal_news_like,
-							String.valueOf(newsData.getLikeQuantity()));
-				} else {
-					helper.setText(R.id.btn_personal_news_like, getResources()
-							.getString(R.string.news_like));
-				}*/
+				/*
+				 * if (newsData.getLikeQuantity() > 0) {
+				 * helper.setText(R.id.btn_personal_news_like,
+				 * String.valueOf(newsData.getLikeQuantity())); } else {
+				 * helper.setText(R.id.btn_personal_news_like, getResources()
+				 * .getString(R.string.news_like)); }
+				 */
 
 				// ///////////////// 评论///////////////////////////////////
 				helper.setText(R.id.btn_personal_news_comment,
 						String.valueOf(newsData.getCommentQuantity()));
-				/*if (newsData.getCommentQuantity() > 0) {
-					helper.setText(R.id.btn_personal_news_comment,
-							String.valueOf(newsData.getCommentQuantity()));
-				} else {
-					 helper.setText(R.id.btn_personal_news_comment,
-					 getResources().getString(R.string.news_comment));
-				}*/
+				/*
+				 * if (newsData.getCommentQuantity() > 0) {
+				 * helper.setText(R.id.btn_personal_news_comment,
+				 * String.valueOf(newsData.getCommentQuantity())); } else {
+				 * helper.setText(R.id.btn_personal_news_comment,
+				 * getResources().getString(R.string.news_comment)); }
+				 */
 
 				// 设置item点击事件
 				final int postion = helper.getPosition();

@@ -536,12 +536,16 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	private void newsContentDataSet(NewsModel data) {
 		imgLoader.displayImage(data.getUserHeadSubImage(), newsUserHeadImgView,
 				options);
-		newsUserName.setText(data.getUserName());
+		if (data.getUserName().equals("")) {
+			newsUserName.setText(getString(R.string.personal_none));
+		} else {
+			newsUserName.setText(data.getUserName());
+		}
+
 		if (null == data.getUserJob() || data.getUserJob().equals("")) {
 			// 未填写则隐藏
-			newsUserJob.setVisibility(View.GONE);
+			newsUserJob.setText(getString(R.string.personal_none));
 		} else {
-			newsUserJob.setVisibility(View.VISIBLE);
 			newsUserJob.setText(data.getUserJob() + " | ");
 		}
 
@@ -578,8 +582,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			newsLocation.setText(data.getLocation());
 		}
 		// 发布的时间
-		newsPublishTime
-				.setText(TimeHandle.getShowTimeFormat(data.getSendTime()));
+		newsPublishTime.setText(TimeHandle.getShowTimeFormat(
+				data.getSendTime(), getApplicationContext()));
 		// 点赞按钮状态设置
 		if (data.getIsLike()) {
 			newsLikeBtn.setImageResource(R.drawable.like_btn_press);
@@ -644,7 +648,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					helper.setVisible(R.id.txt_news_reply_content, true);
 					//
 					helper.setText(R.id.txt_news_reply_time, TimeHandle
-							.getShowTimeFormat(item.get(PUBLISH_TIME)));
+							.getShowTimeFormat(item.get(PUBLISH_TIME),
+									getApplicationContext()));
 					TextView commentView = (TextView) helper
 							.getView(R.id.txt_news_reply_content);
 					if (!item.get(TARGET_NAME).equals("")) {

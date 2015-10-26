@@ -78,6 +78,18 @@
     <!-- Login -->
 
 
+    <!-- time -->
+    <string name="just_recently">刚刚</string>
+    <string name="minutes_ago">分钟前</string>
+    <string name="hour_ago">小时前</string>
+    <string name="yesterday">昨天</string>
+    <string name="day_before_yesterday">前天</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="year">年</string>
+    <!-- time -->
+
+
     <!-- Personal -->
     <string name="personal_me_title">我的</string>
     <string name="personal_signature">个人说明</string>
@@ -215,6 +227,7 @@
     <string name="em_user_remove">此用户已被移除</string>
     <string name="set">设置</string>
     <string name="notify">新消息提醒</string>
+    <string name="notification">通知</string>
     <string name="newnotify">接收新消息通知</string>
     <string name="voice">声音</string>
     <string name="shake">震动</string>
@@ -469,5 +482,10 @@
     <string name="push_invite">邀请加入</string>
     <string name="delete_comment">删除评论</string>
     <string name="search_prompt">输入手机号、群ID号</string>
+    <string name="scan_qr_code">扫描二维码</string>
+    <string name="search_to_add">加好友（群）</string>
+    <string name="new_group">新建群聊</string>
+    <string name="my_qr_code">我的二维码</string>
+    <string name="my_collect_code">我收藏的名片</string>
 
 </resources>

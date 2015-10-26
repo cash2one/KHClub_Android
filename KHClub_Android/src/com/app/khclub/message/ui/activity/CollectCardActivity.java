@@ -87,7 +87,7 @@ public class CollectCardActivity extends BaseActivityWithTopBar {
 
 	@Override
 	protected void setUpView() {
-		setBarText("我收藏的名片");
+		setBarText(getString(R.string.my_collect_code));
 		init();
 		listviewSet();
 
@@ -298,7 +298,8 @@ public class CollectCardActivity extends BaseActivityWithTopBar {
 						if (lastPage.equals("0")) {
 							cardListView.setMode(Mode.BOTH);
 						}
-						ToastUtil.show(CollectCardActivity.this, "网络故障，请检查");
+						ToastUtil.show(CollectCardActivity.this,
+								getString(R.string.net_error));
 						isRequestingData = false;
 					}
 				}, null));

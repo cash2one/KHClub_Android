@@ -157,7 +157,7 @@ public class NewsListFragment extends BaseFragment {
 			@Override
 			public void shareToWeiboClick(NewsModel news) {
 				// 分享到微博
-				LogUtils.i("-----"+news.getUserName());
+				LogUtils.i("-----" + news.getUserName());
 			}
 
 			@Override
@@ -395,19 +395,26 @@ public class NewsListFragment extends BaseFragment {
 					.setImageResource(R.drawable.icon);
 		}
 
-		// 设置用户名，职位，公司
-		helper.setText(R.id.txt_main_news_user_name, titleData.getUserName());
+		if (titleData.getUserName().equals("")) {
+			// 设置用户名，职位，公司
+			helper.setText(R.id.txt_main_news_user_name,
+					getString(R.string.personal_none));
+		} else {
+			helper.setText(R.id.txt_main_news_user_name,
+					titleData.getUserName());
+		}
+
 		// 绑定职位
 		if (titleData.getUserJob().equals("")) {
-			helper.setVisible(R.id.txt_main_news_user_job, false);
+			helper.setText(R.id.txt_main_news_user_job,
+					getString(R.string.personal_none));
 		} else {
-			helper.setVisible(R.id.txt_main_news_user_job, true);
 			helper.setText(R.id.txt_main_news_user_job, titleData.getUserJob()
 					+ " | ");
 		}
 		// 绑定公司名
 		if (titleData.getUserJob().equals("")) {
-			helper.setVisible(R.id.txt_main_news_user_company, true);
+			helper.setVisible(R.id.txt_main_news_user_company, false);
 		} else {
 			helper.setVisible(R.id.txt_main_news_user_company, true);
 			helper.setText(R.id.txt_main_news_user_company,
@@ -495,15 +502,18 @@ public class NewsListFragment extends BaseFragment {
 		OperateItem opData = (OperateItem) item;
 		// ///////////////// 绑定时间///////////////////////////////////////
 		helper.setText(R.id.txt_main_news_publish_time,
-				TimeHandle.getShowTimeFormat(opData.getSendTime()));
+				TimeHandle.getShowTimeFormat(opData.getSendTime(), mContext));
 
 		// /////////////////// 绑定评论/////////////////////////////////////////
-		if (opData.getCommentCount() > 0) {
-			helper.setText(R.id.btn_mian_reply,
-					String.valueOf(opData.getCommentCount()));
-		} else {
-			helper.setText(R.id.btn_mian_reply, "评论");
-		}
+		helper.setText(R.id.btn_mian_reply,
+				String.valueOf(opData.getCommentCount()));
+//		if (opData.getCommentCount() > 0) {
+//			helper.setText(R.id.btn_mian_reply,
+//					String.valueOf(opData.getCommentCount()));
+//		} else {
+//			helper.setText(R.id.btn_mian_reply,
+//					getString(R.string.news_comment));
+//		}
 
 		// /////////////////////点赞按钮///////////////////////////////////
 		TextView likeBtn = helper.getView(R.id.btn_news_like);
@@ -515,12 +525,13 @@ public class NewsListFragment extends BaseFragment {
 		}
 		likeBtn.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null,
 				null);
-		// 点赞数大于0才显示点赞数量
-		if (opData.getLikeCount() > 0) {
-			likeBtn.setText(String.valueOf(opData.getLikeCount()));
-		} else {
-			likeBtn.setText("赞");
-		}
+		likeBtn.setText(String.valueOf(opData.getLikeCount()));
+		// // 点赞数大于0才显示点赞数量
+		// if (opData.getLikeCount() > 0) {
+		// likeBtn.setText(String.valueOf(opData.getLikeCount()));
+		// } else {
+		// likeBtn.setText(getString(R.string.news_like));
+		// }
 
 		// /////////////////////////设置事件监听///////////////////////////////
 		final int postion = helper.getPosition();
@@ -721,7 +732,7 @@ public class NewsListFragment extends BaseFragment {
 				if (operateData.getLikeCount() > 0) {
 					oprtView.setText(String.valueOf(operateData.getLikeCount()));
 				} else {
-					oprtView.setText("赞");
+					oprtView.setText(getString(R.string.news_like));
 				}
 				oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable,
 						null, null, null);
@@ -748,7 +759,7 @@ public class NewsListFragment extends BaseFragment {
 				if (operateData.getLikeCount() > 0) {
 					oprtView.setText(String.valueOf(operateData.getLikeCount()));
 				} else {
-					oprtView.setText("赞");
+					oprtView.setText(getString(R.string.news_like));
 				}
 				oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable,
 						null, null, null);
