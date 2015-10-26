@@ -43,10 +43,10 @@
 
 
     <!-- Main -->
-    <string name="main_home_title">主页</string>
+    <string name="main_home_title">广场</string>
     <string name="main_msg_title">消息</string>
     <string name="main_contact_title">通讯录</string>
-    <string name="main_me_title">我</string>
+    <string name="main_me_title">名片</string>
     <!-- Main -->
 
 
@@ -144,6 +144,10 @@
     <string name="news_comment">评论</string>
     <string name="news_like">赞</string>
     <!-- News -->
+
+    <string name="reply">回复</string>
+    <string name="confirm_delete">确认删除信息？</string>
+    <string name="confirm">确认</string>
     <string name="publish_news">发送</string>
     <string name="text_ack_msg">已读</string>
     <string name="text_delivered_msg">送达</string>
@@ -461,5 +465,6 @@
     <string name="push_a_message">一条新消息</string>
     <string name="push_like">赞了你</string>
     <string name="push_invite">邀请加入</string>
+    <string name="delete_comment">删除评论</string>
 
 </resources>

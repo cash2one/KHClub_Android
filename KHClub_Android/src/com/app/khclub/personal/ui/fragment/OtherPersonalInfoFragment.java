@@ -180,15 +180,17 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 		}
 
 		// 收藏按钮
-		if (userId != UserManager.getInstance().getUser().getUid()) {
-			// 不是自己的主页
+		if ((userId != UserManager.getInstance().getUser().getUid())
+				&& !isFriend) {
+			// 不是自己的主页并且不是好友
 			collectBtn.setVisibility(View.VISIBLE);
-		}
-		if (isCollected) {
+			
 			// 如果未收藏
-			collectBtn.setImageResource(R.drawable.iconfont_collected);
-		} else {
-			collectBtn.setImageResource(R.drawable.iconfont_collect);
+			if (isCollected) {
+				collectBtn.setImageResource(R.drawable.iconfont_collected);
+			} else {
+				collectBtn.setImageResource(R.drawable.iconfont_collect);
+			}
 		}
 	}
 

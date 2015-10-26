@@ -70,10 +70,10 @@
 
 
     <!-- Main -->
-    <string name="main_home_title">Home</string>
+    <string name="main_home_title">Square</string>
     <string name="main_msg_title">Message</string>
     <string name="main_contact_title">Contact</string>
-    <string name="main_me_title">Me</string>
+    <string name="main_me_title">Business card</string>
     <!-- Main -->
 
 
@@ -126,6 +126,9 @@
 
 
     <!-- News -->
+    <string name="confirm">Confirm</string>
+    <string name="confirm_delete">Confirm delete？</string>
+    <string name="reply">reply</string>
     <string name="news_enter_content">Please enter content</string>
     <string name="news_where">Where</string>
     <string name="news_content_image_empty">Pictures and content both empty!</string>
@@ -450,5 +453,6 @@
     <string name="push_a_message">A new message</string>
     <string name="push_like">A Like for you</string>
     <string name="push_invite">invite to join</string>
+    <string name="delete_comment">Delete comment</string>
 
 </resources>
