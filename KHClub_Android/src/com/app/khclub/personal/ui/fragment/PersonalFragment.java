@@ -162,8 +162,18 @@ public class PersonalFragment extends BaseFragment {
 			public void shareToWeiboClick() {
 				// 分享到微博
 				ShareParams sp = new ShareParams();
+				sp.setTitle("KHClub");
+				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setText(UserManager.getInstance().getUser().getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
 				Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
 				weibo.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				weibo.SSOSetting(true);
@@ -180,7 +190,14 @@ public class PersonalFragment extends BaseFragment {
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
 				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -194,7 +211,14 @@ public class PersonalFragment extends BaseFragment {
 				sp.setTitle("KHClub");
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
 				Platform qq = ShareSDK.getPlatform(QZone.NAME);
 				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -208,7 +232,14 @@ public class PersonalFragment extends BaseFragment {
 				sp.setTitle("KHClub");
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
 				Platform qq = ShareSDK.getPlatform(QQ.NAME);
 				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -232,14 +263,21 @@ public class PersonalFragment extends BaseFragment {
 
 			@Override
 			public void shareToCircleofFriendsClick() {
-				// 分享到qq空间
+				// 分享到朋友圈
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
 				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
+				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
 				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享

@@ -23,6 +23,9 @@ public interface KHConst {
 	// IM通用密码
 	public static final String IM_PWD = "123456";
 
+	//服务器默认图片
+	public static final String ROOT_IMG = ROOT_PATH + "/icon.png";
+	
 	// broadCast
 	// 状态回复消息或点赞或者新好友
 	public static final String BROADCAST_NEW_MESSAGE_PUSH = "com.khclub.broadcastreceiver.newsPush";

@@ -224,8 +224,14 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(otherUserModel.getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR
-						+ otherUserModel.getHead_sub_image());
+				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != otherUserModel.getHead_sub_image() && otherUserModel.getHead_sub_image().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
 				Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
 				weibo.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				weibo.SSOSetting(true);
@@ -242,8 +248,14 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(otherUserModel.getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR
-						+ otherUserModel.getHead_sub_image());
+				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != otherUserModel.getHead_sub_image() && otherUserModel.getHead_sub_image().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
 				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -257,7 +269,14 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				sp.setTitle("KHClub");
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(otherUserModel.getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());
+				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != otherUserModel.getHead_sub_image() && otherUserModel.getHead_sub_image().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
 				Platform qq = ShareSDK.getPlatform(QZone.NAME);
 				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -271,8 +290,14 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				sp.setTitle("KHClub");
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(otherUserModel.getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR
-						+ otherUserModel.getHead_sub_image());
+				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != otherUserModel.getHead_sub_image() && otherUserModel.getHead_sub_image().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
 				Platform qq = ShareSDK.getPlatform(QQ.NAME);
 				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -307,7 +332,15 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(otherUserModel.getName());
-				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());
+				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != otherUserModel.getHead_sub_image() && otherUserModel.getHead_sub_image().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
+				
 				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享

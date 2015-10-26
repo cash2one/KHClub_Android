@@ -1,6 +1,7 @@
 package com.app.khclub.news.ui.fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.BroadcastReceiver;
@@ -15,6 +16,15 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.framework.Platform.ShareParams;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
+import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
@@ -157,25 +167,106 @@ public class NewsListFragment extends BaseFragment {
 			@Override
 			public void shareToWeiboClick(NewsModel news) {
 				// 分享到微博
-				LogUtils.i("-----"+news.getUserName());
+				ShareParams sp = new ShareParams();
+				sp.setTitle(news.getUserName());
+				if (news.getUserName() == null || news.getUserName().length() < 1) {
+					sp.setTitle("KHClub");
+				}
+				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setShareType(Platform.SHARE_WEBPAGE);
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setText(news.getNewsContent());
+				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != news.getImageNewsList() && news.getImageNewsList().size()>0) {
+					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
+				Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+				weibo.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				weibo.SSOSetting(true);
+				// 执行图文分享
+				weibo.share(sp);
 			}
 
 			@Override
 			public void shareToWeChatClick(NewsModel news) {
 				// 分享到微信
-
+				ShareParams sp = new ShareParams();
+				sp.setTitle(news.getUserName());
+				if (news.getUserName() == null || news.getUserName().length() < 1) {
+					sp.setTitle("KHClub");
+				}
+				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setShareType(Platform.SHARE_WEBPAGE);
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setText(news.getNewsContent());
+				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != news.getImageNewsList() && news.getImageNewsList().size()>0) {
+					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
+				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
+				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				wexin.share(sp);
 			}
 
 			@Override
 			public void shareToQzoneClick(NewsModel news) {
+				LogUtils.i(""+news.getUserHeadSubImage(), 1);
 				// 分享到qq空间
+				ShareParams sp = new ShareParams();
+				sp.setTitle(news.getUserName());
+				if (news.getUserName() == null || news.getUserName().length() < 1) {
+					sp.setTitle("KHClub");
+				}
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setText(news.getNewsContent());
+				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != news.getImageNewsList() && news.getImageNewsList().size()>0) {
+					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
 
+				Platform qq = ShareSDK.getPlatform(QZone.NAME);
+				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				qq.share(sp);
 			}
 
 			@Override
 			public void shareToCircleofFriendsClick(NewsModel news) {
 				// 分享到朋友圈
-
+				ShareParams sp = new ShareParams();
+				sp.setTitle(news.getUserName());
+				if (news.getUserName() == null || news.getUserName().length() < 1) {
+					sp.setTitle("KHClub");
+				}
+				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setShareType(Platform.SHARE_WEBPAGE);
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setText(news.getNewsContent());
+				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
+					sp.setText("KHClub");
+				}
+				if (null != news.getImageNewsList() && news.getImageNewsList().size()>0) {
+					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
+				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
+				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				wexin.share(sp);
 			}
 
 			@Override
@@ -910,4 +1001,23 @@ public class NewsListFragment extends BaseFragment {
 		}
 
 	}
+	
+	// 分享监听
+	PlatformActionListener platformActionListener = new PlatformActionListener() {
+		@Override
+		public void onError(Platform arg0, int arg1, Throwable arg2) {
+			ToastUtil.show(getActivity(),
+					R.string.personal_share_fail);
+		}
+
+		@Override
+		public void onComplete(Platform arg0, int arg1,
+				HashMap<String, Object> arg2) {
+			// ToastUtil.show(getActivity(), R.string.personal_share_ok);
+		}
+
+		@Override
+		public void onCancel(Platform arg0, int arg1) {
+		}
+	};
 }
