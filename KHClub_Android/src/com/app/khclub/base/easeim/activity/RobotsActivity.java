@@ -110,46 +110,60 @@ public class RobotsActivity extends BaseActivity {
 	}
 
 	private void getRobotNamesFromServer() {
-		asyncGetRobotNamesFromServer(new EMValueCallBack<List<EMContact>>() {
-
-			@Override
-			public void onSuccess(final List<EMContact> value) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						progressBar.setVisibility(View.GONE);
-						swipeRefreshLayout.setRefreshing(false);
-						Map<String, RobotUser> mMap = new HashMap<String, RobotUser>();
-						for (EMContact item : value) {
-							RobotUser user = new RobotUser();
-							user.setUsername(item.getUsername());
-							user.setNick(item.getNick());
-							user.setHeader("#");
-							mMap.put(item.getUsername(), user);
-						}
-						robotList.clear();
-						robotList.addAll(mMap.values());
-						// 存入内存
-						((KHHXSDKHelper) HXSDKHelper.getInstance()).setRobotList(mMap);
-						// 存入db
-						UserDao dao = new UserDao(RobotsActivity.this);
-						dao.saveRobotUser(robotList);
-						adapter.notifyDataSetChanged();
-					}
-				});
-			}
-
-			@Override
-			public void onError(int error, String errorMsg) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						swipeRefreshLayout.setRefreshing(false);
-						progressBar.setVisibility(View.GONE);
-					}
-				});
-			}
-		});
+		
+		RobotUser user = new RobotUser();
+		user.setUsername("khtest1");
+		user.setNick(getString(R.string.personal_official_business_manager));
+		user.setHeader("#");
+		robotList.add(user);
+		Map<String, RobotUser> mMap = new HashMap<String, RobotUser>();
+		mMap.put("khtest1", user);
+		// 存入内存
+		((KHHXSDKHelper) HXSDKHelper.getInstance()).setRobotList(mMap);		
+		UserDao dao = new UserDao(RobotsActivity.this);
+		dao.saveRobotUser(robotList);
+		adapter.notifyDataSetChanged();
+		
+//		asyncGetRobotNamesFromServer(new EMValueCallBack<List<EMContact>>() {
+//
+//			@Override
+//			public void onSuccess(final List<EMContact> value) {
+//				runOnUiThread(new Runnable() {
+//					@Override
+//					public void run() {
+//						progressBar.setVisibility(View.GONE);
+//						swipeRefreshLayout.setRefreshing(false);
+//						Map<String, RobotUser> mMap = new HashMap<String, RobotUser>();
+//						for (EMContact item : value) {
+//							RobotUser user = new RobotUser();
+//							user.setUsername(item.getUsername());
+//							user.setNick(item.getNick());
+//							user.setHeader("#");
+//							mMap.put(item.getUsername(), user);
+//						}
+//						robotList.clear();
+//						robotList.addAll(mMap.values());
+//						// 存入内存
+//						((KHHXSDKHelper) HXSDKHelper.getInstance()).setRobotList(mMap);
+//						// 存入db
+//						UserDao dao = new UserDao(RobotsActivity.this);
+//						dao.saveRobotUser(robotList);
+//						adapter.notifyDataSetChanged();
+//					}
+//				});
+//			}
+//
+//			@Override
+//			public void onError(int error, String errorMsg) {
+//				runOnUiThread(new Runnable() {
+//					@Override
+//					public void run() {
+//						swipeRefreshLayout.setRefreshing(false);
+//						progressBar.setVisibility(View.GONE);
+//					}
+//				});
+//			}
+//		});
 	}
 
 	private void asyncGetRobotNamesFromServer(final EMValueCallBack<List<EMContact>> callback) {

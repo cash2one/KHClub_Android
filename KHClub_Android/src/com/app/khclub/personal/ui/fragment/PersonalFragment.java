@@ -26,6 +26,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
+import com.app.khclub.base.easeim.activity.RobotsActivity;
 import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.helper.JsonRequestCallBack;
@@ -86,7 +87,7 @@ public class PersonalFragment extends BaseFragment {
 	// 分享弹出菜单
 	private PersonalBottomPopupMenu shareMenu;
 
-	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout, R.id.btn_more_operate })
+	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout, R.id.btn_more_operate, R.id.robot_cover_layout})
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.base_tv_back:
@@ -107,6 +108,10 @@ public class PersonalFragment extends BaseFragment {
 			// 操作菜单
 			popupMenu.showPopupWindow(operateButton);
 			break;
+		case R.id.robot_cover_layout:
+			//商务管家
+			startActivityWithRight(new Intent(getActivity(),RobotsActivity.class));
+			break;
 		default:
 			break;
 		}
@@ -120,7 +125,6 @@ public class PersonalFragment extends BaseFragment {
 
 	@Override
 	public void loadLayout(View rootView) {
-		initViewPager();
 		imageList.add(pictureImageView1);
 		imageList.add(pictureImageView2);
 		imageList.add(pictureImageView3);
@@ -133,6 +137,7 @@ public class PersonalFragment extends BaseFragment {
 
 	@Override
 	public void setUpViews(View rootView) {
+		initViewPager();
 		// 操作菜单监听
 		popupMenu = new PersonalPopupMenu(getActivity());
 		shareMenu = new PersonalBottomPopupMenu(getActivity(), false);
@@ -170,6 +175,10 @@ public class PersonalFragment extends BaseFragment {
 			public void shareToWeChatClick() {
 				// 分享到微信
 				ShareParams sp = new ShareParams();
+				sp.setTitle("KHClub");
+				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setShareType(Platform.SHARE_WEBPAGE);
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
 				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
@@ -225,6 +234,10 @@ public class PersonalFragment extends BaseFragment {
 			public void shareToCircleofFriendsClick() {
 				// 分享到qq空间
 				ShareParams sp = new ShareParams();
+				sp.setTitle("KHClub");
+				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setShareType(Platform.SHARE_WEBPAGE);
+				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
 				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);

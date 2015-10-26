@@ -57,6 +57,7 @@
     <string name="login_verification_not_null">Verification code can\'t be empty</string>
     <string name="login_password_length_six">Password length of at least six</string>
     <string name="login_register_successful">Success</string>
+    <string name="pwd_update_successful">Success</string>
     <string name="login_modify_password">Password</string>
     <string name="login_register_title">Register</string>
     <string name="login_verification_send">Sent to</string>
@@ -450,5 +451,6 @@
     <string name="push_a_message">A new message</string>
     <string name="push_like">A Like for you</string>
     <string name="push_invite">invite to join</string>
+    <string name="personal_official_business_manager">Official business manager</string>
 
 </resources>
