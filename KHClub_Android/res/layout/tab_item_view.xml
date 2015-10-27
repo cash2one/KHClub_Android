@@ -6,24 +6,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="3dp"
         android:background="@drawable/tab_background"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingBottom="3dp"
+        android:paddingTop="5dp" >
 
         <ImageView
             android:id="@+id/imageview"
-            android:src="@drawable/abc_ab_bottom_solid_light_holo"
             android:layout_width="27dp"
-            android:layout_height="27dp" />
+            android:layout_height="27dp"
+            android:src="@drawable/abc_ab_bottom_solid_light_holo" />
 
         <TextView
             android:id="@+id/textview"
-            android:textColor="@color/main_white"
-			android:layout_width="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
+            android:textColor="@color/main_white"
             android:textSize="@dimen/font_size_small" />
     </LinearLayout>
 
@@ -31,14 +31,12 @@
         android:id="@+id/unread_text_view"
         android:layout_width="10dip"
         android:layout_height="10dip"
-        android:background="@drawable/small_unread"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="15dp"
+        android:background="@drawable/small_unread"
         android:gravity="center"
         android:textColor="#e60028"
-        android:visibility="gone"
-        android:textSize="10sp"/>
-    
+        android:textSize="10sp"
+        android:visibility="gone" />
 
 </FrameLayout>
-
