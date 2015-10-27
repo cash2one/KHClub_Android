@@ -17,6 +17,9 @@ public interface KHConst {
 
 	public static final int PAGE_SIZE = 10;
 
+	//客服账号
+	public static final String KH_ROBOT = "kh100";
+	
 	// IM和推送 公用前缀
 	public static final String KH = "kh";
 	public static final String KH_GROUP = "khGroup";

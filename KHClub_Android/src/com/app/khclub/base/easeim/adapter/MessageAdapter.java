@@ -73,18 +73,16 @@ import com.app.khclub.base.easeim.utils.SmileUtils;
 import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
-import com.app.khclub.base.utils.LogUtils;
-import com.app.khclub.message.ui.activity.SearchActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMGroupInfo;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.EMMessage.Direct;
 import com.easemob.chat.EMMessage.Type;
-import com.easemob.chat.EMGroupInfo;
 import com.easemob.chat.FileMessageBody;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.LocationMessageBody;
@@ -613,6 +611,9 @@ public class MessageAdapter extends BaseAdapter{
 //				intent.setClass(context, UserProfileActivity.class);
 //				intent.putExtra("username", message.getFrom());
 //				context.startActivity(intent);
+				if (message.getFrom().equals(KHConst.KH_ROBOT)) {
+					return;
+				}
 				// 跳转到其他人页面
 				Intent intent = new Intent(context, OtherPersonalActivity.class);
 				intent.putExtra(OtherPersonalActivity.INTENT_KEY,KHUtils.stringToInt(message.getFrom().replace(KHConst.KH, "")));
