@@ -24,8 +24,8 @@
 
         <com.app.khclub.base.ui.view.RoundImageView
             android:id="@+id/img_news_reply_user_head"
-            android:layout_width="@dimen/head_image_size_medium"
-            android:layout_height="@dimen/head_image_size_medium"
+            android:layout_width="@dimen/head_image_size_small"
+            android:layout_height="@dimen/head_image_size_small"
             android:scaleType="centerCrop"
             app2:rect_adius="2dp" />
 
