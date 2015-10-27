@@ -4,14 +4,14 @@
     xmlns:app2="http://schemas.android.com/apk/res/com.app.khclub"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/main_gary"
+    android:background="@color/main_light_white"
     android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/layout_collect_card_rootview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="1px"
+        android:layout_marginBottom="1dp"
         android:background="@drawable/selector_deep_white_click"
         android:clickable="true"
         android:orientation="horizontal"
