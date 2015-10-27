@@ -222,8 +222,6 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 						listener);
 				helper.setOnClickListener(R.id.txt_personal_news_content,
 						listener);
-				helper.setOnClickListener(R.id.btn_personal_news_share,
-						listener);
 				helper.setOnClickListener(R.id.btn_personal_news_comment,
 						listener);
 				helper.setOnClickListener(R.id.btn_personal_news_like, listener);
@@ -440,10 +438,6 @@ public class PersonalNewsActivity extends BaseActivityWithTopBar {
 		case R.id.btn_personal_news_comment:
 			// 跳转至动态详情
 			jumpToNewsDetail(postion);
-			break;
-
-		case R.id.btn_personal_news_share:
-			// 分享操作
 			break;
 
 		case R.id.btn_personal_news_like:

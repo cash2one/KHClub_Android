@@ -21,10 +21,10 @@
             android:layout_gravity="top"
             android:layout_weight="1"
             android:gravity="top|left"
-            android:paddingLeft="10dp"
+            android:paddingLeft="65dp"
             android:paddingTop="10dp"
             android:text="11:12"
-            android:textColor="@color/main_light_black"
+            android:textColor="@color/main_gary"
             android:textSize="@dimen/font_size_tiny" />
 
         <!-- 分享按钮 -->
@@ -76,7 +76,7 @@
     <View
         android:id="@+id/view1"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
+        android:layout_height="1dp"
         android:background="@color/main_light_white" />
 
 </LinearLayout>
