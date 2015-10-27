@@ -477,7 +477,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		// 签名
 		if (null != otherUserModel.getSignature()
 				&& otherUserModel.getSignature().length() > 0) {
-			signTextView.setText(otherUserModel.getName());
+			signTextView.setText(otherUserModel.getSignature());
 		} else {
 			signTextView.setText(R.string.personal_none);
 		}

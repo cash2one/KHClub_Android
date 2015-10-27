@@ -41,6 +41,7 @@ import com.app.khclub.base.easeim.KHHXSDKHelper;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.app.khclub.base.easeim.db.UserDao;
 import com.app.khclub.base.easeim.domain.RobotUser;
+import com.app.khclub.base.utils.KHConst;
 import com.easemob.EMValueCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContact;
@@ -79,7 +80,6 @@ public class RobotsActivity extends BaseActivity {
 			robotList.addAll(robotMap.values());
 		} else {
 			progressBar.setVisibility(View.VISIBLE);
-			getRobotNamesFromServer();
 		}
 		adapter = new RobotAdapter(this, 1, robotList);
 		mListView.setAdapter(adapter);
@@ -107,63 +107,69 @@ public class RobotsActivity extends BaseActivity {
 				return false;
 			}
 		});
+		
+		getRobotNamesFromServer();
 	}
 
 	private void getRobotNamesFromServer() {
 		
-//		RobotUser user = new RobotUser();
-//		user.setUsername("khtest1");
-//		user.setNick(getString(R.string.personal_official_business_manager));
-//		user.setHeader("#");
-//		robotList.add(user);
-//		Map<String, RobotUser> mMap = new HashMap<String, RobotUser>();
-//		mMap.put("khtest1", user);
-//		// 存入内存
-//		((KHHXSDKHelper) HXSDKHelper.getInstance()).setRobotList(mMap);		
-//		UserDao dao = new UserDao(RobotsActivity.this);
-//		dao.saveRobotUser(robotList);
-//		adapter.notifyDataSetChanged();
+		robotList.clear();
+		RobotUser user = new RobotUser();
+		user.setUsername(KHConst.KH_ROBOT);
+		user.setNick(getString(R.string.personal_official_business_manager));
+		user.setHeader("#");
+		robotList.add(user);
+		Map<String, RobotUser> mMap = new HashMap<String, RobotUser>();
+		mMap.put(KHConst.KH_ROBOT, user);
+		// 存入内存
+		((KHHXSDKHelper) HXSDKHelper.getInstance()).setRobotList(mMap);		
+		UserDao dao = new UserDao(RobotsActivity.this);
+		dao.saveRobotUser(robotList);
+		adapter.notifyDataSetChanged();			
 		
-		asyncGetRobotNamesFromServer(new EMValueCallBack<List<EMContact>>() {
-
-			@Override
-			public void onSuccess(final List<EMContact> value) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						progressBar.setVisibility(View.GONE);
-						swipeRefreshLayout.setRefreshing(false);
-						Map<String, RobotUser> mMap = new HashMap<String, RobotUser>();
-						for (EMContact item : value) {
-							RobotUser user = new RobotUser();
-							user.setUsername(item.getUsername());
-							user.setNick(item.getNick());
-							user.setHeader("#");
-							mMap.put(item.getUsername(), user);
-						}
-						robotList.clear();
-						robotList.addAll(mMap.values());
-						// 存入内存
-						((KHHXSDKHelper) HXSDKHelper.getInstance()).setRobotList(mMap);
-						// 存入db
-						UserDao dao = new UserDao(RobotsActivity.this);
-						dao.saveRobotUser(robotList);
-						adapter.notifyDataSetChanged();
-					}
-				});
-			}
-
-			@Override
-			public void onError(int error, String errorMsg) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						swipeRefreshLayout.setRefreshing(false);
-						progressBar.setVisibility(View.GONE);
-					}
-				});
-			}
-		});
+		swipeRefreshLayout.setRefreshing(false);
+		progressBar.setVisibility(View.GONE);
+		
+//		asyncGetRobotNamesFromServer(new EMValueCallBack<List<EMContact>>() {
+//
+//			@Override
+//			public void onSuccess(final List<EMContact> value) {
+//				runOnUiThread(new Runnable() {
+//					@Override
+//					public void run() {
+//						progressBar.setVisibility(View.GONE);
+//						swipeRefreshLayout.setRefreshing(false);
+//						Map<String, RobotUser> mMap = new HashMap<String, RobotUser>();
+//						for (EMContact item : value) {
+//							RobotUser user = new RobotUser();
+//							user.setUsername(item.getUsername());
+//							user.setNick(item.getNick());
+//							user.setHeader("#");
+//							mMap.put(item.getUsername(), user);
+//						}
+//						robotList.clear();
+//						robotList.addAll(mMap.values());
+//						// 存入内存
+//						((KHHXSDKHelper) HXSDKHelper.getInstance()).setRobotList(mMap);
+//						// 存入db
+//						UserDao dao = new UserDao(RobotsActivity.this);
+//						dao.saveRobotUser(robotList);
+//						adapter.notifyDataSetChanged();
+//					}
+//				});
+//			}
+//
+//			@Override
+//			public void onError(int error, String errorMsg) {
+//				runOnUiThread(new Runnable() {
+//					@Override
+//					public void run() {
+//						swipeRefreshLayout.setRefreshing(false);
+//						progressBar.setVisibility(View.GONE);
+//					}
+//				});
+//			}
+//		});
 	}
 
 	private void asyncGetRobotNamesFromServer(final EMValueCallBack<List<EMContact>> callback) {
