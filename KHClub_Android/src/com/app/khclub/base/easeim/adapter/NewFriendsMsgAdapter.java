@@ -107,7 +107,7 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 			} else if (msg.getStatus() == InviteMesageStatus.BEINVITEED || msg.getStatus() == InviteMesageStatus.BEAPPLYED) {
 				holder.status.setVisibility(View.VISIBLE);
 				holder.status.setEnabled(true);
-				holder.status.setBackgroundResource(android.R.drawable.btn_default);
+				holder.status.setBackgroundResource(R.color.main_gold);
 				holder.status.setText(str2);
 				if(msg.getStatus() == InviteMesageStatus.BEINVITEED){
 					if (msg.getReason() == null) {
