@@ -163,7 +163,7 @@ public class PersonalFragment extends BaseFragment {
 				// 分享到微博
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setText(UserManager.getInstance().getUser().getName());
 				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
@@ -186,9 +186,9 @@ public class PersonalFragment extends BaseFragment {
 				// 分享到微信
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
 					sp.setText("KHClub");
@@ -209,7 +209,7 @@ public class PersonalFragment extends BaseFragment {
 				// 分享到朋友圈
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
 					sp.setText("KHClub");
@@ -230,7 +230,7 @@ public class PersonalFragment extends BaseFragment {
 				// 分享给qq好友
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
 					sp.setText("KHClub");
@@ -266,9 +266,9 @@ public class PersonalFragment extends BaseFragment {
 				// 分享到朋友圈
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
 					sp.setText("KHClub");

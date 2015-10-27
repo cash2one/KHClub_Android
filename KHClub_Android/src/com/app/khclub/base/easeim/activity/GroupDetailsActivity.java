@@ -260,7 +260,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				// 分享到微博
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setText(group.getGroupName());
 				sp.setImageUrl(KHConst.ROOT_IMG);	
@@ -276,7 +276,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				// 分享到微信
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setText(group.getGroupName());
 				sp.setImageUrl(KHConst.ROOT_IMG);
@@ -291,11 +291,11 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				// 分享到朋友圈
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setText(group.getGroupName());
 				sp.setImageUrl(KHConst.ROOT_IMG);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				Platform qq = ShareSDK.getPlatform(QZone.NAME);
 				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -307,11 +307,11 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				// 分享给qq好友
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setText(group.getGroupName());
 				sp.setImageUrl(KHConst.ROOT_IMG);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				Platform qq = ShareSDK.getPlatform(QQ.NAME);
 				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -340,11 +340,11 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				// 分享到qq空间
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setText(group.getGroupName());
 				sp.setImageUrl(KHConst.ROOT_IMG);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享

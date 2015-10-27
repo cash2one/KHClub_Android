@@ -19,6 +19,8 @@ public interface KHConst {
 
 	//客服账号
 	public static final String KH_ROBOT = "kh100";
+	//分享的网址
+	public static final String SHARE_WEB = "http://www.khclub.sg/";
 	
 	// IM和推送 公用前缀
 	public static final String KH = "kh";

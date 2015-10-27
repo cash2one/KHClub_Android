@@ -220,9 +220,9 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				// 分享到微博
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(otherUserModel.getName());
 				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
 					sp.setText("KHClub");
@@ -244,9 +244,9 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				// 分享到微信
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(otherUserModel.getName());
 				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
 					sp.setText("KHClub");
@@ -267,7 +267,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				// 分享到qq空间
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(otherUserModel.getName());
 				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
 					sp.setText("KHClub");
@@ -288,7 +288,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				// 分享给qq好友
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(otherUserModel.getName());
 				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
 					sp.setText("KHClub");
@@ -328,9 +328,9 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				// 分微信朋友圈
 				ShareParams sp = new ShareParams();
 				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(otherUserModel.getName());
 				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
 					sp.setText("KHClub");

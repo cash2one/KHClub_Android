@@ -249,9 +249,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				if (news.getUserName() == null || news.getUserName().length() < 1) {
 					sp.setTitle("KHClub");
 				}
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(news.getNewsContent());
 				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
 					sp.setText("KHClub");
@@ -276,9 +276,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				if (news.getUserName() == null || news.getUserName().length() < 1) {
 					sp.setTitle("KHClub");
 				}
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(news.getNewsContent());
 				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
 					sp.setText("KHClub");
@@ -303,7 +303,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				if (news.getUserName() == null || news.getUserName().length() < 1) {
 					sp.setTitle("KHClub");
 				}
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(news.getNewsContent());
 				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
 					sp.setText("KHClub");
@@ -328,9 +328,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				if (news.getUserName() == null || news.getUserName().length() < 1) {
 					sp.setTitle("KHClub");
 				}
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(news.getNewsContent());
 				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
 					sp.setText("KHClub");
