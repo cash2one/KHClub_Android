@@ -319,8 +319,9 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="10dip"
+            android:gravity="center_vertical"
             android:text="@string/personal_signature"
             android:textColor="@color/main_char_gary"
             android:textSize="@dimen/font_size_small" />
@@ -331,7 +332,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dip"
             android:layout_weight="1"
+            android:gravity="right"
             android:paddingBottom="10dp"
+            android:paddingRight="10dp"
             android:paddingTop="10dp"
             android:text="你好啊 哈哈哈哈"
             android:textColor="@color/main_deep_black"

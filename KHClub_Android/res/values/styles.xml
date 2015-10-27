@@ -76,7 +76,7 @@
         <!-- 半透明 -->
         <item name="android:windowNoTitle">true</item>
         <!-- dialog背景样式 -->
-        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowBackground">@color/main_white</item>
         <!-- 背景透明 -->
         <item name="android:backgroundDimEnabled">true</item>
         <!-- 模糊 -->

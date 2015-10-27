@@ -152,12 +152,12 @@
             
 		    <LinearLayout
 		        android:layout_marginTop="10dp"
-		        android:paddingTop="13dp"
-		        android:paddingBottom="13dp"
+		        android:paddingTop="20dp"
+		        android:paddingBottom="20dp"
 		        android:id="@+id/robot_cover_layout"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:background="@color/main_white"
+		        android:background="@drawable/selector_deep_white_click"
 		        android:gravity="center_vertical"
 		        android:orientation="horizontal" >
 		
