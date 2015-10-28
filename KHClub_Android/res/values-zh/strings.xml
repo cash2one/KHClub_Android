@@ -489,5 +489,6 @@
     <string name="new_group">新建群聊</string>
     <string name="my_qr_code">我的二维码</string>
     <string name="my_collect_code">我收藏的名片</string>
+	<string name="exchange_card">(交换名片)</string>
 
 </resources>

@@ -15,7 +15,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class PersonalInfoFragment extends BaseFragment {
+public class PersonalInfoTwoFragment extends BaseFragment {
 
 	// 头像
 	@ViewInject(R.id.head_image_view)
@@ -60,6 +60,7 @@ public class PersonalInfoFragment extends BaseFragment {
 
 	@Override
 	public void setUpViews(View rootView) {
+		LogUtils.i("2222", 1);
 	}
 
 	@Override
@@ -74,9 +75,9 @@ public class PersonalInfoFragment extends BaseFragment {
 		}
 		// 姓名
 		if (null != userModel.getName() && userModel.getName().length() > 0) {
-			nameTextView.setText(userModel.getName());
+			nameTextView.setText(userModel.getName()+"111");
 		} else {
-			nameTextView.setText(R.string.personal_none);
+			nameTextView.setText(R.string.personal_none+"111");
 		}
 		// 职业
 		if (null != userModel.getJob() && userModel.getJob().length() > 0) {

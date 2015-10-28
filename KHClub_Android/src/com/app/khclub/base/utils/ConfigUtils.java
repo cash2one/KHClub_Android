@@ -9,6 +9,12 @@ import android.content.SharedPreferences.Editor;
 //配置存储 同时用于存储IM非好友的姓名和头像
 public class ConfigUtils {
 		
+	//名片配置key
+	public static String CARD_CONFIG = "cardConfig";
+	public static int CARD_ONE = 1;
+	public static int CARD_TWO = 2;
+	
+	
 	//存储配置
 	public static void saveConfig(String key,String value){
 		try {

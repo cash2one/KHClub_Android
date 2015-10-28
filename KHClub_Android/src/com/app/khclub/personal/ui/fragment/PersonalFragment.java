@@ -6,10 +6,15 @@ import java.util.List;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,28 +32,24 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
 import com.app.khclub.base.easeim.activity.RobotsActivity;
-import com.app.khclub.base.easeim.domain.User;
-import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
+import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
-import com.app.khclub.message.ui.activity.CollectCardActivity;
-import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.app.khclub.personal.ui.activity.PersonalNewsActivity;
 import com.app.khclub.personal.ui.activity.PersonalSettingActivity;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.app.khclub.personal.ui.view.PersonalPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalPopupMenu.OperateListener;
-import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -152,6 +153,14 @@ public class PersonalFragment extends BaseFragment {
 			@Override
 			public void switchClick() {
 				// 切换名片样式
+				int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
+				if (style == ConfigUtils.CARD_TWO) {
+					 //加载课程成功后更新界面
+					ConfigUtils.saveConfig(ConfigUtils.CARD_CONFIG, ConfigUtils.CARD_ONE);
+				}else {
+					ConfigUtils.saveConfig(ConfigUtils.CARD_CONFIG, ConfigUtils.CARD_TWO);
+				}
+				initViewPager();
 			}
 		});
 
@@ -162,13 +171,16 @@ public class PersonalFragment extends BaseFragment {
 			public void shareToWeiboClick() {
 				// 分享到微博
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitle(getString(R.string.exchange_card));
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
+//				sp.setVenueName("KHClub");
+//				sp.setTitleUrl(KHConst.SHARE_WEB);
 				sp.setText(UserManager.getInstance().getUser().getName());
 				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
 					sp.setText("KHClub");
 				}
+				sp.setText(sp.getText()+"|"+UserManager.getInstance().getUser().getJob()+"\n"+UserManager.getInstance().getUser().getCompany_name());
 				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
 					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
 				}else {
@@ -185,14 +197,15 @@ public class PersonalFragment extends BaseFragment {
 			public void shareToWeChatClick() {
 				// 分享到微信
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitle(getString(R.string.exchange_card));
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
 					sp.setText("KHClub");
 				}
+				sp.setText(sp.getText()+"|"+UserManager.getInstance().getUser().getJob()+"\n"+UserManager.getInstance().getUser().getCompany_name());
 				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
 					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
 				}else {
@@ -208,12 +221,13 @@ public class PersonalFragment extends BaseFragment {
 			public void shareToQzoneClick() {
 				// 分享到朋友圈
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitle(getString(R.string.exchange_card));
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
 					sp.setText("KHClub");
 				}
+				sp.setText(sp.getText()+"|"+UserManager.getInstance().getUser().getJob()+"\n"+UserManager.getInstance().getUser().getCompany_name());
 				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
 					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
 				}else {
@@ -229,12 +243,13 @@ public class PersonalFragment extends BaseFragment {
 			public void shareToQQFriendsClick() {
 				// 分享给qq好友
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitle(getString(R.string.exchange_card));
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
 					sp.setText("KHClub");
 				}
+				sp.setText(sp.getText()+"|"+UserManager.getInstance().getUser().getJob()+"\n"+UserManager.getInstance().getUser().getCompany_name());
 				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
 					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
 				}else {
@@ -265,14 +280,15 @@ public class PersonalFragment extends BaseFragment {
 			public void shareToCircleofFriendsClick() {
 				// 分享到朋友圈
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
-				sp.setUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitle(getString(R.string.exchange_card));
+				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(UserManager.getInstance().getUser().getName());
 				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
 					sp.setText("KHClub");
 				}
+				sp.setText(sp.getText()+"|"+UserManager.getInstance().getUser().getJob()+"\n"+UserManager.getInstance().getUser().getCompany_name());
 				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
 					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
 				}else {
@@ -337,8 +353,8 @@ public class PersonalFragment extends BaseFragment {
 	 * 初始化ViewPager
 	 */
 	private void initViewPager() {
-		mPager.setAdapter(new MessageFragmentPagerAdapter(getActivity()
-				.getSupportFragmentManager()));
+		MessageFragmentPagerAdapter adapter = new MessageFragmentPagerAdapter(getActivity().getSupportFragmentManager());
+		mPager.setAdapter(adapter);
 		mPager.setCurrentItem(0);
 	}
 
@@ -348,18 +364,63 @@ public class PersonalFragment extends BaseFragment {
 		public MessageFragmentPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
+		
+		@Override
+		public Object instantiateItem(ViewGroup container, int position) {
+//			return super.instantiateItem(container, position);
+			//得到缓存的fragment
+		    Fragment fragment = (Fragment)super.instantiateItem(container,position);
+		    
+		    int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
+			if (fragment instanceof PersonalInfoFragment) {
+				if (style == ConfigUtils.CARD_TWO) {
+					//得到tag
+				    String fragmentTag = fragment.getTag();
+				    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+					//移除旧的fragment
+					ft.remove(fragment);
+					//换成新的fragment
+					fragment = new PersonalInfoTwoFragment();
+					//添加新fragment时必须用前面获得的tag ❶
+					ft.add(container.getId(), fragment, fragmentTag);
+					ft.attach(fragment);
+					ft.commit();
+				}
+			}else if (fragment instanceof PersonalInfoTwoFragment) {
+				if (style == ConfigUtils.CARD_ONE) {
+					//得到tag
+				    String fragmentTag = fragment.getTag();
+				    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+					//移除旧的fragment
+					ft.remove(fragment);
+					//换成新的fragment
+					fragment = new PersonalInfoFragment();
+					//添加新fragment时必须用前面获得的tag ❶
+					ft.add(container.getId(), fragment, fragmentTag);
+					ft.attach(fragment);
+					ft.commit();
+				}				
+			}			
+			
+		    return fragment;
+		}
 
 		@Override
 		public Fragment getItem(int i) {
 			Fragment fragment = null;
 			switch (i) {
 			case 0:
-				fragment = new PersonalInfoFragment();
+				int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
+			    if (style == ConfigUtils.CARD_TWO) {
+			    	fragment = new PersonalInfoTwoFragment();
+			    }else {
+			    	fragment = new PersonalInfoFragment();	
+				}
+				
 				break;
 			case 1:
 				fragment = new PersonalQrcodeFragment();
 				break;
-
 			}
 			return fragment;
 		}
