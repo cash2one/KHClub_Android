@@ -219,7 +219,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			public void shareToWeiboClick() {
 				// 分享到微博
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
+				sp.setTitle(getString(R.string.exchange_card));
 				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
@@ -227,6 +227,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
 					sp.setText("KHClub");
 				}
+				sp.setText(sp.getText()+"|"+otherUserModel.getJob()+"\n"+otherUserModel.getCompany_name());
 				if (null != otherUserModel.getHead_sub_image() && otherUserModel.getHead_sub_image().length()>0) {
 					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());	
 				}else {
@@ -243,7 +244,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			public void shareToWeChatClick() {
 				// 分享到微信
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
+				sp.setTitle(getString(R.string.exchange_card));
 				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
@@ -251,6 +252,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
 					sp.setText("KHClub");
 				}
+				sp.setText(sp.getText()+"|"+otherUserModel.getJob()+"\n"+otherUserModel.getCompany_name());
 				if (null != otherUserModel.getHead_sub_image() && otherUserModel.getHead_sub_image().length()>0) {
 					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());	
 				}else {
@@ -266,12 +268,13 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			public void shareToQzoneClick() {
 				// 分享到qq空间
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
+				sp.setTitle(getString(R.string.exchange_card));
 				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(otherUserModel.getName());
 				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
 					sp.setText("KHClub");
 				}
+				sp.setText(sp.getText()+"|"+otherUserModel.getJob()+"\n"+otherUserModel.getCompany_name());
 				if (null != otherUserModel.getHead_sub_image() && otherUserModel.getHead_sub_image().length()>0) {
 					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());	
 				}else {
@@ -287,12 +290,13 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			public void shareToQQFriendsClick() {
 				// 分享给qq好友
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
+				sp.setTitle(getString(R.string.exchange_card));
 				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setText(otherUserModel.getName());
 				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
 					sp.setText("KHClub");
 				}
+				sp.setText(sp.getText()+"|"+otherUserModel.getJob()+"\n"+otherUserModel.getCompany_name());
 				if (null != otherUserModel.getHead_sub_image() && otherUserModel.getHead_sub_image().length()>0) {
 					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());	
 				}else {
@@ -327,7 +331,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			public void shareToCircleofFriendsClick() {
 				// 分微信朋友圈
 				ShareParams sp = new ShareParams();
-				sp.setTitle("KHClub");
+				sp.setTitle(getString(R.string.exchange_card));
 				sp.setUrl(KHConst.SHARE_WEB); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
 				sp.setTitleUrl(KHConst.SHARE_WEB); // 标题的超链接
@@ -335,6 +339,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				if (otherUserModel.getName() == null || otherUserModel.getName().length() < 1) {
 					sp.setText("KHClub");
 				}
+				sp.setText(sp.getText()+"|"+otherUserModel.getJob()+"\n"+otherUserModel.getCompany_name());
 				if (null != otherUserModel.getHead_sub_image() && otherUserModel.getHead_sub_image().length()>0) {
 					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+otherUserModel.getHead_sub_image());	
 				}else {
