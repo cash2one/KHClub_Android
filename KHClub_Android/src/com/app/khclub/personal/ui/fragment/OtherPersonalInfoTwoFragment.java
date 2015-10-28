@@ -166,15 +166,15 @@ public class OtherPersonalInfoTwoFragment extends OtherPersonalInfoFragment {
 		if (!isFriend) {
 			if (userModel.getPhone_state() == UserModel.SeeOnlyFriends) {
 				// 电话不可见
-				phoneTextView.setText("xxx");
+				phoneTextView.setText("********");
 			}
 			if (userModel.getEmail_state() == UserModel.SeeOnlyFriends) {
 				// 邮件
-				emailTextView.setText("xxx");
+				emailTextView.setText("********");
 			}
 			if (userModel.getAddress_state() == UserModel.SeeOnlyFriends) {
 				// 地址
-				addressTextView.setText("xxx");
+				addressTextView.setText("********");
 			}
 		}
 

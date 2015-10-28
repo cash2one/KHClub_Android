@@ -341,7 +341,7 @@
                 android:layout_margin="11dp"
                 android:background="@drawable/btn_style_alert_dialog_special"
                 android:onClick="exitGroup"
-                android:paddingBottom="7dp"
+                android:paddingBottom="20dp"
                 android:paddingTop="7dp"
                 android:text="@string/Exit_the_group_chat"
                 android:textColor="@android:color/white"

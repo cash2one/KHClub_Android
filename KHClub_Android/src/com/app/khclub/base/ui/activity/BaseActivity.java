@@ -149,7 +149,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	 */
 	public void showConfirmAlert(String title, String message) {
 		new AlertDialog.Builder(this).setTitle(title).setMessage(message)
-				.setPositiveButton("确认", null).show();
+				.setPositiveButton(getString(R.string.confirm), null).show();
 	}
 
 	public void onResume() {
