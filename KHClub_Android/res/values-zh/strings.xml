@@ -40,6 +40,8 @@
     <string name="select_picture">选取照片</string>
     <string name="no_pictures">没有扫描到任何图片</string>
     <string name="no_external_storage">暂无外部存储</string>
+    <string name="save_picture">保存到手机</string>
+    <string name="save_picture_as">已保存至</string>
     <!-- Alert -->
 
 
@@ -116,7 +118,7 @@
     <string name="personal_name_not_null">昵称不能为空</string>
     <string name="personal_name_too_long">名字太长</string>
     <string name="personal_remark_too_long">备注太长</string>
-    <string name="personal_none">暂无</string>
+    <string name="personal_none">暂无信息</string>
     <string name="personal_friends_can_see">仅好友可见</string>
     <string name="personal_no_person">不存在此人</string>
     <string name="personal_add_friend">添加为好友</string>
@@ -489,6 +491,6 @@
     <string name="new_group">新建群聊</string>
     <string name="my_qr_code">我的二维码</string>
     <string name="my_collect_code">我收藏的名片</string>
-	<string name="exchange_card">(交换名片)</string>
+    <string name="exchange_card">(交换名片)</string>
 
 </resources>

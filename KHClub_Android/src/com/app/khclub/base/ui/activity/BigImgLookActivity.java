@@ -128,9 +128,8 @@ public class BigImgLookActivity extends BaseActivity {
 		// 显示图片的配置
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(android.R.color.black)
-				.showImageOnFail(R.color.main_light_white)
-				.cacheInMemory(true).cacheOnDisk(true)
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
+				.showImageOnFail(R.color.main_light_white).cacheInMemory(true)
+				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 
 		// 创建加载dialog
 		loadingDialog = CustomImageLoadingDialog
@@ -247,7 +246,7 @@ public class BigImgLookActivity extends BaseActivity {
 	 * */
 	private void imageLongClick() {
 		List<String> menuList = new ArrayList<String>();
-		menuList.add("保存到手机");
+		menuList.add(getString(R.string.save_picture));
 		downDialog = new CustomListViewDialog(BigImgLookActivity.this, menuList);
 		downDialog.setClickCallBack(new ClickCallBack() {
 
@@ -275,7 +274,7 @@ public class BigImgLookActivity extends BaseActivity {
 	 * */
 	private void download(String Url, String imageName) {
 		HttpUtils http = new HttpUtils();
-		http.download(Url, "/sdcard/helloha/" + imageName, true, true,
+		http.download(Url, "/sdcard/DCIM/Camera" + imageName, true, true,
 				new RequestCallBack<File>() {
 					@Override
 					public void onStart() {
@@ -292,8 +291,9 @@ public class BigImgLookActivity extends BaseActivity {
 
 					@Override
 					public void onSuccess(ResponseInfo<File> responseInfo) {
-						ToastUtil.show(BigImgLookActivity.this, "已保存至"
-								+ responseInfo.result.getPath());
+						ToastUtil.show(BigImgLookActivity.this,
+								getString(R.string.save_picture_as)
+										+ responseInfo.result.getPath());
 					}
 				});
 	}

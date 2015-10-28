@@ -40,6 +40,8 @@
     <string name="select_picture">Select no_pictures</string>
     <string name="no_pictures">No pictures</string>
     <string name="no_external_storage">No external storage</string>
+    <string name="save_picture">Save picture</string>
+     <string name="save_picture_as">Save picture to</string>
     <!-- Alert -->
 
 
