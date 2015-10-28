@@ -45,7 +45,7 @@ public class PersonalInfoFragment extends BaseFragment {
 
 	@Override
 	public int setLayoutId() {
-		return R.layout.fragment_personal_info_two;
+		return R.layout.fragment_personal_info;
 	}
 
 	@Override
