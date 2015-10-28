@@ -12,6 +12,7 @@ import com.app.khclub.base.utils.FileUtil;
 import com.easemob.EMCallBack;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  *Application
@@ -44,7 +45,7 @@ public class KHApplication extends Application {
 		YunBaManager.start(getApplicationContext());
         //初始化用户模型
         UserManager.getInstance().getUser();
-//        //友盟测试模式
+        //友盟测试模式
 //        MobclickAgent.setDebugMode(true);
         //初始化图片加载对象
         ImageLoader.getInstance().init(

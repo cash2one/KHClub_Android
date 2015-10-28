@@ -53,13 +53,17 @@ import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
+import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
 import com.app.khclub.personal.ui.fragment.OtherPersonalInfoFragment;
+import com.app.khclub.personal.ui.fragment.OtherPersonalInfoTwoFragment;
 import com.app.khclub.personal.ui.fragment.OtherPersonalQrcodeFragment;
+import com.app.khclub.personal.ui.fragment.PersonalInfoFragment;
+import com.app.khclub.personal.ui.fragment.PersonalInfoTwoFragment;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.easemob.chat.EMContactManager;
@@ -418,8 +422,14 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			Fragment fragment = null;
 			switch (i) {
 			case 0:
-				otherPersonalInfoFragment = new OtherPersonalInfoFragment();
-				fragment = otherPersonalInfoFragment;
+				int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
+			    if (style == ConfigUtils.CARD_TWO) {
+			    	otherPersonalInfoFragment = new OtherPersonalInfoTwoFragment();
+					fragment = otherPersonalInfoFragment;
+			    }else {
+			    	otherPersonalInfoFragment = new OtherPersonalInfoFragment();
+					fragment = otherPersonalInfoFragment;	
+				}
 				break;
 			case 1:
 				otherPersonalQRFragment = new OtherPersonalQrcodeFragment();
