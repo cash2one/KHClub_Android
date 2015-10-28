@@ -6,13 +6,10 @@ import java.util.List;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -31,7 +28,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
-import com.app.khclub.base.easeim.activity.RobotsActivity;
+import com.app.khclub.base.easeim.activity.ChatActivity;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
@@ -41,7 +38,6 @@ import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
-import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
 import com.app.khclub.personal.ui.activity.PersonalNewsActivity;
@@ -111,7 +107,13 @@ public class PersonalFragment extends BaseFragment {
 			break;
 		case R.id.robot_cover_layout:
 			//商务管家
-			startActivityWithRight(new Intent(getActivity(),RobotsActivity.class));
+//			startActivityWithRight(new Intent(getActivity(),RobotsActivity.class));
+		{
+			Intent roIntent = new Intent();
+			roIntent.setClass(getActivity(), ChatActivity.class);
+			roIntent.putExtra("userId", KHConst.KH_ROBOT);
+			startActivity(roIntent);
+		}
 			break;
 		default:
 			break;

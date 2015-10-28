@@ -84,6 +84,7 @@ import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.easeim.widget.ExpandGridView;
 import com.app.khclub.base.easeim.widget.PasteEditText;
 import com.app.khclub.base.utils.ConfigUtils;
+import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
@@ -401,6 +402,11 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 			}else{
 				UserUtils.setUserNick(toChatUsername, (TextView) findViewById(R.id.name));
 			}
+			//客服
+			if (toChatUsername.equals(KHConst.KH_ROBOT)) {
+				((TextView) findViewById(R.id.name)).setText(getString(R.string.personal_official_business_manager));
+			}
+			
 		} else {
 			// 群聊
 			findViewById(R.id.container_to_group).setVisibility(View.VISIBLE);

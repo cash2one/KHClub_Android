@@ -154,13 +154,13 @@ public abstract class BaseActivity extends FragmentActivity {
 
 	public void onResume() {
 		super.onResume();
-//		MobclickAgent.onResume(this);
+		MobclickAgent.onResume(this);
 	}
 
 	public void onPause() {
 		super.onPause();
 		hideLoading();
-//		MobclickAgent.onPause(this);
+		MobclickAgent.onPause(this);
 	}
 
 	/**
