@@ -75,9 +75,9 @@ public class PersonalInfoTwoFragment extends BaseFragment {
 		}
 		// 姓名
 		if (null != userModel.getName() && userModel.getName().length() > 0) {
-			nameTextView.setText(userModel.getName()+"111");
+			nameTextView.setText(userModel.getName());
 		} else {
-			nameTextView.setText(R.string.personal_none+"111");
+			nameTextView.setText(R.string.personal_none);
 		}
 		// 职业
 		if (null != userModel.getJob() && userModel.getJob().length() > 0) {
