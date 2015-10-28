@@ -69,7 +69,7 @@
     <!-- 透明色 -->
     <color name="main_clear">#00000000</color>
     <!-- 登录部分editText颜色 -->
-    <color name="login_edit_hint_color">#f2f2f2</color>
+    <color name="login_edit_hint_color">#e0e0e0</color>
     <color name="common_top_bar_blue">#4ebcd3</color>
     <color name="btn_login_normal">#00acff</color>
     <color name="btn_login_pressed">#46678d</color>

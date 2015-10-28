@@ -819,12 +819,13 @@ public class NewsListFragment extends BaseFragment {
 					operateData.setIsLike(false);
 				}
 
-				// 点赞数大于0才显示点赞数量
-				if (operateData.getLikeCount() > 0) {
-					oprtView.setText(String.valueOf(operateData.getLikeCount()));
-				} else {
-					oprtView.setText(getString(R.string.news_like));
-				}
+				oprtView.setText(String.valueOf(operateData.getLikeCount()));
+				// // 点赞数大于0才显示点赞数量
+				// if (operateData.getLikeCount() > 0) {
+				// oprtView.setText(String.valueOf(operateData.getLikeCount()));
+				// } else {
+				// oprtView.setText(getString(R.string.news_like));
+				// }
 				oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable,
 						null, null, null);
 			}
@@ -846,12 +847,13 @@ public class NewsListFragment extends BaseFragment {
 							R.drawable.like_btn_press);
 					operateData.setIsLike(true);
 				}
-				// 点赞数大于0才显示点赞数量
-				if (operateData.getLikeCount() > 0) {
-					oprtView.setText(String.valueOf(operateData.getLikeCount()));
-				} else {
-					oprtView.setText(getString(R.string.news_like));
-				}
+				oprtView.setText(String.valueOf(operateData.getLikeCount()));
+				// // 点赞数大于0才显示点赞数量
+				// if (operateData.getLikeCount() > 0) {
+				// oprtView.setText(String.valueOf(operateData.getLikeCount()));
+				// } else {
+				// oprtView.setText(getString(R.string.news_like));
+				// }
 				oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable,
 						null, null, null);
 			}
