@@ -144,7 +144,8 @@
                 <TextView
                     android:id="@+id/sign_text_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:textColor="@color/main_light_black"
                     android:textSize="@dimen/font_size_secondary" />
