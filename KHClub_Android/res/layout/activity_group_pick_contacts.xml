@@ -41,7 +41,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/common_tab_bg"
             android:onClick="save"
-            android:text="@string/button_save"
+            android:text="@string/alert_finish"
             android:textColor="#fff"
             android:textSize="@dimen/action_bar_title_size" />
     </RelativeLayout>
