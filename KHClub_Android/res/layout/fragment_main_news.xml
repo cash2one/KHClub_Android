@@ -44,7 +44,7 @@
             android:gravity="center"
             android:text="@string/main_home_title"
             android:textColor="@color/main_white"
-            android:textSize="@dimen/font_size_huge" />
+            android:textSize="@dimen/action_bar_title_size" />
 
         <ImageView
             android:id="@+id/img_news_publish_btn"

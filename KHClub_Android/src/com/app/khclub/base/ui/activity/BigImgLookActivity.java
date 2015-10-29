@@ -274,7 +274,7 @@ public class BigImgLookActivity extends BaseActivity {
 	 * */
 	private void download(String Url, String imageName) {
 		HttpUtils http = new HttpUtils();
-		http.download(Url, "/sdcard/DCIM/Camera" + imageName, true, true,
+		http.download(Url, "/sdcard/DCIM/Camera/" + imageName, true, true,
 				new RequestCallBack<File>() {
 					@Override
 					public void onStart() {

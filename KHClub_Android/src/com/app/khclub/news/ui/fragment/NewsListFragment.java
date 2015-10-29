@@ -688,7 +688,7 @@ public class NewsListFragment extends BaseFragment {
 					public void onFailure(HttpException arg0, String arg1,
 							String flag) {
 						super.onFailure(arg0, arg1, flag);
-						ToastUtil.show(mContext, "网络故障，请检查");
+						ToastUtil.show(mContext, getString(R.string.net_error));
 						newsListView.onRefreshComplete();
 						newsListView.setMode(Mode.BOTH);
 						isRequestingData = false;

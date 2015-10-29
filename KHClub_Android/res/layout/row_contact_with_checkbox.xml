@@ -17,18 +17,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/mm_listitem"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:focusable="false"
-            android:button="@drawable/checkbox_bg_selector" />
+        android:orientation="horizontal"
+        android:padding="10dp" >
 
         <ImageView
             android:id="@+id/avatar"
@@ -40,16 +33,24 @@
 
         <TextView
             android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
             android:maxWidth="110dp"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:layout_marginRight="16dp"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
-
+            android:layout_marginRight="15dp"
+            android:button="@drawable/checkbox_bg_selector"
+            android:focusable="false" />
     </LinearLayout>
 
 </LinearLayout>

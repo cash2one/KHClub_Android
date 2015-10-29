@@ -152,7 +152,7 @@ public abstract class BaseFragment extends Fragment {
 	public void showAlert(String title, String message) {
 		new AlertDialog.Builder(getActivity()).setTitle(title)
 				.setMessage(message)
-				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+				.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
 
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {

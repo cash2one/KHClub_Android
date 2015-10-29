@@ -33,8 +33,17 @@ public class ListImageDirPopupWindow extends
 						.replace("/", ""));
 				helper.setImageByUrl(R.id.iv_galley_dir_item,
 						item.getFirstImagePath());
-				helper.setText(R.id.tv_galley_dir_item_count, item.getCount()
-						+ "张");
+				if (mContext.getResources().getConfiguration().locale
+						.getCountry().equals("TW")
+						|| mContext.getResources().getConfiguration().locale
+								.getCountry().equals("CN")) {
+					helper.setText(R.id.tv_galley_dir_item_count,
+							item.getCount() + "张");
+				} else {
+					helper.setText(R.id.tv_galley_dir_item_count,
+							"The number is " + item.getCount());
+				}
+
 			}
 		});
 	}
