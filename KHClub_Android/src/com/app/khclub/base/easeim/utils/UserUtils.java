@@ -1,7 +1,6 @@
 package com.app.khclub.base.easeim.utils;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +16,6 @@ import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.base.utils.LogUtils;
 import com.easemob.chat.EMGroup;
 import com.lidroid.xutils.exception.HttpException;
 import com.squareup.picasso.Picasso;
@@ -110,6 +108,10 @@ public class UserUtils {
      * @param username
      */
     public static void setUserAvatar(Context context, String username, ImageView imageView){
+    	if (username.equals(KHConst.KH_ROBOT)) {
+			Picasso.with(context).load(R.drawable.icon).into(imageView);
+    		return;
+		}
     	User user = getUserInfo(username);
         if(user != null && user.getAvatar() != null){
             Picasso.with(context).load(user.getAvatar()).placeholder(R.drawable.default_avatar).into(imageView);

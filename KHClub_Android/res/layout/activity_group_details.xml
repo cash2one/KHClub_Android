@@ -230,6 +230,7 @@
                 
                 <ImageView 
                     android:id="@+id/group_cover"
+                    android:scaleType="centerCrop"
                     android:layout_marginRight="20dp"
                     android:layout_width="38dp"
                     android:layout_height="38dp"
