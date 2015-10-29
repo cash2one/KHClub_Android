@@ -136,6 +136,10 @@ public class UserUtils {
      * 设置用户昵称
      */
     public static void setUserNick(String username,TextView textView){
+    	if (username.equals(KHConst.KH_ROBOT)) {
+    		textView.setText(R.string.personal_official_business_manager);
+    		return;
+		}
     	User user = getUserInfo(username);
     	if(user != null){
     		if (user.getNick().equals(user.getUsername())) {
