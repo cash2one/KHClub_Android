@@ -42,6 +42,7 @@
     <string name="no_external_storage">暂无外部存储</string>
     <string name="save_picture">保存到手机</string>
     <string name="save_picture_as">已保存至</string>
+    <string name="save_picture_fail">图片保存失败</string>
     <!-- Alert -->
 
 

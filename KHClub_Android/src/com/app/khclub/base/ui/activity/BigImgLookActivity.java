@@ -15,7 +15,9 @@ import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -128,8 +130,9 @@ public class BigImgLookActivity extends BaseActivity {
 		// 显示图片的配置
 		options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(android.R.color.black)
-				.showImageOnFail(R.drawable.image_load_fail).cacheInMemory(true)
-				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
+				.showImageOnFail(R.drawable.image_load_fail)
+				.cacheInMemory(true).cacheOnDisk(true)
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
 
 		// 创建加载dialog
 		loadingDialog = CustomImageLoadingDialog
@@ -272,9 +275,11 @@ public class BigImgLookActivity extends BaseActivity {
 	/**
 	 * 下载图片
 	 * */
-	private void download(String Url, String imageName) {
+	private void download(String Url, final String imageName) {
 		HttpUtils http = new HttpUtils();
-		http.download(Url, "/sdcard/DCIM/Camera/" + imageName, true, true,
+		File appDir = new File(Environment.getExternalStorageDirectory(),
+				"KHClub");
+		http.download(Url, appDir + "/" + imageName, true, true,
 				new RequestCallBack<File>() {
 					@Override
 					public void onStart() {
@@ -287,6 +292,7 @@ public class BigImgLookActivity extends BaseActivity {
 
 					@Override
 					public void onFailure(HttpException error, String msg) {
+						ToastUtil.show(BigImgLookActivity.this, msg);
 					}
 
 					@Override
@@ -294,6 +300,11 @@ public class BigImgLookActivity extends BaseActivity {
 						ToastUtil.show(BigImgLookActivity.this,
 								getString(R.string.save_picture_as)
 										+ responseInfo.result.getPath());
+						// 通知图库更新
+						sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
+								Uri.parse("file://"
+										+ Environment
+												.getExternalStorageDirectory())));
 					}
 				});
 	}

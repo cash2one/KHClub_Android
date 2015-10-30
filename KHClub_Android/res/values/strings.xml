@@ -42,6 +42,7 @@
     <string name="no_external_storage">No external storage</string>
     <string name="save_picture">Save picture</string>
     <string name="save_picture_as">Save picture to</string>
+    <string name="save_picture_fail">Save picture fail</string>
     <!-- Alert -->
 
 
