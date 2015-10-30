@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.app.khclub.base.easeim.activity.ShowBigImage;
 import com.app.khclub.base.easeim.utils.CommonUtils;
 import com.app.khclub.base.easeim.utils.ImageCache;
 import com.easemob.chat.EMChatManager;
@@ -75,30 +76,30 @@ public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 				public void onClick(View v) {
 					if (thumbnailPath != null) {
 
-//						Intent intent = new Intent(activity, ShowBigImage.class);
-//						File file = new File(localFullSizePath);
-//						if (file.exists()) {
-//							Uri uri = Uri.fromFile(file);
-//							intent.putExtra("uri", uri);
-//						} else {
-//							// The local full size pic does not exist yet.
-//							// ShowBigImage needs to download it from the server
-//							// first
-//							intent.putExtra("remotepath", remotePath);
-//						}
-//						if (message.getChatType() != ChatType.Chat) {
-//							// delete the image from server after download
-//						}
-//						if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked && message.getChatType() != ChatType.GroupChat && message.getChatType() != ChatType.ChatRoom) {
-//							message.isAcked = true;
-//							try {
-//								// 看了大图后发个已读回执给对方
-//								EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
-//							} catch (Exception e) {
-//								e.printStackTrace();
-//							}
-//						}
-//						activity.startActivity(intent);
+						Intent intent = new Intent(activity, ShowBigImage.class);
+						File file = new File(localFullSizePath);
+						if (file.exists()) {
+							Uri uri = Uri.fromFile(file);
+							intent.putExtra("uri", uri);
+						} else {
+							// The local full size pic does not exist yet.
+							// ShowBigImage needs to download it from the server
+							// first
+							intent.putExtra("remotepath", remotePath);
+						}
+						if (message.getChatType() != ChatType.Chat) {
+							// delete the image from server after download
+						}
+						if (message != null && message.direct == EMMessage.Direct.RECEIVE && !message.isAcked && message.getChatType() != ChatType.GroupChat && message.getChatType() != ChatType.ChatRoom) {
+							message.isAcked = true;
+							try {
+								// 看了大图后发个已读回执给对方
+								EMChatManager.getInstance().ackMessageRead(message.getFrom(), message.getMsgId());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						activity.startActivity(intent);
 					}
 				}
 			});

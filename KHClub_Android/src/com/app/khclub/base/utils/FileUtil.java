@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
@@ -1013,5 +1014,27 @@ import com.app.khclub.base.app.KHApplication;
 //	    LogUtils.i("3"+(s-new Date().getTime()), 1);
 	    return bitmap.getRowBytes() * bitmap.getHeight();                //earlier version
 	    
+	}
+	
+	public static File saveImage(Bitmap bmp) {
+	    File appDir = new File(Environment.getExternalStorageDirectory(), "KHClub");
+	    if (!appDir.exists()) {
+	        appDir.mkdir();
+	    }
+	    String fileName = System.currentTimeMillis() + ".jpg";
+	    File file = new File(appDir, fileName);
+	    try {
+	        FileOutputStream fos = new FileOutputStream(file);
+	        bmp.compress(CompressFormat.JPEG, 100, fos);
+	        fos.flush();
+	        fos.close();
+	        return file;
+	    } catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	        return null;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 }

@@ -14,18 +14,25 @@
 package com.app.khclub.base.easeim.activity;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.widget.ProgressBar;
 
 import com.app.khclub.R;
@@ -33,6 +40,12 @@ import com.app.khclub.base.easeim.task.LoadLocalBigImgTask;
 import com.app.khclub.base.easeim.utils.ImageCache;
 import com.app.khclub.base.easeim.widget.photoview.PhotoView;
 import com.app.khclub.base.easeim.widget.photoview.PhotoViewAttacher;
+import com.app.khclub.base.ui.activity.BigImgLookActivity;
+import com.app.khclub.base.ui.view.CustomListViewDialog;
+import com.app.khclub.base.ui.view.CustomListViewDialog.ClickCallBack;
+import com.app.khclub.base.utils.FileUtil;
+import com.app.khclub.base.utils.LogUtils;
+import com.app.khclub.base.utils.ToastUtil;
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.util.EMLog;
@@ -52,6 +65,8 @@ public class ShowBigImage extends BaseActivity {
 	private Bitmap bitmap;
 	private boolean isDownloaded;
 	private ProgressBar loadLocalPb;
+	// 保存dialog
+	private CustomListViewDialog downDialog;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -83,9 +98,18 @@ public class ShowBigImage extends BaseActivity {
 				} else {
 					task.execute();
 				}
+				bitmap = ImageUtils.decodeScaleImage(uri.getPath(), ImageUtils.SCALE_IMAGE_WIDTH, ImageUtils.SCALE_IMAGE_HEIGHT);
 			} else {
 				image.setImageBitmap(bitmap);
 			}
+			
+			image.setOnLongClickListener(new OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View v) {
+					imageLongClick();
+					return false;
+				}
+			});
 		} else if (remotepath != null) { //去服务器下载图片
 			EMLog.d(TAG, "download remote image");
 			Map<String, String> maps = new HashMap<String, String>();
@@ -109,6 +133,7 @@ public class ShowBigImage extends BaseActivity {
 				finish();
 			}
 		});
+
 	}
 	
 	/**
@@ -158,6 +183,14 @@ public class ShowBigImage extends BaseActivity {
 							image.setImageBitmap(bitmap);
 							ImageCache.getInstance().put(localFilePath, bitmap);
 							isDownloaded = true;
+							
+							image.setOnLongClickListener(new OnLongClickListener() {
+								@Override
+								public boolean onLongClick(View v) {
+									imageLongClick();
+									return false;
+								}
+							});
 						}
 						if (pd != null) {
 							pd.dismiss();
@@ -203,5 +236,40 @@ public class ShowBigImage extends BaseActivity {
 		if (isDownloaded)
 			setResult(RESULT_OK);
 		finish();
+	}
+	
+	
+	/**
+	 * 长按操作
+	 * */
+	private void imageLongClick() {
+		List<String> menuList = new ArrayList<String>();
+		menuList.add(getString(R.string.save_picture));
+		downDialog = new CustomListViewDialog(ShowBigImage.this, menuList);
+		downDialog.setClickCallBack(new ClickCallBack() {
+
+			@Override
+			public void Onclick(View view, int which) {
+				if (bitmap != null) {
+					File file = FileUtil.saveImage(bitmap);
+					
+					if (file != null) {
+						Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+						Uri uri = Uri.fromFile(file);
+						intent.setData(uri);
+						sendBroadcast(intent);
+						ToastUtil.show(ShowBigImage.this, R.string.alert_finish);
+					}
+					
+				}
+				downDialog.cancel();
+			}
+		});
+		downDialog.setOnDismissListener(new OnDismissListener() {
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+			}
+		});
+		downDialog.show();
 	}
 }
