@@ -85,7 +85,7 @@ public class MultiImageView extends RelativeLayout {
 		// 显示图片的配置
 		options = new DisplayImageOptions.Builder()
 				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-				.showImageOnLoading(R.drawable.loading_default)
+				.showImageOnLoading(R.color.main_light_white)
 				.showImageOnFail(R.color.main_light_white)
 				.cacheInMemory(true).cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
