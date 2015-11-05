@@ -2,11 +2,11 @@ package com.app.khclub.base.utils;
 
 public interface KHConst {
 
-	// 正式环境
+	// 正式环境 120.25.213.171
 	// 测试环境 112.74.199.145
-	public static final String DOMIN = "http://112.74.199.145/khclub_php/index.php/Home/MobileApi";
-	public static final String ATTACHMENT_ADDR = "http://112.74.199.145/khclub_php/Uploads/";
-	public static final String ROOT_PATH = "http://112.74.199.145/khclub_php/";
+	public static final String DOMIN = "http://120.25.213.171/khclub_php/index.php/Home/MobileApi";
+	public static final String ATTACHMENT_ADDR = "http://120.25.213.171/khclub_php/Uploads/";
+	public static final String ROOT_PATH = "http://120.25.213.171/khclub_php/";
 
 	public static final int STATUS_SUCCESS = 1;// 接口返回成功
 	public static final int STATUS_FAIL = 0;// 接口返回失败
@@ -21,6 +21,8 @@ public interface KHConst {
 	public static final String KH_ROBOT = "kh100";
 	//分享的网址
 	public static final String SHARE_WEB = "http://www.khclub.sg/";
+	//名片分享网址
+	public static final String SHARE_CARD_WEB = "http://120.25.121.179/api/index.html";
 	
 	// IM和推送 公用前缀
 	public static final String KH = "kh";
@@ -79,13 +81,6 @@ public interface KHConst {
 	// 修改有可见状态的个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION_STATE = DOMIN
 			+ "/changePersonalInformationState";
-	// 获取学校列表
-	public static final String GET_SCHOOL_LIST = DOMIN + "/getSchoolList";
-	// 获取学校学生列表
-	public static final String GET_SCHOOL_STUDENT_LIST = DOMIN
-			+ "/getSchoolStudentList";
-	// 修改学校
-	public static final String CHANGE_SCHOOL = DOMIN + "/changeSchool";
 	// 获取用户二维码
 	public static final String GET_USER_QRCODE = DOMIN + "/getUserQRCode";
 	// 修改个人信息中的图片 如背景图 头像
@@ -117,7 +112,6 @@ public interface KHConst {
 	// 创建圈子
 	public static final String CREATE_GROUP = DOMIN + "/createGroup";
 	// 获取群组图片和名字
-
 	public static final String GET_GROUP_IMAGE_AND_NAME_AND_QRCODE = DOMIN
 			+ "/getGroupImageAndNameAndQrcode";
 	// 更新群组名字
@@ -128,19 +122,10 @@ public interface KHConst {
 	public static final String GET_ALL_FRIENDS_LIST = DOMIN + "/getAllFriendsList";
 
 	// //////////////////////////////////////发现模块//////////////////////////////////////////
-	// http://localhost/jlxc_php/index.php/Home/MobileApi/getContactUser
 	// 获取联系人用户
 	public static final String GET_CONTACT_USER = DOMIN + "/getContactUser";
-	// http://localhost/jlxc_php/index.php/Home/MobileApi/findUserList
 	// 搜索用户列表
-	public static final String FIND_USER_LIST = DOMIN + "/findUserList";
-	// http://localhost/jlxc_php/index.php/Home/MobileApi/helloHaIdExists
-	// 判断该哈哈号是否存在
-	public static final String HELLOHA_ID_EXISTS = DOMIN + "/helloHaIdExists";
-	// http://localhost/jlxc_php/index.php/Home/MobileApi/recommendFriendsList
-	// 推荐的人列表
-	public static final String RECOMMEND_FRIENDS_LIST = DOMIN
-			+ "/recommendFriendsList";
+	public static final String FIND_USER_LIST = DOMIN + "/findUserList";;
 	// //////////////////////////////////////通讯录部分//////////////////////////////////////////
 	// 收藏名片
 	public static final String COLLECT_CARD = DOMIN + "/collectCard";
