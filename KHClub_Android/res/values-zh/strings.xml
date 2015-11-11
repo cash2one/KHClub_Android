@@ -125,6 +125,7 @@
     <string name="personal_add_friend">添加为好友</string>
     <string name="personal_send_message">发送消息</string>
     <string name="personal_moments">动态列表</string>
+    <string name="personal_no_moments">暂无动态</string>
     <string name="personal_clear_cache">清空缓存</string>
     <string name="personal_version">版本检测</string>
     <string name="personal_clear_ok">清除成功</string>
@@ -233,7 +234,8 @@
     <string name="notify">新消息提醒</string>
     <string name="notification">通知</string>
     <string name="newnotify">接收新消息通知</string>
-    <string name="voice">声音</string>
+    <string name="voice">[声音]</string>
+    <string name="voice_title">声音</string>
     <string name="shake">震动</string>
     <string name="chatset">聊天设置</string>
     <string name="yangshengqi">使用扬声器播放语音</string>

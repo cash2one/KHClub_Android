@@ -51,12 +51,18 @@ public class HXNotifier {
     private final static String TAG = "notify";
     Ringtone ringtone = null;
 
+//    protected final static String[] msg_eng = { "sent a message", "sent a picture", "sent a voice",
+//                                                "sent location message", "sent a video", "sent a file", "%1 contacts sent %2 messages"
+//                                              };
+//    protected final static String[] msg_ch = { "发来一条消息", "发来一张图片", "发来一段语音", "发来位置信息", "发来一个视频", "发来一个文件",
+//                                               "%1个联系人发来%2条消息"
+//                                             };
     protected final static String[] msg_eng = { "sent a message", "sent a picture", "sent a voice",
-                                                "sent location message", "sent a video", "sent a file", "%1 contacts sent %2 messages"
-                                              };
-    protected final static String[] msg_ch = { "发来一条消息", "发来一张图片", "发来一段语音", "发来位置信息", "发来一个视频", "发来一个文件",
-                                               "%1个联系人发来%2条消息"
-                                             };
+        "sent location message", "sent a video", "sent a file", "A new message"
+      };
+	protected final static String[] msg_ch = { "发来一条消息", "发来一张图片", "发来一段语音", "发来位置信息", "发来一个视频", "发来一个文件",
+	       "您收到了一条新消息"
+	     };    
 
     protected static int notifyID = 0525; // start notification id
     protected static int foregroundNotifyID = 0555;
@@ -257,8 +263,8 @@ public class HXNotifier {
             }
 
             int fromUsersNum = fromUsers.size();
-            String summaryBody = msgs[6].replaceFirst("%1", Integer.toString(fromUsersNum)).replaceFirst("%2",Integer.toString(notificationNum));
-            
+//            String summaryBody = msgs[6].replaceFirst("%1", Integer.toString(fromUsersNum)).replaceFirst("%2",Integer.toString(notificationNum));
+            String summaryBody = msgs[6];
             if (notificationInfoProvider != null) {
                 // lastest text
                 String customSummaryBody = notificationInfoProvider.getLatestText(message, fromUsersNum,notificationNum);

@@ -182,8 +182,9 @@ public class ChatAllHistoryAdapter extends ArrayAdapter<EMConversation> {
 			}
 			break;
 		case IMAGE: // 图片消息
-			ImageMessageBody imageBody = (ImageMessageBody) message.getBody();
-			digest = getStrng(context, R.string.picture) + imageBody.getFileName();
+//			ImageMessageBody imageBody = (ImageMessageBody) message.getBody();
+//			digest = getStrng(context, R.string.picture) + imageBody.getFileName();
+			digest = getStrng(context, R.string.picture);
 			break;
 		case VOICE:// 语音消息
 			digest = getStrng(context, R.string.voice);

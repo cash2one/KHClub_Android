@@ -11,7 +11,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.opengl.Visibility;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -24,11 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
@@ -37,7 +35,6 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.amap.api.services.core.v;
 import com.app.khclub.R;
 import com.app.khclub.base.app.KHApplication;
 import com.app.khclub.base.easeim.KHHXSDKHelper;
@@ -62,8 +59,6 @@ import com.app.khclub.contact.ui.activity.ShareContactsActivity;
 import com.app.khclub.personal.ui.fragment.OtherPersonalInfoFragment;
 import com.app.khclub.personal.ui.fragment.OtherPersonalInfoTwoFragment;
 import com.app.khclub.personal.ui.fragment.OtherPersonalQrcodeFragment;
-import com.app.khclub.personal.ui.fragment.PersonalInfoFragment;
-import com.app.khclub.personal.ui.fragment.PersonalInfoTwoFragment;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.easemob.chat.EMContactManager;
@@ -78,10 +73,15 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class OtherPersonalActivity extends BaseActivityWithTopBar {
 
 	public final static String INTENT_KEY = "uid";
+	//用于添加好友成功后进入详情
+	public final static String INTENT_FRIEND_KEY = "isFriend";
 
 	// 标题栏
 	@ViewInject(R.id.title_bar)
 	private RelativeLayout titleBar;
+	// 没有动态提示
+	@ViewInject(R.id.no_moment_text_view)
+	private TextView noMomentTextView;	
 	// 页卡内容
 	@ViewInject(R.id.vPager)
 	private ViewPager mPager;
@@ -188,6 +188,10 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			isFriend = false;
 			addSendButton.setText(R.string.personal_add_friend);
 			shareMenu = new PersonalBottomPopupMenu(this, false);
+		}
+		//如果有这个参数
+		if (intent.hasExtra(INTENT_FRIEND_KEY)) {
+			isFriend = intent.getBooleanExtra(INTENT_FRIEND_KEY, false);
 		}
 
 		//如果是本人，则隐藏添加按钮
@@ -513,7 +517,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		}
 		// 设置不可见
 		for (ImageView imageView : imageList) {
-			imageView.setVisibility(View.INVISIBLE);
+			imageView.setVisibility(View.GONE);
 		}
 
 		for (int i = 0; i < size; i++) {
@@ -528,6 +532,13 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				imageView.setImageResource(R.drawable.loading_default);
 			}
 			imageView.setVisibility(View.VISIBLE);
+		}
+		
+		//提示暂无
+		if (size > 0) {
+			noMomentTextView.setVisibility(View.GONE);
+		}else {
+			noMomentTextView.setVisibility(View.VISIBLE);
 		}
 
 		// 备注

@@ -44,8 +44,6 @@ import com.app.khclub.personal.ui.activity.PersonalNewsActivity;
 import com.app.khclub.personal.ui.activity.PersonalSettingActivity;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
-import com.app.khclub.personal.ui.view.PersonalPopupMenu;
-import com.app.khclub.personal.ui.view.PersonalPopupMenu.OperateListener;
 import com.easemob.chat.EMMessage;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -61,6 +59,9 @@ public class PersonalFragment extends BaseFragment {
 	// 签名
 	@ViewInject(R.id.sign_text_view)
 	private TextView signTextView;
+	// 没有动态提示
+	@ViewInject(R.id.no_moment_text_view)
+	private TextView noMomentTextView;
 	// 图片1
 	@ViewInject(R.id.personal_picture_image_view1)
 	private ImageView pictureImageView1;
@@ -80,7 +81,7 @@ public class PersonalFragment extends BaseFragment {
 	// 图片缓存工具
 	private DisplayImageOptions imageOptions;
 	// 操作菜单
-	private PersonalPopupMenu popupMenu;
+//	private PersonalPopupMenu popupMenu;
 	// 分享弹出菜单
 	private PersonalBottomPopupMenu shareMenu;
 
@@ -103,7 +104,9 @@ public class PersonalFragment extends BaseFragment {
 
 		case R.id.btn_more_operate:
 			// 操作菜单
-			popupMenu.showPopupWindow(operateButton);
+//			popupMenu.showPopupWindow(operateButton);
+			// 分享点击
+			shareMenu.showPopupWindow(operateButton);
 			break;
 		case R.id.robot_cover_layout:
 			//商务管家
@@ -142,29 +145,29 @@ public class PersonalFragment extends BaseFragment {
 	public void setUpViews(View rootView) {
 		initViewPager();
 		// 操作菜单监听
-		popupMenu = new PersonalPopupMenu(getActivity());
+//		popupMenu = new PersonalPopupMenu(getActivity());
 		shareMenu = new PersonalBottomPopupMenu(getActivity(), false);
-		popupMenu.setListener(new OperateListener() {
-
-			@Override
-			public void shareClick() {
-				// 分享点击
-				shareMenu.showPopupWindow(operateButton);
-			}
-
-			@Override
-			public void switchClick() {
-				// 切换名片样式
-				int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
-				if (style == ConfigUtils.CARD_TWO) {
-					 //加载课程成功后更新界面
-					ConfigUtils.saveConfig(ConfigUtils.CARD_CONFIG, ConfigUtils.CARD_ONE);
-				}else {
-					ConfigUtils.saveConfig(ConfigUtils.CARD_CONFIG, ConfigUtils.CARD_TWO);
-				}
-				initViewPager();
-			}
-		});
+//		popupMenu.setListener(new OperateListener() {
+//
+//			@Override
+//			public void shareClick() {
+//				// 分享点击
+//				shareMenu.showPopupWindow(operateButton);
+//			}
+//
+//			@Override
+//			public void switchClick() {
+//				// 切换名片样式
+//				int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
+//				if (style == ConfigUtils.CARD_TWO) {
+//					 //加载课程成功后更新界面
+//					ConfigUtils.saveConfig(ConfigUtils.CARD_CONFIG, ConfigUtils.CARD_ONE);
+//				}else {
+//					ConfigUtils.saveConfig(ConfigUtils.CARD_CONFIG, ConfigUtils.CARD_TWO);
+//				}
+//				initViewPager();
+//			}
+//		});
 
 		// 分享菜单的事件
 		shareMenu.setListener(new BottomClickListener() {
@@ -466,7 +469,7 @@ public class PersonalFragment extends BaseFragment {
 							}
 							// 设置不可见
 							for (ImageView imageView : imageList) {
-								imageView.setVisibility(View.INVISIBLE);
+								imageView.setVisibility(View.GONE);
 							}
 
 							for (int i = 0; i < size; i++) {
@@ -482,6 +485,13 @@ public class PersonalFragment extends BaseFragment {
 											.setImageResource(R.drawable.loading_default);
 								}
 								imageView.setVisibility(View.VISIBLE);
+							}
+							
+							//提示暂无
+							if (size > 0) {
+								noMomentTextView.setVisibility(View.GONE);
+							}else {
+								noMomentTextView.setVisibility(View.VISIBLE);
 							}
 						}
 

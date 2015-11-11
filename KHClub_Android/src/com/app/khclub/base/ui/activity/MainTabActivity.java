@@ -65,7 +65,6 @@ import com.easemob.EMEventListener;
 import com.easemob.EMGroupChangeListener;
 import com.easemob.EMNotifierEvent;
 import com.easemob.EMValueCallBack;
-import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMContactListener;
 import com.easemob.chat.EMContactManager;
@@ -230,24 +229,6 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 			return;
 		}
 		
-		
-//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): java.lang.NullPointerException
-//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): 	at com.app.khclub.base.easeim.activity.ContactlistFragment$HXBlackListSyncListener.onSyncSucess(ContactlistFragment.java:151)
-//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): 	at com.app.khclub.base.easeim.applib.controller.HXSDKHelper.notifyBlackListSyncListener(HXSDKHelper.java:631)
-//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): 	at com.app.khclub.base.ui.activity.MainTabActivity$4.onSuccess(MainTabActivity.java:469)
-//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): 	at com.app.khclub.base.ui.activity.MainTabActivity$4.onSuccess(MainTabActivity.java:1)
-//		10-22 18:05:46.784: A/MobUncaughtExceptionHandler(22675): 	at com.app.khclub.base.easeim.applib.controller.HXSDKHelper$5.run(HXSDKHelper.java:611)
-//		10-22 18:05:46.784: E/Environment(22675): tzyl---update PrimaryVolume everytime
-//		10-22 18:05:46.784: E/Environment(22675): tzyl---getPrimaryVolume StorageVolume [mStorageId=65537 mPath=/storage/sdcard0 mDescriptionId=17040671 mPrimary=true mRemovable=false mEmulated=true mMtpReserveSpace=100 mAllowMassStorage=false mMaxFileSize=0 mOwner=UserHandle{0}]
-//		10-22 18:05:46.784: W/Environment(22675): tzyl---getExternalStorageStatemounted
-//		10-22 18:05:46.784: E/AndroidRuntime(22675): FATAL EXCEPTION: Thread-24729
-//		10-22 18:05:46.784: E/AndroidRuntime(22675): java.lang.NullPointerException
-//		10-22 18:05:46.784: E/AndroidRuntime(22675): 	at com.app.khclub.base.easeim.activity.ContactlistFragment$HXContactSyncListener.onSyncSucess(ContactlistFragment.java:121)
-//		10-22 18:05:46.784: E/AndroidRuntime(22675): 	at com.app.khclub.base.easeim.applib.controller.HXSDKHelper.notifyContactsSyncListener(HXSDKHelper.java:582)
-//		10-22 18:05:46.784: E/AndroidRuntime(22675): 	at com.app.khclub.base.ui.activity.MainTabActivity$3.onSuccess(MainTabActivity.java:435)
-//		10-22 18:05:46.784: E/AndroidRuntime(22675): 	at com.app.khclub.base.ui.activity.MainTabActivity$3.onSuccess(MainTabActivity.java:1)
-//		10-22 18:05:46.784: E/AndroidRuntime(22675): 	at com.app.khclub.base.easeim.applib.controller.HXSDKHelper$4.run(HXSDKHelper.java:564)
-
 	}
 
 	@Override
@@ -739,7 +720,6 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 
 		@Override
 		public void onContactInvited(String username, String reason) {
-			
 			// 接到邀请的消息，如果不处理(同意或拒绝)，掉线后，服务器会自动再发过来，所以客户端不需要重复提醒
 			List<InviteMessage> msgs = inviteMessgeDao.getMessagesList();
 			for (InviteMessage inviteMessage : msgs) {
@@ -837,6 +817,9 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 				@Override
 				public void run() {
 					chatHistoryFragmentRefresh();
+					if (chatHistoryFragment != null) {
+						chatHistoryFragment.errorItem.setVisibility(View.GONE);	
+					}
 				}
 
 			});
@@ -889,20 +872,22 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 			}
 			if (!hasGroup)
 				return;
-
-			// 被邀请
-			String st3 = getResources().getString(R.string.Invite_you_to_join_a_group_chat);
-			EMMessage msg = EMMessage.createReceiveMessage(Type.TXT);
-			msg.setChatType(ChatType.GroupChat);
-			msg.setFrom(inviter);
-			msg.setTo(groupId);
-			msg.setMsgId(UUID.randomUUID().toString());
-//			msg.addBody(new TextMessageBody(inviter + " " +st3));
-			msg.addBody(new TextMessageBody(st3));
-			// 保存邀请消息
-			EMChatManager.getInstance().saveMessage(msg);
-			// 提醒新消息
-			HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(msg);
+			//如果是自己不提示
+			if (!inviter.equals(EMChatManager.getInstance().getCurrentUser())) {
+				// 被邀请
+				String st3 = getResources().getString(R.string.Invite_you_to_join_a_group_chat);
+				EMMessage msg = EMMessage.createReceiveMessage(Type.TXT);
+				msg.setChatType(ChatType.GroupChat);
+				msg.setFrom(inviter);
+				msg.setTo(groupId);
+				msg.setMsgId(UUID.randomUUID().toString());
+//				msg.addBody(new TextMessageBody(inviter + " " +st3));
+				msg.addBody(new TextMessageBody(st3));
+				// 保存邀请消息
+				EMChatManager.getInstance().saveMessage(msg);			
+				// 提醒新消息
+				HXSDKHelper.getInstance().getNotifier().viberateAndPlayTone(msg);				
+			}
 
 			runOnUiThread(new Runnable() {
 				public void run() {

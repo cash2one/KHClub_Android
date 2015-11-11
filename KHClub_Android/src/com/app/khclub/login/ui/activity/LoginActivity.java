@@ -2,12 +2,14 @@ package com.app.khclub.login.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ import com.app.khclub.base.manager.ActivityManager;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.ui.activity.BaseActivity;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -38,7 +41,7 @@ public class LoginActivity extends BaseActivity {
 	private Button loginRegisterBtn;
 	// 布局文件
 	@ViewInject(R.id.login_activity)
-	private RelativeLayout loginLayout;
+	private FrameLayout loginLayout;
 	// 区号
 	@ViewInject(R.id.area_code_btn)
 	private TextView areatTView;
@@ -191,7 +194,29 @@ public class LoginActivity extends BaseActivity {
 
 	@Override
 	protected void setUpView() {
-		areatTView.setText("+86");
+		areatTView.setText("+86");		
+		loginRegisterBtn.setClickable(false);
+		loginRegisterBtn.setTextColor(getResources().getColorStateList(R.color.main_deep_gary));
+		
+		usernameEt.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+				if (usernameEt.getText().toString().length() > 0) {
+					loginRegisterBtn.setClickable(true);
+					loginRegisterBtn.setTextColor(getResources().getColorStateList(R.color.main_white));
+				}else {
+					loginRegisterBtn.setClickable(false);
+					loginRegisterBtn.setTextColor(getResources().getColorStateList(R.color.main_deep_gary));
+				}
+			}
+		});
 	}
 
 	@Override

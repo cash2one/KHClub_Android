@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,7 +25,6 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 import com.alibaba.fastjson.JSONObject;
-import com.amap.api.mapcore2d.ar;
 import com.app.khclub.R;
 import com.app.khclub.base.app.KHApplication;
 import com.app.khclub.base.easeim.Constant;
@@ -41,7 +42,6 @@ import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
-import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.Md5Utils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.easemob.EMCallBack;
@@ -313,6 +313,33 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 		};
 		// 开始倒计时
 		verifyCountdownTimer.start();
+		
+		//处理按钮点击
+		nextButton.setClickable(false);
+		nextButton.setTextColor(getResources().getColorStateList(R.color.main_deep_gary));
+		
+		TextWatcher textWatcher = new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+				if (verifycodeEditText.getText().toString().length() > 0 && passwdeEditText.getText().toString().length() > 0) {
+					nextButton.setClickable(true);
+					nextButton.setTextColor(getResources().getColorStateList(R.color.main_white));
+				}else {
+					nextButton.setClickable(false);
+					nextButton.setTextColor(getResources().getColorStateList(R.color.main_deep_gary));
+				}
+			}
+		};
+		
+		verifycodeEditText.addTextChangedListener(textWatcher);
+		passwdeEditText.addTextChangedListener(textWatcher);
 	}
 	
 	@Override

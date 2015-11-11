@@ -84,8 +84,11 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
+                    android:gravity="center_vertical"
                     android:layout_marginLeft="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip"
                     android:layout_weight="1"
                     android:text="@string/personal_moments"
                     android:textColor="@color/main_deep_black"
@@ -100,7 +103,7 @@
                     android:layout_marginTop="10dip"
                     android:background="@color/main_blue"
                     android:scaleType="centerCrop"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view2"
@@ -111,7 +114,7 @@
                     android:layout_marginTop="10dip"
                     android:background="@color/main_blue"
                     android:scaleType="centerCrop"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view1"
@@ -122,7 +125,21 @@
                     android:layout_marginTop="10dip"
                     android:background="@color/main_blue"
                     android:scaleType="centerCrop"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
+                
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/no_moment_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="30dip"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip"
+                    android:text="@string/personal_no_moments"
+                    android:textColor="@color/main_light_black"
+                    android:textSize="@dimen/font_size_medium" />
+                
             </LinearLayout>
 
             <LinearLayout

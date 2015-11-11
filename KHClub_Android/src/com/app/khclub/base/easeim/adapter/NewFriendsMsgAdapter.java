@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,7 +42,9 @@ import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.lidroid.xutils.exception.HttpException;
@@ -193,6 +196,15 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
 													messgeDao.updateMessage(msg.getId(), values);
 													button.setBackgroundDrawable(null);
 													button.setEnabled(false);
+													//进入个人详情
+													Intent intent = new Intent(context,OtherPersonalActivity.class);
+													intent.putExtra(
+															OtherPersonalActivity.INTENT_KEY,
+															KHUtils.stringToInt(msg.getFrom().replace(KHConst.KH, "")));
+													intent.putExtra(OtherPersonalActivity.INTENT_FRIEND_KEY, true);
+													context.startActivity(intent);
+													((Activity)context).overridePendingTransition(
+															R.anim.push_right_in, R.anim.push_right_out);
 												}
 											});
 

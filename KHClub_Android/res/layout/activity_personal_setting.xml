@@ -59,7 +59,7 @@
                  android:textColor="@color/main_char_gary"
                  android:textSize="@dimen/font_size_small"
                  android:layout_centerVertical="true"
-                 android:text="@string/voice"
+                 android:text="@string/voice_title"
                  android:typeface="serif" />
 
              <ImageView
