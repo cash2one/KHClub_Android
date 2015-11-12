@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.app.khclub">
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/layout_title_bar" />
+
+    <com.app.khclub.base.ui.view.CustomerScrollView
+        android:id="@+id/scrollView_person"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:background="@color/main_light_white"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        tools:ignore="UselessParent" >
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_light_white"
+            android:orientation="vertical" >
+            
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+	            <ImageView
+	                android:layout_marginTop="10dp" 
+	                android:layout_width="150dp"
+	                android:layout_height="150dp"
+	                android:src="@drawable/icon"/>
+	            <com.app.khclub.base.ui.view.CircularImageView
+	                android:id="@+id/head_image_view"
+	                android:src="@drawable/abc_ab_bottom_solid_dark_holo"
+	                app:border_width="10dp"
+	                app:border_color="@color/main_white"
+	                android:layout_marginTop="135dp"
+	                android:layout_centerHorizontal="true" 
+	                android:layout_width="60dp"
+	                android:layout_height="60dp"/>
+	            
+	            <TextView 
+	                android:id="@+id/name_text_view"
+	                android:layout_centerHorizontal="true"
+	                android:layout_below="@+id/head_image_view"
+	                android:layout_marginTop="8dp"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:textColor="@color/main_deep_black"
+	                android:textSize="@dimen/font_size_huge"
+	                android:text="测试姓名"/>	                   
+	            
+	            
+            </RelativeLayout>
+            
+            <TextView 
+                android:id="@+id/company_text_view"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+                android:drawablePadding="5dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_deep_black"
+                android:textSize="@dimen/font_size_large"
+                android:text="xxxxxxxxx公司"/>
+            
+            <TextView
+                android:id="@+id/job_text_view" 
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+                android:drawablePadding="5dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_deep_black"
+                android:textSize="@dimen/font_size_large"
+                android:text="产品经理"/>            
+            <TextView 
+                android:id="@+id/phone_number_text_view"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+                android:drawablePadding="5dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_deep_black"
+                android:textSize="@dimen/font_size_large"
+                android:text="123456789"/>   
+            <TextView 
+                android:id="@+id/email_text_view"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+                android:drawablePadding="5dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_deep_black"
+                android:textSize="@dimen/font_size_large"
+                android:text="123456@123456"/>   
+            <TextView 
+                android:id="@+id/address_text_view"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+                android:drawablePadding="5dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_deep_black"
+                android:textSize="@dimen/font_size_large"
+                android:text="南山区xxxxxxxxxxxxx"/>
+            
+            <RelativeLayout
+                android:layout_marginTop="30dp" 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                
+                <TextView 
+                    android:id="@+id/title_1_text_view"
+                    android:padding="5dp"
+                    android:text="测试测试1"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_large"
+                    android:background="@color/main_gold"
+                    android:textColor="@color/main_white"/>
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/title_1_text_view" 
+                    android:id="@+id/title_2_text_view"
+                    android:padding="5dp"
+                    android:text="测试测试2"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_large"
+                    android:background="@color/main_gold"
+                    android:textColor="@color/main_white"/>                
+                <TextView 
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/title_1_text_view"
+                    android:id="@+id/title_3_text_view"
+                    android:padding="5dp"
+                    android:text="测试测试3"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_large"
+                    android:background="@color/main_gold"
+                    android:textColor="@color/main_white"/>
+                                
+                <TextView 
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/title_1_text_view"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/title_3_text_view"
+                    android:id="@+id/title_4_text_view"
+                    android:padding="5dp"
+                    android:text="测试测试4"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_size_large"
+                    android:background="@color/main_gold"
+                    android:textColor="@color/main_white"/>                
+            </RelativeLayout>
+
+        </LinearLayout>
+    </com.app.khclub.base.ui.view.CustomerScrollView>
+
+</LinearLayout>

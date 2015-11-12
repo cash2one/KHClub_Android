@@ -494,12 +494,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		otherUserModel = new UserModel();
 		otherUserModel.setContentWithJson(jsonObject);
 		// 签名
-		if (null != otherUserModel.getSignature()
-				&& otherUserModel.getSignature().length() > 0) {
-			signTextView.setText(otherUserModel.getSignature());
-		} else {
-			signTextView.setText(R.string.personal_none);
-		}
+		signTextView.setText(KHUtils.emptyRetunNone(otherUserModel.getSignature()));
 		// 标题
 		setBarText(otherUserModel.getName());
 

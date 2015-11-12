@@ -5,8 +5,6 @@
     android:background="@color/main_white"
     android:orientation="vertical" >
 
-    <include layout="@layout/layout_title_bar" />
-    
 	<fragment
 	    android:id="@+id/fragmentNotice"
 	    android:layout_width="match_parent"

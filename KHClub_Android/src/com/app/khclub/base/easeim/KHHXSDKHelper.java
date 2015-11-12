@@ -331,6 +331,7 @@ public class KHHXSDKHelper extends HXSDKHelper{
             public Intent getLaunchIntent(EMMessage message) {
                 //设置点击通知栏跳转事件
                 Intent intent = new Intent(appContext, MainTabActivity.class);
+                intent.putExtra(MainTabActivity.INTENT_JUMP_MESSAGE, true);
                 //有电话时优先跳转到通话页面
                 if(isVideoCalling){
 //                    intent = new Intent(appContext, VideoCallActivity.class);

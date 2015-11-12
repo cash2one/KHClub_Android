@@ -22,7 +22,8 @@ import com.app.khclub.R;
 import com.app.khclub.base.adapter.HelloHaAdapter;
 import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
 import com.app.khclub.base.model.NewsPushModel;
-import com.app.khclub.base.ui.fragment.BaseFragment;
+import com.app.khclub.base.ui.fragment.BaseFragmentWithTopBar;
+import com.app.khclub.base.ui.view.CustomAlertDialog;
 import com.app.khclub.base.ui.view.CustomListViewDialog;
 import com.app.khclub.base.ui.view.CustomListViewDialog.ClickCallBack;
 import com.app.khclub.base.utils.KHConst;
@@ -30,11 +31,14 @@ import com.app.khclub.base.utils.TimeHandle;
 import com.app.khclub.news.ui.activity.NewsDetailActivity;
 import com.app.khclub.news.ui.model.NewsConstants;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-public class NotifyNewsFragment extends BaseFragment {
-
+public class NotifyNewsFragment extends BaseFragmentWithTopBar {
+	
+	@ViewInject(R.id.clear_notify_image_view)
+	private ImageView clearImageView; 
 	// 列表
 	@ViewInject(R.id.notify_list_view)
 	private ListView notifyListView;
@@ -45,12 +49,21 @@ public class NotifyNewsFragment extends BaseFragment {
 	private int page = 1;
 	private int size = 30;
 
+	@OnClick({R.id.clear_notify_image_view})
+	private void clickEvent(View view) {
+		switch (view.getId()) {
+		case R.id.clear_notify_image_view:
+			clearNotify();
+			break;
+		default:
+			break;
+		}
+		
+	}
+	
 	@Override
 	public int setLayoutId() {
 		return R.layout.fragment_new_notify;
-	}
-	@Override
-	public void loadLayout(View rootView) {
 	}
 
 	@Override
@@ -68,6 +81,8 @@ public class NotifyNewsFragment extends BaseFragment {
 		NewsPushModel.setIsRead();
 		//更新外面
 		sendNotify();
+		
+		setBarText(getString(R.string.notification));
 	}
 
 	@Override
@@ -251,4 +266,26 @@ public class NotifyNewsFragment extends BaseFragment {
 		getActivity().sendBroadcast(messageIntent);
 	}
 
+	//清空通知
+	private void clearNotify(){
+		final CustomAlertDialog confirmDialog = new CustomAlertDialog(
+				getActivity(), getActivity().getString(R.string.confirm_clear), getActivity().getString(R.string.alert_confirm), getActivity().getString(R.string.alert_cancel));
+		confirmDialog.show();
+		confirmDialog.setClicklistener(new CustomAlertDialog.ClickListenerInterface() {
+					@Override
+					public void doConfirm() {
+						//清空数据
+						NewsPushModel.removeAll();
+						// 刷新列表
+						refreshList();
+						confirmDialog.dismiss();
+					}
+
+					@Override
+					public void doCancel() {
+						confirmDialog.dismiss();
+					}
+				});	
+		
+	}
 }

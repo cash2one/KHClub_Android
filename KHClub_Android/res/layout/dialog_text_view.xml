@@ -27,7 +27,7 @@
         android:gravity="left|center"
         android:hint="@string/personal_enter_name"
         android:inputType="text"
-        android:maxLength="10"
+        android:maxLength="30"
         android:paddingLeft="5dp"
         android:textColor="@color/main_deep_black"
         android:textColorHint="@color/main_deep_gary" />

@@ -135,7 +135,11 @@
     <string name="personal_share_ok">分享成功</string>
     <string name="personal_share_fail">分享失败</string>
     <string name="personal_setting">设置</string>
+    <string name="personal_edit">编辑</string>
     <string name="personal_news">个人动态</string>
+    <string name="personal_title">个人头衔</string>
+    <string name="personal_title_prompt">请介绍您更多的身份（10个字以内）</string>
+    <string name="personal_title_too_long">内容过长</string>    
     <string name="collect_success">名片已收藏</string>
     <string name="collect_fail">收藏失败</string>
     <string name="cancel_collect_success">取消收藏成功</string>
@@ -165,6 +169,7 @@
 
     <string name="reply">回复</string>
     <string name="confirm_delete">确认删除信息？</string>
+    <string name="confirm_clear">确认清空？</string>
     <string name="confirm">确认</string>
     <string name="publish_news">发送</string>
     <string name="text_ack_msg">已读</string>

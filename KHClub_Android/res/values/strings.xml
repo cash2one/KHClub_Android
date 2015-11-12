@@ -135,7 +135,11 @@
     <string name="personal_share_ok">Share OK</string>
     <string name="personal_share_fail">Share fail</string>
     <string name="personal_setting">Setting</string>
+    <string name="personal_edit">Edit</string>
     <string name="personal_news">Personal News</string>
+    <string name="personal_title">Title</string>
+    <string name="personal_title_prompt">Introduce your self</string>
+    <string name="personal_title_too_long">Content too long</string>
     <string name="collect_success">Collect success</string>
     <string name="collect_fail">Collect fail</string>
     <string name="cancel_collect_success">Cancel the collection success</string>
@@ -147,6 +151,7 @@
     <!-- News -->
     <string name="confirm">Confirm</string>
     <string name="confirm_delete">Confirm delete？</string>
+    <string name="confirm_clear">Confirm clear？</string>
     <string name="reply">reply</string>
     <string name="news_enter_content">Please enter content</string>
     <string name="news_where">Where</string>

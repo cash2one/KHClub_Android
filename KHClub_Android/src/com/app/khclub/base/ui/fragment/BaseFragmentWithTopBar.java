@@ -10,7 +10,7 @@ import com.app.khclub.R;
 public abstract class BaseFragmentWithTopBar extends BaseFragment {
 	private TextView barTitle;
 	private RelativeLayout rlBar;
-	private LinearLayout llRightView;
+	public LinearLayout llRightView;
 	private TextView backBtn;
 
 	@Override

@@ -1,30 +1,17 @@
 package com.app.khclub.login.ui.activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.app.khclub.R;
-import com.app.khclub.base.easeim.Constant;
 import com.app.khclub.base.easeim.KHHXSDKHelper;
-import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
-import com.app.khclub.base.easeim.db.UserDao;
-import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.manager.ActivityManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivity;
 import com.app.khclub.base.ui.activity.MainTabActivity;
-import com.app.khclub.base.utils.KHConst;
-import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.lidroid.xutils.view.annotation.ViewInject;

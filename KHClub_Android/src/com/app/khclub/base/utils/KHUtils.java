@@ -8,6 +8,8 @@ import java.util.Date;
 
 import android.annotation.SuppressLint;
 
+import com.app.khclub.R;
+import com.app.khclub.base.app.KHApplication;
 import com.app.khclub.base.manager.UserManager;
 
 @SuppressLint("SimpleDateFormat")
@@ -150,6 +152,13 @@ public class KHUtils {
     
     public static String selfCommonIMID() {
 		return KHConst.KH + UserManager.getInstance().getUser().getUid();
+	}
+    
+    public static String emptyRetunNone(String content) {
+    	if (null != content && content.length() > 0) {
+    		return content;
+		}
+		return KHApplication.getInstance().getString(R.string.personal_none);
 	}
     
 }

@@ -1,6 +1,5 @@
 package com.app.khclub.personal.ui.activity;
 
-
 import java.io.File;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -25,31 +23,20 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
-import com.app.khclub.base.easeim.KHHXSDKHelper;
-import com.app.khclub.base.easeim.KHHXSDKModel;
-import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
-import com.app.khclub.base.manager.NewVersionCheckManager;
-import com.app.khclub.base.manager.NewVersionCheckManager.VersionCallBack;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
-import com.app.khclub.base.ui.view.CustomAlertDialog;
 import com.app.khclub.base.ui.view.CustomSelectPhotoDialog;
 import com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity;
-import com.app.khclub.base.utils.DataCleanManager;
+import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.FileUtil;
-import com.app.khclub.base.utils.HttpCacheUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
-import com.app.khclub.login.ui.activity.LoginActivity;
-import com.easemob.EMCallBack;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMChatOptions;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -93,36 +80,27 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 	// 签名
 	@ViewInject(R.id.sign_text_view)
 	private TextView signTextView;	
-	/**
-	 * 打开声音提示imageview
-	 */
-	@ViewInject(R.id.iv_switch_open_sound)
-	private ImageView iv_switch_open_sound;
-	/**
-	 * 关闭声音提示imageview
-	 */
-	@ViewInject(R.id.iv_switch_close_sound)
-	private ImageView iv_switch_close_sound;
-	/**
-	 * 打开消息震动提示
-	 */
-	@ViewInject(R.id.iv_switch_open_vibrate)
-	private ImageView iv_switch_open_vibrate;
-	/**
-	 * 关闭消息震动提示
-	 */
-	@ViewInject(R.id.iv_switch_close_vibrate)
-	private ImageView iv_switch_close_vibrate;
+	// 头衔1
+	@ViewInject(R.id.title_1_text_view)
+	private TextView title1TextView;	
+	// 头衔2
+	@ViewInject(R.id.title_2_text_view)
+	private TextView title2TextView;	
+	// 头衔3
+	@ViewInject(R.id.title_3_text_view)
+	private TextView title3TextView;
+	// 头衔4
+	@ViewInject(R.id.title_4_text_view)
+	private TextView title4TextView;
 	
 	private UserModel userModel;
 	// 新图片缓存工具 头像
 	DisplayImageOptions headImageOptions;
-	private EMChatOptions chatOptions;
-	private KHHXSDKModel model;
-	
+
 	@OnClick(value = { R.id.name_layout, R.id.sign_layout,R.id.company_layout,R.id.phone_layout,R.id.version_text_view,
 			R.id.address_layout,R.id.email_layout,R.id.logout_button,R.id.rl_switch_sound,R.id.rl_switch_vibrate,
-			R.id.sex_layout, R.id.head_image_view,R.id.head_layout, R.id.job_layout, R.id.clear_cache_text_view})
+			R.id.sex_layout, R.id.head_image_view,R.id.head_layout, R.id.job_layout, R.id.clear_cache_text_view , R.id.setting_image_view,
+			R.id.title_1_layout,R.id.title_2_layout,R.id.title_3_layout,R.id.title_4_layout})
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		// 姓名
@@ -205,51 +183,23 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 
 					});
 			break;
-		case R.id.clear_cache_text_view:
-			//清除缓存
-			clearCache();
+		case R.id.setting_image_view:
+			Intent settingIntent = new Intent(this, AppSettingActivity.class);
+			startActivityWithRight(settingIntent);
 			break;
-		case R.id.logout_button:
-			//退出
-			logout();
+		//头衔部分
+		case R.id.title_1_layout:
+			titleClick(1);
 			break;
-		case R.id.version_text_view:
-			//版本检测
-			checkVersion();
+		case R.id.title_2_layout:
+			titleClick(2);
 			break;
-		case R.id.rl_switch_sound:
-			//声音
-			if (iv_switch_open_sound.getVisibility() == View.VISIBLE) {
-				iv_switch_open_sound.setVisibility(View.INVISIBLE);
-				iv_switch_close_sound.setVisibility(View.VISIBLE);
-				chatOptions.setNoticeBySound(false);
-				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgSound(false);
-			} else {
-				iv_switch_open_sound.setVisibility(View.VISIBLE);
-				iv_switch_close_sound.setVisibility(View.INVISIBLE);
-				chatOptions.setNoticeBySound(true);
-				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgSound(true);
-			}
+		case R.id.title_3_layout:
+			titleClick(3);
 			break;
-		case R.id.rl_switch_vibrate:
-			//震动
-			if (iv_switch_open_vibrate.getVisibility() == View.VISIBLE) {
-				iv_switch_open_vibrate.setVisibility(View.INVISIBLE);
-				iv_switch_close_vibrate.setVisibility(View.VISIBLE);
-				chatOptions.setNoticedByVibrate(false);
-				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgVibrate(false);
-			} else {
-				iv_switch_open_vibrate.setVisibility(View.VISIBLE);
-				iv_switch_close_vibrate.setVisibility(View.INVISIBLE);
-				chatOptions.setNoticedByVibrate(true);
-				EMChatManager.getInstance().setChatOptions(chatOptions);
-				HXSDKHelper.getInstance().getModel().setSettingMsgVibrate(true);
-			}
+		case R.id.title_4_layout:
+			titleClick(4);
 			break;			
-			
 		default:
 			break;
 		}
@@ -263,7 +213,7 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 
 	@Override
 	protected void setUpView() {
-		setBarText(getString(R.string.personal_setting));
+		setBarText(getString(R.string.personal_edit));
 		userModel = UserManager.getInstance().getUser();
 		// 显示头像的配置
 		headImageOptions = new DisplayImageOptions.Builder()
@@ -271,6 +221,7 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true)
 				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 		init();
+		getExtraInfo();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -407,41 +358,17 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 			ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR+userModel.getHead_image(), headImageView, headImageOptions);	
 		}
 		//姓名
-		if (null != userModel.getName() && userModel.getName().length() > 0) {
-			nameTextView.setText(userModel.getName());
-		}else {
-			nameTextView.setText(R.string.personal_none);
-		}
+		nameTextView.setText(KHUtils.emptyRetunNone(userModel.getName()));
 		//职业
-		if (null != userModel.getJob() && userModel.getJob().length() > 0) {
-			jobTextView.setText(userModel.getJob());
-		}else {
-			jobTextView.setText(R.string.personal_none);
-		}		
+		jobTextView.setText(KHUtils.emptyRetunNone(userModel.getJob()));
 		//公司
-		if (null != userModel.getCompany_name() && userModel.getCompany_name().length() > 0) {
-			companyTextView.setText(userModel.getCompany_name());
-		}else {
-			companyTextView.setText(R.string.personal_none);
-		}		
+		companyTextView.setText(KHUtils.emptyRetunNone(userModel.getCompany_name()));
 		//电话
-		if (null != userModel.getPhone_num() && userModel.getPhone_num().length() > 0) {
-			phoneTextView.setText(userModel.getPhone_num());
-		}else {
-			phoneTextView.setText(R.string.personal_none);
-		}
+		phoneTextView.setText(KHUtils.emptyRetunNone(userModel.getPhone_num()));
 		//邮件
-		if (null != userModel.getE_mail() && userModel.getE_mail().length() > 0) {
-			emailTextView.setText(userModel.getE_mail());
-		}else {
-			emailTextView.setText(R.string.personal_none);
-		}	
+		emailTextView.setText(KHUtils.emptyRetunNone(userModel.getE_mail()));
 		//地址
-		if (null != userModel.getAddress() && userModel.getAddress().length() > 0) {
-			addressTextView.setText(userModel.getAddress());
-		}else {
-			addressTextView.setText(R.string.personal_none);
-		}
+		addressTextView.setText(KHUtils.emptyRetunNone(userModel.getAddress()));
 		//性别
 		if (userModel.getSex() == UserModel.SexBoy) {
 			sexTextView.setText(R.string.personal_sex_male);
@@ -449,33 +376,13 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 			sexTextView.setText(R.string.personal_sex_female);
 		}
 		//签名
-		if (null != userModel.getSignature() && userModel.getSignature().length() > 0) {
-			signTextView.setText(userModel.getSignature());
-		}else {
-			signTextView.setText(R.string.personal_none);
-		}
+		signTextView.setText(KHUtils.emptyRetunNone(userModel.getSignature()));
 		
-		chatOptions = EMChatManager.getInstance().getChatOptions();
-		model = (KHHXSDKModel) HXSDKHelper.getInstance().getModel();
-		// 是否打开声音
-		// sound notification is switched on or not?
-		if (model.getSettingMsgSound()) {
-			iv_switch_open_sound.setVisibility(View.VISIBLE);
-			iv_switch_close_sound.setVisibility(View.INVISIBLE);
-		} else {
-			iv_switch_open_sound.setVisibility(View.INVISIBLE);
-			iv_switch_close_sound.setVisibility(View.VISIBLE);
-		}
-		
-		// 是否打开震动
-		// vibrate notification is switched on or not?
-		if (model.getSettingMsgVibrate()) {
-			iv_switch_open_vibrate.setVisibility(View.VISIBLE);
-			iv_switch_close_vibrate.setVisibility(View.INVISIBLE);
-		} else {
-			iv_switch_open_vibrate.setVisibility(View.INVISIBLE);
-			iv_switch_close_vibrate.setVisibility(View.VISIBLE);
-		}
+		//四个头衔
+		title1TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_1_KEY)));
+		title2TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_2_KEY)));
+		title3TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_3_KEY)));
+		title4TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_4_KEY)));
 	}
 	
 	// 开启缩放
@@ -549,6 +456,89 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 			}
 		});
 
+	}
+	
+	// 头衔点击
+	private void titleClick(final int index) {
+		// dialog
+		Builder nameAlertDialog = new AlertDialog.Builder(this);
+		LinearLayout textViewLayout = (LinearLayout) View.inflate(
+				this, R.layout.dialog_text_view, null);
+		nameAlertDialog.setView(textViewLayout);
+		TextView titleTextView = (TextView) textViewLayout
+				.findViewById(R.id.name_text_view);
+		titleTextView.setText(getString(R.string.personal_title)+index);
+		final EditText et_search = (EditText) textViewLayout
+				.findViewById(R.id.name_edit_text);
+		et_search.setHint("");
+		//内容填充
+		switch (index) {
+		case 1:
+			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_1_KEY));
+			break;
+		case 2:
+			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_2_KEY));
+			break;
+		case 3:
+			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_3_KEY));
+			break;
+		case 4:
+			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_4_KEY));
+			break;					
+		default:
+			break;
+		}		
+		//设置光标
+		et_search.setSelection(et_search.getText().length());
+		
+		final Dialog dialog = nameAlertDialog.show();
+		TextView cancelTextView = (TextView) textViewLayout
+				.findViewById(R.id.tv_custom_alert_dialog_cancel);
+		cancelTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		TextView confirmTextView = (TextView) textViewLayout
+				.findViewById(R.id.tv_custom_alert_dialog_confirm);
+		confirmTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String title = et_search.getText().toString().trim();
+				if (title.length() > 10) {
+					ToastUtil.show(PersonalSettingActivity.this, R.string.personal_title_too_long);
+					return;
+				}
+				
+				String keyStr = KHConst.TITLE_1_KEY;
+				//内容填充
+				switch (index) {
+				case 1:
+					title1TextView.setText(title);
+					keyStr = KHConst.TITLE_1_KEY;
+					break;
+				case 2:
+					title2TextView.setText(title);
+					keyStr = KHConst.TITLE_2_KEY;
+					break;
+				case 3:
+					title3TextView.setText(title);
+					keyStr = KHConst.TITLE_3_KEY;
+					break;
+				case 4:
+					title4TextView.setText(title);
+					keyStr = KHConst.TITLE_4_KEY;
+					break;					
+				default:
+					break;
+				}
+				//上传
+				uploadExtraInformation(keyStr, title, keyStr);
+				dialog.dismiss();
+			}
+		});
 	}
 	
 	// 职位点击
@@ -634,6 +624,40 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 
 	}
 
+	//上传额外信息
+	private void uploadExtraInformation(final String field, final String value, final String keyStr) {
+
+		// 参数设置
+		RequestParams params = new RequestParams();
+		params.addBodyParameter("uid", userModel.getUid() + "");
+		params.addBodyParameter("field", field);
+		params.addBodyParameter("value", value);
+
+		HttpManager.post(KHConst.CHANGE_PERSONAL_EXTRA_INFORMATION, params,
+				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						if (status == KHConst.STATUS_SUCCESS) {
+							//额外信息 非db持久化
+							ConfigUtils.saveConfig(keyStr, value);
+						}
+						if (status == KHConst.STATUS_FAIL) {
+							ToastUtil.show(PersonalSettingActivity.this, R.string.net_error);
+						}
+					}
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						super.onFailure(arg0, arg1, flag);
+						ToastUtil.show(PersonalSettingActivity.this, R.string.net_error);
+					}
+				}, null));
+	}
+	
 	//上传信息
 	private void uploadInformation(final String field, final String value) {
 
@@ -803,6 +827,51 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 
 	}
 	
+	//获取额外的个人信息
+	private void getExtraInfo(){
+		
+		String path = KHConst.GET_PERSONAL_EXTRA_INFORMATION + "?" + "uid=" + userModel.getUid();
+		HttpManager.get(path, new JsonRequestCallBack<String>(
+				new LoadDataHandler<String>() {
+
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						if (status == KHConst.STATUS_SUCCESS) {
+							JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
+							//四个头衔							
+							if (jResult.containsKey(KHConst.TITLE_1_KEY)) {
+								title1TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_1_KEY)));
+								ConfigUtils.saveConfig(KHConst.TITLE_1_KEY, jResult.getString(KHConst.TITLE_1_KEY));
+							}
+							if (jResult.containsKey(KHConst.TITLE_2_KEY)) {
+								title2TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_2_KEY)));
+								ConfigUtils.saveConfig(KHConst.TITLE_2_KEY, jResult.getString(KHConst.TITLE_2_KEY));
+							}
+							if (jResult.containsKey(KHConst.TITLE_3_KEY)) {
+								title3TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_3_KEY)));
+								ConfigUtils.saveConfig(KHConst.TITLE_3_KEY, jResult.getString(KHConst.TITLE_3_KEY));
+							}
+							if (jResult.containsKey(KHConst.TITLE_4_KEY)) {
+								title4TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_4_KEY)));
+								ConfigUtils.saveConfig(KHConst.TITLE_4_KEY, jResult.getString(KHConst.TITLE_4_KEY));
+							}							
+						}
+						if (status == KHConst.STATUS_FAIL) {
+						}
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						super.onFailure(arg0, arg1, flag);
+					}
+
+				}, null));
+		
+	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -821,88 +890,4 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 	}
 
 	
-	//清除缓存
-	private void clearCache(){
-		try {
-			DataCleanManager.clearAllCache(this);
-			//清除缓存
-			HttpCacheUtils.clearHttpCache();
-			ToastUtil.show(this, R.string.personal_clear_ok);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	//退出
-	private void logout(){
-		final CustomAlertDialog confirmDialog = new CustomAlertDialog(
-				this, getString(R.string.personal_confirm_logout), getString(R.string.alert_confirm), getString(R.string.alert_cancel));
-		confirmDialog.show();
-		confirmDialog.setClicklistener(new CustomAlertDialog.ClickListenerInterface() {
-					@Override
-					public void doConfirm() {
-						
-						final ProgressDialog pd = new ProgressDialog(PersonalSettingActivity.this);
-						String st = getResources().getString(R.string.Are_logged_out);
-						pd.setMessage(st);
-						pd.setCanceledOnTouchOutside(false);
-						pd.show();
-						KHHXSDKHelper.getInstance().logout(true,new EMCallBack() {
-							
-							@Override
-							public void onSuccess() {
-								runOnUiThread(new Runnable() {
-									public void run() {
-										pd.dismiss();
-										// 重新显示登陆页面
-						                //清空数据
-						                UserManager.getInstance().clear();
-						                UserManager.getInstance().setUser(new UserModel());
-						                Intent exit = new Intent(PersonalSettingActivity.this, LoginActivity.class);
-						                exit.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
-										startActivity(exit);
-//										ActivityManager.getInstence().exitApplication();
-										
-									}
-								});
-							}
-							
-							@Override
-							public void onProgress(int progress, String status) {
-								
-							}
-							
-							@Override
-							public void onError(int code, String message) {
-								runOnUiThread(new Runnable() {
-									
-									public void run() {
-										// TODO Auto-generated method stub
-										pd.dismiss();
-									}
-								});
-							}
-						});
-						
-						
-						confirmDialog.dismiss();
-					}
-
-					@Override
-					public void doCancel() {
-						confirmDialog.dismiss();
-					}
-				});	  
-	}
-	
-	//检测版本
-	private void checkVersion() {
-		
-		showLoading(getString(R.string.downloading), true);
-		new NewVersionCheckManager(this, this).checkNewVersion(true, new VersionCallBack() {
-			@Override
-			public void finish() {
-				hideLoading();
-			}
-		});
-	} 
 }

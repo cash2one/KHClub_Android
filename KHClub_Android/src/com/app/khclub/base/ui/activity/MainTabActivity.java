@@ -84,6 +84,9 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class MainTabActivity extends BaseActivity implements EMEventListener{
 
+	//从通知进来 跳转到消息页面
+	public static String INTENT_JUMP_MESSAGE = "jumpMessage";
+	
 	// FragmentTabHost对象
 	@ViewInject(android.R.id.tabhost)
 	public FragmentTabHost mTabHost;
@@ -112,7 +115,6 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 	
 	// im未读数量
 	public void initTab() {
-		
 		layoutInflater = LayoutInflater.from(this);
 
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
@@ -258,6 +260,11 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		EMChatManager.getInstance().updateCurrentUserNick(UserManager.getInstance().getUser().getName());
 		
 		asycContact();
+		
+		//如果是点击消息通知进入的
+		if (getIntent().getBooleanExtra(INTENT_JUMP_MESSAGE, false)) {
+			mTabHost.setCurrentTab(1);
+		}
 	}
 	
 	private void init() {     
@@ -323,6 +330,7 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		// register the event listener when enter the foreground
 		EMChatManager.getInstance().registerEventListener(this,
 				new EMNotifierEvent.Event[] { EMNotifierEvent.Event.EventNewMessage ,EMNotifierEvent.Event.EventOfflineMessage, EMNotifierEvent.Event.EventConversationListChanged});
+		
 	}
 
 	public void onPause() {
@@ -1081,11 +1089,19 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 	}
 	
 	private android.app.AlertDialog.Builder conflictBuilder;
-	private android.app.AlertDialog.Builder accountRemovedBuilder;
+//	private android.app.AlertDialog.Builder accountRemovedBuilder;
 	private boolean isConflictDialogShow;
 	private boolean isAccountRemovedDialogShow;
-    private BroadcastReceiver internalDebugReceiver;
-	
+//    private BroadcastReceiver internalDebugReceiver;
+    @Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		if (getIntent().getBooleanExtra("conflict", false) && !isConflictDialogShow) {
+			showConflictDialog();
+		} else if (getIntent().getBooleanExtra(Constant.ACCOUNT_REMOVED, false) && !isAccountRemovedDialogShow) {
+			
+		}
+	}
 	/**
 	 * 显示帐号在别处登录dialog
 	 */

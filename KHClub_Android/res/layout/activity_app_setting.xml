@@ -1,0 +1,155 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    
+	<include layout="@layout/layout_title_bar" />
+	
+    <com.app.khclub.base.ui.view.CustomerScrollView
+        android:background="@color/main_light_white"
+        android:id="@+id/scrollView_person"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        tools:ignore="UselessParent" >
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+		<RelativeLayout
+		     android:layout_marginTop="15dp"
+             android:id="@+id/rl_switch_sound"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@color/main_white"
+             android:padding="10dip" >
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textColor="@color/main_char_gary"
+                 android:textSize="@dimen/font_size_small"
+                 android:layout_centerVertical="true"
+                 android:text="@string/voice_title"
+                 android:typeface="serif" />
+
+             <ImageView
+                 android:id="@+id/iv_switch_open_sound"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentRight="true"
+                 android:layout_centerVertical="true"
+                 android:background="@drawable/open_icon"
+                 android:visibility="visible" />
+
+             <ImageView
+                 android:id="@+id/iv_switch_close_sound"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentRight="true"
+                 android:layout_centerVertical="true"
+                 android:background="@drawable/close_icon"
+                 android:visibility="invisible" />
+         </RelativeLayout>
+	     <View
+		        android:layout_width="match_parent"
+		        android:layout_height="1px"
+		        android:background="@color/main_light_gary" />
+
+         <RelativeLayout
+             android:id="@+id/rl_switch_vibrate"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@color/main_white"
+             android:padding="10dip" >
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerVertical="true"
+                 android:text="@string/shake"
+                 android:textColor="@color/main_char_gary"
+          		 android:textSize="@dimen/font_size_small"
+                 android:typeface="serif" />
+
+             <ImageView
+                 android:id="@+id/iv_switch_open_vibrate"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentRight="true"
+                 android:layout_centerVertical="true"
+                 android:background="@drawable/open_icon"
+                 android:visibility="visible" />
+
+             <ImageView
+                 android:id="@+id/iv_switch_close_vibrate"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentRight="true"
+                 android:layout_centerVertical="true"
+                 android:background="@drawable/close_icon"
+                 android:visibility="invisible" />
+         </RelativeLayout> 
+        <View
+	        android:layout_width="match_parent"
+	        android:layout_height="1px"
+	        android:background="@color/main_light_gary" />                 	
+ 	   <TextView 
+ 	       	android:id="@+id/clear_cache_text_view"
+            android:padding="10dp"
+            android:text="@string/personal_clear_cache"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_white"/>
+        <View
+	        android:layout_width="match_parent"
+	        android:layout_height="1px"
+	        android:background="@color/main_light_gary" />
+        <TextView 
+            android:id="@+id/version_text_view"
+            android:padding="10dp"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small"
+            android:text="@string/personal_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_white"/>
+        <View
+	        android:layout_width="match_parent"
+	        android:layout_height="1px"
+	        android:background="@color/main_light_gary" />           
+        
+	    <RelativeLayout
+	        android:layout_marginTop="20dip"
+	        android:layout_marginBottom="20dip"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+		        
+		    <ImageButton
+		        android:id="@+id/logout_button"
+		        android:layout_marginLeft="15dip"
+		        android:layout_marginRight="15dip"
+		        android:layout_width="match_parent"
+		        android:layout_height="45dip"
+		        android:background="@drawable/logout_btn"/>
+		    <TextView 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textSize="@dimen/font_size_medium"
+		        android:layout_centerInParent="true"
+		        android:textColor="@color/main_white"
+		        android:text="@string/log_out"/>
+		    
+		</RelativeLayout>        	
+        </LinearLayout>
+        
+    </com.app.khclub.base.ui.view.CustomerScrollView>
+       
+</LinearLayout>
+
+
+    

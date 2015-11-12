@@ -6,7 +6,6 @@
     android:orientation="vertical" >
 
     <!-- 头像 -->
-
     <LinearLayout
         android:id="@+id/head_layout"
         android:layout_width="match_parent"
@@ -43,7 +42,6 @@
         android:background="@color/main_light_gary" />
 
     <!-- 姓名 -->
-
     <LinearLayout
         android:id="@+id/name_layout"
         android:layout_width="match_parent"
@@ -79,9 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/main_light_gary" />
-
     <!-- 签名 -->
-
     <LinearLayout
         android:id="@+id/job_layout"
         android:layout_width="match_parent"
@@ -117,9 +113,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@color/main_light_gary" />
-
     <!-- 公司 -->
-
     <LinearLayout
         android:id="@+id/company_layout"
         android:layout_width="match_parent"
@@ -155,9 +149,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@color/main_light_gary" />
-
     <!-- 地址 -->
-
     <LinearLayout
         android:id="@+id/address_layout"
         android:layout_width="match_parent"
@@ -183,7 +175,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:text="xxxx地址"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_medium" />
         </RelativeLayout>
@@ -193,9 +184,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@color/main_light_gary" />
-
     <!-- 性别 -->
-
     <LinearLayout
         android:id="@+id/sex_layout"
         android:layout_width="match_parent"
@@ -221,19 +210,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:text="女孩纸"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_medium" />
         </RelativeLayout>
     </LinearLayout>
-
     <View
         android:layout_width="fill_parent"
         android:layout_height="15dp"
         android:background="@color/main_light_gary" />
-
     <!-- 邮箱 -->
-
     <LinearLayout
         android:id="@+id/email_layout"
         android:layout_width="match_parent"
@@ -259,19 +244,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:text="sdfsdfs@sdfds"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_medium" />
         </RelativeLayout>
     </LinearLayout>
-
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@color/main_light_gary" />
-
     <!-- 电话 -->
-
     <LinearLayout
         android:id="@+id/phone_layout"
         android:layout_width="match_parent"
@@ -297,19 +278,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:text="123456"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_medium" />
         </RelativeLayout>
     </LinearLayout>
-
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px"
         android:background="@color/main_light_gary" />
-
     <!-- 签名 -->
-
     <LinearLayout
         android:id="@+id/sign_layout"
         android:layout_width="match_parent"
@@ -336,9 +313,140 @@
             android:paddingBottom="10dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
-            android:text="你好啊 哈哈哈哈"
             android:textColor="@color/main_deep_black"
             android:textSize="@dimen/font_size_medium" />
     </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:background="@color/main_light_gary" />
+    <!-- 头衔 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dip"
+            android:gravity="center_vertical"
+            android:text="@string/personal_title"
+            android:textColor="@color/main_char_gary"
+            android:textSize="@dimen/font_size_small" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/personal_title_prompt"
+            android:textColor="@color/main_light_black"
+            android:textSize="@dimen/font_size_small" />
+    </LinearLayout>    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_light_gary" />
+    <!-- 头衔1 -->
+    <LinearLayout
+        android:id="@+id/title_1_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/title_1_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/main_deep_black"
+            android:textSize="@dimen/font_size_medium" />
+    </LinearLayout>    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_light_gary" />
+    <!-- 头衔2 -->
+    <LinearLayout
+        android:id="@+id/title_2_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/title_2_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/main_deep_black"
+            android:textSize="@dimen/font_size_medium" />
+    </LinearLayout>    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_light_gary" />   
+    <!-- 头衔3 -->
+    <LinearLayout
+        android:id="@+id/title_3_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/title_3_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/main_deep_black"
+            android:textSize="@dimen/font_size_medium" />
+    </LinearLayout>    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_light_gary" />   
+    <!-- 头衔4 -->
+    <LinearLayout
+        android:id="@+id/title_4_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/title_4_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dip"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/main_deep_black"
+            android:textSize="@dimen/font_size_medium" />
+    </LinearLayout>    
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:background="@color/main_light_gary" />                       
+    
 </LinearLayout>
