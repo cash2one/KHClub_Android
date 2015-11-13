@@ -72,7 +72,6 @@ public class OtherPersonalInfoFragment extends BaseFragment {
 				collectCard(String.valueOf(userId));
 				isCollected = true;
 			}
-
 			break;
 		default:
 			break;

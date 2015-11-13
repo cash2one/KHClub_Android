@@ -6,14 +6,10 @@ import java.util.List;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
@@ -35,11 +31,11 @@ import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
-import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
+import com.app.khclub.personal.ui.activity.CardActivity;
 import com.app.khclub.personal.ui.activity.PersonalNewsActivity;
 import com.app.khclub.personal.ui.activity.PersonalSettingActivity;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
@@ -53,9 +49,41 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class PersonalFragment extends BaseFragment {
 
+	// 头像
+	@ViewInject(R.id.head_image_view)
+	private ImageView headImageView;
+	// 姓名
+	@ViewInject(R.id.name_text_view)
+	private TextView nameTextView;
+	// 职业
+	@ViewInject(R.id.job_text_view)
+	private TextView jobTextView;
+	// 公司
+	@ViewInject(R.id.company_text_view)
+	private TextView companyTextView;
+	// 电话
+	@ViewInject(R.id.phone_number_text_view)
+	private TextView phoneTextView;
+	// 邮箱
+	@ViewInject(R.id.email_text_view)
+	private TextView emailTextView;
+	// 邮箱
+	@ViewInject(R.id.address_text_view)
+	private TextView addressTextView;
+	//二维码
+	@ViewInject(R.id.qr_code_image_view)
+	private ImageView qrcodeImageView;
+	//名片背景
+	@ViewInject(R.id.card_layout)
+	private LinearLayout cardLayout;	
+	// 用户
+	private UserModel userModel;
+	// 新图片缓存工具 头像
+	DisplayImageOptions headImageOptions;
+	
 	// 页卡内容
-	@ViewInject(R.id.vPager)
-	private ViewPager mPager;
+//	@ViewInject(R.id.vPager)
+//	private ViewPager mPager;
 	// 签名
 	@ViewInject(R.id.sign_text_view)
 	private TextView signTextView;
@@ -85,7 +113,7 @@ public class PersonalFragment extends BaseFragment {
 	// 分享弹出菜单
 	private PersonalBottomPopupMenu shareMenu;
 
-	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout, R.id.btn_more_operate, R.id.robot_cover_layout})
+	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout, R.id.btn_more_operate, R.id.robot_cover_layout, R.id.card_layout})
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.base_tv_back:
@@ -101,7 +129,6 @@ public class PersonalFragment extends BaseFragment {
 					UserManager.getInstance().getUser().getUid());
 			startActivityWithRight(intentToNewsList);
 			break;
-
 		case R.id.btn_more_operate:
 			// 操作菜单
 //			popupMenu.showPopupWindow(operateButton);
@@ -117,6 +144,12 @@ public class PersonalFragment extends BaseFragment {
 			roIntent.putExtra("userId", KHConst.KH_ROBOT);
 			startActivity(roIntent);
 		}
+			break;
+		case R.id.card_layout:
+			//名片点击
+			Intent cardIntent = new Intent(getActivity(), CardActivity.class);
+			cardIntent.putExtra(CardActivity.INTENT_IS_SELF_KEY, true);
+			startActivityWithRight(cardIntent);
 			break;
 		default:
 			break;
@@ -143,7 +176,15 @@ public class PersonalFragment extends BaseFragment {
 
 	@Override
 	public void setUpViews(View rootView) {
-		initViewPager();
+		
+		// 显示头像的配置
+		headImageOptions = new DisplayImageOptions.Builder()
+				.showImageOnLoading(R.drawable.default_avatar)
+				.showImageOnFail(R.drawable.default_avatar)
+				.cacheInMemory(true).cacheOnDisk(true)
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
+		
+//		initViewPager();
 		// 操作菜单监听
 //		popupMenu = new PersonalPopupMenu(getActivity());
 		shareMenu = new PersonalBottomPopupMenu(getActivity(), false);
@@ -327,7 +368,7 @@ public class PersonalFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		UserModel userModel = UserManager.getInstance().getUser();
+		userModel = UserManager.getInstance().getUser();
 		// 签名
 		if (null != userModel.getSignature()
 				&& userModel.getSignature().length() > 0) {
@@ -337,6 +378,64 @@ public class PersonalFragment extends BaseFragment {
 		}
 		// 获取图片
 		getNewsImages();
+		//更新个人信息
+		setInfo();
+	}
+	//设置内容
+	private void setInfo(){
+		userModel = UserManager.getInstance().getUser();
+		// 头像不为空
+		if (null != userModel.getHead_image()) {
+			ImageLoader.getInstance().displayImage(
+					KHConst.ATTACHMENT_ADDR + userModel.getHead_image(),
+					headImageView, headImageOptions);
+		}
+		// 姓名
+		nameTextView.setText(KHUtils.emptyRetunNone(userModel.getName()));
+		// 职业
+		jobTextView.setText(userModel.getJob());
+		// 公司
+		companyTextView.setText(KHUtils.emptyRetunNone(userModel.getCompany_name()));
+		// 电话
+		phoneTextView.setText(KHUtils.emptyRetunNone(userModel.getPhone_num()));
+		// 邮件
+		emailTextView.setText(KHUtils.emptyRetunNone(userModel.getE_mail()));
+		// 地址
+		addressTextView.setText(KHUtils.emptyRetunNone(userModel.getAddress()));
+		
+		//不存在获取 存在直接设置
+		if (userModel.getQr_code() != null && userModel.getQr_code().length() > 0) {
+			ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+userModel.getQr_code(), qrcodeImageView, imageOptions);
+			return;
+		}
+		
+		//从网上获取一次
+		String path = KHConst.GET_USER_QRCODE+"?"+"user_id="+userModel.getUid();
+		HttpManager.get(path, new JsonRequestCallBack<String>(
+				new LoadDataHandler<String>() {
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						if (status == KHConst.STATUS_SUCCESS) {
+							String qrpath = jsonResponse.getString(KHConst.HTTP_RESULT);
+							//本地缓存
+							ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+qrpath, qrcodeImageView, imageOptions);
+							UserManager.getInstance().getUser().setQr_code(qrpath);
+							UserManager.getInstance().saveAndUpdate();
+							
+						}
+						if (status == KHConst.STATUS_FAIL) {
+							ToastUtil.show(getActivity(), R.string.net_error);
+						}
+					}
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						super.onFailure(arg0, arg1, flag);
+					}
+				}, null));
 	}
 	
 	//分享监听
@@ -357,84 +456,84 @@ public class PersonalFragment extends BaseFragment {
 	/**
 	 * 初始化ViewPager
 	 */
-	private void initViewPager() {
-		MessageFragmentPagerAdapter adapter = new MessageFragmentPagerAdapter(getActivity().getSupportFragmentManager());
-		mPager.setAdapter(adapter);
-		mPager.setCurrentItem(0);
-	}
+//	private void initViewPager() {
+//		MessageFragmentPagerAdapter adapter = new MessageFragmentPagerAdapter(getActivity().getSupportFragmentManager());
+//		mPager.setAdapter(adapter);
+//		mPager.setCurrentItem(0);
+//	}
 
-	private class MessageFragmentPagerAdapter extends
-			android.support.v4.app.FragmentPagerAdapter {
-
-		public MessageFragmentPagerAdapter(FragmentManager fm) {
-			super(fm);
-		}
-		
-		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-//			return super.instantiateItem(container, position);
-			//得到缓存的fragment
-		    Fragment fragment = (Fragment)super.instantiateItem(container,position);
-		    
-		    int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
-			if (fragment instanceof PersonalInfoFragment) {
-				if (style == ConfigUtils.CARD_TWO) {
-					//得到tag
-				    String fragmentTag = fragment.getTag();
-				    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-					//移除旧的fragment
-					ft.remove(fragment);
-					//换成新的fragment
-					fragment = new PersonalInfoTwoFragment();
-					//添加新fragment时必须用前面获得的tag ❶
-					ft.add(container.getId(), fragment, fragmentTag);
-					ft.attach(fragment);
-					ft.commit();
-				}
-			}else if (fragment instanceof PersonalInfoTwoFragment) {
-				if (style == ConfigUtils.CARD_ONE) {
-					//得到tag
-				    String fragmentTag = fragment.getTag();
-				    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-					//移除旧的fragment
-					ft.remove(fragment);
-					//换成新的fragment
-					fragment = new PersonalInfoFragment();
-					//添加新fragment时必须用前面获得的tag ❶
-					ft.add(container.getId(), fragment, fragmentTag);
-					ft.attach(fragment);
-					ft.commit();
-				}				
-			}			
-			
-		    return fragment;
-		}
-
-		@Override
-		public Fragment getItem(int i) {
-			Fragment fragment = null;
-			switch (i) {
-			case 0:
-				int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
-			    if (style == ConfigUtils.CARD_TWO) {
-			    	fragment = new PersonalInfoTwoFragment();
-			    }else {
-			    	fragment = new PersonalInfoFragment();	
-				}
-				
-				break;
-			case 1:
-				fragment = new PersonalQrcodeFragment();
-				break;
-			}
-			return fragment;
-		}
-
-		@Override
-		public int getCount() {
-			return 2;
-		}
-	}
+//	private class MessageFragmentPagerAdapter extends
+//			android.support.v4.app.FragmentPagerAdapter {
+//
+//		public MessageFragmentPagerAdapter(FragmentManager fm) {
+//			super(fm);
+//		}
+//		
+//		@Override
+//		public Object instantiateItem(ViewGroup container, int position) {
+////			return super.instantiateItem(container, position);
+//			//得到缓存的fragment
+//		    Fragment fragment = (Fragment)super.instantiateItem(container,position);
+//		    
+//		    int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
+//			if (fragment instanceof PersonalInfoFragment) {
+//				if (style == ConfigUtils.CARD_TWO) {
+//					//得到tag
+//				    String fragmentTag = fragment.getTag();
+//				    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+//					//移除旧的fragment
+//					ft.remove(fragment);
+//					//换成新的fragment
+//					fragment = new PersonalInfoTwoFragment();
+//					//添加新fragment时必须用前面获得的tag ❶
+//					ft.add(container.getId(), fragment, fragmentTag);
+//					ft.attach(fragment);
+//					ft.commit();
+//				}
+//			}else if (fragment instanceof PersonalInfoTwoFragment) {
+//				if (style == ConfigUtils.CARD_ONE) {
+//					//得到tag
+//				    String fragmentTag = fragment.getTag();
+//				    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+//					//移除旧的fragment
+//					ft.remove(fragment);
+//					//换成新的fragment
+//					fragment = new PersonalInfoFragment();
+//					//添加新fragment时必须用前面获得的tag ❶
+//					ft.add(container.getId(), fragment, fragmentTag);
+//					ft.attach(fragment);
+//					ft.commit();
+//				}				
+//			}			
+//			
+//		    return fragment;
+//		}
+//
+//		@Override
+//		public Fragment getItem(int i) {
+//			Fragment fragment = null;
+//			switch (i) {
+//			case 0:
+//				int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
+//			    if (style == ConfigUtils.CARD_TWO) {
+//			    	fragment = new PersonalInfoTwoFragment();
+//			    }else {
+//			    	fragment = new PersonalInfoFragment();	
+//				}
+//				
+//				break;
+//			case 1:
+//				fragment = new PersonalQrcodeFragment();
+//				break;
+//			}
+//			return fragment;
+//		}
+//
+//		@Override
+//		public int getCount() {
+//			return 2;
+//		}
+//	}
 
 	// 获取当前最近的十张状态图片
 	private void getNewsImages() {

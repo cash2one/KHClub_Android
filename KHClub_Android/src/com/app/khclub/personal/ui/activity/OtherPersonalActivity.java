@@ -3,17 +3,12 @@ package com.app.khclub.personal.ui.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -50,15 +45,11 @@ import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
-import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
-import com.app.khclub.personal.ui.fragment.OtherPersonalInfoFragment;
-import com.app.khclub.personal.ui.fragment.OtherPersonalInfoTwoFragment;
-import com.app.khclub.personal.ui.fragment.OtherPersonalQrcodeFragment;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu.BottomClickListener;
 import com.easemob.chat.EMContactManager;
@@ -76,15 +67,47 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	//用于添加好友成功后进入详情
 	public final static String INTENT_FRIEND_KEY = "isFriend";
 
+	// 头像
+	@ViewInject(R.id.head_image_view)
+	private ImageView headImageView;
+	// 姓名
+	@ViewInject(R.id.name_text_view)
+	private TextView nameTextView;
+	// 职业
+	@ViewInject(R.id.job_text_view)
+	private TextView jobTextView;
+	// 公司
+	@ViewInject(R.id.company_text_view)
+	private TextView companyTextView;
+	// 电话
+	@ViewInject(R.id.phone_number_text_view)
+	private TextView phoneTextView;
+	// 邮箱
+	@ViewInject(R.id.email_text_view)
+	private TextView emailTextView;
+	// 邮箱
+	@ViewInject(R.id.address_text_view)
+	private TextView addressTextView;
+	//二维码
+	@ViewInject(R.id.qr_code_image_view)
+	private ImageView qrcodeImageView;
+	// 收藏按钮
+	@ViewInject(R.id.text_collect_btn)
+	private ImageView collectBtn;
+	// 新图片缓存工具 头像
+	DisplayImageOptions headImageOptions;	
+	// 是否正在传输数据
+	private boolean isUploadData = false;
+	
 	// 标题栏
 	@ViewInject(R.id.title_bar)
 	private RelativeLayout titleBar;
 	// 没有动态提示
 	@ViewInject(R.id.no_moment_text_view)
 	private TextView noMomentTextView;	
-	// 页卡内容
-	@ViewInject(R.id.vPager)
-	private ViewPager mPager;
+//	// 页卡内容
+//	@ViewInject(R.id.vPager)
+//	private ViewPager mPager;
 	// 签名
 	@ViewInject(R.id.sign_text_view)
 	private TextView signTextView;
@@ -106,10 +129,10 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	private List<ImageView> imageList = new ArrayList<ImageView>();
 	// 图片缓存工具
 	private DisplayImageOptions imageOptions;
-	// 个人信息fragment
-	private OtherPersonalInfoFragment otherPersonalInfoFragment;
-	// 二维码fragment
-	private OtherPersonalQrcodeFragment otherPersonalQRFragment;
+//	// 个人信息fragment
+//	private OtherPersonalInfoFragment otherPersonalInfoFragment;
+//	// 二维码fragment
+//	private OtherPersonalQrcodeFragment otherPersonalQRFragment;
 	// 用户ID
 	private int uid;
 	// 查看者的模型
@@ -127,7 +150,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	// imUser
 	private User imUser;
 
-	@OnClick({ R.id.image_cover_layout, R.id.add_send_btn })
+	@OnClick({ R.id.image_cover_layout, R.id.add_send_btn ,R.id.text_collect_btn, R.id.card_layout})
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.image_cover_layout:
@@ -147,6 +170,22 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				addContact();
 			}
 			break;
+		case R.id.text_collect_btn:
+			// 收藏与取消收藏名片
+			if (isCollected > 0) {
+				collectCardDelete(String.valueOf(uid));
+				isCollected = 0;
+			} else {
+				collectCard(String.valueOf(uid));
+				isCollected = 1;
+			}
+			break;	
+		case R.id.card_layout:
+			//名片点击
+			Intent cardIntent = new Intent(OtherPersonalActivity.this, CardActivity.class);
+			cardIntent.putExtra(INTENT_KEY, uid);
+			startActivityWithRight(cardIntent);
+			break;			
 		default:
 			break;
 		}
@@ -169,7 +208,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				.cacheInMemory(false).cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 
-		initViewPager();
+//		initViewPager();
 		Intent intent = getIntent();
 		uid = intent.getIntExtra(INTENT_KEY, 0);
 		if (uid == 0) {
@@ -408,47 +447,47 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	/**
 	 * 初始化ViewPager
 	 */
-	private void initViewPager() {
-		mPager.setAdapter(new MessageFragmentPagerAdapter(
-				getSupportFragmentManager()));
-		mPager.setCurrentItem(0);
-	}
+//	private void initViewPager() {
+//		mPager.setAdapter(new MessageFragmentPagerAdapter(
+//				getSupportFragmentManager()));
+//		mPager.setCurrentItem(0);
+//	}
 
-	private class MessageFragmentPagerAdapter extends
-			android.support.v4.app.FragmentPagerAdapter {
-
-		public MessageFragmentPagerAdapter(FragmentManager fm) {
-			super(fm);
-		}
-
-		@Override
-		public Fragment getItem(int i) {
-			Fragment fragment = null;
-			switch (i) {
-			case 0:
-				int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
-			    if (style == ConfigUtils.CARD_TWO) {
-			    	otherPersonalInfoFragment = new OtherPersonalInfoTwoFragment();
-					fragment = otherPersonalInfoFragment;
-			    }else {
-			    	otherPersonalInfoFragment = new OtherPersonalInfoFragment();
-					fragment = otherPersonalInfoFragment;	
-				}
-				break;
-			case 1:
-				otherPersonalQRFragment = new OtherPersonalQrcodeFragment();
-				fragment = otherPersonalQRFragment;
-				break;
-
-			}
-			return fragment;
-		}
-
-		@Override
-		public int getCount() {
-			return 2;
-		}
-	}
+//	private class MessageFragmentPagerAdapter extends
+//			android.support.v4.app.FragmentPagerAdapter {
+//
+//		public MessageFragmentPagerAdapter(FragmentManager fm) {
+//			super(fm);
+//		}
+//
+//		@Override
+//		public Fragment getItem(int i) {
+//			Fragment fragment = null;
+//			switch (i) {
+//			case 0:
+//				int style = ConfigUtils.getIntConfig(ConfigUtils.CARD_CONFIG);
+//			    if (style == ConfigUtils.CARD_TWO) {
+//			    	otherPersonalInfoFragment = new OtherPersonalInfoTwoFragment();
+//					fragment = otherPersonalInfoFragment;
+//			    }else {
+//			    	otherPersonalInfoFragment = new OtherPersonalInfoFragment();
+//					fragment = otherPersonalInfoFragment;	
+//				}
+//				break;
+//			case 1:
+//				otherPersonalQRFragment = new OtherPersonalQrcodeFragment();
+//				fragment = otherPersonalQRFragment;
+//				break;
+//
+//			}
+//			return fragment;
+//		}
+//
+//		@Override
+//		public int getCount() {
+//			return 2;
+//		}
+//	}
 
 	// //////////////////private method////////////////////////
 	// 获取用户信息
@@ -543,23 +582,26 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		if (jsonObject.containsKey("isCollected")) {
 			isCollected = jsonObject.getIntValue("isCollected");
 		}
-
-		if (otherPersonalInfoFragment != null) {
-			otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend,
-					isCollected, remark);
-			otherPersonalQRFragment.setQRcode(otherUserModel);	
-		}else {
-			new Timer().schedule(new TimerTask() {
-				@Override
-				public void run() {
-					otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend,
-							isCollected, remark);
-					otherPersonalQRFragment.setQRcode(otherUserModel);
-					
-				}
-			}, 1000);
-			otherPersonalQRFragment.setQRcode(otherUserModel);
-		}
+		//设置内容
+		setUIWithModel(otherUserModel, isFriend,isCollected, remark);
+		//设置二维码
+		setQRcode(otherUserModel);
+//		if (otherPersonalInfoFragment != null) {
+//			otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend,
+//					isCollected, remark);
+//			otherPersonalQRFragment.setQRcode(otherUserModel);	
+//		}else {
+//			new Timer().schedule(new TimerTask() {
+//				@Override
+//				public void run() {
+//					otherPersonalInfoFragment.setUIWithModel(otherUserModel, isFriend,
+//							isCollected, remark);
+//					otherPersonalQRFragment.setQRcode(otherUserModel);
+//					
+//				}
+//			}, 1000);
+//			otherPersonalQRFragment.setQRcode(otherUserModel);
+//		}
 
 	}
 
@@ -778,9 +820,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 
 		// 参数设置
 		RequestParams params = new RequestParams();
-		params.addBodyParameter("user_id", UserManager.getInstance().getUser()
-				.getUid()
-				+ "");
+		params.addBodyParameter("user_id", UserManager.getInstance().getUser().getUid() + "");
 		params.addBodyParameter("target_id", uid + "");
 		params.addBodyParameter("friend_remark", remark);
 
@@ -798,24 +838,23 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 						if (status == KHConst.STATUS_SUCCESS) {
 
 							OtherPersonalActivity.this.remark = remark;
-
-							String secondName = "";
 							if (remark.length() > 0) {
 								// 设置名
 								imUser.setNick(remark);
-								secondName = otherUserModel.getName();
+								// 更新UI
+								nameTextView.setText(remark);
+								setBarText(remark);
 							} else {
 								// 为空恢复
 								imUser.setNick(otherUserModel.getName());
+								// 更新UI
+								nameTextView.setText(otherUserModel.getName());
+								setBarText(otherUserModel.getName());
 							}
 							// 缓存
 							UserDao userDao = new UserDao(KHApplication
 									.getInstance());
 							userDao.saveContact(imUser);
-							// 更新UI
-							otherPersonalInfoFragment.setNameTextView(
-									imUser.getNick(), secondName);
-
 						}
 						if (status == KHConst.STATUS_FAIL) {
 							ToastUtil.show(OtherPersonalActivity.this,
@@ -833,5 +872,225 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 					}
 				}, null));
 	}
+	
+	public void setQRcode(UserModel user){
+		final DisplayImageOptions options = new DisplayImageOptions.Builder()
+		.showImageOnLoading(R.drawable.loading_default)
+		.showImageOnFail(R.drawable.loading_default)
+		.cacheInMemory(true).cacheOnDisk(true)
+		.bitmapConfig(Bitmap.Config.RGB_565).build();
+		//不存在获取 存在直接设置
+		if (user.getQr_code() != null && user.getQr_code().length() > 0) {
+			ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+user.getQr_code(), qrcodeImageView, options);
+			return;
+		}
+		
+		//从网上获取一次
+		String path = KHConst.GET_USER_QRCODE+"?"+"user_id="+user.getUid();
+		HttpManager.get(path, new JsonRequestCallBack<String>(
+				new LoadDataHandler<String>() {
+
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						if (status == KHConst.STATUS_SUCCESS) {
+							String qrpath = jsonResponse.getString(KHConst.HTTP_RESULT);
+							ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+qrpath, qrcodeImageView, options);
+						}
+						if (status == KHConst.STATUS_FAIL) {
+							ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+						}
+					}
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						super.onFailure(arg0, arg1, flag);
+					}
+
+				}, null));
+	}
+	
+	// 设置内容
+	public void setUIWithModel(UserModel userModel, boolean isFriend,
+			int isCollect, String remark) {
+		// 获取uid
+		uid = userModel.getUid();
+		if (isCollect == 0) {
+			isCollected = 0;
+		} else {
+			isCollected = 1;
+		}
+
+		// 头像不为空
+		if (null != userModel.getHead_image()) {
+			ImageLoader.getInstance().displayImage(
+					KHConst.ATTACHMENT_ADDR + userModel.getHead_image(),
+					headImageView, headImageOptions);
+		}
+		// 姓名
+		nameTextView.setText(KHUtils.emptyRetunNone(userModel.getName()));
+		// 备注
+		if (null != remark && remark.length() > 0) {
+			nameTextView.setText(remark);
+			setBarText(remark);
+		}
+		// 职业
+		jobTextView.setText(KHUtils.emptyRetunNone(userModel.getJob()));
+		// 公司
+		companyTextView.setText(KHUtils.emptyRetunNone(userModel.getCompany_name()));
+		// 电话
+		phoneTextView.setText(KHUtils.emptyRetunNone(userModel.getPhone_num()));
+		// 邮件
+		emailTextView.setText(KHUtils.emptyRetunNone(userModel.getE_mail()));
+		// 地址
+		addressTextView.setText(KHUtils.emptyRetunNone(userModel.getAddress()));
+
+		// 不是好友
+		if (!isFriend) {
+			if (userModel.getPhone_state() == UserModel.SeeOnlyFriends) {
+				// 电话不可见
+				phoneTextView.setText("********");
+			}
+			if (userModel.getEmail_state() == UserModel.SeeOnlyFriends) {
+				// 邮件
+				emailTextView.setText("********");
+			}
+			if (userModel.getAddress_state() == UserModel.SeeOnlyFriends) {
+				// 地址
+				addressTextView.setText("********");
+			}
+		}
+
+		// 收藏按钮
+		if ((uid != UserManager.getInstance().getUser().getUid())
+				&& !isFriend) {
+			// 不是自己的主页并且不是好友
+			collectBtn.setVisibility(View.VISIBLE);
+			// 如果未收藏
+			if (isCollected > 0) {
+				collectBtn.setImageResource(R.drawable.iconfont_collected);
+			} else {
+				collectBtn.setImageResource(R.drawable.iconfont_collect);
+			}
+		}
+	}	
+	
+	/**
+	 * 收藏名片网络请求
+	 * 
+	 * @param 被收藏者的Id
+	 */
+	private void collectCard(String targetId) {
+		if (!isUploadData) {
+			isUploadData = true;
+			collectBtn.setImageResource(R.drawable.iconfont_collected);
+			// 参数设置
+			RequestParams params = new RequestParams();
+			params.addBodyParameter("user_id", String.valueOf(UserManager
+					.getInstance().getUser().getUid()));
+			params.addBodyParameter("target_id", targetId);
+
+			HttpManager.post(KHConst.COLLECT_CARD, params,
+					new JsonRequestCallBack<String>(
+							new LoadDataHandler<String>() {
+
+								@Override
+								public void onSuccess(JSONObject jsonResponse,
+										String flag) {
+									super.onSuccess(jsonResponse, flag);
+									int status = jsonResponse
+											.getInteger(KHConst.HTTP_STATUS);
+									if (status == KHConst.STATUS_SUCCESS) {
+										// 收藏成功
+										ToastUtil.show(OtherPersonalActivity.this,
+														getResources().getString(R.string.collect_success));
+									}
+
+									if (status == KHConst.STATUS_FAIL) {
+										collectBtn
+												.setImageResource(R.drawable.iconfont_collect);
+										ToastUtil.show(
+												OtherPersonalActivity.this,
+												getResources().getString(
+														R.string.collect_fail));
+									}
+									isUploadData = false;
+								}
+
+								@Override
+								public void onFailure(HttpException arg0,
+										String arg1, String flag) {
+									super.onFailure(arg0, arg1, flag);
+									collectBtn
+											.setImageResource(R.drawable.iconfont_collect);
+									ToastUtil.show(
+											OtherPersonalActivity.this,
+											getResources().getString(
+													R.string.collect_fail));
+									isUploadData = false;
+								}
+							}, null));
+		}
+	}
+
+	/**
+	 * 取消收藏名片
+	 * */
+	private void collectCardDelete(String targetId) {
+
+		if (!isUploadData) {
+			isUploadData = true;
+			collectBtn.setImageResource(R.drawable.iconfont_collect);
+			// 参数设置
+			RequestParams params = new RequestParams();
+			params.addBodyParameter("user_id", String.valueOf(UserManager
+					.getInstance().getUser().getUid()));
+			params.addBodyParameter("target_id", targetId);
+
+			HttpManager.post(KHConst.COLLECT_CARD_DELETE, params,
+					new JsonRequestCallBack<String>(
+							new LoadDataHandler<String>() {
+
+								@Override
+								public void onSuccess(JSONObject jsonResponse,
+										String flag) {
+									super.onSuccess(jsonResponse, flag);
+									int status = jsonResponse
+											.getInteger(KHConst.HTTP_STATUS);
+									if (status == KHConst.STATUS_SUCCESS) {
+										ToastUtil
+												.show(OtherPersonalActivity.this,
+														getResources()
+																.getString(
+																		R.string.cancel_collect_success));
+									}
+
+									if (status == KHConst.STATUS_FAIL) {
+										collectBtn
+												.setImageResource(R.drawable.iconfont_collect);
+										ToastUtil
+												.show(OtherPersonalActivity.this,
+														getResources()
+																.getString(
+																		R.string.cancel_collect_fail));
+									}
+									isUploadData = false;
+								}
+
+								@Override
+								public void onFailure(HttpException arg0,
+										String arg1, String flag) {
+									super.onFailure(arg0, arg1, flag);
+									collectBtn
+											.setImageResource(R.drawable.iconfont_collected);
+									ToastUtil
+											.show(OtherPersonalActivity.this,getResources().getString(R.string.cancel_collect_fail));
+									isUploadData = false;
+								}
+							}, null));
+		}
+	}	
 
 }

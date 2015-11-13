@@ -4,9 +4,9 @@ public interface KHConst {
 
 	// 正式环境 120.25.213.171
 	// 测试环境 112.74.199.145
-	public static final String DOMIN = "http://120.25.213.171/khclub_php/index.php/Home/MobileApi";
-	public static final String ATTACHMENT_ADDR = "http://120.25.213.171/khclub_php/Uploads/";
-	public static final String ROOT_PATH = "http://120.25.213.171/khclub_php/";
+	public static final String DOMIN = "http://112.74.199.145/khclub_php/index.php/Home/MobileApi";
+	public static final String ATTACHMENT_ADDR = "http://112.74.199.145/khclub_php/Uploads/";
+	public static final String ROOT_PATH = "http://112.74.199.145/khclub_php/";
 
 	public static final int STATUS_SUCCESS = 1;// 接口返回成功
 	public static final int STATUS_FAIL = 0;// 接口返回失败
@@ -23,6 +23,11 @@ public interface KHConst {
 	public static final String SHARE_WEB = "http://www.khclub.sg/";
 	//名片分享网址
 	public static final String SHARE_CARD_WEB = "http://120.25.121.179/api/index.html";
+	//本地持久的额外信息key
+	public static final String TITLE_1_KEY = "title_1";
+	public static final String TITLE_2_KEY = "title_2";
+	public static final String TITLE_3_KEY = "title_3";
+	public static final String TITLE_4_KEY = "title_4";
 	
 	// IM和推送 公用前缀
 	public static final String KH = "kh";
@@ -78,6 +83,12 @@ public interface KHConst {
 	// 修改个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION = DOMIN
 			+ "/changePersonalInformation";
+	// 修改个人额外信息
+	public static final String CHANGE_PERSONAL_EXTRA_INFORMATION = DOMIN
+			+ "/changePersonalExtraInformation";	
+	// 获取个人额外信息
+	public static final String GET_PERSONAL_EXTRA_INFORMATION = DOMIN
+			+ "/getPersonalExtraInformation";		
 	// 修改有可见状态的个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION_STATE = DOMIN
 			+ "/changePersonalInformationState";

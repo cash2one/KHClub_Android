@@ -15,7 +15,6 @@ import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.ConfigUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
-import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -72,11 +71,11 @@ public class CardActivity extends BaseActivityWithTopBar{
 	@Override
 	protected void setUpView() {
 		// TODO Auto-generated method stub
-		
+		setBarText(getString(R.string.main_me_title));
 		// 显示头像的配置
 		headImageOptions = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.loading_default)
-				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true)
+				.showImageOnLoading(R.drawable.default_avatar)
+				.showImageOnFail(R.drawable.default_avatar).cacheInMemory(true)
 				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 		
 		if (getIntent().getBooleanExtra(INTENT_IS_SELF_KEY, false)) {

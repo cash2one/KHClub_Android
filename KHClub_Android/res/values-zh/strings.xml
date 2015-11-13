@@ -49,8 +49,8 @@
     <!-- Main -->
     <string name="main_home_title">广场</string>
     <string name="main_msg_title">消息</string>
-    <string name="main_contact_title">通讯录</string>
-    <string name="main_me_title">名片</string>
+    <string name="main_contact_title">云名片</string>
+    <string name="main_me_title">个人</string>
     <!-- Main -->
 
 

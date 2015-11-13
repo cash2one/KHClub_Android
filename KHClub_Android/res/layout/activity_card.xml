@@ -36,13 +36,13 @@
 	                android:src="@drawable/icon"/>
 	            <com.app.khclub.base.ui.view.CircularImageView
 	                android:id="@+id/head_image_view"
-	                android:src="@drawable/abc_ab_bottom_solid_dark_holo"
-	                app:border_width="10dp"
+	                android:src="@drawable/default_avatar"
+	                app:border_width="5dp"
 	                app:border_color="@color/main_white"
 	                android:layout_marginTop="135dp"
 	                android:layout_centerHorizontal="true" 
-	                android:layout_width="60dp"
-	                android:layout_height="60dp"/>
+	                android:layout_width="70dp"
+	                android:layout_height="70dp"/>
 	            
 	            <TextView 
 	                android:id="@+id/name_text_view"
@@ -53,7 +53,7 @@
 	                android:layout_height="wrap_content"
 	                android:textColor="@color/main_deep_black"
 	                android:textSize="@dimen/font_size_huge"
-	                android:text="测试姓名"/>	                   
+	                />	                   
 	            
 	            
             </RelativeLayout>
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_large"
-                android:text="xxxxxxxxx公司"/>
+               />
             
             <TextView
                 android:id="@+id/job_text_view" 
@@ -80,9 +80,9 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_large"
-                android:text="产品经理"/>            
+                />            
             <TextView 
-                android:id="@+id/phone_number_text_view"
+                android:id="@+id/phone_text_view"
                 android:gravity="center_vertical"
                 android:layout_marginTop="5dp"
                 android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_large"
-                android:text="123456789"/>   
+                />   
             <TextView 
                 android:id="@+id/email_text_view"
                 android:gravity="center_vertical"
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_large"
-                android:text="123456@123456"/>   
+                />   
             <TextView 
                 android:id="@+id/address_text_view"
                 android:gravity="center_vertical"
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_large"
-                android:text="南山区xxxxxxxxxxxxx"/>
+                />
             
             <RelativeLayout
                 android:layout_marginTop="30dp" 
@@ -123,7 +123,6 @@
                 <TextView 
                     android:id="@+id/title_1_text_view"
                     android:padding="5dp"
-                    android:text="测试测试1"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_large"
@@ -134,7 +133,6 @@
                     android:layout_toRightOf="@+id/title_1_text_view" 
                     android:id="@+id/title_2_text_view"
                     android:padding="5dp"
-                    android:text="测试测试2"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_large"
@@ -145,7 +143,6 @@
                     android:layout_below="@+id/title_1_text_view"
                     android:id="@+id/title_3_text_view"
                     android:padding="5dp"
-                    android:text="测试测试3"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_large"
@@ -159,7 +156,6 @@
                     android:layout_toRightOf="@+id/title_3_text_view"
                     android:id="@+id/title_4_text_view"
                     android:padding="5dp"
-                    android:text="测试测试4"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_large"
