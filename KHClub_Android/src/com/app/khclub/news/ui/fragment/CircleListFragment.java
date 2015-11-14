@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -19,14 +18,10 @@ import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
-import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.fragment.BaseFragment;
-import com.app.khclub.base.ui.view.CustomAlertDialog;
 import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.base.utils.TimeHandle;
-import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.news.ui.activity.CircleDetailActivity;
 import com.app.khclub.news.ui.model.CircleModel;
-import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
@@ -40,7 +35,6 @@ import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
 public class CircleListFragment extends BaseFragment{
 
-	public final static String INTENT_KEY = "uid";
 	//下拉列表
 	@ViewInject(R.id.circle_refresh_list)
 	private PullToRefreshListView circleListView;
@@ -57,8 +51,6 @@ public class CircleListFragment extends BaseFragment{
 //	private BitmapUtils bitmapUtils;
 	//新图片缓存工具 头像
 	DisplayImageOptions headImageOptions;		
-	//uid
-	private int uid;
 	//当前的页数
 	private int currentPage = 1;	
 	
@@ -76,8 +68,8 @@ public class CircleListFragment extends BaseFragment{
 	public void setUpViews(View rootView) {
 
 		headImageOptions = new DisplayImageOptions.Builder()  
-        .showImageOnLoading(R.drawable.default_avatar)  
-        .showImageOnFail(R.drawable.default_avatar)  
+        .showImageOnLoading(R.drawable.loading_default)  
+        .showImageOnFail(R.drawable.loading_default)  
         .cacheInMemory(true)  
         .cacheOnDisk(true)  
         .bitmapConfig(Bitmap.Config.RGB_565)  
@@ -100,30 +92,28 @@ public class CircleListFragment extends BaseFragment{
 			@Override
 			protected void convert(HelloHaBaseAdapterHelper helper,
 					final CircleModel item) {
-//				//姓名
-//				helper.setText(R.id.name_text_view, item.getName());
-//				//时间
-//				helper.setText(R.id.time_text_view, TimeHandle.getShowTimeFormat(item.getVisit_time()));
-//				//签名
-//				helper.setText(R.id.sign_text_view, item.getSign());
-//				ImageView headImageView = helper.getView(R.id.head_image_view);
-////				bitmapUtils.display(headImageView, JLXCConst.ATTACHMENT_ADDR+item.getHead_sub_image());
-//				if (null != item.getHead_sub_image() && item.getHead_sub_image().length() > 0) {
-//					ImageLoader.getInstance().displayImage(JLXCConst.ATTACHMENT_ADDR + item.getHead_sub_image(), headImageView, headImageOptions);					
-//				}else {
-//					headImageView.setImageResource(R.drawable.default_avatar);
-//				}
+				//圈子标题
+				helper.setText(R.id.circle_name_text_view, item.getTitle());
+				//圈子详情
+				helper.setText(R.id.circle_desc_text_view, item.getIntro());
+				ImageView headImageView = helper.getView(R.id.head_image_view);
 				
+				String[] images = item.getImage().split(",");
+				//取第一张就行
+				if (null != images && images.length > 0) {
+					ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR + images[0], headImageView, headImageOptions);					
+				}else {
+					headImageView.setImageResource(R.drawable.loading_default);
+				}
 				LinearLayout linearLayout = (LinearLayout) helper.getView();
-				final int index = helper.getPosition();
 				//点击事件
 				linearLayout.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-//						//跳转到其他人页面
-//						Intent intent = new Intent(VisitListActivity.this, OtherPersonalActivity.class);
-//						intent.putExtra(OtherPersonalActivity.INTENT_KEY, item.getUid());
-//						startActivityWithRight(intent);
+						//跳转到其他人页面
+						Intent intent = new Intent(getActivity(), CircleDetailActivity.class);
+						intent.putExtra(CircleDetailActivity.INTENT_CIRCLE_KEY, item);
+						startActivityWithRight(intent);
 					}
 				});
 				
@@ -183,9 +173,7 @@ public class CircleListFragment extends BaseFragment{
 	 * */
 	private void getData() {
 
-//		String path = JLXCConst.GET_VISIT_LIST + "?" + "uid=" + uid
-//				+ "&page="+currentPage;
-		String path = "";
+		String path = KHConst.GET_CIRCLE_LIST + "?" + "&page="+currentPage;
 		HttpManager.get(path, new JsonRequestCallBack<String>(
 				new LoadDataHandler<String>() {
 
@@ -202,24 +190,23 @@ public class CircleListFragment extends BaseFragment{
 							}else {
 								isLast = false;
 							}
-							
 							// 获取动态列表							
-//							String jsonArrayStr = jResult.getString(JLXCConst.HTTP_LIST);
-//							List<CircleModel> list = JSON.parseArray(jsonArrayStr, VisitModel.class);
+							String jsonArrayStr = jResult.getString(KHConst.HTTP_LIST);
+							List<CircleModel> list = JSON.parseArray(jsonArrayStr, CircleModel.class);
 							
 							//如果是下拉刷新
-//							if (isPullDowm) {
-//								circleAdapter.replaceAll(list);
-//							}else {
-//								circleAdapter.addAll(list);
-//							}
-//							circleListView.onRefreshComplete();
-//							//是否是最后一页
-//							if (isLast) {
-//								circleListView.setMode(Mode.PULL_FROM_START);
-//							}else {
-//								circleListView.setMode(Mode.BOTH);
-//							}
+							if (isPullDowm) {
+								circleAdapter.replaceAll(list);
+							}else {
+								circleAdapter.addAll(list);
+							}
+							circleListView.onRefreshComplete();
+							//是否是最后一页
+							if (isLast) {
+								circleListView.setMode(Mode.PULL_FROM_START);
+							}else {
+								circleListView.setMode(Mode.BOTH);
+							}
 						}
 
 						if (status == KHConst.STATUS_FAIL) {

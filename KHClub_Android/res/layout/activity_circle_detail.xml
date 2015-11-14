@@ -9,21 +9,22 @@
 	<ScrollView
 	    android:id="@+id/scrollView1"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content" >
+	    android:layout_height="match_parent" >
 	    <LinearLayout
 	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
+	        android:layout_height="wrap_content"
 	        android:orientation="vertical" >
-			<ImageView
-		        android:background="@drawable/abc_ab_bottom_solid_light_holo" 
+		    <com.jlxc.app.group.view.LoopViewPager
+		        android:id="@+id/loop_view_page_group"
 		        android:layout_width="match_parent"
-		        android:layout_height="130dp"/>
+		        android:layout_height="130dp"
+		        android:background="@drawable/loading_default" >
+    		</com.jlxc.app.group.view.LoopViewPager>
 		    <TextView 
 		        android:id="@+id/title_text_view"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:padding="10dp"
-		        android:text="你好你好你好你好"/>
+		        android:padding="10dp"/>
 		    <View 
 		        android:layout_width="match_parent"
 		        android:layout_height="1dp"
@@ -31,21 +32,20 @@
 		    <TextView 
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:padding="10dp"
-		        android:text="圈层介绍"/>
+		        android:padding="10dp"/>
 		    <TextView 
-		        android:id="@+id/desc_text_view"
+		        android:id="@+id/intro_text_view"
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:paddingLeft="10dp"
 		        android:paddingRight="10dp"
-		        android:paddingBottom="10dp"
-		        android:text="你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好"/>        
+		        android:paddingBottom="10dp"/>        
 		    <View 
 		        android:layout_width="match_parent"
 		        android:layout_height="1dp"
-		        android:background="@color/main_gary"/>    
+		        android:background="@color/main_gary"/>
 		    <TextView 
+		        android:id="@+id/address_text_view"
 		        android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
 		        android:drawablePadding="10dp"
 		        android:gravity="center_vertical"
@@ -53,14 +53,29 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="10dp"
 		        android:layout_marginTop="20dp"
-		        android:layout_marginBottom="5dp"
-		        android:text="名字"/>    
+		        android:layout_marginBottom="5dp"/>    
+		    <View 
+		        android:layout_width="match_parent"
+		        android:layout_marginLeft="40dp"
+		        android:layout_height="1dp"
+		        android:background="@color/main_gary"/> 		    
+		    <TextView 
+		        android:id="@+id/manager_name_text_view"
+		        android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+		        android:drawablePadding="10dp"
+		        android:gravity="center_vertical"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginBottom="5dp"/>    
 		    <View 
 		        android:layout_width="match_parent"
 		        android:layout_marginLeft="40dp"
 		        android:layout_height="1dp"
 		        android:background="@color/main_gary"/>    
 		    <TextView 
+		        android:id="@+id/phone_text_view"
 		        android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
 		        android:drawablePadding="10dp"
 		        android:gravity="center_vertical"
@@ -68,14 +83,14 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="10dp"
 		        android:layout_marginTop="10dp"
-		        android:layout_marginBottom="5dp"
-		        android:text="电话号"/>    
+		        android:layout_marginBottom="5dp"/>    
 		    <View 
 		        android:layout_width="match_parent"
 		        android:layout_marginLeft="40dp"
 		        android:layout_height="1dp"
 		        android:background="@color/main_gary"/> 
 		    <TextView 
+		        android:id="@+id/wx_text_view"
 		        android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
 		        android:drawablePadding="10dp"
 		        android:gravity="center_vertical"
@@ -83,8 +98,7 @@
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="10dp"
 		        android:layout_marginTop="10dp"
-		        android:layout_marginBottom="5dp"
-		        android:text="微信号"/>    
+		        android:layout_marginBottom="5dp"/>    
 		    <View 
 		        android:layout_width="match_parent"
 		        android:layout_marginLeft="40dp"

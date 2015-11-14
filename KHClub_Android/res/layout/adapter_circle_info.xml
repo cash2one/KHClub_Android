@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:app2="http://schemas.android.com/apk/res/com.app.khclub"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/main_light_white"
@@ -21,13 +20,12 @@
         android:paddingTop="10dp" >
 
         <!-- 圈子头像 -->
-        <com.app.khclub.base.ui.view.RoundImageView
-            android:id="@+id/img_collect_card_user_head"
+        <ImageView
+            android:id="@+id/circle_image_view"
             android:layout_width="@dimen/head_image_size_large"
             android:layout_height="@dimen/head_image_size_large"
             android:scaleType="centerCrop"
-            android:src="@color/main_light_white"
-            app2:rect_adius="2dp" />
+            android:src="@color/main_light_white" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -40,7 +38,6 @@
                 android:id="@+id/circle_name_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="名字"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_medium" />
             
@@ -54,7 +51,6 @@
                 android:ellipsize="end"
                 android:gravity="left"
                 android:singleLine="true"
-                android:text="描述"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_small" />
         </LinearLayout>
