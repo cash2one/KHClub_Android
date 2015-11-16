@@ -36,6 +36,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.text.Spannable;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,12 +49,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.app.khclub.R;
+import com.app.khclub.base.app.KHApplication;
 import com.app.khclub.base.easeim.Constant;
 import com.app.khclub.base.easeim.KHHXSDKHelper;
 import com.app.khclub.base.easeim.activity.AlertDialog;
@@ -73,6 +76,7 @@ import com.app.khclub.base.easeim.utils.SmileUtils;
 import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
@@ -1055,6 +1059,21 @@ public class MessageAdapter extends BaseAdapter{
 		if(len>0){
 			holder.tv.setText(voiceBody.getLength() + "\"");
 			holder.tv.setVisibility(View.VISIBLE);
+			LayoutParams lp = (LayoutParams) holder.iv.getLayoutParams();
+			
+			DisplayMetrics dm = new DisplayMetrics();  
+			dm = KHApplication.getInstance().getResources().getDisplayMetrics();  
+			float density  = dm.density;    
+			if (voiceBody.getLength() > 3) {
+				int length = voiceBody.getLength()-3;
+				if (length > 10) {
+					length = 10;
+				}
+				lp.width = (int) (70*density + length*10*density);
+			}else {
+				lp.width = (int) (70*density);
+			}
+			holder.iv.setLayoutParams(lp);			
 		}else{
 			holder.tv.setVisibility(View.INVISIBLE);
 		}

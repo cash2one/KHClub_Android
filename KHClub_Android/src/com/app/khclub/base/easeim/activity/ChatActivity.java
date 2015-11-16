@@ -1639,6 +1639,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 			EMChatManager.getInstance().leaveChatRoom(toChatUsername);
 		}
 		finish();
+		overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 	}
 
 	/**

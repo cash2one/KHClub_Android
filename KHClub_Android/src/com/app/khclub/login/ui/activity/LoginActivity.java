@@ -21,7 +21,6 @@ import com.app.khclub.base.manager.ActivityManager;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.ui.activity.BaseActivity;
 import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;

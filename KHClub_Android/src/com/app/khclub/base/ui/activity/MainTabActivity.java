@@ -56,6 +56,7 @@ import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.login.ui.activity.LoginActivity;
+import com.app.khclub.news.ui.fragment.MainPageFragment;
 import com.app.khclub.news.ui.fragment.NewsListFragment;
 import com.app.khclub.personal.ui.fragment.PersonalFragment;
 import com.easemob.EMCallBack;
@@ -92,8 +93,8 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 	public FragmentTabHost mTabHost;
 	
 	private LayoutInflater layoutInflater;	
-	
-	private Class<?> fragmentArray[] = { NewsListFragment.class,
+	//NewsListFragment.class
+	private Class<?> fragmentArray[] = { MainPageFragment.class,
 			ChatAllHistoryFragment.class, ContactlistFragment.class,
 			PersonalFragment.class };
 

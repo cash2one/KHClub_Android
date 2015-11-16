@@ -34,7 +34,7 @@
     <dimen name="title_interior_size_small">5dp</dimen>
     <dimen name="title_interior_size_mediu">10dp</dimen>
     <dimen name="title_interior_size_large">40dp</dimen>
-    <dimen name="title_interior_size_huge">100dp</dimen>
+    <dimen name="title_interior_size_huge">80dp</dimen>
     <!-- 头像的大小 -->
     <dimen name="head_image_size_small">30dp</dimen>
     <dimen name="head_image_size_medium">45dp</dimen>

@@ -29,11 +29,15 @@
 
         <ImageView
             android:id="@+id/iv_voice"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="48dp"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/iv_userhead"
             android:background="@drawable/chatfrom_bg"
+            android:scaleType="fitEnd"
+            android:paddingRight="15dp"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
             android:clickable="true"
             android:src="@drawable/chatfrom_voice_playing" />
 

@@ -29,8 +29,12 @@
 
         <ImageView
             android:id="@+id/iv_voice"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="48dp"
+            android:scaleType="fitStart"
+            android:paddingLeft="15dp"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/iv_userhead"
             android:background="@drawable/chatto_bg"

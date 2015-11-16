@@ -5,9 +5,9 @@ import java.util.List;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
@@ -20,6 +20,7 @@ import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.news.ui.activity.CircleDetailActivity;
 import com.app.khclub.news.ui.model.CircleModel;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -96,32 +97,43 @@ public class CircleListFragment extends BaseFragment{
 				helper.setText(R.id.circle_name_text_view, item.getTitle());
 				//圈子详情
 				helper.setText(R.id.circle_desc_text_view, item.getIntro());
-				ImageView headImageView = helper.getView(R.id.head_image_view);
+				ImageView headImageView = helper.getView(R.id.circle_image_view);
 				
 				String[] images = item.getImage().split(",");
+				LogUtils.i(KHConst.ATTACHMENT_ADDR + images[0]+" "+images, 1);
 				//取第一张就行
 				if (null != images && images.length > 0) {
 					ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR + images[0], headImageView, headImageOptions);					
 				}else {
 					headImageView.setImageResource(R.drawable.loading_default);
 				}
-				LinearLayout linearLayout = (LinearLayout) helper.getView();
-				//点击事件
-				linearLayout.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						//跳转到其他人页面
-						Intent intent = new Intent(getActivity(), CircleDetailActivity.class);
-						intent.putExtra(CircleDetailActivity.INTENT_CIRCLE_KEY, item);
-						startActivityWithRight(intent);
-					}
-				});
+//				LinearLayout linearLayout = (LinearLayout) helper.getView();
+//				//点击事件
+//				linearLayout.setOnClickListener(new OnClickListener() {
+//					@Override
+//					public void onClick(View v) {
+//						//跳转到其他人页面
+//						Intent intent = new Intent(getActivity(), CircleDetailActivity.class);
+//						intent.putExtra(CircleDetailActivity.INTENT_CIRCLE_KEY, item);
+//						startActivityWithRight(intent);
+//					}
+//				});
 				
 			}
 		};
 
 		// 适配器绑定
 		circleListView.setAdapter(circleAdapter);
+		circleListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				//跳转到其他人页面
+				Intent intent = new Intent(getActivity(), CircleDetailActivity.class);
+				intent.putExtra(CircleDetailActivity.INTENT_CIRCLE_KEY, circleAdapter.getItem(position-1));
+				startActivityWithRight(intent);
+			}
+		});
 		circleListView.setMode(Mode.PULL_FROM_START);
 		circleListView.setPullToRefreshOverScrollEnabled(false);
 		// 设置刷新事件监听
@@ -193,7 +205,6 @@ public class CircleListFragment extends BaseFragment{
 							// 获取动态列表							
 							String jsonArrayStr = jResult.getString(KHConst.HTTP_LIST);
 							List<CircleModel> list = JSON.parseArray(jsonArrayStr, CircleModel.class);
-							
 							//如果是下拉刷新
 							if (isPullDowm) {
 								circleAdapter.replaceAll(list);

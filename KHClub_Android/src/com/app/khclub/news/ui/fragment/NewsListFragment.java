@@ -16,11 +16,10 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
@@ -62,7 +61,6 @@ import com.app.khclub.news.ui.view.MultiImageView.JumpCallBack;
 import com.app.khclub.news.ui.view.NewsBottomPopupMenu;
 import com.app.khclub.news.ui.view.NewsBottomPopupMenu.NewsBottomClickListener;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
-import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
@@ -78,15 +76,15 @@ public class NewsListFragment extends BaseFragment {
 	// 动态listview
 	@ViewInject(R.id.news_listview)
 	private PullToRefreshListView newsListView;
-	// 发布按钮
-	@ViewInject(R.id.img_news_publish_btn)
-	private ImageView publishBtn;
-	// 通知按钮
-	@ViewInject(R.id.img_notice_btn)
-	private ImageView noticeBtn;
-	// 未读提示（小红点）
-	@ViewInject(R.id.news_unread_image_view)
-	private ImageView unreadImageView;
+//	// 发布按钮
+//	@ViewInject(R.id.img_news_publish_btn)
+//	private ImageView publishBtn;
+//	// 通知按钮
+//	@ViewInject(R.id.img_notice_btn)
+//	private ImageView noticeBtn;
+//	// 未读提示（小红点）
+//	@ViewInject(R.id.news_unread_image_view)
+//	private ImageView unreadImageView;
 	// 原始数据源
 	private List<NewsModel> newsList = new ArrayList<NewsModel>();
 	// item数据源
@@ -140,26 +138,26 @@ public class NewsListFragment extends BaseFragment {
 		// setLastData(UserManager.getInstance().getUser().getUid());
 		// 从服务器加载数据
 		getNewsData(UserManager.getInstance().getUser().getUid(), pageIndex, "");
-		// 点击发布按钮
-		publishBtn.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				Intent intentUsrMain = new Intent(mContext,
-						PublishNewsActivity.class);
-				startActivityWithRight(intentUsrMain);
-			}
-		});
-		// 点击通知按钮
-		noticeBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// 跳转至通知页面
-				Intent intentCampusInfo = new Intent(mContext,
-						NoticeActivity.class);
-				startActivityWithRight(intentCampusInfo);
-			}
-		});
+//		// 点击发布按钮
+//		publishBtn.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View arg0) {
+//				Intent intentUsrMain = new Intent(mContext,
+//						PublishNewsActivity.class);
+//				startActivityWithRight(intentUsrMain);
+//			}
+//		});
+//		// 点击通知按钮
+//		noticeBtn.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				// 跳转至通知页面
+//				Intent intentCampusInfo = new Intent(mContext,
+//						NoticeActivity.class);
+//				startActivityWithRight(intentCampusInfo);
+//			}
+//		});
 
 		// 设置点击事件回调
 		shareMenu.setListener(new NewsBottomClickListener() {
@@ -275,8 +273,8 @@ public class NewsListFragment extends BaseFragment {
 
 			}
 		});
-		registerNotify();
-		refreshPush();
+//		registerNotify();
+//		refreshPush();
 	}
 
 	/**
@@ -762,14 +760,14 @@ public class NewsListFragment extends BaseFragment {
 					likeOperate(postion, view, operateData);
 				} else if (R.id.btn_mian_share == viewID) {
 					// 分享操作
-					for (int index = 0; index < newsList.size(); index++) {
-						if (operateData.getNewsID().equals(
-								newsList.get(index).getNewsID())) {
-							shareMenu.showPopupWindow(publishBtn,
-									newsList.get(index));
-							break;
-						}
-					}
+//					for (int index = 0; index < newsList.size(); index++) {
+//						if (operateData.getNewsID().equals(
+//								newsList.get(index).getNewsID())) {
+//							shareMenu.showPopupWindow(publishBtn,
+//									newsList.get(index));
+//							break;
+//						}
+//					}
 
 				} else {
 					// 跳转到动态详情
@@ -909,9 +907,9 @@ public class NewsListFragment extends BaseFragment {
 		if (mBroadcastReceiver != null && mLocalBroadcastManager != null) {
 			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
 		}
-		if (newMessageReceiver != null) {
-			getActivity().unregisterReceiver(newMessageReceiver);
-		}
+//		if (newMessageReceiver != null) {
+//			getActivity().unregisterReceiver(newMessageReceiver);
+//		}
 	}
 
 	/**
@@ -987,33 +985,33 @@ public class NewsListFragment extends BaseFragment {
 		}
 	}
 
-	private BroadcastReceiver newMessageReceiver;
-
-	// 注册通知
-	private void registerNotify() {
-		// 刷新push
-		newMessageReceiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				// 刷新push
-				refreshPush();
-			}
-		};
-		IntentFilter intentFilter = new IntentFilter(
-				KHConst.BROADCAST_NEW_MESSAGE_PUSH);
-		getActivity().registerReceiver(newMessageReceiver, intentFilter);
-	}
+//	private BroadcastReceiver newMessageReceiver;
+//
+//	// 注册通知
+//	private void registerNotify() {
+//		// 刷新push
+//		newMessageReceiver = new BroadcastReceiver() {
+//			@Override
+//			public void onReceive(Context context, Intent intent) {
+//				// 刷新push
+//				refreshPush();
+//			}
+//		};
+//		IntentFilter intentFilter = new IntentFilter(
+//				KHConst.BROADCAST_NEW_MESSAGE_PUSH);
+//		getActivity().registerReceiver(newMessageReceiver, intentFilter);
+//	}
 
 	// 刷新tab 未读标志
-	private void refreshPush() {
-		int newsUnreadCount = NewsPushModel.findUnreadCount().size();
-		if (newsUnreadCount < 1) {
-			unreadImageView.setVisibility(View.GONE);
-		} else {
-			unreadImageView.setVisibility(View.VISIBLE);
-		}
-
-	}
+//	private void refreshPush() {
+//		int newsUnreadCount = NewsPushModel.findUnreadCount().size();
+//		if (newsUnreadCount < 1) {
+//			unreadImageView.setVisibility(View.GONE);
+//		} else {
+//			unreadImageView.setVisibility(View.VISIBLE);
+//		}
+//
+//	}
 	
 	// 分享监听
 	PlatformActionListener platformActionListener = new PlatformActionListener() {

@@ -3,8 +3,10 @@ package com.app.khclub.news.ui.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -22,7 +24,10 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.app.khclub.R;
+import com.app.khclub.base.model.NewsPushModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
+import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.news.ui.activity.NoticeActivity;
 import com.app.khclub.news.ui.activity.PublishNewsActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -36,6 +41,15 @@ public class MainPageFragment extends BaseFragment {
 	// title的项目
 	@ViewInject(R.id.layout_title_content)
 	private LinearLayout titleContent;
+	// 发布按钮
+	@ViewInject(R.id.img_news_publish_btn)
+	private ImageView publishBtn;
+	// 通知按钮
+	@ViewInject(R.id.img_notice_btn)
+	private ImageView noticeBtn;
+	// 未读提示（小红点）
+	@ViewInject(R.id.news_unread_image_view)
+	private ImageView unreadImageView;	
 	// 主页viewpager
 	@ViewInject(R.id.tv_news_guid)
 	private TextView newsTitleTextView;
@@ -47,9 +61,6 @@ public class MainPageFragment extends BaseFragment {
 	// 偏移图片
 	@ViewInject(R.id.img_cursor)
 	private ImageView imageCursor;
-	// 通知按钮
-	@ViewInject(R.id.img_news_publish_btn)
-	private ImageView publishBtn;
 	// 当前页卡编号
 	private int currIndex;
 	// 横线图片宽度
@@ -71,16 +82,38 @@ public class MainPageFragment extends BaseFragment {
 		mContext = this.getActivity().getApplicationContext();
 		InitImage();
 		InitViewPager();
+		// 点击发布按钮
 		publishBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
-
+			public void onClick(View arg0) {
 				Intent intentUsrMain = new Intent(mContext,
 						PublishNewsActivity.class);
 				startActivityWithRight(intentUsrMain);
 			}
 		});
+		// 点击通知按钮
+		noticeBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// 跳转至通知页面
+				Intent intentCampusInfo = new Intent(mContext,
+						NoticeActivity.class);
+				startActivityWithRight(intentCampusInfo);
+			}
+		});
+		
+		registerNotify();
+		refreshPush();
+	}
+	
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (newMessageReceiver != null) {
+			getActivity().unregisterReceiver(newMessageReceiver);
+		}		
 	}
 
 	/*
@@ -109,8 +142,8 @@ public class MainPageFragment extends BaseFragment {
 
 		newsTitleTextView.setOnClickListener(new ViewClickListener(0));
 		campusTitleTextView.setOnClickListener(new ViewClickListener(1));
-//		mFragmentList.add(new MainNewsListFragment());
-		//mFragmentList.add(new CampusHomeFragment());
+		mFragmentList.add(new NewsListFragment());
+		mFragmentList.add(new CircleListFragment());
 
 		mainPager.setAdapter(new MainFragmentPagerAdapter(
 				getChildFragmentManager(), mFragmentList));
@@ -207,16 +240,42 @@ public class MainPageFragment extends BaseFragment {
 		public void onPageSelected(int index) {
 			if (0 == index) {
 				newsTitleTextView.setTextColor(getResources().getColor(
-						R.color.main_brown));
+						R.color.main_white));
 				campusTitleTextView.setTextColor(getResources().getColor(
-						R.color.main_clear_brown));
+						R.color.main_deep_black));
 			} else {
 				campusTitleTextView.setTextColor(getResources().getColor(
-						R.color.main_brown));
+						R.color.main_white));
 				newsTitleTextView.setTextColor(getResources().getColor(
-						R.color.main_clear_brown));
+						R.color.main_deep_black));
 			}
 		}
+	}
+	
+	private BroadcastReceiver newMessageReceiver;
+	// 注册通知
+	private void registerNotify() {
+		// 刷新push
+		newMessageReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				// 刷新push
+				refreshPush();
+			}
+		};
+		IntentFilter intentFilter = new IntentFilter(
+				KHConst.BROADCAST_NEW_MESSAGE_PUSH);
+		getActivity().registerReceiver(newMessageReceiver, intentFilter);
+	}
+	
+	private void refreshPush() {
+		int newsUnreadCount = NewsPushModel.findUnreadCount().size();
+		if (newsUnreadCount < 1) {
+			unreadImageView.setVisibility(View.GONE);
+		} else {
+			unreadImageView.setVisibility(View.VISIBLE);
+		}
+
 	}
 
 }
