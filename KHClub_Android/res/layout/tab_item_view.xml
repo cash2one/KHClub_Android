@@ -16,6 +16,7 @@
             android:id="@+id/imageview"
             android:layout_width="27dp"
             android:layout_height="27dp"
+            android:scaleType="center"
             android:src="@drawable/abc_ab_bottom_solid_light_holo" />
 
         <TextView

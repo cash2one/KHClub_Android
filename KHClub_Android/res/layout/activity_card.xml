@@ -20,103 +20,110 @@
         tools:ignore="UselessParent" >
 
         <LinearLayout
+            android:paddingBottom="20dp"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/main_light_white"
+            android:background="@color/main_white"
             android:orientation="vertical" >
             
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 	            <ImageView
-	                android:layout_marginTop="10dp" 
-	                android:layout_width="150dp"
-	                android:layout_height="150dp"
-	                android:src="@drawable/icon"/>
+	                android:layout_marginTop="30dp" 
+	                android:layout_width="300dp"
+	                android:layout_height="170dp"
+	                android:src="@drawable/card_back"/>
 	            <com.app.khclub.base.ui.view.CircularImageView
 	                android:id="@+id/head_image_view"
 	                android:src="@drawable/default_avatar"
 	                app:border_width="5dp"
 	                app:border_color="@color/main_white"
-	                android:layout_marginTop="135dp"
+	                android:layout_marginTop="180dp"
 	                android:layout_centerHorizontal="true" 
-	                android:layout_width="70dp"
-	                android:layout_height="70dp"/>
+	                android:layout_width="75dp"
+	                android:layout_height="75dp"/>
 	            
 	            <TextView 
 	                android:id="@+id/name_text_view"
 	                android:layout_centerHorizontal="true"
 	                android:layout_below="@+id/head_image_view"
-	                android:layout_marginTop="8dp"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:textColor="@color/main_deep_black"
-	                android:textSize="@dimen/font_size_huge"
+	                android:textSize="@dimen/font_size_large"
 	                />	                   
-	            
 	            
             </RelativeLayout>
             
             <TextView 
+                android:layout_marginTop="8dp"
                 android:id="@+id/company_text_view"
                 android:gravity="center_vertical"
-                android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+                android:drawableLeft="@drawable/icon_company"
                 android:drawablePadding="5dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_deep_black"
-                android:textSize="@dimen/font_size_large"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_height="25dp"
+                android:textColor="@color/main_light_black"
+                android:textSize="@dimen/font_size_medium"
                />
             
             <TextView
                 android:id="@+id/job_text_view" 
                 android:gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+                android:drawableLeft="@drawable/icon_job"
                 android:drawablePadding="5dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_deep_black"
-                android:textSize="@dimen/font_size_large"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_height="25dp"
+                android:textColor="@color/main_light_black"
+                android:textSize="@dimen/font_size_medium"
                 />            
             <TextView 
                 android:id="@+id/phone_text_view"
                 android:gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+                android:drawableLeft="@drawable/icon_phone"
                 android:drawablePadding="5dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_deep_black"
-                android:textSize="@dimen/font_size_large"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_height="25dp"
+                android:textColor="@color/main_light_black"
+                android:textSize="@dimen/font_size_medium"
                 />   
             <TextView 
                 android:id="@+id/email_text_view"
                 android:gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+                android:drawableLeft="@drawable/icon_email"
                 android:drawablePadding="5dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_deep_black"
-                android:textSize="@dimen/font_size_large"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_height="25dp"
+                android:textColor="@color/main_light_black"
+                android:textSize="@dimen/font_size_medium"
                 />   
             <TextView 
                 android:id="@+id/address_text_view"
                 android:gravity="center_vertical"
-                android:layout_marginTop="5dp"
-                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
+                android:drawableLeft="@drawable/icon_address"
                 android:drawablePadding="5dp"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_deep_black"
-                android:textSize="@dimen/font_size_large"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_height="25dp"
+                android:textColor="@color/main_light_black"
+                android:textSize="@dimen/font_size_medium"
                 />
             
+            <ImageView
+                android:scaleType="centerInside"
+                android:layout_marginTop="10dp" 
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/card_title_back"/>            
+            
             <RelativeLayout
-                android:layout_marginTop="30dp" 
+                android:layout_marginTop="10dp" 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 
@@ -126,7 +133,7 @@
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_large"
-                    android:background="@color/main_gold"
+                    android:background="@drawable/card_title_content_back"
                     android:textColor="@color/main_white"/>
                 <TextView
                     android:layout_marginLeft="20dp"
@@ -136,7 +143,7 @@
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_large"
-                    android:background="@color/main_gold"
+                    android:background="@drawable/card_title_content_back"
                     android:textColor="@color/main_white"/>                
                 <TextView 
                     android:layout_marginTop="15dp"
@@ -146,7 +153,7 @@
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_large"
-                    android:background="@color/main_gold"
+                    android:background="@drawable/card_title_content_back"
                     android:textColor="@color/main_white"/>
                                 
                 <TextView 
@@ -159,7 +166,7 @@
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/font_size_large"
-                    android:background="@color/main_gold"
+                    android:background="@drawable/card_title_content_back"
                     android:textColor="@color/main_white"/>                
             </RelativeLayout>
 

@@ -35,12 +35,12 @@
             android:background="@drawable/common_tab_bg" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/personal_setting" />
+            android:scaleType="centerInside"
+            android:paddingRight="5dp"
+            android:src="@drawable/personal_info_edit" />
 
         <ImageButton
             android:id="@+id/btn_more_operate"
@@ -77,7 +77,7 @@
 		    android:id="@+id/card_layout"
 		    android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="240dp"
             android:background="@color/main_white"
             android:orientation="vertical" >
 		            
@@ -89,11 +89,11 @@
 			                android:layout_marginTop="10dp"
 			                android:id="@+id/head_image_view"
 			                android:src="@drawable/default_avatar"
-			                app:border_width="5dp"
+			                app:border_width="2dp"
 			                app:border_color="@color/main_light_gary"
 			                android:layout_centerHorizontal="true" 
-			                android:layout_width="70dp"
-			                android:layout_height="70dp"/>
+			                android:layout_width="75dp"
+			                android:layout_height="75dp"/>
 			            <LinearLayout 
 			                android:gravity="center"
 			                android:orientation="horizontal"
@@ -116,7 +116,7 @@
 			                android:layout_width="wrap_content"
 			                android:layout_height="wrap_content"
 			                android:textColor="@color/main_deep_black"
-			                android:textSize="@dimen/font_size_medium"/> 
+			                android:textSize="@dimen/font_size_large"/> 
 			                
 			            </LinearLayout>
 			            
@@ -140,52 +140,45 @@
 							<TextView 
 				                android:id="@+id/company_text_view"
 				                android:gravity="center_vertical"
-				                android:layout_marginTop="20dp"
-				                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
-				                android:drawablePadding="5dp"
+				                android:layout_marginTop="15dp"
+				                android:drawableLeft="@drawable/icon_company"
 				                android:layout_marginLeft="10dp"
 				                android:layout_width="230dp"
-				                android:layout_height="wrap_content"
+				                android:layout_height="25dp"
 				                android:textColor="@color/main_deep_black"
-				                android:textSize="@dimen/font_size_medium"
+				                android:textSize="@dimen/font_size_small"
 				                android:singleLine="true"/>
 				            
 				            <TextView 
 				                android:id="@+id/phone_number_text_view"
 				                android:gravity="center_vertical"
-				                android:layout_marginTop="5dp"
-				                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
-				                android:drawablePadding="5dp"
+				                android:drawableLeft="@drawable/icon_phone"
 				                android:layout_marginLeft="10dp"
 				                android:layout_width="230dp"
-				                android:layout_height="wrap_content"
+				                android:layout_height="25dp"
 				                android:textColor="@color/main_deep_black"
-				                android:textSize="@dimen/font_size_medium"
+				                android:textSize="@dimen/font_size_small"
 				                android:singleLine="true"/>   
 				            <TextView 
 				                android:id="@+id/email_text_view"
 				                android:gravity="center_vertical"
-				                android:layout_marginTop="5dp"
-				                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
-				                android:drawablePadding="5dp"
+				                android:drawableLeft="@drawable/icon_email"
 				                android:layout_marginLeft="10dp"
 				                android:layout_width="230dp"
-				                android:layout_height="wrap_content"
+				                android:layout_height="23dp"
 				                android:textColor="@color/main_deep_black"
-				                android:textSize="@dimen/font_size_medium"
+				                android:textSize="@dimen/font_size_small"
 				                android:singleLine="true"/>   
 				            <TextView 
 				                android:id="@+id/address_text_view"
 				                android:gravity="center_vertical"
-				                android:layout_marginTop="5dp"
 				                android:layout_marginLeft="10dp"
-				                android:drawableLeft="@drawable/abc_ab_bottom_solid_light_holo"
-				                android:drawablePadding="5dp"
+				                android:drawableLeft="@drawable/icon_address"
 				                android:singleLine="true"
 				                android:layout_width="230dp"
-				                android:layout_height="wrap_content"
+				                android:layout_height="25dp"
 				                android:textColor="@color/main_deep_black"
-				                android:textSize="@dimen/font_size_medium"/>								    
+				                android:textSize="@dimen/font_size_small"/>								    
 						    
 						</LinearLayout>  
 						
@@ -203,46 +196,45 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="10dip"
-                    android:layout_marginBottom="10dip"
-                    android:layout_marginTop="10dip"
-                    android:layout_weight="1"
+                    android:layout_marginBottom="5dip"
+                    android:layout_marginTop="5dip"
                     android:text="@string/personal_moments"
                     android:textColor="@color/main_deep_black"
                     android:textSize="@dimen/font_size_medium" />
 
                 <ImageView
-                    android:id="@+id/personal_picture_image_view3"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_marginBottom="10dip"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dip"
+                    android:id="@+id/personal_picture_image_view1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="5dip"
+                    android:layout_marginTop="5dip"
                     android:background="@color/main_blue"
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view2"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_marginBottom="10dip"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dip"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="5dip"
+                    android:layout_marginTop="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@color/main_blue"
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/personal_picture_image_view1"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:layout_marginBottom="10dip"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dip"
+                    android:id="@+id/personal_picture_image_view3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dip"
+                    android:layout_marginTop="5dip"
                     android:background="@color/main_blue"
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
@@ -251,11 +243,11 @@
                     android:visibility="gone"
                     android:id="@+id/no_moment_text_view"
                     android:layout_width="wrap_content"
-                    android:layout_height="55dp"
+                    android:layout_height="50dp"
                     android:gravity="center_vertical"
-                    android:layout_marginRight="30dip"
-                    android:layout_marginBottom="10dip"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginBottom="5dip"
+                    android:layout_marginTop="5dip"
                     android:text="@string/personal_no_moments"
                     android:textColor="@color/main_light_black"
                     android:textSize="@dimen/font_size_medium" />
@@ -265,14 +257,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="1dip"
                 android:background="@color/main_white"
                 android:orientation="horizontal"
-                android:padding="10dp" >
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="60dp"
                     android:gravity="center"
                     android:text="@string/personal_signature"
                     android:textColor="@color/main_deep_black"
@@ -281,9 +274,11 @@
                 <TextView
                     android:id="@+id/sign_text_view"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:textColor="@color/main_light_black"
                     android:textSize="@dimen/font_size_secondary" />
             </LinearLayout>

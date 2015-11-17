@@ -1,23 +1,23 @@
 package com.app.khclub.news.ui.activity;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
+import android.os.CountDownTimer;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.app.khclub.R;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.news.ui.model.CircleModel;
 import com.app.khclub.news.ui.view.LoopViewPager;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -56,6 +56,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 	//介绍
 	@ViewInject(R.id.wx_text_view)
 	private TextView wxTextView;
+	//网页
+	@ViewInject(R.id.web_text_view)
+	private TextView webTextView;	
 	//模型
 	private CircleModel circleModel;
 	//新图片缓存工具 头像
@@ -103,15 +106,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 		//标题
 		titleTextView.setText(circleModel.getTitle());
 		//介绍
-		introTextView.setText(circleModel.getIntro());
+		introTextView.setText("    "+circleModel.getIntro());
 		//地址
 		addressTextView.setText(circleModel.getAddress());
 		//名
 		managerNameTextView.setText(circleModel.getManager_name());
 		//电话
 		phoneTextView.setText(circleModel.getPhone_num());
-		//介绍
+		//微信
 		wxTextView.setText(circleModel.getWx_num());
+		//网页
+		webTextView.setText(circleModel.getWeb());
 		//初始化pageView
 		images = circleModel.getImage().split(",");
 		if (images.length > 0) {
@@ -133,6 +138,41 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 		}
 		groupViewPage.setAdapter(new MyPagerAdapter());
 		groupViewPage.setOnPageChangeListener(opcl);
+		
+		final CountDownTimer verifyCountdownTimer = new CountDownTimer(6000000, 2000) {
+			@Override
+			public void onTick(long millisUntilFinished) {
+				int position = groupViewPage.getCurrentItem()+1;
+				if (position > 3) {
+					position = 0;
+				}
+				groupViewPage.setCurrentItem(position, true);
+				//page提示部分变化
+				for (int i = 0; i < images.length; i++) {
+					if (i <= 3) {
+						for(View view : pageViews) {
+							view.setBackgroundResource(R.color.main_clear_white);
+						}
+					}
+				}
+				if (position == 3) {
+					position = 0;
+				}
+				pageViews.get(position).setBackgroundResource(R.color.main_white);						
+			}
+			@Override
+			public void onFinish() {
+			}
+		};			
+		
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				// 开始倒计时
+				verifyCountdownTimer.start();				
+			}
+		}, 2000);
+		
 	}
 
 	class MyPagerAdapter extends PagerAdapter {

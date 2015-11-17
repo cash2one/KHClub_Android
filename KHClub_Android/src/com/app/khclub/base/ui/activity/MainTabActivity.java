@@ -57,7 +57,6 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.login.ui.activity.LoginActivity;
 import com.app.khclub.news.ui.fragment.MainPageFragment;
-import com.app.khclub.news.ui.fragment.NewsListFragment;
 import com.app.khclub.personal.ui.fragment.PersonalFragment;
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;

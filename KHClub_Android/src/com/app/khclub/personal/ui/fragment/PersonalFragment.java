@@ -370,8 +370,7 @@ public class PersonalFragment extends BaseFragment {
 		super.onResume();
 		userModel = UserManager.getInstance().getUser();
 		// 签名
-		if (null != userModel.getSignature()
-				&& userModel.getSignature().length() > 0) {
+		if (null != userModel.getSignature() && userModel.getSignature().length() > 0) {
 			signTextView.setText(userModel.getSignature());
 		} else {
 			signTextView.setText(R.string.personal_none);
@@ -392,6 +391,9 @@ public class PersonalFragment extends BaseFragment {
 		}
 		// 姓名
 		nameTextView.setText(KHUtils.emptyRetunNone(userModel.getName()));
+		if (userModel.getJob() != null && userModel.getJob().length() > 0) {
+			nameTextView.setText(nameTextView.getText()+"/");
+		}
 		// 职业
 		jobTextView.setText(userModel.getJob());
 		// 公司
@@ -406,7 +408,6 @@ public class PersonalFragment extends BaseFragment {
 		//不存在获取 存在直接设置
 		if (userModel.getQr_code() != null && userModel.getQr_code().length() > 0) {
 			ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+userModel.getQr_code(), qrcodeImageView, imageOptions);
-			return;
 		}
 		
 		//从网上获取一次
@@ -420,6 +421,10 @@ public class PersonalFragment extends BaseFragment {
 								.getInteger(KHConst.HTTP_STATUS);
 						if (status == KHConst.STATUS_SUCCESS) {
 							String qrpath = jsonResponse.getString(KHConst.HTTP_RESULT);
+							//相等不处理
+							if (userModel.getQr_code() == null || qrpath.equals(userModel.getQr_code())) {
+								return;
+							}							
 							//本地缓存
 							ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+qrpath, qrcodeImageView, imageOptions);
 							UserManager.getInstance().getUser().setQr_code(qrpath);

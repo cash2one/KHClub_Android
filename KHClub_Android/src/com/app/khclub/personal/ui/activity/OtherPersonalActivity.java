@@ -203,8 +203,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		imageList.add(pictureImageView2);
 		imageList.add(pictureImageView3);
 		imageOptions = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.drawable.loading_default)
-				.showImageOnFail(R.drawable.loading_default)
+				.showImageOnLoading(R.drawable.default_avatar)
+				.showImageOnFail(R.drawable.default_avatar)
 				.cacheInMemory(false).cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 
@@ -851,6 +851,9 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 								nameTextView.setText(otherUserModel.getName());
 								setBarText(otherUserModel.getName());
 							}
+							if (otherUserModel.getJob() != null && otherUserModel.getJob().length() > 0) {
+								nameTextView.setText(nameTextView.getText()+"/");
+							}
 							// 缓存
 							UserDao userDao = new UserDao(KHApplication
 									.getInstance());
@@ -874,42 +877,47 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	}
 	
 	public void setQRcode(UserModel user){
-		final DisplayImageOptions options = new DisplayImageOptions.Builder()
-		.showImageOnLoading(R.drawable.loading_default)
-		.showImageOnFail(R.drawable.loading_default)
-		.cacheInMemory(true).cacheOnDisk(true)
-		.bitmapConfig(Bitmap.Config.RGB_565).build();
-		//不存在获取 存在直接设置
-		if (user.getQr_code() != null && user.getQr_code().length() > 0) {
-			ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+user.getQr_code(), qrcodeImageView, options);
-			return;
+		
+		try {
+			final DisplayImageOptions options = new DisplayImageOptions.Builder()
+			.showImageOnLoading(R.drawable.loading_default)
+			.showImageOnFail(R.drawable.loading_default)
+			.cacheInMemory(true).cacheOnDisk(true)
+			.bitmapConfig(Bitmap.Config.RGB_565).build();
+			//不存在获取 存在直接设置
+			if (user.getQr_code() != null && user.getQr_code().length() > 0) {
+				ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+user.getQr_code(), qrcodeImageView, options);
+			}
+			
+			//从网上获取一次
+			String path = KHConst.GET_USER_QRCODE+"?"+"user_id="+user.getUid();
+			HttpManager.get(path, new JsonRequestCallBack<String>(
+					new LoadDataHandler<String>() {
+
+						@Override
+						public void onSuccess(JSONObject jsonResponse, String flag) {
+							super.onSuccess(jsonResponse, flag);
+							int status = jsonResponse
+									.getInteger(KHConst.HTTP_STATUS);
+							if (status == KHConst.STATUS_SUCCESS) {
+								String qrpath = jsonResponse.getString(KHConst.HTTP_RESULT);
+								ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+qrpath, qrcodeImageView, options);
+							}
+							if (status == KHConst.STATUS_FAIL) {
+								ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
+							}
+						}
+						@Override
+						public void onFailure(HttpException arg0, String arg1,
+								String flag) {
+							super.onFailure(arg0, arg1, flag);
+						}
+
+					}, null));
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		
-		//从网上获取一次
-		String path = KHConst.GET_USER_QRCODE+"?"+"user_id="+user.getUid();
-		HttpManager.get(path, new JsonRequestCallBack<String>(
-				new LoadDataHandler<String>() {
-
-					@Override
-					public void onSuccess(JSONObject jsonResponse, String flag) {
-						super.onSuccess(jsonResponse, flag);
-						int status = jsonResponse
-								.getInteger(KHConst.HTTP_STATUS);
-						if (status == KHConst.STATUS_SUCCESS) {
-							String qrpath = jsonResponse.getString(KHConst.HTTP_RESULT);
-							ImageLoader.getInstance().displayImage(KHConst.ROOT_PATH+qrpath, qrcodeImageView, options);
-						}
-						if (status == KHConst.STATUS_FAIL) {
-							ToastUtil.show(OtherPersonalActivity.this, R.string.net_error);
-						}
-					}
-					@Override
-					public void onFailure(HttpException arg0, String arg1,
-							String flag) {
-						super.onFailure(arg0, arg1, flag);
-					}
-
-				}, null));
 	}
 	
 	// 设置内容
@@ -935,6 +943,9 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		if (null != remark && remark.length() > 0) {
 			nameTextView.setText(remark);
 			setBarText(remark);
+		}
+		if (userModel.getJob() != null && userModel.getJob().length() > 0) {
+			nameTextView.setText(nameTextView.getText()+"/");
 		}
 		// 职业
 		jobTextView.setText(KHUtils.emptyRetunNone(userModel.getJob()));

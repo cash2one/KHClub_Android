@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 public class CircleModel implements Serializable{
 	
-	
-	
 	/**
 	 * 
 	 */
@@ -27,6 +25,8 @@ public class CircleModel implements Serializable{
 	private String address;
 	//微信号
 	private String wx_num;
+	//网页
+	private String web;	
 	private int delete_flag;
 	
 	public int getId() {
@@ -83,7 +83,11 @@ public class CircleModel implements Serializable{
 	public void setDelete_flag(int delete_flag) {
 		this.delete_flag = delete_flag;
 	}
-	
-	
+	public String getWeb() {
+		return web;
+	}
+	public void setWeb(String web) {
+		this.web = web;
+	}
 	
 }

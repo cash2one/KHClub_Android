@@ -28,7 +28,7 @@
                 android:gravity="center"
                 android:text="@string/news_news_topic"
                 android:textColor="@color/main_white"
-                android:textSize="@dimen/action_bar_title_size" />
+                android:textSize="@dimen/font_size_medium" />
 
             <TextView
                 android:layout_marginLeft="15dp"
@@ -38,7 +38,7 @@
                 android:gravity="center"
                 android:text="@string/news_circle_title"
                 android:textColor="@color/main_deep_black"
-                android:textSize="@dimen/action_bar_title_size" />
+                android:textSize="@dimen/font_size_small" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,10 +64,11 @@
 
             <ImageView
                 android:id="@+id/img_notice_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
+                android:scaleType="centerInside"
                 android:background="@drawable/common_tab_bg"
-                android:paddingLeft="10dp"
+                android:paddingLeft="0dp"
                 android:paddingRight="10dp"
                 android:src="@drawable/news_notice_btn_selector" />
 
@@ -76,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|top"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/small_unread"
                 android:visibility="invisible" />
@@ -85,11 +86,11 @@
         <ImageView
             android:layout_gravity="right"
             android:id="@+id/img_news_publish_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="@drawable/common_tab_bg"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:scaleType="centerInside"
+            android:padding="14dp"
             android:src="@drawable/news_publish_btn_selector" />        
         
     </FrameLayout>

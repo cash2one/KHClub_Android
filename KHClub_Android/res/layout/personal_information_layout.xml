@@ -31,7 +31,6 @@
                 android:layout_height="60dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:background="@color/main_gary"
                 android:scaleType="fitCenter" />
         </RelativeLayout>
     </LinearLayout>
@@ -309,7 +308,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dip"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="left"
             android:paddingBottom="10dp"
             android:paddingRight="10dp"
             android:paddingTop="10dp"
@@ -363,12 +362,11 @@
             android:id="@+id/title_1_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dip"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="left"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:textColor="@color/main_deep_black"
             android:textSize="@dimen/font_size_medium" />
     </LinearLayout>    
@@ -387,12 +385,11 @@
             android:id="@+id/title_2_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dip"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="left"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:textColor="@color/main_deep_black"
             android:textSize="@dimen/font_size_medium" />
     </LinearLayout>    
@@ -411,12 +408,11 @@
             android:id="@+id/title_3_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dip"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="left"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:textColor="@color/main_deep_black"
             android:textSize="@dimen/font_size_medium" />
     </LinearLayout>    
@@ -435,12 +431,11 @@
             android:id="@+id/title_4_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dip"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="left"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:textColor="@color/main_deep_black"
             android:textSize="@dimen/font_size_medium" />
     </LinearLayout>    

@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.app.khclub.R;
 import com.app.khclub.base.model.NewsPushModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.news.ui.activity.NoticeActivity;
 import com.app.khclub.news.ui.activity.PublishNewsActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -243,11 +245,15 @@ public class MainPageFragment extends BaseFragment {
 						R.color.main_white));
 				campusTitleTextView.setTextColor(getResources().getColor(
 						R.color.main_deep_black));
+				newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+				campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 			} else {
 				campusTitleTextView.setTextColor(getResources().getColor(
 						R.color.main_white));
 				newsTitleTextView.setTextColor(getResources().getColor(
 						R.color.main_deep_black));
+				newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+				campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 			}
 		}
 	}
@@ -275,7 +281,6 @@ public class MainPageFragment extends BaseFragment {
 		} else {
 			unreadImageView.setVisibility(View.VISIBLE);
 		}
-
 	}
 
 }
