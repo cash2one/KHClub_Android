@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.app.khclub"
-    android:versionCode="6"
-    android:versionName="1.00" >
+    android:versionCode="9"
+    android:versionName="1.10" >
 
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -368,10 +368,10 @@
         </receiver>
 
         <!-- 设置环信应用的appkey -->
-        <!-- khclub2015#khclub  -->
+        <!-- khclub2015#khclub  测试 yukirin#khclub-->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="yukirin#khclub" />
+            android:value="khclub2015#khclub" />
         <!-- 声明sdk所需的service -->
         <service android:name="com.easemob.chat.EMChatService" />
         <!-- 声明sdk所需的receiver -->
@@ -446,10 +446,10 @@
                 <category android:name="com.app.khclub" />
             </intent-filter>
         </receiver>
-		<!-- 测试Key 5616180ae6b2257059049482 -->
+		<!-- 562de0fa85f5aa6c14e24d1f 测试Key 5616180ae6b2257059049482 -->
         <meta-data
             android:name="YUNBA_APPKEY"
-            android:value="5616180ae6b2257059049482" />
+            android:value="562de0fa85f5aa6c14e24d1f" />
         <!-- 高德部分 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"

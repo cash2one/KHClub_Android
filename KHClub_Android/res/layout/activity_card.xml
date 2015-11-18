@@ -47,6 +47,7 @@
 	            
 	            <TextView 
 	                android:id="@+id/name_text_view"
+	                android:singleLine="true"
 	                android:layout_centerHorizontal="true"
 	                android:layout_below="@+id/head_image_view"
 	                android:layout_width="wrap_content"
@@ -61,6 +62,7 @@
                 android:layout_marginTop="8dp"
                 android:id="@+id/company_text_view"
                 android:gravity="center_vertical"
+                android:singleLine="true"
                 android:drawableLeft="@drawable/icon_company"
                 android:drawablePadding="5dp"
                 android:layout_width="match_parent"
@@ -73,6 +75,7 @@
             <TextView
                 android:id="@+id/job_text_view" 
                 android:gravity="center_vertical"
+                android:singleLine="true"
                 android:drawableLeft="@drawable/icon_job"
                 android:drawablePadding="5dp"
                 android:layout_width="match_parent"
@@ -84,6 +87,7 @@
             <TextView 
                 android:id="@+id/phone_text_view"
                 android:gravity="center_vertical"
+                android:singleLine="true"
                 android:drawableLeft="@drawable/icon_phone"
                 android:drawablePadding="5dp"
                 android:layout_width="match_parent"
@@ -95,6 +99,7 @@
             <TextView 
                 android:id="@+id/email_text_view"
                 android:gravity="center_vertical"
+                android:singleLine="true"
                 android:drawableLeft="@drawable/icon_email"
                 android:drawablePadding="5dp"
                 android:layout_width="match_parent"
@@ -110,17 +115,17 @@
                 android:drawablePadding="5dp"
                 android:layout_width="match_parent"
                 android:layout_marginLeft="30dp"
-                android:layout_height="25dp"
+                android:paddingRight="20dp"
+                android:layout_height="wrap_content"
                 android:textColor="@color/main_light_black"
-                android:textSize="@dimen/font_size_medium"
-                />
+                android:textSize="@dimen/font_size_medium"/>
             
-            <ImageView
+			<ImageView
                 android:scaleType="centerInside"
                 android:layout_marginTop="10dp" 
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/card_title_back"/>            
+                android:src="@drawable/card_title_back"/>        
             
             <RelativeLayout
                 android:layout_marginTop="10dp" 
@@ -132,7 +137,8 @@
                     android:padding="5dp"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_size_large"
+                    android:textSize="@dimen/font_size_medium"
+                    android:gravity="center"
                     android:background="@drawable/card_title_content_back"
                     android:textColor="@color/main_white"/>
                 <TextView
@@ -142,7 +148,8 @@
                     android:padding="5dp"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_size_large"
+                    android:textSize="@dimen/font_size_medium"
+                    android:gravity="center"
                     android:background="@drawable/card_title_content_back"
                     android:textColor="@color/main_white"/>                
                 <TextView 
@@ -152,7 +159,8 @@
                     android:padding="5dp"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_size_large"
+                    android:textSize="@dimen/font_size_medium"
+                    android:gravity="center"
                     android:background="@drawable/card_title_content_back"
                     android:textColor="@color/main_white"/>
                                 
@@ -165,7 +173,8 @@
                     android:padding="5dp"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_size_large"
+                    android:textSize="@dimen/font_size_medium"
+                    android:gravity="center"
                     android:background="@drawable/card_title_content_back"
                     android:textColor="@color/main_white"/>                
             </RelativeLayout>

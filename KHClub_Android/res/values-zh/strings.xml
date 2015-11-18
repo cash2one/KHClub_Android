@@ -150,7 +150,7 @@
 
     <!-- News -->
     <string name="news_news_topic">动态●话题</string>
-    <string name="news_circle_title">圈层</string>
+    <string name="news_circle_title">圈层●门户</string>
     <string name="news_circle_intro">圈层介绍</string>
     <string name="news_circle_detail_title">圈层详情</string>
     <string name="news_enter_content">请输入内容</string>

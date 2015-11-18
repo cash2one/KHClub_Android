@@ -75,6 +75,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 	@Override
 	protected void setUpView() {
+		
 		setBarText(getString(R.string.news_circle_detail_title));
 		
 		pageViews.add(pageView1);
@@ -91,7 +92,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 		}else {
 			//没有数据 说明数据异常 暂不处理
 		}
-
 	}
 	
 	private void initUI(){
@@ -147,6 +147,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 					position = 0;
 				}
 				groupViewPage.setCurrentItem(position, true);
+				
 				//page提示部分变化
 				for (int i = 0; i < images.length; i++) {
 					if (i <= 3) {
