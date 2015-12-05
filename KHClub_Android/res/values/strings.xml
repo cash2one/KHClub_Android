@@ -173,6 +173,14 @@
     <string name="news_comment">Comment</string>
     <string name="news_like">Like</string>
     <!-- News -->
+    
+	<!-- Contact -->
+    <string name="contact_none">None</string>
+    <string name="contact_add_friend">Contact</string>
+    <string name="contact_add">Add</string>
+    <string name="contact_added">Added</string>
+	<!-- Contact -->    
+    
     <string name="publish_news">Send</string>
     <string name="text_ack_msg">Read</string>
     <string name="text_delivered_msg">Delivered</string>
@@ -484,7 +492,7 @@
     <string name="im_group_name_card">Group Name Card</string>
     <string name="push_a_message">A new message</string>
     <string name="push_like">A Like for you</string>
-    <string name="push_invite">invite to join</string>
+    <string name="push_invite"> invite to join</string>
     <string name="personal_official_business_manager">Official business manager</string>
     <string name="delete_comment">Delete comment</string>
     <string name="search_prompt">Input phone number or group id</string>

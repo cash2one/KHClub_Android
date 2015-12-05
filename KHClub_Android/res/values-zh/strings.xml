@@ -13,7 +13,6 @@
     <string name="downloading_fail">获取失败</string>
     <string name="loading">加载中..</string>
     <string name="search_fail">未查询到相关信息</string>
-
     <!-- Loading -->
 
 
@@ -170,6 +169,13 @@
     <string name="news_comment">评论</string>
     <string name="news_like">赞</string>
     <!-- News -->
+    
+    <!-- Contact -->
+    <string name="contact_none">没有未添加的联系人</string>
+    <string name="contact_add_friend">添加通讯录好友</string>
+    <string name="contact_add">添加</string>
+    <string name="contact_added">已添加</string>
+	<!-- Contact -->
 
     <string name="reply">回复</string>
     <string name="confirm_delete">确认删除信息？</string>

@@ -80,7 +80,7 @@ public interface KHConst {
 	public static final String LIKE_OR_CANCEL = DOMIN + "/likeOrCancel";
 	// 新闻详情
 	public static final String NEWS_DETAIL = DOMIN + "/newsDetail";
-	// 圈子列表详情
+	// 圈子列表
 	public static final String GET_CIRCLE_LIST = DOMIN + "/getCircleList";	
 	// //////////////////////////////////////////////个人信息////////////////////////////////////////////////
 	// 修改个人信息

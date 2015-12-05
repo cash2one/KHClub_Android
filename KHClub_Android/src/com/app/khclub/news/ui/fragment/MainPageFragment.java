@@ -28,7 +28,6 @@ import com.app.khclub.R;
 import com.app.khclub.base.model.NewsPushModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.news.ui.activity.NoticeActivity;
 import com.app.khclub.news.ui.activity.PublishNewsActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;

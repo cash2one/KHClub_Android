@@ -85,7 +85,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class NewsDetailActivity extends BaseActivityWithTopBar {
 
-	// 与评论或点赞数据相关的key      
+	// 与评论或点赞数据相关的key      1
 	private final static String USER_HEAD = "user_head";
 	private final static String USER_NAME = "user_name";
 	private final static String USER_JOB = "USER_JOB";

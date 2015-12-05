@@ -88,7 +88,7 @@ public class CardActivity extends BaseActivityWithTopBar{
 		}
 	}
 
-	//设置内容
+	//设置内容 这里没有做电话等信息隐藏处理 是一个BUG 以后改
 	private void setContent(UserModel userModel){
 		
 		//头像不为空
@@ -157,6 +157,41 @@ public class CardActivity extends BaseActivityWithTopBar{
 					}
 
 				}, null));
+		
+		String path2 = KHConst.GET_PERSONAL_EXTRA_INFORMATION + "?" + "uid=" + uid;
+		HttpManager.get(path2, new JsonRequestCallBack<String>(
+				new LoadDataHandler<String>() {
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						if (status == KHConst.STATUS_SUCCESS) {
+							JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
+							//四个头衔							
+							if (jResult.containsKey(KHConst.TITLE_1_KEY)) {
+								title1TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_1_KEY)));
+							}
+							if (jResult.containsKey(KHConst.TITLE_2_KEY)) {
+								title2TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_2_KEY)));
+							}
+							if (jResult.containsKey(KHConst.TITLE_3_KEY)) {
+								title3TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_3_KEY)));
+							}
+							if (jResult.containsKey(KHConst.TITLE_4_KEY)) {
+								title4TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_4_KEY)));
+							}							
+						}
+						if (status == KHConst.STATUS_FAIL) {
+						}
+					}
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						super.onFailure(arg0, arg1, flag);
+					}
+				}, null));		
+		
 	}
 	
 }

@@ -41,9 +41,7 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
-import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
-import com.app.khclub.message.model.IMModel;
 import com.app.khclub.message.ui.model.PersonModel;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.chat.EMContactManager;
@@ -109,7 +107,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 					.getUser().getUid()), getContactsJSON(mContactsNumber));
 		} else {
 			promptTextView.setVisibility(View.VISIBLE);
-			promptTextView.setText("没有未添加的联系人");
+			promptTextView.setText(R.string.contact_none);
 		}
 	}
 
@@ -118,7 +116,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 	 * 初始化
 	 * */
 	private void init() {
-		setBarText("添加通讯录好友");
+		setBarText(getString(R.string.contact_add_friend));
 		// 显示头像的配置
 		imgLoader = ImageLoader.getInstance();
 		// 显示图片的配置
@@ -165,7 +163,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 					contactName = mContactsName.get(index);
 				}
 
-				helper.setText(R.id.tv_contacts_name, "通讯录好友：" + contactName);
+				helper.setText(R.id.tv_contacts_name, contactName);
 				helper.setOnClickListener(R.id.layout_contacts_root_view,
 						new OnClickListener() {
 
@@ -189,13 +187,13 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 						.getContactList().get(KHConst.KH + item.getUerId());
 				
 				if (null != imUser) {
-					addButton.setText("已添加");
+					addButton.setText(R.string.contact_added);
 					addButton.setBackgroundResource(R.color.main_gary);
 					addButton.setTextColor(getResources().getColorStateList(
 							R.color.main_white));
 					addButton.setEnabled(false);
 				} else {
-					addButton.setText("添加");
+					addButton.setText(R.string.contact_add);
 					addButton.setBackgroundResource(R.color.main_yellow);
 					addButton.setTextColor(getResources().getColorStateList(
 							R.color.main_brown));
@@ -346,7 +344,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 	 * */
 	private void getContactsPerson(String userId, String contact) {
 		// 网络请求
-		showLoading("信息获取中...", true);
+		showLoading(getString(R.string.downloading), true);
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("user_id", userId);
 		params.addBodyParameter("contact", contact);
@@ -385,7 +383,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 						hideLoading();
 						promptTextView.setVisibility(View.VISIBLE);
 						promptTextView.setText(R.string.downloading_fail);
-						ToastUtil.show(ContactsUserActivity.this, "网络故障，请检查");
+						ToastUtil.show(ContactsUserActivity.this, R.string.net_error);
 					}
 
 				}, null));
@@ -406,7 +404,7 @@ public class ContactsUserActivity extends BaseActivityWithTopBar {
 
 		if (contactsAdapter.getCount() == 0) {
 			promptTextView.setVisibility(View.VISIBLE);
-			promptTextView.setText("没有未添加好友");
+			promptTextView.setText(R.string.contact_none);
 		} else {
 			promptTextView.setVisibility(View.GONE);
 		}
