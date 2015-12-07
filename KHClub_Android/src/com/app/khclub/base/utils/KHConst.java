@@ -3,10 +3,10 @@ package com.app.khclub.base.utils;
 public interface KHConst {
 
 	// 正式环境 120.25.213.171
-	// 测试环境 112.74.199.145
-	public static final String DOMIN = "http://120.25.213.171/khclub_php/index.php/Home/MobileApi";
-	public static final String ATTACHMENT_ADDR = "http://120.25.213.171/khclub_php/Uploads/";
-	public static final String ROOT_PATH = "http://120.25.213.171/khclub_php/";
+	// 测试环境 114.215.95.23
+	public static final String DOMIN = "http://114.215.95.23/khclub_php/index.php/Home/MobileApi";
+	public static final String ATTACHMENT_ADDR = "http://114.215.95.23/khclub_php/Uploads/";
+	public static final String ROOT_PATH = "http://114.215.95.23/khclub_php/";
 
 	public static final int STATUS_SUCCESS = 1;// 接口返回成功
 	public static final int STATUS_FAIL = 0;// 接口返回失败
