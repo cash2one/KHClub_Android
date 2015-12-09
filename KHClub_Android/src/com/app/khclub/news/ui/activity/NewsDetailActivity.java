@@ -162,7 +162,6 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		case R.id.base_ll_right_btns:
 			deleteCurrentNews();
 			break;
-
 		// 发布评论
 		case R.id.btn_comment_send:
 			sendComment();

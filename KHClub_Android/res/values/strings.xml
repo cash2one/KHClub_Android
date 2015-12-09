@@ -149,6 +149,11 @@
 
 
     <!-- News -->
+      <string name="club_main_page">Club Page</string>
+     <string name="news_club_expert">Club Expert</string>
+    <string name="news_circle_friend">Club Friend:</string>
+    <string name="news_master_name">Master Name:</string>
+    <string name="news_circle_name">Circle Name:</string>
     <string name="circle_recommend_type_name">Recommend Circle</string>
     <string name="circle_attention_type_name">My Circle</string>
     <string name="news_news_topic">Dynamic</string>
@@ -506,6 +511,10 @@
     <string name="my_collect_code">Collection of cards</string>
     <string name="exchange_card">（Exchange card）</string>
     <string name="picture_number_count"></string>
+ 
+   
+    
+   
     
 
 </resources>
