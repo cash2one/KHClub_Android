@@ -40,6 +40,7 @@ public class MainPageFragment extends BaseFragment {
 	@ViewInject(R.id.viewpager_main)
 	private ViewPager mainPager;
 	// title的项目
+	// 商务圈bar
 	@ViewInject(R.id.layout_title_content)
 	private LinearLayout titleContent;
 	// 发布按钮
@@ -50,7 +51,7 @@ public class MainPageFragment extends BaseFragment {
 	private ImageView noticeBtn;
 	// 未读提示（小红点）
 	@ViewInject(R.id.news_unread_image_view)
-	private ImageView unreadImageView;	
+	private ImageView unreadImageView;
 	// 主页viewpager
 	@ViewInject(R.id.tv_news_guid)
 	private TextView newsTitleTextView;
@@ -88,8 +89,7 @@ public class MainPageFragment extends BaseFragment {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intentUsrMain = new Intent(mContext,
-						PublishNewsActivity.class);
+				Intent intentUsrMain = new Intent(mContext, PublishNewsActivity.class);
 				startActivityWithRight(intentUsrMain);
 			}
 		});
@@ -98,23 +98,22 @@ public class MainPageFragment extends BaseFragment {
 			@Override
 			public void onClick(View v) {
 				// 跳转至通知页面
-				Intent intentCampusInfo = new Intent(mContext,
-						NoticeActivity.class);
+				Intent intentCampusInfo = new Intent(mContext, NoticeActivity.class);
 				startActivityWithRight(intentCampusInfo);
 			}
 		});
-		
+
 		registerNotify();
 		refreshPush();
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		if (newMessageReceiver != null) {
 			getActivity().unregisterReceiver(newMessageReceiver);
-		}		
+		}
 	}
 
 	/*
@@ -122,17 +121,14 @@ public class MainPageFragment extends BaseFragment {
 	 */
 	public void InitImage() {
 		int screenWidth = getResources().getDisplayMetrics().widthPixels;
-		int contentLeftMargin = ((FrameLayout.LayoutParams) titleContent
-				.getLayoutParams()).leftMargin;
+		int contentLeftMargin = ((FrameLayout.LayoutParams) titleContent.getLayoutParams()).leftMargin;
 		int contentWidth = screenWidth - (2 * contentLeftMargin);
 
 		// 设置游标的尺寸与位置
-		LayoutParams cursorParams = (LayoutParams) imageCursor
-				.getLayoutParams();
+		LayoutParams cursorParams = (LayoutParams) imageCursor.getLayoutParams();
 		cursorWidth = cursorParams.width;
 		offset = contentWidth / 2;
-		cursorParams.leftMargin = (contentWidth / 2 - cursorWidth) / 2
-				+ contentLeftMargin;
+		cursorParams.leftMargin = (contentWidth / 2 - cursorWidth) / 2 + contentLeftMargin;
 		imageCursor.setLayoutParams(cursorParams);
 	}
 
@@ -143,11 +139,9 @@ public class MainPageFragment extends BaseFragment {
 
 		newsTitleTextView.setOnClickListener(new ViewClickListener(0));
 		campusTitleTextView.setOnClickListener(new ViewClickListener(1));
+		mFragmentList.add(new CircleFragment());
 		mFragmentList.add(new NewsListFragment());
-		mFragmentList.add(new CircleListFragment());
-
-		mainPager.setAdapter(new MainFragmentPagerAdapter(
-				getChildFragmentManager(), mFragmentList));
+		mainPager.setAdapter(new MainFragmentPagerAdapter(getChildFragmentManager(), mFragmentList));
 		mainPager.setCurrentItem(0);
 		mainPager.setOnPageChangeListener(new MyOnPageChangeListener());
 	}
@@ -169,7 +163,7 @@ public class MainPageFragment extends BaseFragment {
 
 	/**
 	 * ViewPager的适配器
-	 * */
+	 */
 	class MainFragmentPagerAdapter extends FragmentStatePagerAdapter {
 		private List<Fragment> fragmentList;
 
@@ -222,11 +216,10 @@ public class MainPageFragment extends BaseFragment {
 		// CurrentTab:当前页面序号
 		// OffsetPercent:当前页面偏移的百分比
 		// offsetPixel:当前页面偏移的像素位置
-		public void onPageScrolled(int CurrentTab, float OffsetPercent,
-				int offsetPixel) {
+		public void onPageScrolled(int CurrentTab, float OffsetPercent, int offsetPixel) {
 			// 下标的移动动画
-			Animation animation = new TranslateAnimation(offset * lastpostion,
-					offset * (CurrentTab + OffsetPercent), 0, 0);
+			Animation animation = new TranslateAnimation(offset * lastpostion, offset * (CurrentTab + OffsetPercent), 0,
+					0);
 
 			lastpostion = OffsetPercent + CurrentTab;
 			// True:图片停在动画结束位置
@@ -237,27 +230,24 @@ public class MainPageFragment extends BaseFragment {
 
 		/**
 		 * 状态改变后
-		 * */
+		 */
 		public void onPageSelected(int index) {
 			if (0 == index) {
-				newsTitleTextView.setTextColor(getResources().getColor(
-						R.color.main_white));
-				campusTitleTextView.setTextColor(getResources().getColor(
-						R.color.main_deep_black));
+				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_white));
+				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
 				newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 				campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 			} else {
-				campusTitleTextView.setTextColor(getResources().getColor(
-						R.color.main_white));
-				newsTitleTextView.setTextColor(getResources().getColor(
-						R.color.main_deep_black));
+				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_white));
+				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
 				newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 				campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 			}
 		}
 	}
-	
+
 	private BroadcastReceiver newMessageReceiver;
+
 	// 注册通知
 	private void registerNotify() {
 		// 刷新push
@@ -268,11 +258,10 @@ public class MainPageFragment extends BaseFragment {
 				refreshPush();
 			}
 		};
-		IntentFilter intentFilter = new IntentFilter(
-				KHConst.BROADCAST_NEW_MESSAGE_PUSH);
+		IntentFilter intentFilter = new IntentFilter(KHConst.BROADCAST_NEW_MESSAGE_PUSH);
 		getActivity().registerReceiver(newMessageReceiver, intentFilter);
 	}
-	
+
 	private void refreshPush() {
 		int newsUnreadCount = NewsPushModel.findUnreadCount().size();
 		if (newsUnreadCount < 1) {

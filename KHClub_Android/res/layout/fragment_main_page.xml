@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/news_news_topic"
+                android:text="@string/news_circle_title"
                 android:textColor="@color/main_white"
                 android:textSize="@dimen/font_size_medium" />
 
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/news_circle_title"
+                android:text="@string/news_news_topic"
                 android:textColor="@color/main_deep_black"
                 android:textSize="@dimen/font_size_small" />
         </LinearLayout>

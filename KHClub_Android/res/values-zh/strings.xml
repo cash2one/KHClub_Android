@@ -46,6 +46,7 @@
 
 
     <!-- Main -->
+    <string name="circle_name">圈子名称</string>
     <string name="main_home_title">商务圈</string>
     <string name="main_msg_title">消息</string>
     <string name="main_contact_title">云名片</string>
@@ -148,8 +149,10 @@
 
 
     <!-- News -->
-    <string name="news_news_topic">动态●话题</string>
-    <string name="news_circle_title">圈层●门户</string>
+    <string name="circle_attention_type_name">我的圈子</string>
+    <string name="circle_recommend_type_name">推荐圈子</string>
+    <string name="news_news_topic">动态</string>
+    <string name="news_circle_title">圈子</string>
     <string name="news_circle_intro">圈层介绍</string>
     <string name="news_circle_detail_title">圈层详情</string>
     <string name="news_enter_content">请输入内容</string>

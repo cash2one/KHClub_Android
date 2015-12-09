@@ -74,8 +74,7 @@ public class CircleListFragment extends BaseFragment{
         .cacheInMemory(true)  
         .cacheOnDisk(true)  
         .bitmapConfig(Bitmap.Config.RGB_565)  
-        .build();
-		
+        .build();		
 		initListViewSet();
 		getData();		
 	}
