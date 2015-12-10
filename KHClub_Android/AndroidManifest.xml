@@ -72,6 +72,8 @@
         <activity android:name="com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity" />
 
         <!-- 动态 -->
+        <activity android:name="com.app.khclub.news.ui.activity.CirclePageActivity" >
+        </activity>
         <activity android:name="com.app.khclub.base.ui.activity.BigImgLookActivity" >
         </activity>
         <activity android:name="com.app.khclub.news.ui.activity.NewsDetailActivity" >

@@ -4,10 +4,13 @@ import java.util.List;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
@@ -23,6 +26,7 @@ import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.news.ui.activity.CircleDetailActivity;
+import com.app.khclub.news.ui.activity.CirclePageActivity;
 import com.app.khclub.news.ui.model.CircleModel;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -38,7 +42,7 @@ import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 public class CircleFragment extends BaseFragment {
 	private List<CircleModel> list;
 	private boolean ISATTENTION=true;
-	private boolean ISNOTATTENTION=true;
+	//private boolean ISNOTATTENTION=true;
 	// 下拉列表
 	@ViewInject(R.id.circle_refresh_list)
 	private PullToRefreshListView circleListView;
@@ -92,9 +96,14 @@ public class CircleFragment extends BaseFragment {
 				helper.setText(R.id.circle_name, item.getTitle());
 				// 圈子类型（是否关注）
 				if(ISATTENTION){
+				helper.setVisible(R.id.attention_btn, false);
 				helper.setVisible(R.id.circle_attention_type,true);
 				helper.setText(R.id.circle_attention_type,getResources().getString(R.string.circle_attention_type_name));
 				ISATTENTION=false;
+				}
+				if("精英游艇会".equals(item.getTitle())){
+					helper.setVisible(R.id.circle_attention_type,true);
+					helper.setText(R.id.circle_attention_type,getResources().getString(R.string.circle_recommend_type_name));
 				}
 				helper.setText(R.id.circle_people_count,"1");
 				ImageView headImageView = helper.getView(R.id.circle_image);
@@ -108,19 +117,19 @@ public class CircleFragment extends BaseFragment {
 				} else {
 					headImageView.setImageResource(R.drawable.loading_default);
 				}
-				// LinearLayout linearLayout = (LinearLayout) helper.getView();
-				// //点击事件
-				// linearLayout.setOnClickListener(new OnClickListener() {
-				// @Override
-				// public void onClick(View v) {
-				// //跳转到其他人页面
-				// Intent intent = new Intent(getActivity(),
-				// CircleDetailActivity.class);
-				// intent.putExtra(CircleDetailActivity.INTENT_CIRCLE_KEY,
-				// item);
-				// startActivityWithRight(intent);
-				// }
-				// });
+				 LinearLayout linearLayout = (LinearLayout) helper.getView();
+			    //点击事件
+				linearLayout.setOnClickListener(new OnClickListener() {
+				 @Override
+				public void onClick(View v) {
+				 //跳转到其他人页面
+				 Intent intent = new Intent(getActivity(),
+				   CirclePageActivity.class);
+				 intent.putExtra(CircleDetailActivity.INTENT_CIRCLE_KEY,
+				 item);
+				 startActivityWithRight(intent);
+				 }
+				 });
 
 			}
 		};

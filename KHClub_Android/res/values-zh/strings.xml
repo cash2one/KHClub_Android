@@ -139,7 +139,7 @@
     <string name="personal_news">个人动态</string>
     <string name="personal_title">个人头衔</string>
     <string name="personal_title_prompt">请介绍您更多的身份（10个字以内）</string>
-    <string name="personal_title_too_long">内容过长</string>    
+    <string name="personal_title_too_long">内容过长</string>
     <string name="collect_success">名片已收藏</string>
     <string name="collect_fail">收藏失败</string>
     <string name="cancel_collect_success">取消收藏成功</string>
@@ -149,6 +149,11 @@
 
 
     <!-- News -->
+    <string name="club_main_page">圈子主页</string>
+    <string name="news_club_expert">圈达人</string>
+    <string name="news_circle_friend">圈友:</string>
+    <string name="news_master_name">圈主：</string>
+    <string name="news_circle_name">圈子名称：</string>
     <string name="circle_attention_type_name">我的圈子</string>
     <string name="circle_recommend_type_name">推荐圈子</string>
     <string name="news_news_topic">动态</string>
@@ -172,13 +177,14 @@
     <string name="news_comment">评论</string>
     <string name="news_like">赞</string>
     <!-- News -->
-    
+
+
     <!-- Contact -->
     <string name="contact_none">没有未添加的联系人</string>
     <string name="contact_add_friend">添加通讯录好友</string>
     <string name="contact_add">添加</string>
     <string name="contact_added">已添加</string>
-	<!-- Contact -->
+    <!-- Contact -->
 
     <string name="reply">回复</string>
     <string name="confirm_delete">确认删除信息？</string>
