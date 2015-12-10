@@ -80,9 +80,23 @@ public interface KHConst {
 	public static final String LIKE_OR_CANCEL = DOMIN + "/likeOrCancel";
 	// 新闻详情
 	public static final String NEWS_DETAIL = DOMIN + "/newsDetail";
+	// 圈子列表 废弃
+	public static final String GET_CIRCLE_LIST = DOMIN + "/getCircleList";
+	// 创建圈子
+	public static final String POST_NEW_CIRCLE = DOMIN + "/postNewCircle";
+	// 修改圈子信息
+	public static final String MODIFY_CIRCLE = DOMIN + "/modifyCircle";
 	// 圈子列表
-	public static final String GET_CIRCLE_LIST = DOMIN + "/getCircleList";	
-	// //////////////////////////////////////////////个人信息////////////////////////////////////////////////
+	public static final String GET_PERSONAL_CIRCLE_LIST = DOMIN + "/getPersonalCircleList";
+	// 圈子主页列表
+	public static final String GET_CIRCLE_HOME_LIST = DOMIN + "/getCircleHomeList";	
+	// 我的圈子封面列表
+	public static final String GET_MY_CIRCLE_COVER = DOMIN + "/getMyCircleCover";
+	// 关注或者取消关注圈子
+	public static final String FOLLOW_OR_UNFOLLOW_CIRCLE = DOMIN + "/followOrUnfollowCircle";
+	// 圈达人列表
+	public static final String GET_CIRCLE_MEMBERS = DOMIN + "/getCircleMembers";
+	//////////////////////////////////////////////个人信息////////////////////////////////////////////////
 	// 修改个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION = DOMIN
 			+ "/changePersonalInformation";
