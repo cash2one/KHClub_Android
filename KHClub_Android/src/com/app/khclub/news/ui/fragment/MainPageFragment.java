@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +29,7 @@ import com.app.khclub.R;
 import com.app.khclub.base.model.NewsPushModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.news.ui.activity.CreateCircleActivity;
 import com.app.khclub.news.ui.activity.NoticeActivity;
 import com.app.khclub.news.ui.activity.PublishNewsActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -65,6 +67,8 @@ public class MainPageFragment extends BaseFragment {
 	private ImageView imageCursor;
 	// 当前页卡编号
 	private int currIndex;
+	//当前页卡
+	private int currpage;
 	// 横线图片宽度
 	private int cursorWidth;
 	// 图片移动的偏移量
@@ -86,11 +90,17 @@ public class MainPageFragment extends BaseFragment {
 		InitViewPager();
 		// 点击发布按钮
 		publishBtn.setOnClickListener(new OnClickListener() {
-
+         
 			@Override
 			public void onClick(View arg0) {
-				Intent intentUsrMain = new Intent(mContext, PublishNewsActivity.class);
-				startActivityWithRight(intentUsrMain);
+				if (currpage == 0) {
+					Intent intentUsrMain = new Intent(mContext, CreateCircleActivity.class);
+					startActivityWithRight(intentUsrMain);
+				}
+				if (currpage == 1) {
+					Intent intentUsrMain = new Intent(mContext, PublishNewsActivity.class);
+					startActivityWithRight(intentUsrMain);
+				}
 			}
 		});
 		// 点击通知按钮
@@ -123,7 +133,6 @@ public class MainPageFragment extends BaseFragment {
 		int screenWidth = getResources().getDisplayMetrics().widthPixels;
 		int contentLeftMargin = ((FrameLayout.LayoutParams) titleContent.getLayoutParams()).leftMargin;
 		int contentWidth = screenWidth - (2 * contentLeftMargin);
-
 		// 设置游标的尺寸与位置
 		LayoutParams cursorParams = (LayoutParams) imageCursor.getLayoutParams();
 		cursorWidth = cursorParams.width;
@@ -210,9 +219,12 @@ public class MainPageFragment extends BaseFragment {
 		float lastpostion = 0;
 
 		public void onPageScrollStateChanged(int index) {
+			
 			currIndex = index;
+			
+			
 		}
-
+		
 		// CurrentTab:当前页面序号
 		// OffsetPercent:当前页面偏移的百分比
 		// offsetPixel:当前页面偏移的像素位置
@@ -220,7 +232,7 @@ public class MainPageFragment extends BaseFragment {
 			// 下标的移动动画
 			Animation animation = new TranslateAnimation(offset * lastpostion, offset * (CurrentTab + OffsetPercent), 0,
 					0);
-
+		
 			lastpostion = OffsetPercent + CurrentTab;
 			// True:图片停在动画结束位置
 			animation.setFillAfter(true);
@@ -232,6 +244,7 @@ public class MainPageFragment extends BaseFragment {
 		 * 状态改变后
 		 */
 		public void onPageSelected(int index) {
+			currpage=index;
 			if (0 == index) {
 				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_white));
 				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));

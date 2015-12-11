@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp" >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-               android:paddingTop="10dp">
+                android:paddingTop="10dp" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -41,7 +42,6 @@
             </LinearLayout>
 
             <LinearLayout
-                
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -76,6 +76,40 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <include layout="@layout/activity_circle_page_haeder_expert"/>
+     <!--引入达人部分  -->
+    <include layout="@layout/activity_circle_page_haeder_expert" />
+
+    <LinearLayout
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <View
+            android:layout_width="47dp"
+            android:layout_height="1dp" />
+        <View
+            android:background="@color/main_gary"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
+
+        <TextView
+            android:textSize="20sp"
+            android:id="@+id/circle_attention_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:background="@color/main_gold"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+             />
+    </LinearLayout>
 
 </LinearLayout>

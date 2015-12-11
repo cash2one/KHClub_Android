@@ -165,7 +165,6 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 		}
 
 		selectDialog.show();
-
 	}
 
 	private void addNewsImageView(String filePath) {
@@ -194,20 +193,20 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 				headImageOptions);
 
 		// 设置点击查看大图事件
-		imageView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
+				imageView.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
 
-				final String tmpFilePath = (String) v.getTag();
+						final String tmpFilePath = (String) v.getTag();
 
-				Intent intent = new Intent(PublishNewsActivity.this,
-						PublisPhotoHandelActivity.class);
-				intent.putExtra(PublisPhotoHandelActivity.INTENT_KEY,
-						tmpFilePath);
-				startActivityForResult(intent, PHOTO_DELETE);
+						Intent intent = new Intent(PublishNewsActivity.this,
+								PublisPhotoHandelActivity.class);
+						intent.putExtra(PublisPhotoHandelActivity.INTENT_KEY,
+								tmpFilePath);
+						startActivityForResult(intent, PHOTO_DELETE);
 
-			}
-		});
+					}
+				});
 
 	}
 
@@ -264,7 +263,6 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 
 	// 发布动态
 	private void publishNews() {
-
 		if ("".equals(contentEditText.getText().toString().trim())
 				&& addImageLayout.getChildCount() == 1) {
 			ToastUtil.show(this, R.string.news_content_image_empty);

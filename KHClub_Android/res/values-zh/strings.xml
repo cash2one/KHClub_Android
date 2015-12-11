@@ -149,6 +149,12 @@
 
 
     <!-- News -->
+    <string name="create_circle_introduce">圈子介绍</string>
+    <string name="create_circle_name">圈子称呢</string>
+    <string name="circle_introduce_limit">(200字以内)</string>	
+    <string name="circle_name_limit">(七个字以内)</string>
+    <string name="create_circle_title">创建圈子</string>
+    <string name="create_uploading_cover">上传封面</string>
     <string name="club_main_page">圈子主页</string>
     <string name="news_club_expert">圈达人</string>
     <string name="news_circle_friend">圈友:</string>

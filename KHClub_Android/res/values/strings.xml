@@ -149,8 +149,14 @@
 
 
     <!-- News -->
-      <string name="club_main_page">Club Page</string>
-     <string name="news_club_expert">Club Expert</string>
+    <string name="create_circle_introduce">Club Introduce</string>
+    <string name="create_circle_name">Club Name</string>
+    <string name="circle_name_limit">Content can\'t exceed 7 characters</string>
+    <string name="circle_introduce_limit">Content can\'t exceed 200 characters</string>
+    <string name="create_circle_title">Create Club</string>
+    <string name="create_uploading_cover">Uploading Cover</string>
+    <string name="club_main_page">Club Page</string>
+    <string name="news_club_expert">Club Expert</string>
     <string name="news_circle_friend">Club Friend:</string>
     <string name="news_master_name">Master Name:</string>
     <string name="news_circle_name">Circle Name:</string>
@@ -181,14 +187,15 @@
     <string name="news_comment">Comment</string>
     <string name="news_like">Like</string>
     <!-- News -->
-    
-	<!-- Contact -->
+
+
+    <!-- Contact -->
     <string name="contact_none">None</string>
     <string name="contact_add_friend">Contact</string>
     <string name="contact_add">Add</string>
     <string name="contact_added">Added</string>
-	<!-- Contact -->    
-    
+    <!-- Contact -->
+
     <string name="publish_news">Send</string>
     <string name="text_ack_msg">Read</string>
     <string name="text_delivered_msg">Delivered</string>
@@ -511,10 +518,9 @@
     <string name="my_collect_code">Collection of cards</string>
     <string name="exchange_card">（Exchange card）</string>
     <string name="picture_number_count"></string>
- 
-   
     
-   
+    
+    
     
 
 </resources>
