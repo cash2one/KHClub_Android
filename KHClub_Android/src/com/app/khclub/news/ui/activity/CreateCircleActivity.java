@@ -291,17 +291,7 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 	}
 
-	// 删除状态图片
-	private void deleteNewsImageView(String tag) {
-		// 删除
-//		int subviewsCount = addImageLayout.getChildCount();
-//		for (int i = 0; i < subviewsCount; i++) {
-//			View view = addImageLayout.getChildAt(i);
-//			if (null != view.getTag() && view.getTag().equals(tag)) {
-//				addImageLayout.removeViewAt(i);
-//				break;
-//			}
-		}
+
 
 	private void addNewsImageView(String filePath) {
 		File file = new File(filePath);
@@ -313,39 +303,12 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		if (isclub) {
 			// 设置圈子头像
 			ImageLoader.getInstance().displayImage("file://" + filePath, coverImageView, headImageOptions);
-			// 设置点击查看大图事件
-			coverImageView.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-
-					final String tmpFilePath = (String) v.getTag();
-
-					Intent intent = new Intent(CreateCircleActivity.this,
-							PublisPhotoHandelActivity.class);
-					intent.putExtra(PublisPhotoHandelActivity.INTENT_KEY,
-							tmpFilePath);
-					startActivityForResult(intent, PHOTO_DELETE);
-
-				}
-			});
+			
 
 		} else {
 			// 设置二维码
 			ImageLoader.getInstance().displayImage("file://" + filePath, qrImageView, headImageOptions);
-			qrImageView.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-
-					final String tmpFilePath = (String) v.getTag();
-
-					Intent intent = new Intent(CreateCircleActivity.this,
-							PublisPhotoHandelActivity.class);
-					intent.putExtra(PublisPhotoHandelActivity.INTENT_KEY,
-							tmpFilePath);
-					startActivityForResult(intent, PHOTO_DELETE);
-
-				}
-			});
+			
 		}
 
 	}
@@ -498,16 +461,16 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 				break;
 
-			 //删除选中的照片
-			 case PHOTO_DELETE:
-			 if
-			 (data.hasExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL))
-			 {
-			 String tmpFilePath =
-			 data.getStringExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL);
-			 deleteNewsImageView(tmpFilePath);
-			 }
-			 break;
+//			 //删除选中的照片
+//			 case PHOTO_DELETE:
+//			 if
+//			 (data.hasExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL))
+//			 {
+//			 String tmpFilePath =
+//			 data.getStringExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL);
+//			 deleteNewsImageView(tmpFilePath);
+//			 }
+//			 break;
 			}
 		} else {
 			// 恢复点击

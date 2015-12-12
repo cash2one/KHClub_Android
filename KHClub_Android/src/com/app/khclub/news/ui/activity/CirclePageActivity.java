@@ -158,46 +158,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				break;
 			}
 		}
-//		groupViewPage.setAdapter(new MyPagerAdapter());
-//		groupViewPage.setOnPageChangeListener(opcl);
-		
-//		final CountDownTimer verifyCountdownTimer = new CountDownTimer(6000000, 2000) {
-//			@Override
-//			public void onTick(long millisUntilFinished) {
-//				int position = groupViewPage.getCurrentItem()+1;
-//				if (position > 3) {
-//					position = 0;
-//				}
-//				groupViewPage.setCurrentItem(position, true);
-//				
-//				//page提示部分变化
-//				for (int i = 0; i < images.length; i++) {
-//					if (i <= 3) {
-//						for(View view : pageViews) {
-//							view.setBackgroundResource(R.color.main_clear_white);
-//						}
-//					}
-//				}
-//				if (position == 3) {
-//					position = 0;
-//				}
-//				pageViews.get(position).setBackgroundResource(R.color.main_white);						
-//			}
-//			@Override
-//			public void onFinish() {
-//			}
-//		};			
-//		
-//		new Timer().schedule(new TimerTask() {
-//			@Override
-//			public void run() {
-//				// 开始倒计时
-//				verifyCountdownTimer.start();				
-//			}
-//		}, 2000);
-		
 	}
-
 	
 	// 动态listview
 	@ViewInject(R.id.news_circle_listView)
