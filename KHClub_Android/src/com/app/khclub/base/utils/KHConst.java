@@ -67,7 +67,7 @@ public interface KHConst {
 	public static final String FIND_PWD = DOMIN + "/findPwd";
 	// 用户登录
 	public static final String LOGIN_USER = DOMIN + "/loginUser";
-	// //////////////////////////////////////////////首页'状态'部分////////////////////////////////////////////////
+	//////////////////////////////////////////////首页'状态'部分////////////////////////////////////////////////
 	// 发布状态
 	public static final String PUBLISH_NEWS = DOMIN + "/publishNews";
 	// 状态新闻列表
@@ -80,6 +80,7 @@ public interface KHConst {
 	public static final String LIKE_OR_CANCEL = DOMIN + "/likeOrCancel";
 	// 新闻详情
 	public static final String NEWS_DETAIL = DOMIN + "/newsDetail";
+	//////////////////////////////////////////////首页'圈子'部分////////////////////////////////////////////////
 	// 圈子列表 废弃
 	public static final String GET_CIRCLE_LIST = DOMIN + "/getCircleList";
 	// 创建圈子
@@ -91,11 +92,13 @@ public interface KHConst {
 	// 圈子主页列表
 	public static final String GET_CIRCLE_HOME_LIST = DOMIN + "/getCircleHomeList";	
 	// 我的圈子封面列表
-	public static final String GET_MY_CIRCLE_COVER = DOMIN + "/getMyCircleCover";
+//	public static final String GET_MY_CIRCLE_COVER = DOMIN + "/getMyCircleCover";
 	// 关注或者取消关注圈子
 	public static final String FOLLOW_OR_UNFOLLOW_CIRCLE = DOMIN + "/followOrUnfollowCircle";
 	// 圈达人列表
 	public static final String GET_CIRCLE_MEMBERS = DOMIN + "/getCircleMembers";
+	// 我关注的圈子列表
+	public static final String GET_MY_FOLLOW_CIRCLE_LIST = DOMIN + "/getMyFollowCircleList";
 	//////////////////////////////////////////////个人信息////////////////////////////////////////////////
 	// 修改个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION = DOMIN
