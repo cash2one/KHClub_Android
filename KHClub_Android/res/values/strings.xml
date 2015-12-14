@@ -149,6 +149,7 @@
 
 
     <!-- News -->
+    <string name="circle_attention_fail">Attention Fail</string>
     <string name="create_circle_introduce">Club Introduce</string>
     <string name="create_circle_name">Club Name</string>
     <string name="circle_name_limit">Content can\'t exceed 7 characters</string>
@@ -518,6 +519,7 @@
     <string name="my_collect_code">Collection of cards</string>
     <string name="exchange_card">（Exchange card）</string>
     <string name="picture_number_count"></string>
+    
     
     
     

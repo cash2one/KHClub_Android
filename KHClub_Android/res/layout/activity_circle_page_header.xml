@@ -12,8 +12,8 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="57dp"
+            android:layout_height="57dp"
             android:padding="5dp"
             android:src="@drawable/default_avatar" />
 
@@ -57,7 +57,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,8 +101,9 @@
         android:gravity="center_horizontal" >
 
         <TextView
+            android:text="取消关注"
             android:textSize="20sp"
-            android:id="@+id/circle_attention_btn"
+            android:id="@+id/circle_unattention_btn"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:background="@color/main_gold"

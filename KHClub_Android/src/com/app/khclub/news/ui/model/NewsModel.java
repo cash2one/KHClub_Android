@@ -10,6 +10,8 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 
+import android.util.Log;
+
 public class NewsModel implements Serializable {
 
 	/**
@@ -51,7 +53,6 @@ public class NewsModel implements Serializable {
 	// 内容注入
 	@SuppressWarnings("unchecked")
 	public void setContentWithJson(JSONObject object) {
-
 		if (object.containsKey("user_id")) {
 			setUid(object.getString("user_id"));
 		}
@@ -93,7 +94,7 @@ public class NewsModel implements Serializable {
 		if (object.containsKey("is_like")) {
 			setIsLike(object.getString("is_like"));
 		}
-
+		Log.i("wwww", "1111");
 		// 图片的转换
 		if (object.containsKey("images")) {
 			List<JSONObject> JImageObj = (List<JSONObject>) object
@@ -110,6 +111,7 @@ public class NewsModel implements Serializable {
 		if (object.containsKey("add_time")) {
 			setTimesTamp(object.getString("add_time"));
 		}
+		
 	}
 
 	public String getUid() {

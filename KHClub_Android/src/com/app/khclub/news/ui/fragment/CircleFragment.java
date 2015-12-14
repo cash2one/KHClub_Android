@@ -1,5 +1,7 @@
 package com.app.khclub.news.ui.fragment;
 
+import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 
 import android.content.Intent;
@@ -12,24 +14,25 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import cn.sharesdk.tencent.qzone.h;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
 import com.app.khclub.base.adapter.HelloHaAdapter;
 import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
-import com.app.khclub.base.adapter.MultiItemTypeSupport;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
+import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
-import com.app.khclub.news.ui.activity.CircleDetailActivity;
+import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.news.ui.activity.CirclePageActivity;
+import com.app.khclub.news.ui.activity.CreateCircleActivity;
 import com.app.khclub.news.ui.model.CircleItemModel;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -37,6 +40,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleLis
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -44,9 +48,10 @@ import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
 public class CircleFragment extends BaseFragment {
 	private static final String FOLLOW_LIST = "followList";
+	private static final String CIRCLE_ID = "circle_id";
+	private static final String CIRCLE_ISFOLLOW= "isFollow";
 	private static final String UNFOLLOW_LIST = "unfollowList";
 	private List<CircleItemModel> followList, unfollowList, dataList;
-	private boolean ISATTENTION = true;
 	// private boolean ISNOTATTENTION=true;
 	// 下拉列表
 	@ViewInject(R.id.circle_refresh_list)
@@ -60,12 +65,12 @@ public class CircleFragment extends BaseFragment {
 	// 是否下拉刷新
 	private boolean isPullDowm = false;
 	// 是否是最后一页
-	private boolean ishide = true;
+	private boolean isattention = true;
 	// private BitmapUtils bitmapUtils;
 	// 新图片缓存工具 头像
 	DisplayImageOptions headImageOptions;
-	// 当前的页数
-	private int currentPage = 1;
+	// item位置
+	private int position;
 
 	@Override
 	public int setLayoutId() {
@@ -94,42 +99,42 @@ public class CircleFragment extends BaseFragment {
 	private void initListViewSet() {
 		// 设置内容
 		circleAdapter = new HelloHaAdapter<CircleItemModel>(getActivity(), R.layout.fragment_circle_attention) {
-			private int position;
 			private int datacount;
 
 			@Override
 			protected void convert(HelloHaBaseAdapterHelper helper, final CircleItemModel item) {
-				//item 位置
-				position = dataList.indexOf(item);
+				// item 位置
+				position = helper.getPosition();
 				datacount = dataList.size();
+				// helper.setOnClickListener(viewId, listener)
 				// 圈子标题
 				helper.setText(R.id.circle_name, item.getCircle_name());
 				// 圈子类型（是否关注）
-				if (followList.get(0).getId().equals(item.getId())) {
-					helper.setVisible(R.id.circle_attention_type, true);
-					helper.setText(R.id.circle_attention_type,
-							getResources().getString(R.string.circle_attention_type_name));
-				} else {
-					helper.setVisible(R.id.circle_attention_type, false);
+				if (followList.size() > 0) {
+					if (followList.get(0).getId().equals(item.getId())) {
+						helper.setVisible(R.id.circle_attention_type, true);
+						helper.setText(R.id.circle_attention_type,
+								getResources().getString(R.string.circle_attention_type_name));
+					} else {
+						helper.setVisible(R.id.circle_attention_type, false);
+					}
 				}
-				if (unfollowList.get(0).getId().equals(item.getId())) {
-					helper.setVisible(R.id.circle_recommend_type, true);
-					helper.setText(R.id.circle_recommend_type,
-							getResources().getString(R.string.circle_recommend_type_name));
-				} else {
-					helper.setVisible(R.id.circle_recommend_type, false);
+				if (unfollowList.size() > 0) {
+					if (unfollowList.get(0).getId().equals(item.getId())) {
+						helper.setVisible(R.id.circle_recommend_type, true);
+						helper.setText(R.id.circle_recommend_type,
+								getResources().getString(R.string.circle_recommend_type_name));
+					} else {
+						helper.setVisible(R.id.circle_recommend_type, false);
+					}
 				}
-				Log.i("wwww", datacount+"");
-				Log.i("wwww", position+"");
-				if(position>=(followList.size()-unfollowList.size())){
+				if (position >= (followList.size() - unfollowList.size())) {
 					helper.setVisible(R.id.recommend_btn, true);
-				}else {
-					helper.setVisible(R.id.recommend_btn,false);
+				} else {
+					helper.setVisible(R.id.recommend_btn, false);
 				}
-				
 				helper.setText(R.id.circle_people_count, item.getFollow_quantity());
 				ImageView headImageView = helper.getView(R.id.circle_image);
-
 				String image = item.getCircle_cover_sub_image();
 				LogUtils.i(KHConst.ATTACHMENT_ADDR + image + " " + image, 1);
 				// 加入图片
@@ -139,6 +144,16 @@ public class CircleFragment extends BaseFragment {
 				} else {
 					headImageView.setImageResource(R.drawable.loading_default);
 				}
+				helper.setOnClickListener(R.id.recommend_btn, new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						recommend(item.getId());
+						Log.i("wwww", dataList.get(position).getId());
+						Log.i("wwww", item.getId());
+						Log.i("wwww", position+"");
+					}
+				});
 				LinearLayout linearLayout = (LinearLayout) helper.getView();
 				// 点击事件
 				linearLayout.setOnClickListener(new OnClickListener() {
@@ -146,7 +161,11 @@ public class CircleFragment extends BaseFragment {
 					public void onClick(View v) {
 						// 跳转到其他人页面
 						Intent intent = new Intent(getActivity(), CirclePageActivity.class);
-						// intent.putExtra(CircleDetailActivity.INTENT_CIRCLE_KEY,item);
+						intent.putExtra(CIRCLE_ID, item.getId());
+						if (position >= (followList.size() - unfollowList.size())) {
+							
+						    intent.putExtra(CIRCLE_ISFOLLOW,"no");
+						}
 						startActivityWithRight(intent);
 					}
 				});
@@ -155,17 +174,18 @@ public class CircleFragment extends BaseFragment {
 
 		// 适配器绑定
 		circleListView.setAdapter(circleAdapter);
-		circleListView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// 跳转到其他人页面
-				// Intent intent = new Intent(getActivity(),
-				// CircleDetailActivity.class);
-				// intent.putExtra(CircleDetailActivity.INTENT_CIRCLE_KEY,
-				// circleAdapter.getItem(position - 1));
-				// startActivityWithRight(intent);
-			}
-		});
+		// circleListView.setOnItemClickListener(new OnItemClickListener() {
+		// @Override
+		// public void onItemClick(AdapterView<?> parent, View view, int
+		// position, long id) {
+		// 跳转到其他人页面
+		// Intent intent = new Intent(getActivity(),
+		// CircleDetailActivity.class);
+		// intent.putExtra(CircleDetailActivity.INTENT_CIRCLE_KEY,
+		// circleAdapter.getItem(position - 1));
+		// startActivityWithRight(intent);
+		// }
+		// });
 		circleListView.setMode(Mode.PULL_FROM_START);
 		circleListView.setPullToRefreshOverScrollEnabled(false);
 		// 设置刷新事件监听
@@ -175,7 +195,6 @@ public class CircleFragment extends BaseFragment {
 			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 下拉刷新
 				isPullDowm = true;
-
 				getData();
 			}
 
@@ -185,27 +204,73 @@ public class CircleFragment extends BaseFragment {
 
 		});
 
-		// // 设置底部自动刷新
-		// circleListView.setOnLastItemVisibleListener(new
-		// OnLastItemVisibleListener() {
-		//
-		// @Override
-		// public void onLastItemVisible() {
-		// if (isLast) {
-		// circleListView.onRefreshComplete();
-		// return;
-		// }
-		// currentPage++;
-		// // 底部自动加载
-		// circleListView.setMode(Mode.PULL_FROM_END);
-		// circleListView.setRefreshing(true);
-		// isPullDowm = false;
-		// getData();
-		// }
-		// });
-
 		// 快宿滑动时不加载图片
 		circleListView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), false, true));
+	}
+
+	// 关注请求
+	private void recommend(String circle_id) {
+		// TODO Auto-generated method stub
+		RequestParams params = new RequestParams();
+		final UserModel userModel = UserManager.getInstance().getUser();
+		params.addBodyParameter("user_id", userModel.getUid() + "");
+		params.addBodyParameter("circle_id", circle_id);
+		//if (position >= (followList.size() - unfollowList.size())) {
+			// 设置为关注
+		params.addBodyParameter("isFollow", "1");
+	//		isattention = true;
+//		} else {
+//			params.addBodyParameter("isFollow", "0");
+//			isattention = false;
+//		}
+		// Log.i("wwww", "关注成功");
+
+		// 关注
+		HttpManager.post(KHConst.FOLLOW_OR_UNFOLLOW_CIRCLE, params,
+				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse.getIntValue("status");
+						Log.i("wwww", status + "");
+						switch (status) {
+						case KHConst.STATUS_SUCCESS:
+							showLoading(getActivity(), "正在刷新");
+							ToastUtil.show(getActivity(), "关注成功");
+							getData();
+							circleAdapter.replaceAll(dataList);
+							hideLoading();
+							break;
+						case KHConst.STATUS_FAIL:
+							Toast.makeText(getActivity(), R.string.circle_attention_fail, Toast.LENGTH_SHORT).show();
+							break;
+						}
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1, String flag) {
+						super.onFailure(arg0, arg1, flag);
+						hideLoading();
+						Toast.makeText(getActivity(), R.string.net_error, Toast.LENGTH_SHORT).show();
+					}
+				}, null));
+
+	}
+
+	private void freshAttentionData() {
+		// TODO Auto-generated method stub
+		Log.i("wwww", position+"");
+		if (isattention) {
+			CircleItemModel attention = dataList.get(position);
+			followList.add(attention);
+			unfollowList.remove(position);
+			circleAdapter.notifyDataSetChanged();
+		} else {
+			CircleItemModel attention = dataList.get(position);
+			unfollowList.add(attention);
+			followList.remove(position);
+			circleAdapter.notifyDataSetChanged();
+		}
 	}
 
 	/**
@@ -214,7 +279,7 @@ public class CircleFragment extends BaseFragment {
 	private void getData() {
 		final UserModel userModel = UserManager.getInstance().getUser();
 		String path = KHConst.GET_PERSONAL_CIRCLE_LIST + "?user_id=" + userModel.getUid();
-		Log.i("wwww", path);
+		// Log.i("wwww", path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
 			@Override
@@ -223,12 +288,6 @@ public class CircleFragment extends BaseFragment {
 				int status = jsonResponse.getInteger(KHConst.HTTP_STATUS);
 				if (status == KHConst.STATUS_SUCCESS) {
 					JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
-					// // 最后一页
-					// if (0 < jResult.getIntValue("is_last")) {
-					// isLast = true;
-					// } else {
-					// isLast = false;
-					// }
 					// 获取动态列表
 					String unfollowJsonArray = jResult.getString(UNFOLLOW_LIST);
 					String followJsonArray = jResult.getString(FOLLOW_LIST);
@@ -246,7 +305,6 @@ public class CircleFragment extends BaseFragment {
 					circleListView.setMode(Mode.PULL_FROM_START);
 
 				}
-
 				if (status == KHConst.STATUS_FAIL) {
 					circleListView.onRefreshComplete();
 					circleListView.setMode(Mode.PULL_FROM_START);
@@ -258,12 +316,28 @@ public class CircleFragment extends BaseFragment {
 				super.onFailure(arg0, arg1, flag);
 				circleListView.onRefreshComplete();
 				// 是否是最后一页
-
 				circleListView.setMode(Mode.PULL_FROM_START);
 
 			}
 
 		}, null));
 	}
+ /*   public  interface freshCircleData{
+    	void fresh();
+    }*/
+	
+	 Fresh fresh =new Fresh();
+     class Fresh implements Serializable{
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public void fresh() {
+			// TODO Auto-generated method stub
+			getData();
+			circleAdapter.replaceAll(dataList);
+		}}
+   
 }

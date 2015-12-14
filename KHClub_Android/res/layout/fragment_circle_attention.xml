@@ -64,14 +64,16 @@
                 android:text="0" />
 
             <RelativeLayout
+                android:focusable="true"
+                android:id="@+id/recommend_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center_vertical" >
                 <Button
                     android:id="@+id/recommend_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="15dp"
