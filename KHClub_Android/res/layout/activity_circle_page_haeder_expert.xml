@@ -8,7 +8,7 @@
         android:layout_width="@dimen/head_image_size_small"
         android:layout_height="@dimen/head_image_size_small"
         android:layout_marginLeft="7dp"
-        android:src="@drawable/smiley_minus_btn_pressed" />
+        android:src="@drawable/ring" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,39 +19,51 @@
         android:textSize="15sp" />
 
     <ImageView
+        android:id="@+id/members_image0"
         android:layout_width="@dimen/head_image_size_small"
         android:layout_height="@dimen/head_image_size_small"
         android:layout_marginLeft="7dp"
-        android:src="@drawable/video_download_btn_nor" />
+        android:src="@drawable/default_avatar"
+        android:visibility="gone" />
 
     <ImageView
+        android:id="@+id/members_image1"
         android:layout_width="@dimen/head_image_size_small"
         android:layout_height="@dimen/head_image_size_small"
         android:layout_marginLeft="7dp"
-        android:src="@drawable/video_download_btn_nor" />
+        android:src="@drawable/default_avatar"
+        android:visibility="gone" /> 
 
     <ImageView
+        android:id="@+id/members_image2"
         android:layout_width="@dimen/head_image_size_small"
         android:layout_height="@dimen/head_image_size_small"
         android:layout_marginLeft="7dp"
-        android:src="@drawable/video_download_btn_nor" />
+        android:src="@drawable/default_avatar"
+        android:visibility="gone" />
 
     <ImageView
+        android:id="@+id/members_image3"
         android:layout_width="@dimen/head_image_size_small"
         android:layout_height="@dimen/head_image_size_small"
         android:layout_marginLeft="7dp"
-        android:src="@drawable/video_download_btn_nor" />
+        android:src="@drawable/default_avatar"
+        android:visibility="gone" />
 
     <ImageView
+        android:id="@+id/members_image4"
         android:layout_width="@dimen/head_image_size_small"
         android:layout_height="@dimen/head_image_size_small"
         android:layout_marginLeft="7dp"
-        android:src="@drawable/video_download_btn_nor" />
+        android:src="@drawable/default_avatar"
+        android:visibility="gone" />
 
     <ImageView
+        android:id="@+id/members_image5"
         android:layout_width="@dimen/head_image_size_small"
         android:layout_height="@dimen/head_image_size_small"
         android:layout_marginLeft="7dp"
-        android:src="@drawable/video_download_btn_nor" />
+        android:src="@drawable/default_avatar"
+        android:visibility="gone" />
 
 </LinearLayout>

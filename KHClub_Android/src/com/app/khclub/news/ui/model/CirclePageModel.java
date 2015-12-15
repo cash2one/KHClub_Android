@@ -1,5 +1,6 @@
 package com.app.khclub.news.ui.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,11 @@ import com.app.khclub.R.string;
 import com.app.khclub.base.model.ImageModel;
 import com.app.khclub.base.utils.KHConst;
 
-public class CirclePageModel {
+public class CirclePageModel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String circleId;
 	// 圈子ID
 	private String userID;
@@ -38,7 +43,7 @@ public class CirclePageModel {
 	private String circleUrl;
 	// 圈子网址
 	private String isFollow;
-
+	//圈子达人头像
 	// 用户是否点赞
 	// 内容注入
 	@SuppressWarnings("unchecked")

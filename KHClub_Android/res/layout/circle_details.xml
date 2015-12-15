@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/layout_title_bar" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/loading_default" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp" >
+
+        <TextView
+            android:id="@+id/circle_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="圈子名称"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/circle_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/circle_name"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/circle_like_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="12dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="12dp"
+            android:text="0"
+            android:textSize="10sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_toLeftOf="@id/circle_like_tv"
+            android:src="@drawable/xinxi_03" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_gary" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp" >
+
+        <TextView
+            android:id="@+id/circle_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="圈层介绍"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/circle_introduce_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/circle_info"
+            android:layout_marginLeft="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="13sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/main_gary" />
+    <!-- 地址 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp" >
+
+        <ImageView
+            android:id="@+id/localtion_img"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/location_icon" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/localtion_img"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/circle_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/main_gary" />
+        </LinearLayout>
+    </RelativeLayout>
+    <!-- 圈主电话 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp" >
+
+        <ImageView
+            android:id="@+id/card_phone"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_phone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/card_phone"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/card_phone_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/main_gary" />
+        </LinearLayout>
+    </RelativeLayout>
+    <!-- 微信公众号 -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp" >
+
+        <ImageView
+            android:id="@+id/icon_weixin"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_weixin" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/icon_weixin"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/circle_wx_num"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/main_gary" />
+        </LinearLayout>
+    </RelativeLayout>
+    <!-- 网址 -->
+
+    <RelativeLayout
+        android:id="@+id/relativelayout_web"
+        android:layout_width="match_parent"
+        android:layout_height="35dp" >
+
+        <ImageView
+            android:id="@+id/icon_web"
+            android:layout_width="35dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_web" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/icon_web"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/circle_web_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:textSize="13sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/main_gary" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_centerInParent="true"
+            android:background="@color/main_gold"
+            android:text="编辑圈子"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</LinearLayout>

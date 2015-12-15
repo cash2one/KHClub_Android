@@ -7,7 +7,6 @@ public interface KHConst {
 	public static final String DOMIN = "http://114.215.95.23/khclub_php/index.php/Home/MobileApi";
 	public static final String ATTACHMENT_ADDR = "http://114.215.95.23/khclub_php/Uploads/";
 	public static final String ROOT_PATH = "http://114.215.95.23/khclub_php/";
-
 	public static final int STATUS_SUCCESS = 1;// 接口返回成功
 	public static final int STATUS_FAIL = 0;// 接口返回失败
 	public static final String HTTP_MESSAGE = "message"; // 返回值信息

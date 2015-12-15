@@ -7,14 +7,18 @@
     android:paddingTop="5dp" >
 
     <LinearLayout
+        android:id="@+id/circle_page_head_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
         android:orientation="horizontal" >
 
         <ImageView
+            android:id="@+id/circle_cover_image"
             android:layout_width="57dp"
             android:layout_height="57dp"
-            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/default_avatar" />
 
         <LinearLayout
@@ -27,8 +31,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp" >
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -44,8 +47,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp" >
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -56,17 +58,36 @@
                     android:id="@+id/news_master_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/circle_unattention_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="27dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/filet_03"
+                        android:gravity="center"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="取消关注"
+                        android:textSize="15sp" />
+                </RelativeLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp" >
+                android:orientation="horizontal" >
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/news_circle_friend" />
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/member2x" />
 
                 <TextView
                     android:id="@+id/news_circle_friend"
@@ -75,41 +96,25 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-     <!--引入达人部分  -->
+    <!-- 引入达人部分 -->
+
     <include layout="@layout/activity_circle_page_haeder_expert" />
 
     <LinearLayout
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" >
 
         <View
             android:layout_width="47dp"
             android:layout_height="1dp" />
+
         <View
-            android:background="@color/main_gary"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
-        
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal" >
-
-        <TextView
-            android:text="取消关注"
-            android:textSize="20sp"
-            android:id="@+id/circle_unattention_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:background="@color/main_gold"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-             />
+            android:layout_height="1dp"
+            android:background="@color/main_gary" />
     </LinearLayout>
 
 </LinearLayout>
