@@ -130,44 +130,45 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 	}
 
-//	private void initUI() {
-//		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
-//				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
-//				.bitmapConfig(Bitmap.Config.RGB_565).build();
-//		// 标题
-//		titleTextView.setText(circleModel.getTitle());
-//		// 介绍
-//		introTextView.setText("    " + circleModel.getIntro());
-//		// 地址
-//		addressTextView.setText(circleModel.getAddress());
-//		// 名
-//		managerNameTextView.setText(circleModel.getManager_name());
-//		// 电话
-//		phoneTextView.setText(circleModel.getPhone_num());
-//		// 微信
-//		wxTextView.setText(circleModel.getWx_num());
-//		// 网页
-//		webTextView.setText(circleModel.getWeb());
-//		// 初始化pageView
-//		images = circleModel.getImage().split(",");
-//		if (images.length > 0) {
-//			int size = images.length;
-//			if (size > 3) {
-//				size = 3;
-//			}
-//			switch (size) {
-//			case 1:
-//				// pageView2.setVisibility(View.GONE);
-//				// pageView3.setVisibility(View.GONE);
-//				break;
-//			case 2:
-//				// pageView3.setVisibility(View.GONE);
-//				break;
-//			default:
-//				break;
-//			}
-//		}
-//	}
+	// private void initUI() {
+	// options = new
+	// DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
+	// .showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
+	// .bitmapConfig(Bitmap.Config.RGB_565).build();
+	// // 标题
+	// titleTextView.setText(circleModel.getTitle());
+	// // 介绍
+	// introTextView.setText(" " + circleModel.getIntro());
+	// // 地址
+	// addressTextView.setText(circleModel.getAddress());
+	// // 名
+	// managerNameTextView.setText(circleModel.getManager_name());
+	// // 电话
+	// phoneTextView.setText(circleModel.getPhone_num());
+	// // 微信
+	// wxTextView.setText(circleModel.getWx_num());
+	// // 网页
+	// webTextView.setText(circleModel.getWeb());
+	// // 初始化pageView
+	// images = circleModel.getImage().split(",");
+	// if (images.length > 0) {
+	// int size = images.length;
+	// if (size > 3) {
+	// size = 3;
+	// }
+	// switch (size) {
+	// case 1:
+	// // pageView2.setVisibility(View.GONE);
+	// // pageView3.setVisibility(View.GONE);
+	// break;
+	// case 2:
+	// // pageView3.setVisibility(View.GONE);
+	// break;
+	// default:
+	// break;
+	// }
+	// }
+	// }
 
 	// 动态listview
 	@ViewInject(R.id.news_circle_listView)
@@ -231,23 +232,22 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				// TODO Auto-generated method stub
 				switch (view.getId()) {
 				case R.id.circle_unattention_btn:
-                  attention();
+					attention();
 					break;
 				case R.id.circle_page_head_layout:
-                    toCircleDetail();
+					toCircleDetail();
 					break;
 
 				default:
 					break;
 				}
-				
+
 			}
 
 			private void toCircleDetail() {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(CirclePageActivity.this,CircleDetailActivity.class);
+				Intent intent = new Intent(CirclePageActivity.this, CircleDetailActivity.class);
 				intent.putExtra(CIRCLEDETAIL, circleModel2);
-				Log.i("wwww", "到这了1");
 				startActivity(intent);
 			}
 
@@ -287,7 +287,6 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		};
 		// 设置点击事件回调
 		shareMenu.setListener(new NewsBottomClickListener() {
-
 			@Override
 			public void shareToWeiboClick(NewsModel news) {
 				// 分享到微博
@@ -439,10 +438,10 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	 */
 	private void multiItemTypeSet() {
 		multiItemTypeSupport = new MultiItemTypeSupport<NewsItemModel>() {
-
 			@Override
 			public int getLayoutId(int position, NewsItemModel itemData) {
 				int layoutId = 0;
+				// if (!isNullList) {
 				switch (itemData.getItemType()) {
 				case NewsItemModel.NEWS_TITLE:
 					layoutId = R.layout.mian_news_item_title_layout;
@@ -456,10 +455,10 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				default:
 					break;
 				}
+				// }
 				if (position == 0) {
 					layoutId = R.layout.activity_circle_page_header;
 				}
-
 				return layoutId;
 			}
 
@@ -474,6 +473,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				if (postion == 0) {
 					return 3;
 				}
+				//if (!isNullList) {
 				switch (itemData.getItemType()) {
 				case NewsItemModel.NEWS_TITLE:
 					itemtype = NewsItemModel.NEWS_TITLE;
@@ -487,6 +487,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				default:
 					break;
 				}
+				//}
 				return itemtype;
 			}
 		};
@@ -527,7 +528,6 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		 * 设置底部自动刷新
 		 */
 		newsListView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
-
 			@Override
 			public void onLastItemVisible() {
 				if (!lastPage) {
@@ -544,7 +544,6 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 			@Override
 			protected void convert(HelloHaBaseAdapterHelper helper, NewsItemModel item) {
-
 				switch (helper.layoutId) {
 				case R.layout.mian_news_item_title_layout:
 					setTitleItemView(helper, item);
@@ -601,7 +600,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 			private void lodermembersImage(HelloHaBaseAdapterHelper helper) {
 				// TODO Auto-generated method stub
-				Log.i("wwww", membersDatas.toString());
+				// Log.i("wwww", membersDatas.toString());
 				for (int i = 0; i <= (membersDatas.size() - 1); i++) {
 					switch (i) {
 					case 0:
@@ -834,7 +833,6 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	 */
 	private void getNewsData(int userID, int desPage, String lastTime) {
 		String path = KHConst.GET_CIRCLE_HOME_LIST + "?" + "circle_id=" + circle_id + "&" + "user_id=" + userID;
-		Log.i("wwww", path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
 			@SuppressWarnings("unchecked")
@@ -847,12 +845,13 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 					JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
 					// 圈子信息
 					JSONObject circle = jResult.getJSONObject("circle");
+					// Log.i("wwww", circle.toString());
 					circleModel2 = new CirclePageModel();
 					circleModel2.setContentWithJson(circle);
 					// 圈子帖子
 					List<JSONObject> JSONList = (List<JSONObject>) jResult.get("list");
 					List<JSONObject> JSONMemberslist = (List<JSONObject>) jResult.get("circleMembers");
-					Log.i("wwww", JSONMemberslist.toString());
+
 					jsonJsonToCircleMembersModel(JSONMemberslist);
 					JsonToNewsModel(JSONList);
 					newsListView.onRefreshComplete();
@@ -900,25 +899,26 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 	private void JsonToNewsModel(List<JSONObject> dataList) {
 		List<NewsModel> newDatas = new ArrayList<NewsModel>();
-		if ("[]".equals(dataList.toString())) {
-			newDatas.add(new NewsModel());
-			// Log.i("wwww", newsList.toString()+"22");
-		} else {
+	
+		if (null != dataList && !dataList.isEmpty()) {
 			for (JSONObject newsObj : dataList) {
 				NewsModel tempNews = new NewsModel();
 				tempNews.setContentWithJson(newsObj);
 				newDatas.add(tempNews);
-			}
+			}	
 		}
-
 		if (isPullDowm) {
-			// 更新时间戳
-			latestTimesTamp = newDatas.get(0).getTimesTamp();
-			newsList.clear();
-			newsList.addAll(newDatas);
-			List<NewsItemModel> newsList = NewsToItemData.newsDataToItems(newDatas);
-			newsList.add(0, new NewsItemModel());
-			newsAdapter.replaceAll(newsList);
+			if (newDatas.isEmpty() == false) {
+				// 更新时间戳
+				latestTimesTamp = newDatas.get(0).getTimesTamp();
+				newsList.clear();
+				newsList.addAll(newDatas);
+			}
+
+			List<NewsItemModel> newsItemList = NewsToItemData.newsDataToItems(newDatas);
+			newsItemList.add(0, new NewsItemModel());
+
+			newsAdapter.replaceAll(newsItemList);
 		} else {
 			newsList.addAll(newDatas);
 			newsAdapter.addAll(NewsToItemData.newsDataToItems(newDatas));
@@ -1221,5 +1221,6 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	};
 	private ListItemClickHelp headerClickListener;
 	private List<CircleMembersModel> membersDatas;
+	private boolean isNullList = false;
 
 }

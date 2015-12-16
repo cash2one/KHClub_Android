@@ -9,6 +9,8 @@ import com.app.khclub.R.string;
 import com.app.khclub.base.model.ImageModel;
 import com.app.khclub.base.utils.KHConst;
 
+import android.util.Log;
+
 public class CirclePageModel implements Serializable{
 	/**
 	 * 
@@ -49,7 +51,7 @@ public class CirclePageModel implements Serializable{
 	@SuppressWarnings("unchecked")
 	public void setContentWithJson(JSONObject object) {
 
-		if (object.containsKey("circleId")) {
+		if (object.containsKey("id")) {
 			setCircleId(object.getString("id"));
 		}
 		if (object.containsKey("name")) {
@@ -80,6 +82,7 @@ public class CirclePageModel implements Serializable{
 			setWxNum(object.getString("wx_num"));
 		}
 		if (object.containsKey("wx_qrcode")) {
+			Log.i("wx", object.getString("wx_qrcode"));
 			setWxqrCode(KHConst.ATTACHMENT_ADDR + object.getString("wx_qrcode"));
 		}
 		if (object.containsKey("follow_quantity")) {

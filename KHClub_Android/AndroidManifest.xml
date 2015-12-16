@@ -72,6 +72,8 @@
         <activity android:name="com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity" />
 
         <!-- 动态 -->
+        <activity android:name="com.app.khclub.news.ui.activity.ModifyCircleActivity" >
+        </activity>
         <activity android:name="com.app.khclub.news.ui.activity.CreateCircleActivity" >
         </activity>
         <activity android:name="com.app.khclub.news.ui.activity.CirclePageActivity" >
@@ -89,7 +91,7 @@
         <activity android:name="com.app.khclub.news.ui.activity.NoticeActivity" >
         </activity>
         <activity android:name="com.app.khclub.news.ui.activity.CircleDetailActivity" >
-        </activity>        
+        </activity>
         <!-- Contact -->
         <activity android:name="com.app.khclub.contact.ui.activity.ShareContactsActivity" >
         </activity>
@@ -104,8 +106,8 @@
             android:name="com.app.khclub.personal.ui.activity.PersonalSettingActivity"
             android:theme="@android:style/Theme.Holo.Light" >
         </activity>
-        <activity android:name="com.app.khclub.personal.ui.activity.CardActivity">
-        </activity>        
+        <activity android:name="com.app.khclub.personal.ui.activity.CardActivity" >
+        </activity>
         <activity
             android:name="com.app.khclub.personal.ui.activity.AppSettingActivity"
             android:theme="@android:style/Theme.Holo.Light" >
@@ -372,7 +374,7 @@
         </receiver>
 
         <!-- 设置环信应用的appkey -->
-        <!-- khclub2015#khclub  测试 yukirin#khclub-->
+        <!-- khclub2015#khclub  测试 yukirin#khclub -->
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="yukirin#khclub" />
@@ -408,7 +410,7 @@
             <!--
             	如果集成QQ分享，或者使用QQ客户端来进行QQ空间的分享，须要在此处添加一个对ACTION_VIEW
             	事件的过滤器，其中的scheme是“tencent”前缀再开发者应用的加上appId。如果此过滤器不设置，
-            	则分享结束以后不能得到正确的回调
+            	则分享结束以后不能得到正确的回调
             -->
             <intent-filter android:priority="1000" >
                 <data android:scheme="tencent100371282" />
@@ -427,8 +429,8 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        
- 		<!-- 云巴部分 -->
+
+        <!-- 云巴部分 -->
         <service android:name="io.yunba.android.core.YunBaService" >
         </service>
 
@@ -450,7 +452,7 @@
                 <category android:name="com.app.khclub" />
             </intent-filter>
         </receiver>
-		<!-- 562de0fa85f5aa6c14e24d1f 测试Key 5616180ae6b2257059049482 -->
+        <!-- 562de0fa85f5aa6c14e24d1f 测试Key 5616180ae6b2257059049482 -->
         <meta-data
             android:name="YUNBA_APPKEY"
             android:value="5616180ae6b2257059049482" />
@@ -458,7 +460,7 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="1aff3b905c22c08df0423482748cd2cd" />
-        
+
         <!-- 友盟部分 -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -467,7 +469,6 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="KHClub" />
-        
     </application>
 
 </manifest>

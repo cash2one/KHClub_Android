@@ -149,6 +149,7 @@
 
 
     <!-- News -->
+    <string name="modify_circle">修改圈子</string>
     <string name="circle_attention_fail">关注失败</string>
     <string name="create_circle_introduce">圈子介绍</string>
     <string name="create_circle_name">圈子称呢</string>
