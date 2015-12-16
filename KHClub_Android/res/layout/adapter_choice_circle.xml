@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_white"
+    android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res/com.app.khclub">
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/main_gold"
+        android:background="@color/main_light_gary"
+        android:id="@+id/circle_attention_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/main_gold"
+        android:background="@color/main_light_gary"
+        android:id="@+id/circle_recommend_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <com.app.khclub.base.ui.view.RoundImageView
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            app:rect_adius="4dp"
+            android:id="@+id/circle_image"
+            android:layout_width="@dimen/head_image_size_large"
+            android:layout_height="@dimen/head_image_size_large"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_avatar" />
+
+        <RelativeLayout
+            android:id="@+id/intro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp" >
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/circle_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/circle_name"
+                android:textSize="14sp" />
+
+            <LinearLayout 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/circle_name"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp">
+                
+	            <ImageView
+	                android:id="@+id/circle_people_image"
+	                android:layout_width="@dimen/title_interior_size_mediu"
+	                android:layout_height="@dimen/title_interior_size_mediu"
+	                android:src="@drawable/member2x" />
+	
+	            <TextView
+	                android:id="@+id/circle_people_count"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dp"
+	                android:textSize="@dimen/font_size_tiny"
+	                android:text="0" />                
+                
+            </LinearLayout>
+            
+        </RelativeLayout>
+    </LinearLayout>
+    
+    <View
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="77dp"
+        android:background="@color/main_light_gary" 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+    
+</LinearLayout>

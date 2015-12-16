@@ -38,7 +38,7 @@
     <!-- 头像的大小 -->
     <dimen name="head_image_size_small">30dp</dimen>
     <dimen name="head_image_size_medium">45dp</dimen>
-    <dimen name="head_image_size_large">50dp</dimen>
+    <dimen name="head_image_size_large">57dp</dimen>
     <dimen name="head_image_size_huge">55dp</dimen>
     <dimen name="head_image_size_super_large">60dp</dimen>
     <!-- 图片的大小 -->
