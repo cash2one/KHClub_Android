@@ -263,77 +263,80 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 
 	// 发布动态
 	private void publishNews() {
-		if ("".equals(contentEditText.getText().toString().trim())
-				&& addImageLayout.getChildCount() == 1) {
-			ToastUtil.show(this, R.string.news_content_image_empty);
-			return;
-		}
-
-		if (contentEditText.getText().toString().length() > 140) {
-			ToastUtil.show(this, R.string.news_content_too_long);
-			return;
-		}
-
-		final UserModel userModel = UserManager.getInstance().getUser();
-		showLoading(getResources().getString(R.string.uploading), false);
-		RequestParams params = new RequestParams();
-		// 用户id
-		params.addBodyParameter("uid", userModel.getUid() + "");
-		// 内容
-		params.addBodyParameter("content_text", contentEditText.getText()
-				.toString());
-		// location
-		params.addBodyParameter("location", locationString);
-
-		// 图片
-		for (int i = 0; i < addImageLayout.getChildCount(); i++) {
-			View view = addImageLayout.getChildAt(i);
-			// 如果不是添加按钮
-			if (view != addImageView) {
-				// 图片
-				File file = new File((String) view.getTag());
-				if (file.exists()) {
-					params.addBodyParameter("image" + i, file);
-				}
-			}
-		}
-
-		// 发布
-		HttpManager.post(KHConst.PUBLISH_NEWS, params,
-				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
-
-					@Override
-					public void onSuccess(JSONObject jsonResponse, String flag) {
-						super.onSuccess(jsonResponse, flag);
-						hideLoading();
-						int status = jsonResponse.getIntValue("status");
-						switch (status) {
-						case KHConst.STATUS_SUCCESS:
-							// toast
-							ToastUtil.show(PublishNewsActivity.this,
-									R.string.news_publish_success);
-							hideLoading();
-							finishWithRight();
-							publishFinishBroadcast();
-							break;
-						case KHConst.STATUS_FAIL:
-							hideLoading();
-							Toast.makeText(PublishNewsActivity.this,
-									R.string.news_publish_fail,
-									Toast.LENGTH_SHORT).show();
-							break;
-						}
-					}
-
-					@Override
-					public void onFailure(HttpException arg0, String arg1,
-							String flag) {
-						super.onFailure(arg0, arg1, flag);
-						hideLoading();
-						Toast.makeText(PublishNewsActivity.this,
-								R.string.net_error, Toast.LENGTH_SHORT).show();
-					}
-				}, null));
+		Intent choiceIntent = new Intent(this, ChoiceCircleActivity.class);
+		startActivityWithRight(choiceIntent);
+		
+//		if ("".equals(contentEditText.getText().toString().trim())
+//				&& addImageLayout.getChildCount() == 1) {
+//			ToastUtil.show(this, R.string.news_content_image_empty);
+//			return;
+//		}
+//
+//		if (contentEditText.getText().toString().length() > 140) {
+//			ToastUtil.show(this, R.string.news_content_too_long);
+//			return;
+//		}
+//
+//		final UserModel userModel = UserManager.getInstance().getUser();
+//		showLoading(getResources().getString(R.string.uploading), false);
+//		RequestParams params = new RequestParams();
+//		// 用户id
+//		params.addBodyParameter("uid", userModel.getUid() + "");
+//		// 内容
+//		params.addBodyParameter("content_text", contentEditText.getText()
+//				.toString());
+//		// location
+//		params.addBodyParameter("location", locationString);
+//
+//		// 图片
+//		for (int i = 0; i < addImageLayout.getChildCount(); i++) {
+//			View view = addImageLayout.getChildAt(i);
+//			// 如果不是添加按钮
+//			if (view != addImageView) {
+//				// 图片
+//				File file = new File((String) view.getTag());
+//				if (file.exists()) {
+//					params.addBodyParameter("image" + i, file);
+//				}
+//			}
+//		}
+//
+//		// 发布
+//		HttpManager.post(KHConst.PUBLISH_NEWS, params,
+//				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+//
+//					@Override
+//					public void onSuccess(JSONObject jsonResponse, String flag) {
+//						super.onSuccess(jsonResponse, flag);
+//						hideLoading();
+//						int status = jsonResponse.getIntValue("status");
+//						switch (status) {
+//						case KHConst.STATUS_SUCCESS:
+//							// toast
+//							ToastUtil.show(PublishNewsActivity.this,
+//									R.string.news_publish_success);
+//							hideLoading();
+//							finishWithRight();
+//							publishFinishBroadcast();
+//							break;
+//						case KHConst.STATUS_FAIL:
+//							hideLoading();
+//							Toast.makeText(PublishNewsActivity.this,
+//									R.string.news_publish_fail,
+//									Toast.LENGTH_SHORT).show();
+//							break;
+//						}
+//					}
+//
+//					@Override
+//					public void onFailure(HttpException arg0, String arg1,
+//							String flag) {
+//						super.onFailure(arg0, arg1, flag);
+//						hideLoading();
+//						Toast.makeText(PublishNewsActivity.this,
+//								R.string.net_error, Toast.LENGTH_SHORT).show();
+//					}
+//				}, null));
 	}
 
 	// /////////////////////////////////////Override//////////////////////////////////////////
