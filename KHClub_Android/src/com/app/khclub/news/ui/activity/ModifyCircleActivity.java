@@ -17,12 +17,10 @@ import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup.MarginLayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +39,7 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.news.ui.model.CirclePageModel;
 import com.app.khclub.news.ui.model.NewsConstants;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -50,17 +49,19 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
-public class CreateCircleActivity extends BaseActivityWithTopBar {
+public class ModifyCircleActivity extends BaseActivityWithTopBar {
 
+	private static final String CIRCLEDETAIL = "circledetail";
 	private static final String CIRCLE_ID = "circle_id";
 	public static final int TAKE_PHOTO = 1;// 拍照
 	public static final int ALBUM_SELECT = 2;// 相册选取
 	public static final int PHOTO_ZOOM = 3; // 缩放
 	public static final int PHOTO_RESOULT = 4;// 结果
-
 	public static final String IMAGE_UNSPECIFIED = "image/*";
 	protected static final String INTENT_KEY_ONE = "one_pic";
-	private boolean isclub = true;
+	private boolean isClub = true;
+	private boolean isModifycover = false;
+	private boolean isModifyrqCode = false;
 	private String filepath, qrcodefilepath;
 	private String clubid;
 	// 上传头像
@@ -91,22 +92,11 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 	@ViewInject(R.id.addImageView)
 	private ImageView addImageView;
-
-	// @ViewInject(R.id.contentEt)
-	// private EditText contentEditText;
-
-	// // 选地点layout
-	// @ViewInject(R.id.choice_location_layout)
-	// private LinearLayout choiceLocationLayout;
-
 	// 发布按钮
 	@ViewInject(R.id.base_ll_right_btns)
 	private LinearLayout rightLayout;
-
 	// 起始左边间距
-	private int oriMarginLeft;
-	// 设置间隔为5
-	private int space = 5;
+	// private int oriMarginLeft;
 	// 点击加号的image弹窗
 	// private AlertDialog imageDialog;
 	private CustomSelectPhotoDialog selectDialog;
@@ -123,7 +113,7 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		switch (view.getId()) {
 		// 添加图片点击
 		case R.id.base_ll_right_btns:
-			createCircle();
+			ModifyCircle();
 			break;
 		case R.id.publish_news_layout:
 			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -131,12 +121,14 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 			break;
 		// 上传头像
 		case R.id.cover_image:
-			isclub = true;
+			isClub = true;
+			isModifycover = true;
 			showChoiceImageAlert();
 			break;
 		// 上传二位码
 		case R.id.create_edit_server_qrcode:
-			isclub = false;
+			isClub = false;
+			isModifyrqCode = true;
 			showChoiceImageAlert();
 			break;
 		default:
@@ -144,12 +136,13 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		}
 	}
 
-	private void createCircle() {
+	private void ModifyCircle() {
 		RequestParams params = new RequestParams();
 		// TODO Auto-generated method stub
 		// 限制圈子名不能为空且不能超过七个字
 		if ("".equals(clubnameEditText.getText().toString().trim())) {
 			ToastUtil.show(this, R.string.news_content_image_empty);
+			
 			return;
 		} else if (clubnameEditText.getText().toString().length() > 7) {
 			ToastUtil.show(this, R.string.circle_name_limit);
@@ -157,6 +150,7 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		} else {
 			// 圈子称呢
 			params.addBodyParameter("circle_name", clubnameEditText.getText().toString());
+			circleModel.setCircleName(clubnameEditText.getText().toString());
 		}
 
 		if (clubintroduceEditText.getText().toString().length() > 200) {
@@ -165,97 +159,103 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		} else {
 			// 圈子介绍
 			params.addBodyParameter("circle_detail", clubintroduceEditText.getText().toString());
+			circleModel.setCircleDetail(clubintroduceEditText.getText().toString());
 		}
 		final UserModel userModel = UserManager.getInstance().getUser();
 		showLoading(getResources().getString(R.string.uploading), false);
 
-		// 用户id
-		params.addBodyParameter("user_id", userModel.getUid() + "");
-
+		// 圈子id
+		params.addBodyParameter("circle_id", clubid);
+		//Log.i("wwww", clubid);
 		// 上传圈子封面
-
-		File imgfile = new File(filepath);
-		// Log.i("wwww", imgfile.toString());
-		if (!imgfile.exists()) {
-			return;
+		if (isModifycover) {
+			File imgfile = new File(filepath);
+			// 
+			if (!imgfile.exists()) {
+				return;
+			}
+			params.addBodyParameter("file", imgfile);
+			
 		}
-		params.addBodyParameter("file", imgfile);
 		// 二维码
-		if (!isclub) {
-			File qrcodeimgfile = new File(qrcodefilepath);
-			Log.i("wwww", qrcodeimgfile.toString());
-			params.addBodyParameter("qrcodefile", qrcodeimgfile);
+		if (isModifyrqCode) {
+			if (!isClub) {
+				File qrcodeimgfile = new File(qrcodefilepath);
+				// Log.i("wwww", qrcodeimgfile.toString());
+				params.addBodyParameter("qrcodefile", qrcodeimgfile);
+			}
 		}
 		// 圈子地址
 		params.addBodyParameter("address", clubaddressEditText.getText().toString());
+		circleModel.setAdress(clubaddressEditText.getText().toString());
 		// 圈子电话
 		params.addBodyParameter("phone_num", clubphoneEditText.getText().toString());
+		circleModel.setPhoneNum(clubphoneEditText.getText().toString());
 		// 微信公众号
 		params.addBodyParameter("wx_num", clubserverEditText.getText().toString());
-		// 圈子地址
+		circleModel.setWxNum(clubserverEditText.getText().toString());
+		// 圈子网址
 		params.addBodyParameter("circle_web", cluburlEditText.getText().toString());
+		circleModel.setCircleUrl(cluburlEditText.getText().toString());
 		// 发布
-		HttpManager.post(KHConst.POST_NEW_CIRCLE, params,
-				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+		HttpManager.post(KHConst.MODIFY_CIRCLE, params, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+			@Override
+			public void onSuccess(JSONObject jsonResponse, String flag) {
+				super.onSuccess(jsonResponse, flag);
+				hideLoading();
+				int status = jsonResponse.getIntValue("status");
+				//Log.i("wwww", status+"");
+				switch (status) {
+				case KHConst.STATUS_SUCCESS:
+					// toast
+					JSONObject result = jsonResponse.getJSONObject("result");
+					//Log.i("wwww", result.toString());
+					ToastUtil.show(ModifyCircleActivity.this, R.string.news_publish_success);
+					result();
+					hideLoading();
+					jumpCirPage();
+					finishWithRight();
+					// publishFinishBroadcast();
+					break;
+				case KHConst.STATUS_FAIL:
+					hideLoading();
+					Toast.makeText(ModifyCircleActivity.this, R.string.news_publish_fail, Toast.LENGTH_SHORT).show();
+					break;
+				}
+			}
 
-					
+			private void result() {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent();
+				intent.putExtra(CIRCLEDETAIL, circleModel);
+				setResult(RESULT_OK, intent);
+			}
 
-					@Override
-					public void onSuccess(JSONObject jsonResponse, String flag) {
-						super.onSuccess(jsonResponse, flag);
-
-						hideLoading();
-						int status = jsonResponse.getIntValue("status");
-						JSONObject result = jsonResponse.getJSONObject("result");
-						clubid = result.getString("id");
-						
-						switch (status) {
-						case KHConst.STATUS_SUCCESS:
-							// toast
-							ToastUtil.show(CreateCircleActivity.this, R.string.news_publish_success);
-							hideLoading();
-							 jumpCirPage();
-							
-							finishWithRight();
-							//publishFinishBroadcast();
-							break;
-						case KHConst.STATUS_FAIL:
-							hideLoading();
-							Toast.makeText(CreateCircleActivity.this, R.string.news_publish_fail, Toast.LENGTH_SHORT)
-									.show();
-							break;
-						}
-
-					}
-
-					
-					@Override
-					public void onFailure(HttpException arg0, String arg1, String flag) {
-						super.onFailure(arg0, arg1, flag);
-						hideLoading();
-						Toast.makeText(CreateCircleActivity.this, R.string.net_error, Toast.LENGTH_SHORT).show();
-					}
-				}, null));
+			@Override
+			public void onFailure(HttpException arg0, String arg1, String flag) {
+				super.onFailure(arg0, arg1, flag);
+				hideLoading();
+				Toast.makeText(ModifyCircleActivity.this, R.string.net_error, Toast.LENGTH_SHORT).show();
+			}
+		}, null));
 
 	}
+
 	private void jumpCirPage() {
 		// TODO Auto-generated method stub
-         Intent circleIntent =new Intent(CreateCircleActivity.this,CirclePageActivity.class);
-         circleIntent.putExtra(CIRCLE_ID, clubid);
-         startActivity(circleIntent);
+		Intent circleIntent = new Intent(ModifyCircleActivity.this, CirclePageActivity.class);
+		circleIntent.putExtra(CIRCLE_ID, clubid);
+		startActivity(circleIntent);
 	}
-
 	private void showChoiceImageAlert() {
-
 		// 设置为头像
 		if (selectDialog == null) {
 			selectDialog = new CustomSelectPhotoDialog(this);
 			selectDialog.setClicklistener(new CustomSelectPhotoDialog.ClickListenerInterface() {
-
 				@Override
 				public void onSelectGallery() {
 					// 相册
-					Intent intentAlbum = new Intent(CreateCircleActivity.this, GalleyActivity.class);
+					Intent intentAlbum = new Intent(ModifyCircleActivity.this, GalleyActivity.class);
 					// if (imageCount < 0) {
 					// imageCount = 0;;
 					// }
@@ -270,7 +270,7 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 				public void onSelectCamera() {
 					// 拍照
 					Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					if (!isclub) {
+					if (!isClub) {
 						tmpImageName = "qrcode" + KHUtils.getPhotoFileName() + "";
 					} else {
 						tmpImageName = KHUtils.getPhotoFileName() + "";
@@ -289,8 +289,6 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 	}
 
-
-
 	private void addNewsImageView(String filePath) {
 		File file = new File(filePath);
 		if (!file.exists()) {
@@ -298,15 +296,14 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 			return;
 		}
 
-		if (isclub) {
+		if (isClub) {
 			// 设置圈子头像
 			ImageLoader.getInstance().displayImage("file://" + filePath, coverImageView, headImageOptions);
-			
 
 		} else {
 			// 设置二维码
 			ImageLoader.getInstance().displayImage("file://" + filePath, qrImageView, headImageOptions);
-			
+
 		}
 
 	}
@@ -315,14 +312,14 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 	@Override
 	public int setLayoutId() {
 		// TODO Auto-generated method stub
-		return R.layout.acitivity_create_circle;
+		return R.layout.activity_modify_circle;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void setUpView() {
 		// 标题
-		setBarText(getString(R.string.create_circle_title));
+		setBarText(getString(R.string.modify_circle));
 		/*
 		 * // 设置图片大小 RelativeLayout.LayoutParams rlParams =
 		 * (RelativeLayout.LayoutParams) addImageView .getLayoutParams();
@@ -332,10 +329,38 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		 */
 		TextView sendBtn = addRightBtn("下一步");
 		sendBtn.setTextColor(getResources().getColor(R.color.main_white));
-		locationString = "";
 		// bitmap初始化
 		headImageOptions = new DisplayImageOptions.Builder().cacheInMemory(false).cacheOnDisk(false)
 				.imageScaleType(ImageScaleType.IN_SAMPLE_INT).bitmapConfig(Bitmap.Config.RGB_565).build();
+		initViewData();
+	}
+
+	private void initViewData() {
+		circleModel = (CirclePageModel) getIntent().getSerializableExtra(CIRCLEDETAIL);
+		if (circleModel == null) {
+			return;
+		}
+		imgLoader = ImageLoader.getInstance();
+		// 加载原有头像
+		
+		clubid=circleModel.getCircleId();
+		//Log.e("wwww", clubid+"111");
+		
+		imgLoader.displayImage(circleModel.getCircleCoverSubImage(), coverImageView, headImageOptions);
+
+		imgLoader.displayImage(circleModel.getWxqrCode(), qrImageView, headImageOptions);
+		// 圈子名称
+		clubnameEditText.setText(circleModel.getCircleName());
+		// 圈子介绍
+		clubintroduceEditText.setText(circleModel.getCircleDetail());
+		// 圈子地址
+		clubaddressEditText.setText(circleModel.getAdress());
+		// 圈子电话
+		clubphoneEditText.setText(circleModel.getPhoneNum());
+		// 公众号名称
+		clubserverEditText.setText(circleModel.getWxNum());
+		// 圈子网址
+		cluburlEditText.setText(circleModel.getCircleUrl());
 	}
 
 	@Override
@@ -363,7 +388,6 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 		super.onSaveInstanceState(outState);
 	}
-	
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -384,7 +408,7 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 			}
 		}
 	}
-
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -400,11 +424,15 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 				int[] screenSize = getScreenSize();
 
 				if (FileUtil.tempToLocalPath(tmpImageName, screenSize[0], screenSize[1])) {
-					if (isclub) {
+					if (isClub) {
 						filepath = FileUtil.BIG_IMAGE_PATH + tmpImageName;
+						//Log.i("wwww", filepath);
+						circleModel.setCircleCoverImage(tmpImageName);
 						addNewsImageView(filepath);
 					} else {
 						qrcodefilepath = FileUtil.BIG_IMAGE_PATH + tmpImageName;
+						//Log.i("wwww", qrcodefilepath);
+						circleModel.setCircleCoverImage(tmpImageName);
 						addNewsImageView(qrcodefilepath);
 					}
 				}
@@ -421,19 +449,21 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 					LogUtils.i(fileRealPath, 1);
 					// 用户id+时间戳
 					String fileName;
-					if (isclub) {
+					if (isClub) {
 						fileName = UserManager.getInstance().getUser().getUid() + "" + interval + ".jpg";
 					} else {
 						fileName = "qrcode" + UserManager.getInstance().getUser().getUid() + "" + interval + ".jpg";
 					}
 					if (fileRealPath != null
 							&& FileUtil.tempToLocalPath(fileRealPath, fileName, screenSize1[0], screenSize1[1])) {
-						if (isclub) {
+						if (isClub) {
 							filepath = FileUtil.BIG_IMAGE_PATH + fileName;
+							circleModel.setCircleCoverImage(fileName);
 							addNewsImageView(filepath);
 						}
-						if (!isclub) {
+						if (!isClub) {
 							qrcodefilepath = FileUtil.BIG_IMAGE_PATH + fileName;
+							circleModel.setWxqrCode(fileName);
 							addNewsImageView(qrcodefilepath);
 						}
 					}
@@ -459,16 +489,16 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 				break;
 
-//			 //删除选中的照片
-//			 case PHOTO_DELETE:
-//			 if
-//			 (data.hasExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL))
-//			 {
-//			 String tmpFilePath =
-//			 data.getStringExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL);
-//			 deleteNewsImageView(tmpFilePath);
-//			 }
-//			 break;
+			// //删除选中的照片
+			// case PHOTO_DELETE:
+			// if
+			// (data.hasExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL))
+			// {
+			// String tmpFilePath =
+			// data.getStringExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL);
+			// deleteNewsImageView(tmpFilePath);
+			// }
+			// break;
 			}
 		} else {
 			// 恢复点击
@@ -478,14 +508,17 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 	final Handler timerHandler = new Handler();
 	final Handler photoHandler = new Handler();
-//
-//	/**
-//	 * 发布动态完成发送广播
-//	 */
-//	private void publishFinishBroadcast() {
-//		Intent mIntent = new Intent(KHConst.BROADCAST_NEWS_LIST_REFRESH);
-//		mIntent.putExtra(NewsConstants.PUBLISH_FINISH, "");
-//		// 发送广播
-//		LocalBroadcastManager.getInstance(CreateCircleActivity.this).sendBroadcast(mIntent);
-//	}
+	private ImageLoader imgLoader;
+	private CirclePageModel circleModel;
+
+	/**
+	 * 发布动态完成发送广播
+	 */
+//	 private void publishFinishBroadcast() {
+//	     Intent mIntent = new Intent(KHConst.BROADCAST_NEWS_LIST_REFRESH);
+//	    mIntent.putExtra(NewsConstants.PUBLISH_FINISH, "");
+//	     //发送广播
+//	    LocalBroadcastManager.getInstance(ModifyCircleActivity.this).sendBroadcast(mIntent);
+//	 }
+
 }

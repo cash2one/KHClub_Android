@@ -9,6 +9,7 @@
         layout="@layout/layout_title_bar" />
 
     <ImageView
+        android:id="@+id/circle_cover"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
@@ -21,21 +22,19 @@
         <TextView
             android:id="@+id/circle_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:gravity="center_vertical"
             android:text="圈子名称"
             android:textSize="15sp" />
 
         <TextView
             android:id="@+id/circle_name_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/circle_name"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:gravity="center_vertical"
             android:textSize="15sp" />
 
         <TextView
@@ -61,7 +60,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/main_gary" />
+        android:background="@color/main_light_gary" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -90,7 +89,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/main_gary" />
+        android:background="@color/main_light_gary" />
     <!-- 地址 -->
 
     <RelativeLayout
@@ -117,12 +116,13 @@
                 android:layout_height="34dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
+                android:text="暂无信息"
                 android:textSize="13sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/main_gary" />
+                android:background="@color/main_light_gary" />
         </LinearLayout>
     </RelativeLayout>
     <!-- 圈主电话 -->
@@ -135,8 +135,8 @@
             android:id="@+id/card_phone"
             android:layout_width="35dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/icon_phone" />
 
         <LinearLayout
@@ -151,12 +151,13 @@
                 android:layout_height="34dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
+                android:text="暂无信息"
                 android:textSize="13sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/main_gary" />
+                android:background="@color/main_light_gary" />
         </LinearLayout>
     </RelativeLayout>
     <!-- 微信公众号 -->
@@ -169,8 +170,8 @@
             android:id="@+id/icon_weixin"
             android:layout_width="35dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/icon_weixin" />
 
         <LinearLayout
@@ -185,13 +186,24 @@
                 android:layout_height="34dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
+                android:text="暂无信息"
                 android:textSize="13sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/main_gary" />
+                android:background="@color/main_light_gary" />
         </LinearLayout>
+
+        <ImageView
+            android:src="@drawable/default_image"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/qrcode_image"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerCrop" />
     </RelativeLayout>
     <!-- 网址 -->
 
@@ -204,8 +216,8 @@
             android:id="@+id/icon_web"
             android:layout_width="35dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:src="@drawable/icon_web" />
 
         <LinearLayout
@@ -220,12 +232,13 @@
                 android:layout_height="34dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
+                android:text="暂无信息"
                 android:textSize="13sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/main_gary" />
+                android:background="@color/main_light_gary" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -234,12 +247,14 @@
         android:layout_height="match_parent" >
 
         <Button
-            android:layout_width="match_parent"
+            android:id="@+id/modify_circle_detail"
+            android:layout_width="200dp"
             android:layout_height="35dp"
             android:layout_centerInParent="true"
             android:background="@color/main_gold"
             android:text="编辑圈子"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>

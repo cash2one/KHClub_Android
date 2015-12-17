@@ -1,69 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:id="@+id/better_members_layout"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="@dimen/head_image_size_small"
+            android:layout_height="@dimen/head_image_size_small"
+            android:layout_marginLeft="7dp"
+            android:src="@drawable/ring" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="10dp"
+            android:text="@string/news_club_expert"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/members_image0"
+            android:layout_width="@dimen/head_image_size_small"
+            android:layout_height="@dimen/head_image_size_small"
+            android:layout_marginLeft="7dp"
+            android:src="@drawable/default_avatar"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/members_image1"
+            android:layout_width="@dimen/head_image_size_small"
+            android:layout_height="@dimen/head_image_size_small"
+            android:layout_marginLeft="7dp"
+            android:src="@drawable/default_avatar"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/members_image2"
+            android:layout_width="@dimen/head_image_size_small"
+            android:layout_height="@dimen/head_image_size_small"
+            android:layout_marginLeft="7dp"
+            android:src="@drawable/default_avatar"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/members_image3"
+            android:layout_width="@dimen/head_image_size_small"
+            android:layout_height="@dimen/head_image_size_small"
+            android:layout_marginLeft="7dp"
+            android:src="@drawable/default_avatar"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/members_image4"
+            android:layout_width="@dimen/head_image_size_small"
+            android:layout_height="@dimen/head_image_size_small"
+            android:layout_marginLeft="7dp"
+            android:src="@drawable/default_avatar"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/members_image5"
+            android:layout_width="@dimen/head_image_size_small"
+            android:layout_height="@dimen/head_image_size_small"
+            android:layout_marginLeft="7dp"
+            android:src="@drawable/default_avatar"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <ImageView
+        android:layout_alignParentRight="true"
+        android:id="@+id/better_members_image"
         android:layout_width="@dimen/head_image_size_small"
         android:layout_height="@dimen/head_image_size_small"
-        android:layout_marginLeft="7dp"
-        android:src="@drawable/ring" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:paddingLeft="10dp"
-        android:text="@string/news_club_expert"
-        android:textSize="15sp" />
-
-    <ImageView
-        android:id="@+id/members_image0"
-        android:layout_width="@dimen/head_image_size_small"
-        android:layout_height="@dimen/head_image_size_small"
-        android:layout_marginLeft="7dp"
-        android:src="@drawable/default_avatar"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/members_image1"
-        android:layout_width="@dimen/head_image_size_small"
-        android:layout_height="@dimen/head_image_size_small"
-        android:layout_marginLeft="7dp"
-        android:src="@drawable/default_avatar"
-        android:visibility="gone" /> 
-
-    <ImageView
-        android:id="@+id/members_image2"
-        android:layout_width="@dimen/head_image_size_small"
-        android:layout_height="@dimen/head_image_size_small"
-        android:layout_marginLeft="7dp"
-        android:src="@drawable/default_avatar"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/members_image3"
-        android:layout_width="@dimen/head_image_size_small"
-        android:layout_height="@dimen/head_image_size_small"
-        android:layout_marginLeft="7dp"
-        android:src="@drawable/default_avatar"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/members_image4"
-        android:layout_width="@dimen/head_image_size_small"
-        android:layout_height="@dimen/head_image_size_small"
-        android:layout_marginLeft="7dp"
-        android:src="@drawable/default_avatar"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/members_image5"
-        android:layout_width="@dimen/head_image_size_small"
-        android:layout_height="@dimen/head_image_size_small"
-        android:layout_marginLeft="7dp"
-        android:src="@drawable/default_avatar"
-        android:visibility="gone" />
-
-</LinearLayout>
+        android:layout_marginRight="7dp"
+        android:src="@drawable/ic_right_arrow"
+     />
+</RelativeLayout>

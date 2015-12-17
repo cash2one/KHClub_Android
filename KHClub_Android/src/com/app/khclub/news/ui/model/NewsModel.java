@@ -97,7 +97,6 @@ public class NewsModel implements Serializable {
 		if (object.containsKey("is_like")) {
 			setIsLike(object.getString("is_like"));
 		}
-		Log.i("wwww", "1111");
 		// 图片的转换
 		if (object.containsKey("images")) {
 			List<JSONObject> JImageObj = (List<JSONObject>) object
