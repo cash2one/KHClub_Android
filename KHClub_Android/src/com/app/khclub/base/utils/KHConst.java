@@ -90,8 +90,8 @@ public interface KHConst {
 	public static final String GET_PERSONAL_CIRCLE_LIST = DOMIN + "/getPersonalCircleList";
 	// 圈子主页列表
 	public static final String GET_CIRCLE_HOME_LIST = DOMIN + "/getCircleHomeList";	
-	// 我的圈子封面列表
-//	public static final String GET_MY_CIRCLE_COVER = DOMIN + "/getMyCircleCover";
+	// 我的圈子列表
+	public static final String GET_MY_CIRCLE_LIST = DOMIN + "/getMyCircleList";
 	// 关注或者取消关注圈子
 	public static final String FOLLOW_OR_UNFOLLOW_CIRCLE = DOMIN + "/followOrUnfollowCircle";
 	// 圈达人列表

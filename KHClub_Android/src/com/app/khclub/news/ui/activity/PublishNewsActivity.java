@@ -7,7 +7,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,13 +28,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
-import com.app.khclub.base.helper.JsonRequestCallBack;
-import com.app.khclub.base.helper.LoadDataHandler;
-import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
-import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.ui.view.CustomSelectPhotoDialog;
 import com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity;
@@ -40,9 +38,6 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
-import com.app.khclub.news.ui.model.NewsConstants;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -193,20 +188,20 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 				headImageOptions);
 
 		// 设置点击查看大图事件
-				imageView.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
+		imageView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
 
-						final String tmpFilePath = (String) v.getTag();
+				final String tmpFilePath = (String) v.getTag();
 
-						Intent intent = new Intent(PublishNewsActivity.this,
-								PublisPhotoHandelActivity.class);
-						intent.putExtra(PublisPhotoHandelActivity.INTENT_KEY,
-								tmpFilePath);
-						startActivityForResult(intent, PHOTO_DELETE);
+				Intent intent = new Intent(PublishNewsActivity.this,
+						PublisPhotoHandelActivity.class);
+				intent.putExtra(PublisPhotoHandelActivity.INTENT_KEY,
+						tmpFilePath);
+				startActivityForResult(intent, PHOTO_DELETE);
 
-					}
-				});
+			}
+		});
 
 	}
 
@@ -263,20 +258,33 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 
 	// 发布动态
 	private void publishNews() {
-		Intent choiceIntent = new Intent(this, ChoiceCircleActivity.class);
-		startActivityWithRight(choiceIntent);
 		
-//		if ("".equals(contentEditText.getText().toString().trim())
-//				&& addImageLayout.getChildCount() == 1) {
-//			ToastUtil.show(this, R.string.news_content_image_empty);
-//			return;
-//		}
-//
-//		if (contentEditText.getText().toString().length() > 140) {
-//			ToastUtil.show(this, R.string.news_content_too_long);
-//			return;
-//		}
-//
+		if ("".equals(contentEditText.getText().toString().trim())
+				&& addImageLayout.getChildCount() == 1) {
+			ToastUtil.show(this, R.string.news_content_image_empty);
+			return;
+		}
+
+		if (contentEditText.getText().toString().length() > 140) {
+			ToastUtil.show(this, R.string.news_content_too_long);
+			return;
+		}
+		
+		Intent choiceIntent = new Intent(this, ChoiceCircleActivity.class);
+		choiceIntent.putExtra(ChoiceCircleActivity.INTENT_CONTENT_TEXT, contentEditText.getText().toString());
+		choiceIntent.putExtra(ChoiceCircleActivity.INTENT_LOCATION, locationString);
+		ArrayList<String> images = new ArrayList<String>();
+		// 图片
+		for (int i = 0; i < addImageLayout.getChildCount(); i++) {
+			View view = addImageLayout.getChildAt(i);
+			// 如果不是添加按钮
+			if (view != addImageView) {
+				images.add((String) view.getTag());
+			}
+		}
+		choiceIntent.putStringArrayListExtra(ChoiceCircleActivity.INTENT_IMAGES, images);
+		startActivityWithRight(choiceIntent);
+
 //		final UserModel userModel = UserManager.getInstance().getUser();
 //		showLoading(getResources().getString(R.string.uploading), false);
 //		RequestParams params = new RequestParams();
@@ -372,13 +380,17 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 				.cacheInMemory(false).cacheOnDisk(false)
 				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
+		
+		initBoradcastReceiver();
 	}
 
 	@Override
 	// 销毁的时候清空缓存
 	protected void onDestroy() {
 		super.onDestroy();
-
+		if (mBroadcastReceiver != null && mLocalBroadcastManager != null) {
+			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
+		}
 		// 清除缓存
 		for (int i = 0; i < addImageLayout.getChildCount(); i++) {
 			View view = addImageLayout.getChildAt(i);
@@ -550,11 +562,34 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 	/**
 	 * 发布动态完成发送广播
 	 * */
-	private void publishFinishBroadcast() {
-		Intent mIntent = new Intent(KHConst.BROADCAST_NEWS_LIST_REFRESH);
-		mIntent.putExtra(NewsConstants.PUBLISH_FINISH, "");
-		// 发送广播
-		LocalBroadcastManager.getInstance(PublishNewsActivity.this)
-				.sendBroadcast(mIntent);
+//	private void publishFinishBroadcast() {
+//		Intent mIntent = new Intent(KHConst.BROADCAST_NEWS_LIST_REFRESH);
+//		mIntent.putExtra(NewsConstants.PUBLISH_FINISH, "");
+//		// 发送广播
+//		LocalBroadcastManager.getInstance(PublishNewsActivity.this)
+//				.sendBroadcast(mIntent);
+//	}
+	
+	private LocalBroadcastManager mLocalBroadcastManager;
+	/**
+	 * 初始化广播信息
+	 * */
+	private void initBoradcastReceiver() {
+		mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+		IntentFilter myIntentFilter = new IntentFilter();
+		myIntentFilter.addAction(KHConst.BROADCAST_NEWS_LIST_REFRESH);
+		// 注册广播
+		mLocalBroadcastManager.registerReceiver(mBroadcastReceiver,
+				myIntentFilter);
 	}
+
+	/**
+	 * 广播接收处理
+	 * */
+	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent resultIntent) {
+			finish();
+		}
+	};
 }

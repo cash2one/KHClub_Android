@@ -149,6 +149,9 @@
 
 
     <!-- News -->
+    <string name="publish_circle_from">来自：</string>
+    <string name="choice_circle">选择圈子</string>
+    <string name="choice_circle_none">您需要选择一个圈子</string>
     <string name="circle_attention_fail">关注失败</string>
     <string name="create_circle_introduce">圈子介绍</string>
     <string name="create_circle_name">圈子称呢</string>

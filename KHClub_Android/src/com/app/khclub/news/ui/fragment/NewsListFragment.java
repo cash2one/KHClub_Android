@@ -568,13 +568,21 @@ public class NewsListFragment extends BaseFragment {
 			// 点击
 			helper.setOnClickListener(R.id.txt_main_news_content, listener);
 		}
+		// 设置圈子
+		if ("".equals(bodyData.getCircles())) {
+			helper.setVisible(R.id.txt_main_circles, false);
+		} else {
+			helper.setVisible(R.id.txt_main_circles, true);
+			helper.setText(R.id.txt_main_circles, getString(R.string.publish_circle_from)+bodyData.getCircles());
+		}
 		// 设置地理位置
 		if (bodyData.getLocation().equals("")) {
 			helper.setVisible(R.id.txt_main_news_location, false);
 		} else {
 			helper.setVisible(R.id.txt_main_news_location, true);
 			helper.setText(R.id.txt_main_news_location, bodyData.getLocation());
-		}
+		}		
+		
 		// 父布局监听
 		helper.setOnClickListener(R.id.miv_main_news_images, listener);
 		helper.setOnClickListener(R.id.layout_news_body_rootview, listener);

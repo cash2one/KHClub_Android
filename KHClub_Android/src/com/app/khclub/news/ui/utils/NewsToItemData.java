@@ -51,10 +51,11 @@ public class NewsToItemData {
 		try {
 			item.setItemType(Type);
 			item.setNewsID(news.getNewsID());
-			//
 			item.setNewsContent(news.getNewsContent());
 			item.setImageNewsList(news.getImageNewsList());
 			item.setLocation(news.getLocation());
+			item.setCircles(news.getCircles());
+			
 		} catch (Exception e) {
 			LogUtils.e("createBody error.");
 		}

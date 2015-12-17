@@ -121,6 +121,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	private TextView newsContent;
 	private MultiImageView newsPictures;
 	private TextView newsLocation;
+	private TextView newsCircles;
 	private TextView newsPublishTime;
 	private ImageView newsShareBtn;
 	private ImageView newsLikeBtn;
@@ -525,6 +526,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				.findViewById(R.id.miv_news_detail_images);
 		newsLocation = (TextView) contenteader
 				.findViewById(R.id.txt_news_detail_location);
+		newsCircles = (TextView) contenteader
+				.findViewById(R.id.txt_main_circles);
 		newsPublishTime = (TextView) contenteader
 				.findViewById(R.id.txt_news_detail_publish_time);
 		newsShareBtn = (ImageView) contenteader
@@ -670,6 +673,12 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		} else {
 			newsLocation.setVisibility(View.VISIBLE);
 			newsLocation.setText(data.getLocation());
+		}
+		if ("".equals(data.getCircles())) {
+			newsCircles.setVisibility(View.GONE);
+		} else {
+			newsCircles.setVisibility(View.VISIBLE);
+			newsCircles.setText(getString(R.string.publish_circle_from)+data.getCircles());
 		}
 		// 发布的时间
 		newsPublishTime.setText(TimeHandle.getShowTimeFormat(
