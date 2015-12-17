@@ -30,6 +30,7 @@
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
      
         <Button
+            android:id="@+id/send_news"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"

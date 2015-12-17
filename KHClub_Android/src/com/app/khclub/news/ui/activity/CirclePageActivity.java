@@ -1,5 +1,6 @@
 package com.app.khclub.news.ui.activity;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -66,6 +68,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnChildClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -76,7 +79,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	private int userID;
 	protected static final String CIRCLE_ID = "circle_id";
 	public static String INTENT_CIRCLE_KEY = "circleModel";
-	private View headerView;
+	//private View headerView;
 	// 圈子信息
 	private CirclePageModel circleModel2;
 
@@ -159,7 +162,8 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	// 动态listview
 	@ViewInject(R.id.news_circle_listView)
 	private PullToRefreshListView newsListView;
-
+	@ViewInject(R.id.send_news)
+    private Button sendnews;
 	// 原始数据源
 	private List<NewsModel> newsList = new ArrayList<NewsModel>();
 	// item数据源
@@ -217,6 +221,14 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		initBoradcastReceiver();
 		multiItemTypeSet();
 		newsListViewSet();
+		sendnews.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				sendnews();
+			}
+		});
 		// 获取上次缓存的数据
 		// setLastData(UserManager.getInstance().getUser().getUid());
 		// 从服务器加载数据
@@ -233,11 +245,21 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				case R.id.circle_page_head_layout:
 					toCircleDetail();
 					break;
+				case R.id.better_members_layout:
+					toBetterMembers();
+					break;
 
 				default:
 					break;
 				}
 
+			}
+
+			private void toBetterMembers() {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(CirclePageActivity.this, BetterMemberActivity.class);
+				intent.putExtra(CIRCLE_ID, circleModel2.getCircleId());
+				startActivity(intent);
 			}
 
 			private void toCircleDetail() {
@@ -420,11 +442,17 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		// refreshPush();
 	}
 
+	private void sendnews() {
+		// TODO Auto-generated method stub
+		Intent intent=new Intent(CirclePageActivity.this,PublishNewsActivity.class);
+		startActivity(intent);
+	}
+
 	/**
 	 * 数据的初始化
 	 */
 	private void init() {
-		headerView = getLayoutInflater().inflate(R.layout.activity_circle_page_header, null);
+		//headerView = getLayoutInflater().inflate(R.layout.activity_circle_page_header, null);
 		mContext = CirclePageActivity.this;
 		shareMenu = new PersonalBottomPopupMenu(this, false);
 		itemViewClickListener = new ItemViewClick();
@@ -611,6 +639,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 						headerClickListener.onClick(v, postion, v.getId());
 					}
 				};
+				helper.setOnClickListener(R.id.better_members_layout, headListener);
 				helper.setOnClickListener(R.id.circle_unattention_btn, headListener);
 				helper.setOnClickListener(R.id.circle_page_head_layout, headListener);
 
