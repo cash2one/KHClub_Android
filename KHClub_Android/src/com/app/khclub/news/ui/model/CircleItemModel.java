@@ -2,6 +2,8 @@ package com.app.khclub.news.ui.model;
 
 import java.io.Serializable;
 
+import com.alibaba.fastjson.JSONObject;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -40,5 +42,19 @@ public class CircleItemModel{
 	public void setFollow_quantity(String follow_quantity) {
 		this.follow_quantity = follow_quantity;
 	}
-	
+	public void setContentWithJson(JSONObject object) {
+         
+		if (object.containsKey("id")) {
+			setId(object.getString("id"));
+		}
+		if (object.containsKey("circle_name")) {
+			setCircle_name(object.getString("circle_name"));
+		}
+		if (object.containsKey("circle_cover_sub_image")) {
+			setCircle_cover_sub_image(object.getString("circle_cover_sub_image"));
+		}
+		if (object.containsKey("follow_quantity")) {
+			setFollow_quantity(object.getString("follow_quantity"));
+		}
+	}
 }

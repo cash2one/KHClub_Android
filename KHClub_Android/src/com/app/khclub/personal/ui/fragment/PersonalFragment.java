@@ -37,6 +37,7 @@ import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
 import com.app.khclub.personal.ui.activity.CardActivity;
+import com.app.khclub.personal.ui.activity.MyCircleActivity;
 import com.app.khclub.personal.ui.activity.PersonalNewsActivity;
 import com.app.khclub.personal.ui.activity.PersonalSettingActivity;
 import com.app.khclub.personal.ui.view.PersonalBottomPopupMenu;
@@ -127,7 +128,9 @@ public class PersonalFragment extends BaseFragment {
 	// 分享弹出菜单
 	private PersonalBottomPopupMenu shareMenu;
 
-	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout, R.id.btn_more_operate, R.id.robot_cover_layout, R.id.card_layout})
+	@OnClick({ R.id.base_tv_back, R.id.image_cover_layout,
+		R.id.btn_more_operate, R.id.robot_cover_layout,
+		R.id.card_layout,R.id.image_mycircle_layout})
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.base_tv_back:
@@ -142,6 +145,14 @@ public class PersonalFragment extends BaseFragment {
 			intentToNewsList.putExtra(PersonalNewsActivity.INTNET_KEY_UID,
 					UserManager.getInstance().getUser().getUid());
 			startActivityWithRight(intentToNewsList);
+			break;
+		case R.id.image_mycircle_layout:
+			// 跳转至我的圈子
+			Intent myCircleIntent = new Intent(this.getActivity(),
+					MyCircleActivity.class);
+//			intentToNewsList.putExtra(PersonalNewsActivity.INTNET_KEY_UID,
+//					UserManager.getInstance().getUser().getUid());
+			startActivityWithRight(myCircleIntent);
 			break;
 		case R.id.btn_more_operate:
 			// 操作菜单
@@ -402,9 +413,8 @@ public class PersonalFragment extends BaseFragment {
 	
 	private void setMyCircle(){
 
-		String path = KHConst.GET_MY_FOLLOW_CIRCLE_LIST + "?" + "uid_id="
+		String path = KHConst.GET_MY_CIRCLE_LIST + "?" + "user_id="
 				+ UserManager.getInstance().getUser().getUid();
-        Log.i("wwww", path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(
 				new LoadDataHandler<String>() {
 

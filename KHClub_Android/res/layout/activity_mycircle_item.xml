@@ -3,24 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/main_gold"
-        android:background="@color/main_light_gary"
-        android:id="@+id/circle_attention_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-    <TextView
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/main_gold"
-        android:background="@color/main_light_gary"
-        android:id="@+id/circle_recommend_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
@@ -77,6 +59,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center_vertical" >
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/recommend_btn"
                     android:layout_width="60dp"
                     android:layout_height="30dp"
