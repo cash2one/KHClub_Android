@@ -72,6 +72,8 @@
         <activity android:name="com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity" />
 
         <!-- 动态 -->
+        <activity android:name="com.app.khclub.news.ui.activity.BetterMemberActivity" >
+        </activity>
         <activity android:name="com.app.khclub.news.ui.activity.ModifyCircleActivity" >
         </activity>
         <activity android:name="com.app.khclub.news.ui.activity.CreateCircleActivity" >
@@ -93,7 +95,7 @@
         <activity android:name="com.app.khclub.news.ui.activity.CircleDetailActivity" >
         </activity>
         <activity android:name="com.app.khclub.news.ui.activity.ChoiceCircleActivity" >
-        </activity>        
+        </activity>
         <!-- Contact -->
         <activity android:name="com.app.khclub.contact.ui.activity.ShareContactsActivity" >
         </activity>
@@ -412,7 +414,7 @@
             <!--
             	如果集成QQ分享，或者使用QQ客户端来进行QQ空间的分享，须要在此处添加一个对ACTION_VIEW
             	事件的过滤器，其中的scheme是“tencent”前缀再开发者应用的加上appId。如果此过滤器不设置，
-            	则分享结束以后不能得到正确的回调
+            	则分享结束以后不能得到正确的回调
             -->
             <intent-filter android:priority="1000" >
                 <data android:scheme="tencent100371282" />

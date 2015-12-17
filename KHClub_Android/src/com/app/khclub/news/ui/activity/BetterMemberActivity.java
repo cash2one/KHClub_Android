@@ -17,6 +17,7 @@ import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.news.ui.model.BetterMembersModel;
 import com.app.khclub.news.ui.model.CircleItemModel;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -37,19 +38,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class BetterMemberActivity extends  BaseActivityWithTopBar{
+public class BetterMemberActivity extends BaseActivityWithTopBar {
 
-	private static final String FOLLOW_LIST = "followList";
 	private static final String CIRCLE_ID = "circle_id";
-	private static final String CIRCLE_ISFOLLOW= "isFollow";
-	private static final String UNFOLLOW_LIST = "unfollowList";
-	private List<CircleItemModel> followList, unfollowList, dataList;
-	// private boolean ISNOTATTENTION=true;
+	private List<BetterMembersModel> dataList;
 	// 下拉列表
-	@ViewInject(R.id.circle_refresh_list)
-	private PullToRefreshListView circleListView;
+	@ViewInject(R.id.better_members_listView)
+	private PullToRefreshListView membersListView;
 	// adapter
-	HelloHaAdapter<CircleItemModel> circleAdapter;
+	HelloHaAdapter<BetterMembersModel> MembersModelAdapter;
 	// 下拉模式
 	public static final int PULL_DOWM_MODE = 0;
 	// 上拉模式
@@ -64,98 +61,46 @@ public class BetterMemberActivity extends  BaseActivityWithTopBar{
 	// item位置
 	private int position;
 
-
-	@Override
-	public void loadLayout(View rootView) {
-		
-	}
-
-
 	/***
 	 * 
 	 * listview的设置
 	 */
 	private void initListViewSet() {
 		// 设置内容
-		circleAdapter = new HelloHaAdapter<CircleItemModel>(BetterMemberActivity.this, R.layout.activity_better_expert_item) {
-			private int datacount;
+		MembersModelAdapter = new HelloHaAdapter<BetterMembersModel>(BetterMemberActivity.this,
+				R.layout.activity_better_expert_item) {
 			@Override
-			protected void convert(HelloHaBaseAdapterHelper helper, final CircleItemModel item) {
+			protected void convert(HelloHaBaseAdapterHelper helper, final BetterMembersModel item) {
 				// item 位置
 				position = helper.getPosition();
-				datacount = dataList.size();
-				// helper.setOnClickListener(viewId, listener)
-				// 圈子标题
-				helper.setText(R.id.circle_name, item.getCircle_name());
-				// 圈子类型（是否关注）
-				if (followList.size() > 0) {
-					if (followList.get(0).getId().equals(item.getId())) {
-						helper.setVisible(R.id.circle_attention_type, true);
-						helper.setText(R.id.circle_attention_type,
-								getResources().getString(R.string.circle_attention_type_name));
-					} else {
-						helper.setVisible(R.id.circle_attention_type, false);
-					}
-				}
-				if (unfollowList.size() > 0) {
-					if (unfollowList.get(0).getId().equals(item.getId())) {
-						helper.setVisible(R.id.circle_recommend_type, true);
-						helper.setText(R.id.circle_recommend_type,
-								getResources().getString(R.string.circle_recommend_type_name));
-					} else {
-						helper.setVisible(R.id.circle_recommend_type, false);
-					}
-				}
-				if (position >= (followList.size() - unfollowList.size())) {
-					helper.setVisible(R.id.recommend_btn, true);
+				if (position == 0) {
+					helper.setVisible(R.id.all_club_members_layout, true);
 				} else {
-					helper.setVisible(R.id.recommend_btn, false);
+					helper.setVisible(R.id.all_club_members_layout, false);
 				}
-				helper.setText(R.id.circle_people_count, item.getFollow_quantity());
-				ImageView headImageView = helper.getView(R.id.circle_image);
-				String image = item.getCircle_cover_sub_image();
-				LogUtils.i(KHConst.ATTACHMENT_ADDR + image + " " + image, 1);
-				// 加入图片
-				if (image.length() > 0) {
-					ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR + image, headImageView,
-							headImageOptions);
-				} else {
-					headImageView.setImageResource(R.drawable.loading_default);
+				helper.setText(R.id.member_user_name, item.getName());
+				if ("".equals(item.getJob())) {
+					helper.setText(R.id.member_job, "暂无信息");
+				}else {
+					helper.setText(R.id.member_job, item.getJob());
 				}
-				helper.setOnClickListener(R.id.recommend_btn, new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-					}
-				});
-				
+				ImageView userImageView = helper.getView(R.id.member_user_image);
+				ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR + item.getHead_sub_image(),
+						userImageView, headImageOptions);
 			}
 		};
 
 		// 适配器绑定
-		circleListView.setAdapter(circleAdapter);
-		// circleListView.setOnItemClickListener(new OnItemClickListener() {
-		// @Override
-		// public void onItemClick(AdapterView<?> parent, View view, int
-		// position, long id) {
-		// 跳转到其他人页面
-		// Intent intent = new Intent(getActivity(),
-		// CircleDetailActivity.class);
-		// intent.putExtra(CircleDetailActivity.INTENT_CIRCLE_KEY,
-		// circleAdapter.getItem(position - 1));
-		// startActivityWithRight(intent);
-		// }
-		// });
-		circleListView.setMode(Mode.PULL_FROM_START);
-		circleListView.setPullToRefreshOverScrollEnabled(false);
+		membersListView.setAdapter(MembersModelAdapter);
+		membersListView.setMode(Mode.PULL_FROM_START);
+		membersListView.setPullToRefreshOverScrollEnabled(false);
 		// 设置刷新事件监听
-		circleListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
+		membersListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 下拉刷新
 				isPullDowm = true;
-				getData();
 			}
 
 			@Override
@@ -165,34 +110,30 @@ public class BetterMemberActivity extends  BaseActivityWithTopBar{
 		});
 
 		// 快宿滑动时不加载图片
-		circleListView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), false, true));
+		membersListView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), false, true));
 	}
 
-
-
-	private void freshAttentionData() {
-		// TODO Auto-generated method stub
-		Log.i("wwww", position+"");
-		if (isattention) {
-			CircleItemModel attention = dataList.get(position);
-			followList.add(attention);
-			unfollowList.remove(position);
-			circleAdapter.notifyDataSetChanged();
-		} else {
-			CircleItemModel attention = dataList.get(position);
-			unfollowList.add(attention);
-			followList.remove(position);
-			circleAdapter.notifyDataSetChanged();
-		}
-	}
+	// private void freshAttentionData() {
+	// // TODO Auto-generated method stub
+	// if (isattention) {
+	// CircleItemModel attention = dataList.get(position);
+	// followList.add(attention);
+	// unfollowList.remove(position);
+	// circleAdapter.notifyDataSetChanged();
+	// } else {
+	// CircleItemModel attention = dataList.get(position);
+	// unfollowList.add(attention);
+	// followList.remove(position);
+	// circleAdapter.notifyDataSetChanged();
+	// }
+	// }
 
 	/**
 	 * 获取动态数据
 	 */
 	private void getData() {
-		String circleid="";
-		String path = KHConst.GET_PERSONAL_CIRCLE_LIST + "?circle_id=" +circleid;
-		// Log.i("wwww", path);
+		String circleid = getIntent().getStringExtra("circle_id");
+		String path = KHConst.GET_CIRCLE_MEMBERS + "?circle_id=" + circleid;
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
 			@Override
@@ -202,68 +143,50 @@ public class BetterMemberActivity extends  BaseActivityWithTopBar{
 				if (status == KHConst.STATUS_SUCCESS) {
 					JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
 					// 获取动态列表
-					String unfollowJsonArray = jResult.getString(UNFOLLOW_LIST);
-					String followJsonArray = jResult.getString(FOLLOW_LIST);
-					followList = JSON.parseArray(followJsonArray, CircleItemModel.class);
-					unfollowList = JSON.parseArray(unfollowJsonArray, CircleItemModel.class);
-					followList.addAll(unfollowList);
-					dataList = followList;
+					String followJsonArray = jResult.getString("list");
+					dataList = JSON.parseArray(followJsonArray, BetterMembersModel.class);
 					// 如果是下拉刷新
 					if (isPullDowm) {
-						circleAdapter.replaceAll(dataList);
+						MembersModelAdapter.replaceAll(dataList);
 					} else {
-						circleAdapter.addAll(dataList);
+						MembersModelAdapter.addAll(dataList);
 					}
-					circleListView.onRefreshComplete();
-					circleListView.setMode(Mode.PULL_FROM_START);
+					membersListView.onRefreshComplete();
+					membersListView.setMode(Mode.PULL_FROM_START);
 
 				}
 				if (status == KHConst.STATUS_FAIL) {
-					circleListView.onRefreshComplete();
-					circleListView.setMode(Mode.PULL_FROM_START);
+					membersListView.onRefreshComplete();
+					membersListView.setMode(Mode.PULL_FROM_START);
 				}
 			}
 
 			@Override
 			public void onFailure(HttpException arg0, String arg1, String flag) {
 				super.onFailure(arg0, arg1, flag);
-				circleListView.onRefreshComplete();
+				membersListView.onRefreshComplete();
 				// 是否是最后一页
-				circleListView.setMode(Mode.PULL_FROM_START);
-
+				membersListView.setMode(Mode.PULL_FROM_START);
 			}
 
 		}, null));
 	}
- /*   public  interface freshCircleData{
-    	void fresh();
-    }*/
-	
-	 Fresh fresh =new Fresh();
-     class Fresh implements Serializable{
 
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		public void fresh() {
-			// TODO Auto-generated method stub
-			getData();
-			circleAdapter.replaceAll(dataList);
-		}}
 	@Override
 	protected void setUpView() {
 		// TODO Auto-generated method stub
-		
+		setBarText(getString(R.string.news_club_expert));
+		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
+				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
+		getData();
+		initListViewSet();
 	}
-
 
 	@Override
 	public int setLayoutId() {
 		// TODO Auto-generated method stub
 		return R.layout.activity_better_expert;
 	}
-   
 
 }

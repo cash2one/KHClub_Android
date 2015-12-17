@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -99,13 +100,26 @@ public class PersonalFragment extends BaseFragment {
 	// 图片3
 	@ViewInject(R.id.personal_picture_image_view3)
 	private ImageView pictureImageView3;
+	// 我的圈子1
+	@ViewInject(R.id.personal_mycircle_image_view1)
+	private ImageView myCircleImageView1;
+	// 我的圈子2
+	@ViewInject(R.id.personal_mycircle_image_view2)
+	private ImageView myCircleImageView2;
+	// 我的圈子3
+	@ViewInject(R.id.personal_mycircle_image_view3)
+	private ImageView myCircleImageView3;
 	// 操作菜单
 	@ViewInject(R.id.btn_more_operate)
 	private ImageButton operateButton;
 	// 前10张图片数组
 	private List<String> newsImageList = new ArrayList<String>();
+	//获取我的圈子头像
+	private List<String> myCircleImageList = new ArrayList<String>();
 	// 控件数组
 	private List<ImageView> imageList = new ArrayList<ImageView>();
+	//
+	private List<ImageView> myCircleList = new ArrayList<ImageView>();
 	// 图片缓存工具
 	private DisplayImageOptions imageOptions;
 	// 操作菜单
@@ -167,6 +181,9 @@ public class PersonalFragment extends BaseFragment {
 		imageList.add(pictureImageView1);
 		imageList.add(pictureImageView2);
 		imageList.add(pictureImageView3);
+		myCircleList.add(myCircleImageView1);
+		myCircleList.add(myCircleImageView2);
+		myCircleList.add(myCircleImageView3);
 		imageOptions = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default)
@@ -316,7 +333,6 @@ public class PersonalFragment extends BaseFragment {
 				object.put("id", KHUtils.selfCommonIMID());
 				object.put("title",UserManager.getInstance().getUser().getName());
 				object.put("avatar", KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());
-				
 				Intent intent = new Intent(getActivity(), ShareContactsActivity.class);
 				intent.putExtra(ShareContactsActivity.INTENT_CARD_KEY, object.toJSONString());
 				startActivityWithRight(intent);
@@ -377,8 +393,79 @@ public class PersonalFragment extends BaseFragment {
 		}
 		// 获取图片
 		getNewsImages();
+		//获取关注圈子
+		setMyCircle();
 		//更新个人信息
 		setInfo();
+		
+	}
+	
+	private void setMyCircle(){
+
+		String path = KHConst.GET_MY_FOLLOW_CIRCLE_LIST + "?" + "uid_id="
+				+ UserManager.getInstance().getUser().getUid();
+        Log.i("wwww", path);
+		HttpManager.get(path, new JsonRequestCallBack<String>(
+				new LoadDataHandler<String>() {
+
+					@Override
+					public void onSuccess(JSONObject jsonResponse, String flag) {
+						super.onSuccess(jsonResponse, flag);
+						int status = jsonResponse
+								.getInteger(KHConst.HTTP_STATUS);
+						if (status == KHConst.STATUS_SUCCESS) {
+							// 数据处理
+							JSONArray array = jsonResponse
+									.getJSONArray(KHConst.HTTP_RESULT);
+							myCircleImageList.clear();
+							for (int i = 0; i < array.size(); i++) {
+								JSONObject object = (JSONObject) array.get(i);
+								myCircleImageList.add(object.getString("circle_cover_sub_image"));
+							}
+
+							// 最多3
+							int size = newsImageList.size();
+							if (size > 3) {
+								size = 3;
+							}
+							// 设置不可见
+							for (ImageView imageView : myCircleList) {
+								imageView.setVisibility(View.GONE);
+							}
+
+							for (int i = 0; i < size; i++) {
+								ImageView imageView = myCircleList.get(i);
+								String path = myCircleImageList.get(i);
+								// 设置图片
+								if (null != path && path.length() > 0) {
+									ImageLoader.getInstance().displayImage(
+											KHConst.ATTACHMENT_ADDR + path,
+											imageView, imageOptions);
+								} else {
+									imageView
+											.setImageResource(R.drawable.loading_default);
+								}
+								imageView.setVisibility(View.VISIBLE);
+							}
+							
+							//提示暂无
+							if (size > 0) {
+								noMomentTextView.setVisibility(View.GONE);
+							}else {
+								noMomentTextView.setVisibility(View.VISIBLE);
+							}
+						}
+
+						if (status == KHConst.STATUS_FAIL) {
+						}
+					}
+
+					@Override
+					public void onFailure(HttpException arg0, String arg1,
+							String flag) {
+						super.onFailure(arg0, arg1, flag);
+					}
+				}, null));
 	}
 	//设置内容
 	private void setInfo(){

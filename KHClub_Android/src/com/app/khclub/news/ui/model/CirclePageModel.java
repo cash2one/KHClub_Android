@@ -82,7 +82,6 @@ public class CirclePageModel implements Serializable{
 			setWxNum(object.getString("wx_num"));
 		}
 		if (object.containsKey("wx_qrcode")) {
-			Log.i("wx", object.getString("wx_qrcode"));
 			setWxqrCode(KHConst.ATTACHMENT_ADDR + object.getString("wx_qrcode"));
 		}
 		if (object.containsKey("follow_quantity")) {

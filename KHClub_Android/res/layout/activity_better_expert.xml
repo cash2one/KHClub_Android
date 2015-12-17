@@ -3,13 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <include
+     <include
         android:id="@+id/title_bar"
         layout="@layout/layout_title_bar" />
-
     <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/news_circle_listView"
+        android:id="@+id/better_members_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="#00000000"
