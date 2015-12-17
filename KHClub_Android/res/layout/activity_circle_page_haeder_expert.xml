@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     android:id="@+id/better_members_layout"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res/com.app.khclub"
     android:layout_height="match_parent" >
 
     <LinearLayout
@@ -9,61 +10,65 @@
         android:layout_height="match_parent"
         android:orientation="horizontal" >
 
+        
         <ImageView
-            android:layout_width="@dimen/head_image_size_small"
-            android:layout_height="@dimen/head_image_size_small"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="7dp"
-            android:src="@drawable/ring" />
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ring"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="7dp"
             android:paddingLeft="10dp"
             android:text="@string/news_club_expert"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
-        <ImageView
+        <com.app.khclub.base.ui.view.RoundImageView
             android:id="@+id/members_image0"
+            app:rect_adius="15dp" 
             android:layout_width="@dimen/head_image_size_small"
             android:layout_height="@dimen/head_image_size_small"
             android:layout_marginLeft="7dp"
-            android:src="@drawable/default_avatar"
             android:visibility="gone" />
 
-        <ImageView
+        <com.app.khclub.base.ui.view.RoundImageView
             android:id="@+id/members_image1"
             android:layout_width="@dimen/head_image_size_small"
             android:layout_height="@dimen/head_image_size_small"
             android:layout_marginLeft="7dp"
-            android:src="@drawable/default_avatar"
+            app:rect_adius="15dp" 
             android:visibility="gone" />
 
-        <ImageView
+        <com.app.khclub.base.ui.view.RoundImageView
             android:id="@+id/members_image2"
             android:layout_width="@dimen/head_image_size_small"
             android:layout_height="@dimen/head_image_size_small"
             android:layout_marginLeft="7dp"
-            android:src="@drawable/default_avatar"
+            app:rect_adius="15dp" 
             android:visibility="gone" />
 
-        <ImageView
+        <com.app.khclub.base.ui.view.RoundImageView
+            app:rect_adius="15dp" 
             android:id="@+id/members_image3"
             android:layout_width="@dimen/head_image_size_small"
             android:layout_height="@dimen/head_image_size_small"
             android:layout_marginLeft="7dp"
-            android:src="@drawable/default_avatar"
             android:visibility="gone" />
 
-        <ImageView
+        <com.app.khclub.base.ui.view.RoundImageView
+            app:rect_adius="15dp" 
             android:id="@+id/members_image4"
             android:layout_width="@dimen/head_image_size_small"
             android:layout_height="@dimen/head_image_size_small"
             android:layout_marginLeft="7dp"
-            android:src="@drawable/default_avatar"
             android:visibility="gone" />
 
-        <ImageView
+        <com.app.khclub.base.ui.view.RoundImageView
+            app:rect_adius="15dp" 
             android:id="@+id/members_image5"
             android:layout_width="@dimen/head_image_size_small"
             android:layout_height="@dimen/head_image_size_small"
@@ -72,12 +77,4 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <ImageView
-        android:layout_alignParentRight="true"
-        android:id="@+id/better_members_image"
-        android:layout_width="@dimen/head_image_size_small"
-        android:layout_height="@dimen/head_image_size_small"
-        android:layout_marginRight="7dp"
-        android:src="@drawable/ic_right_arrow"
-     />
 </RelativeLayout>
