@@ -63,14 +63,6 @@
         android:paddingRight="10dp" >
 
         <ImageView
-            android:id="@+id/img_share_to_weibo"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:src="@drawable/iconfont_weibo" />
-
-        <ImageView
             android:id="@+id/img_share_to_qzone"
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -85,6 +77,16 @@
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:src="@drawable/iconfont_qq" />
+        
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/img_share_to_weibo"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/iconfont_weibo" />        
+        
     </LinearLayout>
 
     <LinearLayout

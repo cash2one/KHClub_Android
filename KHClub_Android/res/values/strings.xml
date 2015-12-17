@@ -510,6 +510,7 @@
     <string name="im_a_card">A Card</string>
     <string name="im_name_card">Name Card</string>
     <string name="im_group_name_card">Group Name Card</string>
+    <string name="im_circle_name_card">Circle Card</string>
     <string name="push_a_message">A new message</string>
     <string name="push_like">A Like for you</string>
     <string name="push_invite"> invite to join</string>

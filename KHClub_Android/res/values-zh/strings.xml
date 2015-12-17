@@ -518,6 +518,7 @@
     <string name="im_a_card">一张名片</string>
     <string name="im_name_card">名片</string>
     <string name="im_group_name_card">群名片</string>
+    <string name="im_circle_name_card">圈子名片</string>
     <string name="push_a_message">一条新消息</string>
     <string name="push_like">赞了你</string>
     <string name="push_invite">邀请加入</string>

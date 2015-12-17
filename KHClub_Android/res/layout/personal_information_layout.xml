@@ -320,7 +320,7 @@
         android:layout_height="20dp"
         android:background="@color/main_light_gary" />
     <!-- 头衔 -->
-    <LinearLayout
+  <!--   <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -351,7 +351,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/main_light_gary" />
-    <!-- 头衔1 -->
+    头衔1
     <LinearLayout
         android:id="@+id/title_1_layout"
         android:layout_width="match_parent"
@@ -374,7 +374,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/main_light_gary" />
-    <!-- 头衔2 -->
+    头衔2
     <LinearLayout
         android:id="@+id/title_2_layout"
         android:layout_width="match_parent"
@@ -397,7 +397,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/main_light_gary" />   
-    <!-- 头衔3 -->
+    头衔3
     <LinearLayout
         android:id="@+id/title_3_layout"
         android:layout_width="match_parent"
@@ -420,7 +420,7 @@
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/main_light_gary" />   
-    <!-- 头衔4 -->
+    头衔4
     <LinearLayout
         android:id="@+id/title_4_layout"
         android:layout_width="match_parent"
@@ -442,6 +442,6 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="10dp"
-        android:background="@color/main_light_gary" />                       
+        android:background="@color/main_light_gary" />                        -->
     
 </LinearLayout>

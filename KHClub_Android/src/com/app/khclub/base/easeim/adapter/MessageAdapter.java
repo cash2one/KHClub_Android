@@ -77,6 +77,7 @@ import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
+import com.app.khclub.news.ui.activity.CirclePageActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.EMCallBack;
 import com.easemob.EMError;
@@ -656,7 +657,7 @@ public class MessageAdapter extends BaseAdapter{
 								}
 							});
 						}
-					}else {
+					}else if (jsonObject.getIntValue("type") == EMMessage.ChatType.GroupChat.ordinal()){
 						holder.cardTitleTextView.setText(R.string.im_group_name_card);
 						if (jsonObject.containsKey("id")) {
 							holder.cardLayout.setOnClickListener(new OnClickListener() {
@@ -670,6 +671,20 @@ public class MessageAdapter extends BaseAdapter{
 								}
 							});							
 						}
+					}else {
+						holder.cardTitleTextView.setText(R.string.im_circle_name_card);
+						if (jsonObject.containsKey("id")) {
+							holder.cardLayout.setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View v) {
+									// 跳转到群结果页面
+									Intent intent = new Intent(context, CirclePageActivity.class);
+									intent.putExtra("circle_id", jsonObject.getString("id"));
+									context.startActivity(intent);
+									((Activity) context).overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+								}
+							});							
+						}
 					}
 				}
 				if (jsonObject.containsKey("title")) {
@@ -677,6 +692,7 @@ public class MessageAdapter extends BaseAdapter{
 				}				
 				if (jsonObject.containsKey("avatar")) {
 					String avatar = jsonObject.getString("avatar");
+					LogUtils.i(avatar, 1);
 					if (avatar.length() > 0) {
 						Picasso.with(context).load(avatar).placeholder(R.drawable.mini_avatar_shadow).into(holder.cardImageView);
 					}

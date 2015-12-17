@@ -33,7 +33,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
-
+//弃用
 public class CircleListFragment extends BaseFragment{
 
 	//下拉列表

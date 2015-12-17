@@ -181,10 +181,10 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			}
 			break;	
 		case R.id.card_layout:
-			//名片点击
-			Intent cardIntent = new Intent(OtherPersonalActivity.this, CardActivity.class);
-			cardIntent.putExtra(INTENT_KEY, uid);
-			startActivityWithRight(cardIntent);
+			//名片点击 该功能取消
+//			Intent cardIntent = new Intent(OtherPersonalActivity.this, CardActivity.class);
+//			cardIntent.putExtra(INTENT_KEY, uid);
+//			startActivityWithRight(cardIntent);
 			break;			
 		default:
 			break;

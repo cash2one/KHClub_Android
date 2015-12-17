@@ -146,10 +146,10 @@ public class PersonalFragment extends BaseFragment {
 		}
 			break;
 		case R.id.card_layout:
-			//名片点击
-			Intent cardIntent = new Intent(getActivity(), CardActivity.class);
-			cardIntent.putExtra(CardActivity.INTENT_IS_SELF_KEY, true);
-			startActivityWithRight(cardIntent);
+			//名片点击 该功能取消
+//			Intent cardIntent = new Intent(getActivity(), CardActivity.class);
+//			cardIntent.putExtra(CardActivity.INTENT_IS_SELF_KEY, true);
+//			startActivityWithRight(cardIntent);
 			break;
 		default:
 			break;

@@ -80,18 +80,18 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 	// 签名
 	@ViewInject(R.id.sign_text_view)
 	private TextView signTextView;	
-	// 头衔1
-	@ViewInject(R.id.title_1_text_view)
-	private TextView title1TextView;	
-	// 头衔2
-	@ViewInject(R.id.title_2_text_view)
-	private TextView title2TextView;	
-	// 头衔3
-	@ViewInject(R.id.title_3_text_view)
-	private TextView title3TextView;
-	// 头衔4
-	@ViewInject(R.id.title_4_text_view)
-	private TextView title4TextView;
+//	// 头衔1 头衔功能作废 
+//	@ViewInject(R.id.title_1_text_view)
+//	private TextView title1TextView;	
+//	// 头衔2
+//	@ViewInject(R.id.title_2_text_view)
+//	private TextView title2TextView;	
+//	// 头衔3
+//	@ViewInject(R.id.title_3_text_view)
+//	private TextView title3TextView;
+//	// 头衔4
+//	@ViewInject(R.id.title_4_text_view)
+//	private TextView title4TextView;
 	
 	private UserModel userModel;
 	// 新图片缓存工具 头像
@@ -99,8 +99,7 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 
 	@OnClick(value = { R.id.name_layout, R.id.sign_layout,R.id.company_layout,R.id.phone_layout,R.id.version_text_view,
 			R.id.address_layout,R.id.email_layout,R.id.logout_button,R.id.rl_switch_sound,R.id.rl_switch_vibrate,
-			R.id.sex_layout, R.id.head_image_view,R.id.head_layout, R.id.job_layout, R.id.clear_cache_text_view , R.id.setting_image_view,
-			R.id.title_1_layout,R.id.title_2_layout,R.id.title_3_layout,R.id.title_4_layout})
+			R.id.sex_layout, R.id.head_image_view,R.id.head_layout, R.id.job_layout, R.id.clear_cache_text_view , R.id.setting_image_view})
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		// 姓名
@@ -187,19 +186,19 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 			Intent settingIntent = new Intent(this, AppSettingActivity.class);
 			startActivityWithRight(settingIntent);
 			break;
-		//头衔部分
-		case R.id.title_1_layout:
-			titleClick(1);
-			break;
-		case R.id.title_2_layout:
-			titleClick(2);
-			break;
-		case R.id.title_3_layout:
-			titleClick(3);
-			break;
-		case R.id.title_4_layout:
-			titleClick(4);
-			break;			
+//		//头衔部分
+//		case R.id.title_1_layout:
+//			titleClick(1);
+//			break;
+//		case R.id.title_2_layout:
+//			titleClick(2);
+//			break;
+//		case R.id.title_3_layout:
+//			titleClick(3);
+//			break;
+//		case R.id.title_4_layout:
+//			titleClick(4);
+//			break;			
 		default:
 			break;
 		}
@@ -221,7 +220,7 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 				.showImageOnFail(R.drawable.default_avatar).cacheInMemory(true)
 				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 		init();
-		getExtraInfo();
+//		getExtraInfo();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -379,10 +378,10 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 		signTextView.setText(KHUtils.emptyRetunNone(userModel.getSignature()));
 		
 		//四个头衔
-		title1TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_1_KEY)));
-		title2TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_2_KEY)));
-		title3TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_3_KEY)));
-		title4TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_4_KEY)));
+//		title1TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_1_KEY)));
+//		title2TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_2_KEY)));
+//		title3TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_3_KEY)));
+//		title4TextView.setText(KHUtils.emptyRetunNone(ConfigUtils.getStringConfig(KHConst.TITLE_4_KEY)));
 	}
 	
 	// 开启缩放
@@ -459,87 +458,87 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 	}
 	
 	// 头衔点击
-	private void titleClick(final int index) {
-		// dialog
-		Builder nameAlertDialog = new AlertDialog.Builder(this);
-		LinearLayout textViewLayout = (LinearLayout) View.inflate(
-				this, R.layout.dialog_text_view, null);
-		nameAlertDialog.setView(textViewLayout);
-		TextView titleTextView = (TextView) textViewLayout
-				.findViewById(R.id.name_text_view);
-		titleTextView.setText(getString(R.string.personal_title)+index);
-		final EditText et_search = (EditText) textViewLayout
-				.findViewById(R.id.name_edit_text);
-		et_search.setHint("");
-		//内容填充
-		switch (index) {
-		case 1:
-			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_1_KEY));
-			break;
-		case 2:
-			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_2_KEY));
-			break;
-		case 3:
-			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_3_KEY));
-			break;
-		case 4:
-			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_4_KEY));
-			break;					
-		default:
-			break;
-		}		
-		//设置光标
-		et_search.setSelection(et_search.getText().length());
-		
-		final Dialog dialog = nameAlertDialog.show();
-		TextView cancelTextView = (TextView) textViewLayout
-				.findViewById(R.id.tv_custom_alert_dialog_cancel);
-		cancelTextView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
-
-		TextView confirmTextView = (TextView) textViewLayout
-				.findViewById(R.id.tv_custom_alert_dialog_confirm);
-		confirmTextView.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String title = et_search.getText().toString().trim();
-				if (title.length() > 10) {
-					ToastUtil.show(PersonalSettingActivity.this, R.string.personal_title_too_long);
-					return;
-				}
-				
-				String keyStr = KHConst.TITLE_1_KEY;
-				//内容填充
-				switch (index) {
-				case 1:
-					title1TextView.setText(title);
-					keyStr = KHConst.TITLE_1_KEY;
-					break;
-				case 2:
-					title2TextView.setText(title);
-					keyStr = KHConst.TITLE_2_KEY;
-					break;
-				case 3:
-					title3TextView.setText(title);
-					keyStr = KHConst.TITLE_3_KEY;
-					break;
-				case 4:
-					title4TextView.setText(title);
-					keyStr = KHConst.TITLE_4_KEY;
-					break;					
-				default:
-					break;
-				}
-				//上传
-				uploadExtraInformation(keyStr, title, keyStr);
-				dialog.dismiss();
-			}
-		});
-	}
+//	private void titleClick(final int index) {
+//		// dialog
+//		Builder nameAlertDialog = new AlertDialog.Builder(this);
+//		LinearLayout textViewLayout = (LinearLayout) View.inflate(
+//				this, R.layout.dialog_text_view, null);
+//		nameAlertDialog.setView(textViewLayout);
+//		TextView titleTextView = (TextView) textViewLayout
+//				.findViewById(R.id.name_text_view);
+//		titleTextView.setText(getString(R.string.personal_title)+index);
+//		final EditText et_search = (EditText) textViewLayout
+//				.findViewById(R.id.name_edit_text);
+//		et_search.setHint("");
+//		//内容填充
+//		switch (index) {
+//		case 1:
+//			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_1_KEY));
+//			break;
+//		case 2:
+//			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_2_KEY));
+//			break;
+//		case 3:
+//			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_3_KEY));
+//			break;
+//		case 4:
+//			et_search.setText(ConfigUtils.getStringConfig(KHConst.TITLE_4_KEY));
+//			break;					
+//		default:
+//			break;
+//		}		
+//		//设置光标
+//		et_search.setSelection(et_search.getText().length());
+//		
+//		final Dialog dialog = nameAlertDialog.show();
+//		TextView cancelTextView = (TextView) textViewLayout
+//				.findViewById(R.id.tv_custom_alert_dialog_cancel);
+//		cancelTextView.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				dialog.dismiss();
+//			}
+//		});
+//
+//		TextView confirmTextView = (TextView) textViewLayout
+//				.findViewById(R.id.tv_custom_alert_dialog_confirm);
+//		confirmTextView.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				String title = et_search.getText().toString().trim();
+//				if (title.length() > 10) {
+//					ToastUtil.show(PersonalSettingActivity.this, R.string.personal_title_too_long);
+//					return;
+//				}
+//				
+//				String keyStr = KHConst.TITLE_1_KEY;
+//				//内容填充
+//				switch (index) {
+//				case 1:
+//					title1TextView.setText(title);
+//					keyStr = KHConst.TITLE_1_KEY;
+//					break;
+//				case 2:
+//					title2TextView.setText(title);
+//					keyStr = KHConst.TITLE_2_KEY;
+//					break;
+//				case 3:
+//					title3TextView.setText(title);
+//					keyStr = KHConst.TITLE_3_KEY;
+//					break;
+//				case 4:
+//					title4TextView.setText(title);
+//					keyStr = KHConst.TITLE_4_KEY;
+//					break;					
+//				default:
+//					break;
+//				}
+//				//上传
+//				uploadExtraInformation(keyStr, title, keyStr);
+//				dialog.dismiss();
+//			}
+//		});
+//	}
 	
 	// 职位点击
 	private void jobClick() {
@@ -828,50 +827,50 @@ public class PersonalSettingActivity extends BaseActivityWithTopBar {
 	}
 	
 	//获取额外的个人信息
-	private void getExtraInfo(){
-		
-		String path = KHConst.GET_PERSONAL_EXTRA_INFORMATION + "?" + "uid=" + userModel.getUid();
-		HttpManager.get(path, new JsonRequestCallBack<String>(
-				new LoadDataHandler<String>() {
-
-					@Override
-					public void onSuccess(JSONObject jsonResponse, String flag) {
-						super.onSuccess(jsonResponse, flag);
-						int status = jsonResponse
-								.getInteger(KHConst.HTTP_STATUS);
-						if (status == KHConst.STATUS_SUCCESS) {
-							JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
-							//四个头衔							
-							if (jResult.containsKey(KHConst.TITLE_1_KEY)) {
-								title1TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_1_KEY)));
-								ConfigUtils.saveConfig(KHConst.TITLE_1_KEY, jResult.getString(KHConst.TITLE_1_KEY));
-							}
-							if (jResult.containsKey(KHConst.TITLE_2_KEY)) {
-								title2TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_2_KEY)));
-								ConfigUtils.saveConfig(KHConst.TITLE_2_KEY, jResult.getString(KHConst.TITLE_2_KEY));
-							}
-							if (jResult.containsKey(KHConst.TITLE_3_KEY)) {
-								title3TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_3_KEY)));
-								ConfigUtils.saveConfig(KHConst.TITLE_3_KEY, jResult.getString(KHConst.TITLE_3_KEY));
-							}
-							if (jResult.containsKey(KHConst.TITLE_4_KEY)) {
-								title4TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_4_KEY)));
-								ConfigUtils.saveConfig(KHConst.TITLE_4_KEY, jResult.getString(KHConst.TITLE_4_KEY));
-							}							
-						}
-						if (status == KHConst.STATUS_FAIL) {
-						}
-					}
-
-					@Override
-					public void onFailure(HttpException arg0, String arg1,
-							String flag) {
-						super.onFailure(arg0, arg1, flag);
-					}
-
-				}, null));
-		
-	}
+//	private void getExtraInfo(){
+//		
+//		String path = KHConst.GET_PERSONAL_EXTRA_INFORMATION + "?" + "uid=" + userModel.getUid();
+//		HttpManager.get(path, new JsonRequestCallBack<String>(
+//				new LoadDataHandler<String>() {
+//
+//					@Override
+//					public void onSuccess(JSONObject jsonResponse, String flag) {
+//						super.onSuccess(jsonResponse, flag);
+//						int status = jsonResponse
+//								.getInteger(KHConst.HTTP_STATUS);
+//						if (status == KHConst.STATUS_SUCCESS) {
+//							JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
+//							//四个头衔							
+//							if (jResult.containsKey(KHConst.TITLE_1_KEY)) {
+//								title1TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_1_KEY)));
+//								ConfigUtils.saveConfig(KHConst.TITLE_1_KEY, jResult.getString(KHConst.TITLE_1_KEY));
+//							}
+//							if (jResult.containsKey(KHConst.TITLE_2_KEY)) {
+//								title2TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_2_KEY)));
+//								ConfigUtils.saveConfig(KHConst.TITLE_2_KEY, jResult.getString(KHConst.TITLE_2_KEY));
+//							}
+//							if (jResult.containsKey(KHConst.TITLE_3_KEY)) {
+//								title3TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_3_KEY)));
+//								ConfigUtils.saveConfig(KHConst.TITLE_3_KEY, jResult.getString(KHConst.TITLE_3_KEY));
+//							}
+//							if (jResult.containsKey(KHConst.TITLE_4_KEY)) {
+//								title4TextView.setText(KHUtils.emptyRetunNone(jResult.getString(KHConst.TITLE_4_KEY)));
+//								ConfigUtils.saveConfig(KHConst.TITLE_4_KEY, jResult.getString(KHConst.TITLE_4_KEY));
+//							}							
+//						}
+//						if (status == KHConst.STATUS_FAIL) {
+//						}
+//					}
+//
+//					@Override
+//					public void onFailure(HttpException arg0, String arg1,
+//							String flag) {
+//						super.onFailure(arg0, arg1, flag);
+//					}
+//
+//				}, null));
+//		
+//	}
 	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
