@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.base.model.ImageModel;
 import com.app.khclub.base.utils.KHConst;
@@ -39,6 +40,8 @@ public class NewsModel implements Serializable {
 	private List<ImageModel> imageNewsList = new ArrayList<ImageModel>();
 	// 发布的位置
 	private String location;
+	// 发布的圈子
+	private String circles;	
 	// 发布动态的时间戳
 	private String timesTamp;
 	// 发布的时间
@@ -106,7 +109,20 @@ public class NewsModel implements Serializable {
 			}
 			setImageNewsList(imgList);
 		}
-
+		// 圈子
+		if (object.containsKey("circles")) {
+			JSONArray circleArray = object.getJSONArray("circles");
+			StringBuffer sb = new StringBuffer();	
+			for (int i = 0; i < circleArray.size(); i++) {
+				String circleString = circleArray.getString(i);
+				sb.append(circleString+",");
+			}
+			if (sb.length() > 0) {
+				sb.delete(sb.length()-1, sb.length());
+			}
+			setCircles(sb.toString());
+		}
+		
 		if (object.containsKey("add_time")) {
 			setTimesTamp(object.getString("add_time"));
 		}
@@ -238,4 +254,13 @@ public class NewsModel implements Serializable {
 	public void setUserJob(String userJob) {
 		this.userJob = userJob;
 	}
+
+	public String getCircles() {
+		return circles;
+	}
+
+	public void setCircles(String circles) {
+		this.circles = circles;
+	}
+	
 }

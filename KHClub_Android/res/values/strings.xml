@@ -149,6 +149,9 @@
 
 
     <!-- News -->
+    <string name="publish_circle_from">From：</string>
+    <string name="choice_circle">Choice Cirlce</string>
+    <string name="choice_circle_none">You need to choice a circle</string>
     <string name="modify_circle">Modify Circle</string>
     <string name="circle_attention_fail">Attention Fail</string>
     <string name="create_circle_introduce">Club Introduce</string>

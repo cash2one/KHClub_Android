@@ -130,6 +130,8 @@ public class NewsItemModel {
 		private List<ImageModel> newsImageList = new ArrayList<ImageModel>();
 		// 发布的位置
 		private String location;
+		// 发布的圈子
+		private String circles;		
 
 		public String getNewsContent() {
 			return newsContent;
@@ -154,6 +156,15 @@ public class NewsItemModel {
 		public void setLocation(String location) {
 			this.location = location;
 		}
+
+		public String getCircles() {
+			return circles;
+		}
+
+		public void setCircles(String circles) {
+			this.circles = circles;
+		}
+		
 	}
 
 	/**
