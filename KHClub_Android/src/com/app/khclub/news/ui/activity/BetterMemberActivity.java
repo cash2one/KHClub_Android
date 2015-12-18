@@ -57,7 +57,10 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 	// 上拉模式
 	public static final int PULL_UP_MODE = 1;
 	// 是否下拉刷新
+	
 	private boolean isPullDowm = false;
+	// 是否是最后一页数据
+		private boolean lastPage = false;
 	// 是否是最后一页
 	private boolean isattention = true;
 	// private BitmapUtils bitmapUtils;
@@ -97,7 +100,7 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 
 		// 适配器绑定
 		membersListView.setAdapter(MembersModelAdapter);
-		membersListView.setMode(Mode.PULL_FROM_START);
+		membersListView.setMode(Mode.BOTH);
 		membersListView.setPullToRefreshOverScrollEnabled(false);
 		// 设置刷新事件监听
 		membersListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
@@ -106,10 +109,14 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 				// 下拉刷新
 				isPullDowm = true;
+				getData();
 			}
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+				   if (lastPage) {
+					   getData();
+				}
 			}
 
 		});
@@ -181,7 +188,7 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 				super.onFailure(arg0, arg1, flag);
 				membersListView.onRefreshComplete();
 				// 是否是最后一页
-				membersListView.setMode(Mode.PULL_FROM_START);
+				membersListView.setMode(Mode.BOTH);
 			}
 
 		}, null));
