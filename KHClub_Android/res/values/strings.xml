@@ -87,7 +87,7 @@
 
 
     <!-- Main -->
-    <string name="circle_name">CircleName</string>
+   <string name="circle_name">Circle Name</string>
     <string name="main_home_title">Square</string>
     <string name="main_msg_title">Message</string>
     <string name="main_contact_title">Contact</string>
@@ -149,6 +149,14 @@
 
 
     <!-- News -->
+    <string name="circle_web">Circle Web</string>
+    <string name="circle_qrcode">WeiXin QRcode</string>
+    <string name="wx_num">WeiXin number</string>
+    <string name="circle_phone">Circle Phone</string>
+    <string name="circle_address">Circle Address</string>
+    <string name="circle_info">Circle Introduce</string>
+    <string name="edit_circle">Edit Circle</string>
+    <string name="all_members">All Members</string>
     <string name="publish_circle_from">From：</string>
     <string name="choice_circle">Choice Cirlce</string>
     <string name="choice_circle_none">You need to choice a circle</string>
@@ -200,7 +208,8 @@
     <string name="contact_add">Add</string>
     <string name="contact_added">Added</string>
     <!-- Contact -->
-
+      <string name="modify_fail">Modify Fail</string>
+    <string name="modify_success">Modify Success</string>
     <string name="publish_news">Send</string>
     <string name="text_ack_msg">Read</string>
     <string name="text_delivered_msg">Delivered</string>
@@ -523,13 +532,7 @@
     <string name="my_qr_code">My QR code</string>
     <string name="my_collect_code">Collection of cards</string>
     <string name="exchange_card">（Exchange card）</string>
-    <string name="picture_number_count"></string>
-    
-   
-    
-    
-    
-    
-    
+    <string name="picture_number_count"></string>
+  
 
 </resources>

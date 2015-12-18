@@ -118,24 +118,54 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 			});
 		}
 		// 二维码
-		//Log.i("wwww", circleModel.getWxqrCode());
-		imgLoader.displayImage(circleModel.getWxqrCode(), qrcodeImage, options);
+		if (KHConst.ATTACHMENT_ADDR.equals(circleModel.getWxqrCode())) {
+			qrcodeImage.setVisibility(View.GONE);
+		}else {
+			qrcodeImage.setVisibility(View.VISIBLE);
+			imgLoader.displayImage(circleModel.getWxqrCode(), qrcodeImage, options);
+		}
+
 		// 圈子封面
 		imgLoader.displayImage(circleModel.getCircleCoverImage(), coverImage, options);
 		// 圈子关注人数
 		circleLikeCount.setText(circleModel.getFollowQuantity());
 		// 介绍
-		introTextView.setText("    " + circleModel.getCircleDetail());
+		if ("".equals(circleModel.getCircleDetail())) {
+			introTextView.setText("    " + getString(R.string.personal_none));
+		} else {
+			introTextView.setText("    " + circleModel.getCircleDetail());
+		}
+
 		// 地址
-		addressTextView.setText(circleModel.getAdress());
+		if ("".equals(circleModel.getAdress())) {
+			addressTextView.setText("    " + getString(R.string.personal_none));
+		} else {
+			addressTextView.setText("    " + circleModel.getAdress());
+		}
 		// 圈子名称
-		nameTextView.setText(circleModel.getCircleName());
+		if ("".equals(circleModel.getCircleName())) {
+			nameTextView.setText("    " + getString(R.string.personal_none));
+		} else {
+			nameTextView.setText("    " + circleModel.getCircleName());
+		}
 		// 电话
-		phoneTextView.setText(circleModel.getPhoneNum());
+		if ("".equals(circleModel.getPhoneNum())) {
+			phoneTextView.setText("    " + getString(R.string.personal_none));
+		} else {
+			phoneTextView.setText("    " + circleModel.getPhoneNum());
+		}
 		// 微信
-		wxNumTextView.setText(circleModel.getWxNum());
+		if ("".equals(circleModel.getWxNum())) {
+			wxNumTextView.setText("    " + getString(R.string.personal_none));
+		} else {
+			wxNumTextView.setText("    " + circleModel.getWxNum());
+		}
 		// 网页
-		webTextView.setText(circleModel.getCircleUrl());
+		if ("".equals(circleModel.getCircleUrl())) {
+			webTextView.setText("    " + getString(R.string.personal_none));
+		} else {
+			webTextView.setText("    " + circleModel.getCircleUrl());
+		}
 		// 初始化pageView
 
 	}

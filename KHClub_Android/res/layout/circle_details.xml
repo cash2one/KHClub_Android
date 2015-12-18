@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/main_deep_white"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
@@ -25,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:text="圈子名称"
+            android:text="@string/circle_name"
             android:textSize="15sp" />
 
         <TextView
@@ -44,17 +45,17 @@
             android:layout_alignParentRight="true"
             android:layout_marginBottom="12dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:text="0"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="23dp"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="12dp"
             android:layout_toLeftOf="@id/circle_like_tv"
-            android:src="@drawable/xinxi_03" />
+            android:src="@drawable/like_btn_normal" />
     </RelativeLayout>
 
     <View
@@ -73,7 +74,7 @@
             android:layout_marginLeft="10dp"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="圈层介绍"
+            android:text="@string/news_circle_intro"
             android:textSize="15sp" />
 
         <TextView
@@ -116,7 +117,6 @@
                 android:layout_height="34dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="暂无信息"
                 android:textSize="13sp" />
 
             <View
@@ -151,7 +151,6 @@
                 android:layout_height="34dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="暂无信息"
                 android:textSize="13sp" />
 
             <View
@@ -186,7 +185,6 @@
                 android:layout_height="34dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="暂无信息"
                 android:textSize="13sp" />
 
             <View
@@ -196,6 +194,7 @@
         </LinearLayout>
 
         <ImageView
+            android:visibility="gone"
             android:src="@drawable/default_image"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
@@ -232,7 +231,6 @@
                 android:layout_height="34dp"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="暂无信息"
                 android:textSize="13sp" />
 
             <View
@@ -247,12 +245,15 @@
         android:layout_height="match_parent" >
 
         <Button
+            android:textColor="@color/main_deep_white"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:id="@+id/modify_circle_detail"
-            android:layout_width="200dp"
-            android:layout_height="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:layout_centerInParent="true"
-            android:background="@color/main_gold"
-            android:text="编辑圈子"
+            android:background="@drawable/round_button"
+            android:text="@string/edit_circle"
             android:textSize="15sp"
             android:visibility="gone" />
     </RelativeLayout>

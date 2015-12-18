@@ -210,7 +210,7 @@ public class ModifyCircleActivity extends BaseActivityWithTopBar {
 					// toast
 					JSONObject result = jsonResponse.getJSONObject("result");
 					//Log.i("wwww", result.toString());
-					ToastUtil.show(ModifyCircleActivity.this, R.string.news_publish_success);
+					ToastUtil.show(ModifyCircleActivity.this,R.string.modify_success);
 					result();
 					hideLoading();
 					jumpCirPage();
@@ -219,7 +219,7 @@ public class ModifyCircleActivity extends BaseActivityWithTopBar {
 					break;
 				case KHConst.STATUS_FAIL:
 					hideLoading();
-					Toast.makeText(ModifyCircleActivity.this, R.string.news_publish_fail, Toast.LENGTH_SHORT).show();
+					Toast.makeText(ModifyCircleActivity.this, R.string.modify_fail, Toast.LENGTH_SHORT).show();
 					break;
 				}
 			}

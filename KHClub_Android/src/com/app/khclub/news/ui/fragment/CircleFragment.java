@@ -114,19 +114,23 @@ public class CircleFragment extends BaseFragment {
 				// 圈子类型（是否关注）
 				if (followList.size() > 0) {
 					if (followList.get(0).getId().equals(item.getId())) {
+						helper.setVisible(R.id.circle_attention_layout, true);
 						helper.setVisible(R.id.circle_attention_type, true);
 						helper.setText(R.id.circle_attention_type,
 								getResources().getString(R.string.circle_attention_type_name));
 					} else {
 						helper.setVisible(R.id.circle_attention_type, false);
+						helper.setVisible(R.id.circle_attention_layout, false);
 					}
 				}
 				if (unfollowList.size() > 0) {
 					if (unfollowList.get(0).getId().equals(item.getId())) {
+						helper.setVisible(R.id.circle_recommend_layout, true);
 						helper.setVisible(R.id.circle_recommend_type, true);
 						helper.setText(R.id.circle_recommend_type,
 								getResources().getString(R.string.circle_recommend_type_name));
 					} else {
+						helper.setVisible(R.id.circle_recommend_layout, false);
 						helper.setVisible(R.id.circle_recommend_type, false);
 					}
 				}
@@ -151,9 +155,9 @@ public class CircleFragment extends BaseFragment {
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
 						recommend(item.getId());
-						Log.i("wwww", dataList.get(position).getId());
+						//Log.i("wwww", dataList.get(position).getId());
 						Log.i("wwww", item.getId());
-						Log.i("wwww", position+"");
+						//Log.i("wwww", position+"");
 					}
 				});
 				LinearLayout linearLayout = (LinearLayout) helper.getView();
@@ -164,10 +168,7 @@ public class CircleFragment extends BaseFragment {
 						// 跳转到其他人页面
 						Intent intent = new Intent(getActivity(), CirclePageActivity.class);
 						intent.putExtra(CIRCLE_ID, item.getId());
-						if (position >= (followList.size() - unfollowList.size())) {
-							
-						    intent.putExtra(CIRCLE_ISFOLLOW,"no");
-						}
+						
 						startActivityWithRight(intent);
 					}
 				});

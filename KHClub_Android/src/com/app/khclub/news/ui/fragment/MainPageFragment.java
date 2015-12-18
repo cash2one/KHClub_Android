@@ -249,14 +249,14 @@ public class MainPageFragment extends BaseFragment {
 				publishBtn.setImageResource(R.drawable.create_cirlce_bnt);
 				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_white));
 				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
-				newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-				campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+				//newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+				//campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 			} else {
 				publishBtn.setImageResource(R.drawable.news_publish_btn_selector);
 				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_white));
 				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
-				newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-				campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+//				newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+//				campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 			}
 		}
 	}

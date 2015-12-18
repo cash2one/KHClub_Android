@@ -30,6 +30,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
 import android.content.Intent;
@@ -193,6 +194,7 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 		// TODO Auto-generated method stub
 		setBarText(getString(R.string.news_club_expert));
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
+				.displayer(new RoundedBitmapDisplayer(7))
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 		getData();

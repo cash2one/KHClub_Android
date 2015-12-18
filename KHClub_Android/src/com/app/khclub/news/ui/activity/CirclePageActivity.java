@@ -241,7 +241,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				// TODO Auto-generated method stub
 				switch (view.getId()) {
 				case R.id.circle_unattention_btn:
-					attention();
+					attention(); 
 					break;
 				case R.id.circle_page_head_layout:
 					toCircleDetail();

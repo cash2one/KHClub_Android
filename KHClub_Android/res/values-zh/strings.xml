@@ -149,6 +149,14 @@
 
 
     <!-- News -->
+    <string name="circle_web">圈子网址</string>
+    <string name="circle_qrcode">公众号二维码</string>
+    <string name="wx_num">公众号名称</string> 
+    <string name="circle_phone">电话</string>  
+    <string name="circle_address">地址</string>   
+    <string name="circle_info">介绍</string> 
+    <string name="edit_circle">编辑圈子</string>
+    <string name="all_members">全部圈友</string>
     <string name="publish_circle_from">来自：</string>
     <string name="choice_circle">选择圈子</string>
     <string name="choice_circle_none">您需要选择一个圈子</string>
@@ -196,7 +204,9 @@
     <string name="contact_add">添加</string>
     <string name="contact_added">已添加</string>
     <!-- Contact -->
-
+    
+    <string name="modify_fail">修改失败</string>
+    <string name="modify_success">修改成功</string>
     <string name="reply">回复</string>
     <string name="confirm_delete">确认删除信息？</string>
     <string name="confirm_clear">确认清空？</string>
