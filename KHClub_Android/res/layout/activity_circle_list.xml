@@ -11,7 +11,6 @@
         android:background="@color/main_light_white"
         android:cacheColorHint="#00000000"
         android:divider="#19000000"
-        android:dividerHeight="1px"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
         android:footerDividersEnabled="false"

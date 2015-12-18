@@ -72,6 +72,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 @SuppressLint("ResourceAsColor")
 public class CirclePageActivity extends BaseActivityWithTopBar {
@@ -80,7 +81,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	private int userID;
 	protected static final String CIRCLE_ID = "circle_id";
 	public static String INTENT_CIRCLE_KEY = "circleModel";
-	//private View headerView;
+	// private View headerView;
 	// 圈子信息
 	private CirclePageModel circleModel2;
 
@@ -106,9 +107,9 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	@ViewInject(R.id.web_text_view)
 	private TextView webTextView;
 	// 模型
-//	private CircleModel circleModel;
+	// private CircleModel circleModel;
 	// 新图片缓存工具 头像
-	DisplayImageOptions options;
+	DisplayImageOptions options, membersoptions;
 	// pageViews
 	private List<View> pageViews = new ArrayList<View>();
 	// 需要显示的图片
@@ -164,7 +165,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	@ViewInject(R.id.news_circle_listView)
 	private PullToRefreshListView newsListView;
 	@ViewInject(R.id.send_news)
-    private Button sendnews;
+	private Button sendnews;
 	// 原始数据源
 	private List<NewsModel> newsList = new ArrayList<NewsModel>();
 	// item数据源
@@ -178,7 +179,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	// 当前数据的页
 	private int pageIndex = 1;
 	// 是否是最后一页数据
-	private boolean lastPage = false;
+	// private boolean lastPage = false;
 	// 时间戳
 	private String latestTimesTamp = "";
 	// 是否下拉
@@ -205,7 +206,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		setBarText(getString(R.string.club_main_page));
 		// addRightImgBtn(R.id.layout_base_title,R.id.base_ll_right_btns,
 		// R.drawable.share_btn_normal);
-		//右上角分享按钮
+		// 右上角分享按钮
 		final ImageView rightBtn = addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view,
 				R.id.img_btn_right_top);
 		rightBtn.setImageResource(R.drawable.personal_more);
@@ -213,17 +214,16 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 			@Override
 			public void onClick(View v) {
 				// 分享点击
-				shareMenu.showPopupWindow(rightBtn);				
+				shareMenu.showPopupWindow(rightBtn);
 			}
 		});
-		
-		
+
 		init();
 		initBoradcastReceiver();
 		multiItemTypeSet();
 		newsListViewSet();
 		sendnews.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -287,6 +287,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 						switch (status) {
 						case KHConst.STATUS_SUCCESS:
 							ToastUtil.show(CirclePageActivity.this, "取消成功");
+
 							break;
 						case KHConst.STATUS_FAIL:
 							Toast.makeText(CirclePageActivity.this, "取消关注失败", Toast.LENGTH_SHORT).show();
@@ -336,8 +337,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void shareToQzoneClick() {
-				// 分享到朋友圈
-				// 分享到微信
+				// 分享到Qzone
 				ShareParams sp = new ShareParams();
 				sp.setTitle(circleModel2.getCircleName());
 				sp.setUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
@@ -382,12 +382,12 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				}
 				// 分享给好友
 				JSONObject object = new JSONObject();
-				//单聊
+				// 单聊
 				object.put("type", "100");
 				object.put("id", circle_id);
-				object.put("title",circleModel2.getCircleName());
+				object.put("title", circleModel2.getCircleName());
 				object.put("avatar", circleModel2.getCircleCoverSubImage());
-				
+
 				Intent intent = new Intent(CirclePageActivity.this, ShareContactsActivity.class);
 				intent.putExtra(ShareContactsActivity.INTENT_CARD_KEY, object.toJSONString());
 				startActivityWithRight(intent);
@@ -428,8 +428,8 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 			@Override
 			public void cancelClick() {
 				// 取消操作
-			}			
-			
+			}
+
 		});
 		// registerNotify();
 		// refreshPush();
@@ -437,7 +437,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 	private void sendnews() {
 		// TODO Auto-generated method stub
-		Intent intent=new Intent(CirclePageActivity.this,PublishNewsActivity.class);
+		Intent intent = new Intent(CirclePageActivity.this, PublishNewsActivity.class);
 		startActivity(intent);
 	}
 
@@ -445,7 +445,9 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	 * 数据的初始化
 	 */
 	private void init() {
-		//headerView = getLayoutInflater().inflate(R.layout.activity_circle_page_header, null);
+		// headerView =
+		// getLayoutInflater().inflate(R.layout.activity_circle_page_header,
+		// null);
 		mContext = CirclePageActivity.this;
 		shareMenu = new PersonalBottomPopupMenu(this, false);
 		itemViewClickListener = new ItemViewClick();
@@ -454,8 +456,12 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		imgLoader = ImageLoader.getInstance();
 		// 显示图片的配置
 		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.default_avatar)
-				.showImageOnFail(R.drawable.default_avatar).cacheInMemory(true).cacheOnDisk(true)
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
+				.displayer(new RoundedBitmapDisplayer(7)).showImageOnFail(R.drawable.default_avatar).cacheInMemory(true)
+				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
+		membersoptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.default_avatar)
+				.showImageOnFail(R.drawable.default_avatar)
+				.showImageForEmptyUri(R.drawable.default_avatar)
+				.cacheInMemory(true).cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
 	private LocalBroadcastManager mLocalBroadcastManager;
@@ -512,7 +518,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				if (postion == 0) {
 					return 3;
 				}
-				//if (!isNullList) {
+				// if (!isNullList) {
 				switch (itemData.getItemType()) {
 				case NewsItemModel.NEWS_TITLE:
 					itemtype = NewsItemModel.NEWS_TITLE;
@@ -526,7 +532,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				default:
 					break;
 				}
-				//}
+				// }
 				return itemtype;
 			}
 		};
@@ -555,7 +561,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-				if (!lastPage && !isRequestingData) {
+				if (!isRequestingData) {
 					isRequestingData = true;
 					isPullDowm = false;
 					getNewsData(UserManager.getInstance().getUser().getUid(), pageIndex, latestTimesTamp);
@@ -569,10 +575,10 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		newsListView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
 			@Override
 			public void onLastItemVisible() {
-				if (!lastPage) {
-					newsListView.setMode(Mode.PULL_FROM_END);
-					newsListView.setRefreshing(true);
-				}
+				// if (!lastPage) {
+				// newsListView.setMode(Mode.PULL_FROM_END);
+				// newsListView.setRefreshing(true);
+				// }
 			}
 		});
 
@@ -646,27 +652,27 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 					case 0:
 						helper.setVisible(R.id.members_image0, true);
 						imgLoader.displayImage(membersDatas.get(i).getMembersimage(),
-								(ImageView) helper.getView(R.id.members_image0), options);
+								(ImageView) helper.getView(R.id.members_image0), membersoptions);
 						break;
 					case 1:
 						helper.setVisible(R.id.members_image1, true);
 						imgLoader.displayImage(membersDatas.get(i).getMembersimage(),
-								(ImageView) helper.getView(R.id.members_image1), options);
+								(ImageView) helper.getView(R.id.members_image1), membersoptions);
 						break;
 					case 2:
 						helper.setVisible(R.id.members_image2, true);
 						imgLoader.displayImage(membersDatas.get(i).getMembersimage(),
-								(ImageView) helper.getView(R.id.members_image1), options);
+								(ImageView) helper.getView(R.id.members_image1), membersoptions);
 						break;
 					case 3:
 						helper.setVisible(R.id.members_image3, true);
 						imgLoader.displayImage(membersDatas.get(i).getMembersimage(),
-								(ImageView) helper.getView(R.id.members_image1), options);
+								(ImageView) helper.getView(R.id.members_image1), membersoptions);
 						break;
 					case 4:
 						helper.setVisible(R.id.members_image4, true);
 						imgLoader.displayImage(membersDatas.get(i).getMembersimage(),
-								(ImageView) helper.getView(R.id.members_image1), options);
+								(ImageView) helper.getView(R.id.members_image1), membersoptions);
 						break;
 
 					default:
@@ -904,6 +910,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 					// newsListView.setMode(Mode.PULL_FROM_START);
 					// }
 					// isRequestingData = false;
+					isRequestingData = false;
 				}
 				if (status == KHConst.STATUS_FAIL) {
 					ToastUtil.show(mContext, jsonResponse.getString(KHConst.HTTP_MESSAGE));
@@ -939,13 +946,13 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 	private void JsonToNewsModel(List<JSONObject> dataList) {
 		List<NewsModel> newDatas = new ArrayList<NewsModel>();
-	
+
 		if (null != dataList && !dataList.isEmpty()) {
 			for (JSONObject newsObj : dataList) {
 				NewsModel tempNews = new NewsModel();
 				tempNews.setContentWithJson(newsObj);
 				newDatas.add(tempNews);
-			}	
+			}
 		}
 		if (isPullDowm) {
 			if (newDatas.isEmpty() == false) {

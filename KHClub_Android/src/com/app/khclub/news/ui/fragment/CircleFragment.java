@@ -44,6 +44,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
 public class CircleFragment extends BaseFragment {
@@ -87,6 +88,7 @@ public class CircleFragment extends BaseFragment {
 
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
+				.displayer(new RoundedBitmapDisplayer(7))
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 		initListViewSet();
 		getData();

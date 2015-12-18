@@ -28,6 +28,7 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
 import android.content.Intent;
@@ -182,6 +183,7 @@ public class MyCircleActivity extends BaseActivityWithTopBar{
 		setBarText(getString(R.string.circle_attention_type_name));
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
+				.displayer(new RoundedBitmapDisplayer(7))
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 		getData();
 		initListViewSet();

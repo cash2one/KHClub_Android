@@ -3,16 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <ImageView
-            android:layout_marginTop="5dp"
             android:id="@+id/circle_image"
             android:layout_width="@dimen/head_image_size_large"
             android:layout_height="@dimen/head_image_size_large"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:scaleType="centerCrop"
             android:src="@drawable/default_avatar" />
 
@@ -21,56 +23,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
-            android:paddingLeft="15dp" >
+            android:paddingLeft="10dp" >
 
-            <TextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/circle_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/circle_name"
-                android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/circle_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/circle_name"
+                    android:textSize="14sp" />
 
-            <ImageView
-                android:id="@+id/circle_people_image"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_below="@id/circle_name"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/member2x" />
+                <ImageView
+                    android:id="@+id/circle_people_image"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_below="@id/circle_name"
+                    android:layout_marginTop="13dp"
+                    android:src="@drawable/member2x" />
 
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:id="@+id/circle_people_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:layout_alignBottom="@id/circle_people_image"
-                android:layout_toRightOf="@id/circle_people_image"
-                android:text="0"
-                 />
+                <TextView
+                    android:id="@+id/circle_people_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="38dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/circle_people_image"
+                    android:text="0"
+                    android:textSize="12sp" />
 
-            <RelativeLayout
-                android:focusable="true"
-                android:id="@+id/recommend_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:gravity="center_vertical" >
-                <Button
-                    android:visibility="gone"
-                    android:id="@+id/recommend_btn"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/main_gold"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="关注" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/circle_people_count"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/main_light_gary" />
             </RelativeLayout>
-        </RelativeLayout>
     </LinearLayout>
+
 </LinearLayout>
