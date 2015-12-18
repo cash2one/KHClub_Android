@@ -532,7 +532,7 @@
     <string name="my_qr_code">My QR code</string>
     <string name="my_collect_code">Collection of cards</string>
     <string name="exchange_card">（Exchange card）</string>
-    <string name="picture_number_count"></string>
-  
-
+    <string name="picture_number_count"></string> <string name="attention_success">Attention Success</string>
+    <string name="unattention_success">Unattention Success </string>
+    <string name="unattention_fail">Unattention Fail</string>
 </resources>
