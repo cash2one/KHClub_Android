@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -294,11 +296,18 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 		String APPSECRET = "675c44e12327b136c3f99c07c43ff82a";
 		//初始化验证码
 		SMSSDK.initSDK(this,APPKEY,APPSECRET);
-		//初始化获取一次验证码
-		SMSSDK.getVerificationCode(areaNumber,userPhoneNumber);	
+		//延时加载
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				//初始化获取一次验证码
+				SMSSDK.getVerificationCode(areaNumber,userPhoneNumber);
+			}
+		}, 1000);
+		
 		phonePromptTextView.setText(getString(R.string.login_verification_send)+"：" + userPhoneNumber);
 		revalidatedTextView.setEnabled(false);
-		verifyCountdownTimer = new CountDownTimer(60000, 1000) {
+		verifyCountdownTimer = new CountDownTimer(20000, 1000) {
 			@Override
 			public void onTick(long millisUntilFinished) {
 				countdownValue = (int) millisUntilFinished / 1000;
