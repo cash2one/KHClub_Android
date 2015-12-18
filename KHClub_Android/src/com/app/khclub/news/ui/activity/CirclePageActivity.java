@@ -336,10 +336,11 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				sp.setText(circleModel2.getUserName());
 				if (null != circleModel2.getCircleCoverSubImage()
 						&& circleModel2.getCircleCoverSubImage().length() > 0) {
-					sp.setImageUrl(KHConst.ATTACHMENT_ADDR + circleModel2.getCircleCoverSubImage());
+					sp.setImageUrl(circleModel2.getCircleCoverSubImage());
 				} else {
 					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
+				
 				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -357,7 +358,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				sp.setText(circleModel2.getUserName());
 				if (null != circleModel2.getCircleCoverSubImage()
 						&& circleModel2.getCircleCoverSubImage().length() > 0) {
-					sp.setImageUrl(KHConst.ATTACHMENT_ADDR + circleModel2.getCircleCoverSubImage());
+					sp.setImageUrl(circleModel2.getCircleCoverSubImage());
 				} else {
 					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
@@ -378,7 +379,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				sp.setText(circleModel2.getUserName());
 				if (null != circleModel2.getCircleCoverSubImage()
 						&& circleModel2.getCircleCoverSubImage().length() > 0) {
-					sp.setImageUrl(KHConst.ATTACHMENT_ADDR + circleModel2.getCircleCoverSubImage());
+					sp.setImageUrl(circleModel2.getCircleCoverSubImage());
 				} else {
 					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
@@ -417,7 +418,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				sp.setText(circleModel2.getUserName());
 				if (null != circleModel2.getCircleCoverSubImage()
 						&& circleModel2.getCircleCoverSubImage().length() > 0) {
-					sp.setImageUrl(KHConst.ATTACHMENT_ADDR + circleModel2.getCircleCoverSubImage());
+					sp.setImageUrl(circleModel2.getCircleCoverSubImage());
 				} else {
 					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
