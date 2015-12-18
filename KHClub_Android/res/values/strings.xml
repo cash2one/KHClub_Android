@@ -87,7 +87,7 @@
 
 
     <!-- Main -->
-   <string name="circle_name">Circle Name</string>
+    <string name="circle_name">Circle Name</string>
     <string name="main_home_title">Square</string>
     <string name="main_msg_title">Message</string>
     <string name="main_contact_title">Contact</string>
@@ -208,7 +208,7 @@
     <string name="contact_add">Add</string>
     <string name="contact_added">Added</string>
     <!-- Contact -->
-      <string name="modify_fail">Modify Fail</string>
+    <string name="modify_fail">Modify Fail</string>
     <string name="modify_success">Modify Success</string>
     <string name="publish_news">Send</string>
     <string name="text_ack_msg">Read</string>
@@ -532,7 +532,10 @@
     <string name="my_qr_code">My QR code</string>
     <string name="my_collect_code">Collection of cards</string>
     <string name="exchange_card">（Exchange card）</string>
-    <string name="picture_number_count"></string> <string name="attention_success">Attention Success</string>
+    <string name="picture_number_count"></string>
+    <string name="attention_success">Attention Success</string>
     <string name="unattention_success">Unattention Success </string>
     <string name="unattention_fail">Unattention Fail</string>
+    <string name="attention">Attention</string>
+
 </resources>

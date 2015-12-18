@@ -545,4 +545,5 @@
     <string name="attention_success">关注成功</string>
     <string name="unattention_success">取消关注成功</string>
     <string name="unattention_fail">取消关注失败</string>
+    <string name="attention">关注</string>
 </resources>
