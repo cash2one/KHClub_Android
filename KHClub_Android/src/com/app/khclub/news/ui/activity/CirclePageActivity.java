@@ -325,7 +325,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
 				sp.setText(circleModel2.getUserName());
 				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
-					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+circleModel2.getCircleCoverSubImage());	
+					sp.setImageUrl(circleModel2.getCircleCoverSubImage());	
 				}else {
 					sp.setImageUrl(KHConst.ROOT_IMG);	
 				}
@@ -345,7 +345,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
 				sp.setText(circleModel2.getUserName());
 				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
-					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+circleModel2.getCircleCoverSubImage());	
+					sp.setImageUrl(circleModel2.getCircleCoverSubImage());	
 				}else {
 					sp.setImageUrl(KHConst.ROOT_IMG);	
 				}
@@ -365,7 +365,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
 				sp.setText(circleModel2.getUserName());
 				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
-					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+circleModel2.getCircleCoverSubImage());	
+					sp.setImageUrl(circleModel2.getCircleCoverSubImage());	
 				}else {
 					sp.setImageUrl(KHConst.ROOT_IMG);	
 				}
@@ -403,7 +403,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
 				sp.setText(circleModel2.getUserName());
 				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
-					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+circleModel2.getCircleCoverSubImage());	
+					sp.setImageUrl(circleModel2.getCircleCoverSubImage());	
 				}else {
 					sp.setImageUrl(KHConst.ROOT_IMG);	
 				}
