@@ -543,5 +543,7 @@
     <string name="my_collect_code">我收藏的名片</string>
     <string name="exchange_card">(交换名片)</string>
     <string name="picture_number_count">张</string>
-
+    <string name="attention_success">关注成功</string>
+    <string name="unattention_success">取消关注成功</string>
+    <string name="unattention_fail">取消关注失败</string>
 </resources>

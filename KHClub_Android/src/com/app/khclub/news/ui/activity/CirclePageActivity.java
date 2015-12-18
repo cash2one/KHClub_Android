@@ -1,4 +1,4 @@
-package com.app.khclub.news.ui.activity;
+﻿package com.app.khclub.news.ui.activity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +12,8 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.style.LeadingMarginSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -241,7 +243,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				// TODO Auto-generated method stub
 				switch (view.getId()) {
 				case R.id.circle_unattention_btn:
-					attention(); 
+					attention();
 					break;
 				case R.id.circle_page_head_layout:
 					toCircleDetail();
@@ -276,7 +278,11 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				final UserModel userModel = UserManager.getInstance().getUser();
 				params.addBodyParameter("user_id", userModel.getUid() + "");
 				params.addBodyParameter("circle_id", circle_id);
-				params.addBodyParameter("isFollow", "0");
+				if ("0".equals(circleModel2.getIsFollow())) {
+					params.addBodyParameter("isFollow", "1");
+				} else {
+					params.addBodyParameter("isFollow", "0");
+				}
 				// 关注
 				HttpManager.post(KHConst.FOLLOW_OR_UNFOLLOW_CIRCLE, params,
 						new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
@@ -286,11 +292,15 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 						int status = jsonResponse.getIntValue("status");
 						switch (status) {
 						case KHConst.STATUS_SUCCESS:
-							ToastUtil.show(CirclePageActivity.this, "取消成功");
-
+							Log.i("wx", circleModel2.getIsFollow());
+							if ("0".equals(circleModel2.getIsFollow())) {
+								ToastUtil.show(CirclePageActivity.this, R.string.attention_success);
+							} else {
+								ToastUtil.show(CirclePageActivity.this, R.string.unattention_success);
+							}
 							break;
 						case KHConst.STATUS_FAIL:
-							Toast.makeText(CirclePageActivity.this, "取消关注失败", Toast.LENGTH_SHORT).show();
+							Toast.makeText(CirclePageActivity.this, R.string.unattention_fail, Toast.LENGTH_SHORT).show();
 							break;
 						}
 					}
@@ -320,14 +330,15 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				// 分享到微信
 				ShareParams sp = new ShareParams();
 				sp.setTitle(circleModel2.getCircleName());
-				sp.setUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_CIRCLE_WEB + "?circle_id=" + circle_id); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB + "?circle_id=" + circle_id); // 标题的超链接
 				sp.setText(circleModel2.getUserName());
-				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
-					sp.setImageUrl(circleModel2.getCircleCoverSubImage());	
-				}else {
-					sp.setImageUrl(KHConst.ROOT_IMG);	
+				if (null != circleModel2.getCircleCoverSubImage()
+						&& circleModel2.getCircleCoverSubImage().length() > 0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR + circleModel2.getCircleCoverSubImage());
+				} else {
+					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
 				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
@@ -340,14 +351,15 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				// 分享到Qzone
 				ShareParams sp = new ShareParams();
 				sp.setTitle(circleModel2.getCircleName());
-				sp.setUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_CIRCLE_WEB + "?circle_id=" + circle_id); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB + "?circle_id=" + circle_id); // 标题的超链接
 				sp.setText(circleModel2.getUserName());
-				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
-					sp.setImageUrl(circleModel2.getCircleCoverSubImage());	
-				}else {
-					sp.setImageUrl(KHConst.ROOT_IMG);	
+				if (null != circleModel2.getCircleCoverSubImage()
+						&& circleModel2.getCircleCoverSubImage().length() > 0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR + circleModel2.getCircleCoverSubImage());
+				} else {
+					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
 				Platform qq = ShareSDK.getPlatform(QZone.NAME);
 				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
@@ -360,14 +372,15 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				// 分享给qq好友
 				ShareParams sp = new ShareParams();
 				sp.setTitle(circleModel2.getCircleName());
-				sp.setUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_CIRCLE_WEB + "?circle_id=" + circle_id); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB + "?circle_id=" + circle_id); // 标题的超链接
 				sp.setText(circleModel2.getUserName());
-				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
-					sp.setImageUrl(circleModel2.getCircleCoverSubImage());	
-				}else {
-					sp.setImageUrl(KHConst.ROOT_IMG);	
+				if (null != circleModel2.getCircleCoverSubImage()
+						&& circleModel2.getCircleCoverSubImage().length() > 0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR + circleModel2.getCircleCoverSubImage());
+				} else {
+					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
 				Platform qq = ShareSDK.getPlatform(QQ.NAME);
 				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
@@ -398,14 +411,15 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				// 分享到朋友圈
 				ShareParams sp = new ShareParams();
 				sp.setTitle(circleModel2.getCircleName());
-				sp.setUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setUrl(KHConst.SHARE_CIRCLE_WEB + "?circle_id=" + circle_id); // 标题的超链接
 				sp.setShareType(Platform.SHARE_WEBPAGE);
-				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB + "?circle_id=" + circle_id); // 标题的超链接
 				sp.setText(circleModel2.getUserName());
-				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
-					sp.setImageUrl(circleModel2.getCircleCoverSubImage());	
-				}else {
-					sp.setImageUrl(KHConst.ROOT_IMG);	
+				if (null != circleModel2.getCircleCoverSubImage()
+						&& circleModel2.getCircleCoverSubImage().length() > 0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR + circleModel2.getCircleCoverSubImage());
+				} else {
+					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
 				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
@@ -459,8 +473,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				.displayer(new RoundedBitmapDisplayer(7)).showImageOnFail(R.drawable.default_avatar).cacheInMemory(true)
 				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 		membersoptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.default_avatar)
-				.showImageOnFail(R.drawable.default_avatar)
-				.showImageForEmptyUri(R.drawable.default_avatar)
+				.showImageOnFail(R.drawable.default_avatar).showImageForEmptyUri(R.drawable.default_avatar)
 				.cacheInMemory(true).cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
