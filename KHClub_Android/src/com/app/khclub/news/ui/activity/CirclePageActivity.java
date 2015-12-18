@@ -1,6 +1,5 @@
 package com.app.khclub.news.ui.activity;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +23,9 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.tencent.qzone.QZone;
+import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.alibaba.fastjson.JSONObject;
@@ -68,7 +70,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnChildClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -312,70 +313,66 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void shareToWeChatClick() {
+				if (circleModel2 == null) {
+					return;
+				}
 				// 分享到微信
-//				ShareParams sp = new ShareParams();
-//				sp.setTitle(getString(R.string.exchange_card));
-//				sp.setUrl(KHConst.SHARE_CARD_WEB+"?user_id="+UserManager.getInstance().getUser().getUid()); // 标题的超链接
-//				sp.setShareType(Platform.SHARE_WEBPAGE);
-//				sp.setTitleUrl(KHConst.SHARE_CARD_WEB+"?user_id="+UserManager.getInstance().getUser().getUid()); // 标题的超链接
-//				sp.setText(UserManager.getInstance().getUser().getName());
-//				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
-//					sp.setText("KHClub");
-//				}
-//				sp.setText(sp.getText()+"|"+UserManager.getInstance().getUser().getJob()+"\n"+UserManager.getInstance().getUser().getCompany_name());
-//				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
-//					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
-//				}else {
-//					sp.setImageUrl(KHConst.ROOT_IMG);	
-//				}
-//				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
-//				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
-//				// 执行图文分享
-//				wexin.share(sp);
+				ShareParams sp = new ShareParams();
+				sp.setTitle(circleModel2.getCircleName());
+				sp.setUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setShareType(Platform.SHARE_WEBPAGE);
+				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setText(circleModel2.getUserName());
+				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+circleModel2.getCircleCoverSubImage());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
+				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
+				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				wexin.share(sp);
 			}
 
 			@Override
 			public void shareToQzoneClick() {
 				// 分享到朋友圈
-//				ShareParams sp = new ShareParams();
-//				sp.setTitle(getString(R.string.exchange_card));
-//				sp.setTitleUrl(KHConst.SHARE_CARD_WEB+"?user_id="+UserManager.getInstance().getUser().getUid()); // 标题的超链接
-//				sp.setText(UserManager.getInstance().getUser().getName());
-//				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
-//					sp.setText("KHClub");
-//				}
-//				sp.setText(sp.getText()+"|"+UserManager.getInstance().getUser().getJob()+"\n"+UserManager.getInstance().getUser().getCompany_name());
-//				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
-//					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
-//				}else {
-//					sp.setImageUrl(KHConst.ROOT_IMG);	
-//				}
-//				Platform qq = ShareSDK.getPlatform(QZone.NAME);
-//				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
-//				// 执行图文分享
-//				qq.share(sp);
+				// 分享到微信
+				ShareParams sp = new ShareParams();
+				sp.setTitle(circleModel2.getCircleName());
+				sp.setUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setShareType(Platform.SHARE_WEBPAGE);
+				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setText(circleModel2.getUserName());
+				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+circleModel2.getCircleCoverSubImage());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
+				Platform qq = ShareSDK.getPlatform(QZone.NAME);
+				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				qq.share(sp);
 			}
 
 			@Override
 			public void shareToQQFriendsClick() {
 				// 分享给qq好友
-//				ShareParams sp = new ShareParams();
-//				sp.setTitle(getString(R.string.exchange_card));
-//				sp.setTitleUrl(KHConst.SHARE_CARD_WEB+"?user_id="+UserManager.getInstance().getUser().getUid()); // 标题的超链接
-//				sp.setText(UserManager.getInstance().getUser().getName());
-//				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
-//					sp.setText("KHClub");
-//				}
-//				sp.setText(sp.getText()+"|"+UserManager.getInstance().getUser().getJob()+"\n"+UserManager.getInstance().getUser().getCompany_name());
-//				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
-//					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
-//				}else {
-//					sp.setImageUrl(KHConst.ROOT_IMG);	
-//				}
-//				Platform qq = ShareSDK.getPlatform(QQ.NAME);
-//				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
-//				// 执行图文分享
-//				qq.share(sp);
+				ShareParams sp = new ShareParams();
+				sp.setTitle(circleModel2.getCircleName());
+				sp.setUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setShareType(Platform.SHARE_WEBPAGE);
+				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setText(circleModel2.getUserName());
+				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+circleModel2.getCircleCoverSubImage());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
+				Platform qq = ShareSDK.getPlatform(QQ.NAME);
+				qq.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				qq.share(sp);
 			}
 
 			@Override
@@ -399,25 +396,21 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 			@Override
 			public void shareToCircleofFriendsClick() {
 				// 分享到朋友圈
-//				ShareParams sp = new ShareParams();
-//				sp.setTitle(getString(R.string.exchange_card));
-//				sp.setUrl(KHConst.SHARE_CARD_WEB+"?user_id="+UserManager.getInstance().getUser().getUid()); // 标题的超链接
-//				sp.setShareType(Platform.SHARE_WEBPAGE);
-//				sp.setTitleUrl(KHConst.SHARE_CARD_WEB+"?user_id="+UserManager.getInstance().getUser().getUid()); // 标题的超链接
-//				sp.setText(UserManager.getInstance().getUser().getName());
-//				if (UserManager.getInstance().getUser().getName() == null || UserManager.getInstance().getUser().getName().length() < 1) {
-//					sp.setText("KHClub");
-//				}
-//				sp.setText(sp.getText()+"|"+UserManager.getInstance().getUser().getJob()+"\n"+UserManager.getInstance().getUser().getCompany_name());
-//				if (null != UserManager.getInstance().getUser().getHead_sub_image() && UserManager.getInstance().getUser().getHead_sub_image().length()>0) {
-//					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+UserManager.getInstance().getUser().getHead_sub_image());	
-//				}else {
-//					sp.setImageUrl(KHConst.ROOT_IMG);	
-//				}
-//				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
-//				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
-//				// 执行图文分享
-//				wexin.share(sp);
+				ShareParams sp = new ShareParams();
+				sp.setTitle(circleModel2.getCircleName());
+				sp.setUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setShareType(Platform.SHARE_WEBPAGE);
+				sp.setTitleUrl(KHConst.SHARE_CIRCLE_WEB+"?circle_id="+circle_id); // 标题的超链接
+				sp.setText(circleModel2.getUserName());
+				if (null != circleModel2.getCircleCoverSubImage() && circleModel2.getCircleCoverSubImage().length()>0) {
+					sp.setImageUrl(KHConst.ATTACHMENT_ADDR+circleModel2.getCircleCoverSubImage());	
+				}else {
+					sp.setImageUrl(KHConst.ROOT_IMG);	
+				}
+				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
+				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
+				// 执行图文分享
+				wexin.share(sp);
 			}
 
 			@Override

@@ -23,6 +23,9 @@ public interface KHConst {
 	//名片分享网址
 //	public static final String SHARE_CARD_WEB = "http://120.25.121.179/api/index.html";
 	public static final String SHARE_CARD_WEB = ROOT_PATH + "index.php/Home/WX/cardDetail";
+	//圈子分享网址
+	public static final String SHARE_CIRCLE_WEB = ROOT_PATH + "index.php/Home/WX/details";
+	
 	//本地持久的额外信息key
 	public static final String TITLE_1_KEY = "title_1";
 	public static final String TITLE_2_KEY = "title_2";
