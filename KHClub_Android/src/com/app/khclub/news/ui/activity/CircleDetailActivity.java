@@ -113,6 +113,7 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 					Intent intent = new Intent(CircleDetailActivity.this, ModifyCircleActivity.class);
 					intent.putExtra(CIRCLEDETAIL, circleModel);
 					startActivityForResult(intent, 1);
+					overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
 				}
 			});
 		}

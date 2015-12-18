@@ -267,7 +267,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(CirclePageActivity.this, CircleDetailActivity.class);
 				intent.putExtra(CIRCLEDETAIL, circleModel2);
-				startActivity(intent);
+				startActivityWithRight(intent);
 			}
 
 			private void attention() {
