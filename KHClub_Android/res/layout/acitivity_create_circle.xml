@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_deep_white"
     android:orientation="vertical" >
 
     <!-- 添加bar -->
@@ -18,11 +19,11 @@
         <!-- 上传头像 -->
 
         <ImageView
-            android:scaleType="centerCrop"
             android:id="@+id/cover_image"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
             android:src="@drawable/signin_local_gallry" />
 
         <TextView
@@ -32,7 +33,8 @@
             android:layout_alignLeft="@id/cover_image"
             android:layout_below="@id/cover_image"
             android:gravity="center_horizontal"
-            android:text="@string/create_uploading_cover" />
+            android:text="@string/create_uploading_cover"
+            android:textSize="13sp" />
         <!-- 圈子称呢 -->
 
         <EditText
@@ -41,17 +43,21 @@
             android:layout_height="40dp"
             android:layout_alignLeft="@id/uploading_cover"
             android:layout_below="@id/uploading_cover"
-            android:hint="@string/circle_name_limit" >
+            android:hint="@string/circle_name_limit"
+            android:textColorHint="#c8c7cc"
+            android:textSize="12sp" >
         </EditText>
 
         <TextView
+            android:layout_marginLeft="10dp"
             android:id="@+id/create_circle_name"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignTop="@id/create_edit_name"
             android:gravity="center_vertical"
             android:text="@string/create_circle_name"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+             />
         <!-- 圈子介绍 -->
 
         <EditText
@@ -60,17 +66,21 @@
             android:layout_height="40dp"
             android:layout_alignLeft="@id/uploading_cover"
             android:layout_below="@id/create_edit_name"
-            android:hint="@string/circle_introduce_limit" >
+            android:hint="@string/circle_introduce_limit"
+            android:textColorHint="#c8c7cc"
+            android:textSize="12sp" >
         </EditText>
 
         <TextView
+             android:layout_marginLeft="10dp"
             android:id="@+id/create_circle_introduce"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignTop="@id/create_edit_introduce"
             android:gravity="center_vertical"
             android:text="@string/create_circle_introduce"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+           />
         <!-- 圈子地址 -->
 
         <EditText
@@ -82,13 +92,15 @@
         </EditText>
 
         <TextView
+             android:layout_marginLeft="10dp"
             android:id="@+id/create_circle_address"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignTop="@id/create_edit_address"
             android:gravity="center_vertical"
             android:text="圈子地址"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+             />
         <!-- 圈子电话 -->
 
         <EditText
@@ -100,13 +112,15 @@
         </EditText>
 
         <TextView
+             android:layout_marginLeft="10dp"
             android:id="@+id/create_circle_phone"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignTop="@id/create_edit_phone"
             android:gravity="center_vertical"
             android:text="圈子电话"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            />
         <!-- 公众号填写 -->
 
         <EditText
@@ -118,24 +132,28 @@
         </EditText>
 
         <TextView
+             android:layout_marginLeft="10dp"
             android:id="@+id/create_circle_server"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignTop="@id/create_edit_server"
             android:gravity="center_vertical"
             android:text="公众号名称"
-            android:textSize="13sp" />
-   <!-- 公众号二维码 -->
+            android:textSize="13sp"
+             />
+        <!-- 公众号二维码 -->
+
         <ImageView
-            android:scaleType="centerCrop"
             android:id="@+id/create_edit_server_qrcode"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignLeft="@id/create_edit_server"
             android:layout_below="@id/create_edit_server"
+            android:scaleType="centerCrop"
             android:src="@drawable/signin_local_gallry" />
-       
+
         <TextView
+             android:layout_marginLeft="10dp"
             android:id="@+id/create_circle_server_qrcode"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -143,7 +161,8 @@
             android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:text="公众号二维码"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+             />
         <!-- 圈子网址 -->
 
         <EditText
@@ -155,13 +174,15 @@
         </EditText>
 
         <TextView
+             android:layout_marginLeft="10dp"
             android:id="@+id/create_circle_url"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignTop="@id/create_edit_url"
             android:gravity="center_vertical"
             android:text="圈子网址"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+           />
     </RelativeLayout>
 
 </LinearLayout>

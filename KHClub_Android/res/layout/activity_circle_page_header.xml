@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/main_deep_white"
     android:paddingBottom="5dp"
     android:paddingTop="5dp" >
 
@@ -15,8 +16,8 @@
 
         <ImageView
             android:id="@+id/circle_cover_image"
-            android:layout_width="57dp"
-            android:layout_height="57dp"
+            android:layout_width="79dp"
+            android:layout_height="79dp"
             android:layout_margin="5dp"
             android:scaleType="centerCrop"
             android:src="@drawable/default_avatar" />
@@ -45,6 +46,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -79,17 +81,19 @@
             </LinearLayout>
 
             <LinearLayout
+                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
                 <ImageView
-                    android:layout_width="13dp"
-                    android:layout_height="13dp"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/member2x" />
 
                 <TextView
+	                android:layout_marginLeft="8dp"
                     android:id="@+id/news_circle_friend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

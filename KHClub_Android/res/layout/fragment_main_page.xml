@@ -91,7 +91,7 @@
             android:background="@drawable/common_tab_bg"
             android:scaleType="centerInside"
             android:padding="14dp"
-            android:src="@drawable/news_publish_btn_selector" />        
+            android:src="@drawable/create_cirlce_bnt" />        
         
     </FrameLayout>
 
