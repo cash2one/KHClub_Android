@@ -152,6 +152,7 @@
     <string name="circle_web">圈子网址</string>
     <string name="circle_qrcode">公众号二维码</string>
     <string name="wx_num">公众号名称</string> 
+    <string name="circle_no_follow">您没有关注该动态发布的圈子，不能评论</string>
     <string name="circle_phone">电话</string>  
     <string name="circle_address">地址</string>   
     <string name="circle_info">介绍</string> 

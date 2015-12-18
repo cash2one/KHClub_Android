@@ -178,8 +178,8 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	private Context mContext;
 	// 当前数据的页
 	private int pageIndex = 1;
-	// 是否是最后一页数据
-	// private boolean lastPage = false;
+	 //是否是最后一页数据
+	 private boolean lastPage = false;
 	// 时间戳
 	private String latestTimesTamp = "";
 	// 是否下拉
@@ -561,7 +561,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-				if (!isRequestingData) {
+				if (lastPage && !isRequestingData) {
 					isRequestingData = true;
 					isPullDowm = false;
 					getNewsData(UserManager.getInstance().getUser().getUid(), pageIndex, latestTimesTamp);
@@ -575,10 +575,10 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		newsListView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
 			@Override
 			public void onLastItemVisible() {
-				// if (!lastPage) {
-				// newsListView.setMode(Mode.PULL_FROM_END);
-				// newsListView.setRefreshing(true);
-				// }
+				 if (!lastPage) {
+					newsListView.setMode(Mode.PULL_FROM_END);
+				 	newsListView.setRefreshing(true);
+				 }
 			}
 		});
 
@@ -901,15 +901,14 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 					jsonJsonToCircleMembersModel(JSONMemberslist);
 					JsonToNewsModel(JSONList);
 					newsListView.onRefreshComplete();
-					// if (jResult.getString("is_last").equals("0")) {
-					// lastPage = false;
-					// pageIndex++;
-					// newsListView.setMode(Mode.BOTH);
-					// } else {
-					// lastPage = true;
-					// newsListView.setMode(Mode.PULL_FROM_START);
-					// }
-					// isRequestingData = false;
+					if (jResult.getString("is_last").equals("0")) {
+						lastPage = false;
+						pageIndex++;
+						newsListView.setMode(Mode.BOTH);
+					} else {
+						lastPage = true;
+						newsListView.setMode(Mode.PULL_FROM_START);
+					}
 					isRequestingData = false;
 				}
 				if (status == KHConst.STATUS_FAIL) {
