@@ -61,6 +61,7 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 	public static final String IMAGE_UNSPECIFIED = "image/*";
 	protected static final String INTENT_KEY_ONE = "one_pic";
 	private boolean isclub = true;
+	private boolean iscover = false;
 	private String filepath, qrcodefilepath;
 	private String clubid;
 	// 上传头像
@@ -149,7 +150,7 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		// TODO Auto-generated method stub
 		// 限制圈子名不能为空且不能超过七个字
 		if ("".equals(clubnameEditText.getText().toString().trim())) {
-			ToastUtil.show(this, R.string.news_content_image_empty);
+			ToastUtil.show(this, R.string.cover_name_unnull);
 			return;
 		} else if (clubnameEditText.getText().toString().length() > 7) {
 			ToastUtil.show(this, R.string.circle_name_limit);
@@ -171,15 +172,24 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 		// 用户id
 		params.addBodyParameter("user_id", userModel.getUid() + "");
-
 		// 上传圈子封面
+		if (!iscover) {
+			hideLoading();
+			ToastUtil.show(this, R.string.cover_name_unnull);
+			return ;
+		} else {
+			imgfile = new File(filepath);
+			// Log.i("wwww", imgfile.toString());
+			if (!imgfile.exists()) {
+				hideLoading();
+				Toast.makeText(CreateCircleActivity.this, "封面不能为空", Toast.LENGTH_SHORT);
+				return ;
+			} else {
+				params.addBodyParameter("file", imgfile);
+			}
 
-		File imgfile = new File(filepath);
-		// Log.i("wwww", imgfile.toString());
-		if (!imgfile.exists()) {
-			return;
 		}
-		params.addBodyParameter("file", imgfile);
+
 		// 二维码
 		if (!isclub) {
 			File qrcodeimgfile = new File(qrcodefilepath);
@@ -198,8 +208,6 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		HttpManager.post(KHConst.POST_NEW_CIRCLE, params,
 				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
-					
-
 					@Override
 					public void onSuccess(JSONObject jsonResponse, String flag) {
 						super.onSuccess(jsonResponse, flag);
@@ -208,16 +216,15 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 						int status = jsonResponse.getIntValue("status");
 						JSONObject result = jsonResponse.getJSONObject("result");
 						clubid = result.getString("id");
-						
+
 						switch (status) {
 						case KHConst.STATUS_SUCCESS:
 							// toast
 							ToastUtil.show(CreateCircleActivity.this, R.string.news_publish_success);
 							hideLoading();
-							 jumpCirPage();
-							
+							jumpCirPage();
 							finishWithRight();
-							//publishFinishBroadcast();
+							// publishFinishBroadcast();
 							break;
 						case KHConst.STATUS_FAIL:
 							hideLoading();
@@ -228,7 +235,6 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 					}
 
-					
 					@Override
 					public void onFailure(HttpException arg0, String arg1, String flag) {
 						super.onFailure(arg0, arg1, flag);
@@ -238,11 +244,12 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 				}, null));
 
 	}
+
 	private void jumpCirPage() {
 		// TODO Auto-generated method stub
-         Intent circleIntent =new Intent(CreateCircleActivity.this,CirclePageActivity.class);
-         circleIntent.putExtra(CIRCLE_ID, clubid);
-         startActivity(circleIntent);
+		Intent circleIntent = new Intent(CreateCircleActivity.this, CirclePageActivity.class);
+		circleIntent.putExtra(CIRCLE_ID, clubid);
+		startActivity(circleIntent);
 	}
 
 	private void showChoiceImageAlert() {
@@ -289,8 +296,6 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 	}
 
-
-
 	private void addNewsImageView(String filePath) {
 		File file = new File(filePath);
 		if (!file.exists()) {
@@ -301,14 +306,13 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		if (isclub) {
 			// 设置圈子头像
 			ImageLoader.getInstance().displayImage("file://" + filePath, coverImageView, headImageOptions);
-			
-
+			iscover = true;
 		} else {
 			// 设置二维码
 			ImageLoader.getInstance().displayImage("file://" + filePath, qrImageView, headImageOptions);
-			
-		}
 
+		}
+		
 	}
 
 	// /////////////////////////////////////Override//////////////////////////////////////////
@@ -363,7 +367,6 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 		super.onSaveInstanceState(outState);
 	}
-	
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -459,16 +462,16 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 				break;
 
-//			 //删除选中的照片
-//			 case PHOTO_DELETE:
-//			 if
-//			 (data.hasExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL))
-//			 {
-//			 String tmpFilePath =
-//			 data.getStringExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL);
-//			 deleteNewsImageView(tmpFilePath);
-//			 }
-//			 break;
+			// //删除选中的照片
+			// case PHOTO_DELETE:
+			// if
+			// (data.hasExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL))
+			// {
+			// String tmpFilePath =
+			// data.getStringExtra(PublisPhotoHandelActivity.INTENT_KEY_DELETE_URL);
+			// deleteNewsImageView(tmpFilePath);
+			// }
+			// break;
 			}
 		} else {
 			// 恢复点击
@@ -478,14 +481,15 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 
 	final Handler timerHandler = new Handler();
 	final Handler photoHandler = new Handler();
-//
-//	/**
-//	 * 发布动态完成发送广播
-//	 */
-//	private void publishFinishBroadcast() {
-//		Intent mIntent = new Intent(KHConst.BROADCAST_NEWS_LIST_REFRESH);
-//		mIntent.putExtra(NewsConstants.PUBLISH_FINISH, "");
-//		// 发送广播
-//		LocalBroadcastManager.getInstance(CreateCircleActivity.this).sendBroadcast(mIntent);
-//	}
+	//
+	// /**
+	// * 发布动态完成发送广播
+	// */
+	// private void publishFinishBroadcast() {
+	// Intent mIntent = new Intent(KHConst.BROADCAST_NEWS_LIST_REFRESH);
+	// mIntent.putExtra(NewsConstants.PUBLISH_FINISH, "");
+	// // 发送广播
+	// LocalBroadcastManager.getInstance(CreateCircleActivity.this).sendBroadcast(mIntent);
+	// }
+	private File imgfile;
 }
