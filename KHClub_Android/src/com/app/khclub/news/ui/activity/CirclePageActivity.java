@@ -260,7 +260,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(CirclePageActivity.this, BetterMemberActivity.class);
 				intent.putExtra(CIRCLE_ID, circleModel2.getCircleId());
-				startActivity(intent);
+				startActivityWithRight(intent);
 			}
 
 			private void toCircleDetail() {
@@ -438,7 +438,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	private void sendnews() {
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(CirclePageActivity.this, PublishNewsActivity.class);
-		startActivity(intent);
+		startActivityWithRight(intent);
 	}
 
 	/**

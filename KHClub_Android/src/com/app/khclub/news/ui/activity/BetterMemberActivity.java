@@ -15,10 +15,12 @@ import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.news.ui.model.BetterMembersModel;
 import com.app.khclub.news.ui.model.CircleItemModel;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -30,10 +32,13 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -111,6 +116,17 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 
 		// 快宿滑动时不加载图片
 		membersListView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), false, true));
+		
+		membersListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intentToUsrMain = new Intent(BetterMemberActivity.this,OtherPersonalActivity.class);
+				BetterMembersModel membersModel = MembersModelAdapter.getItem(position);
+				intentToUsrMain.putExtra(OtherPersonalActivity.INTENT_KEY, KHUtils.stringToInt(membersModel.getUser_id()));
+				startActivityWithRight(intentToUsrMain);				
+			}
+		});
 	}
 
 	// private void freshAttentionData() {

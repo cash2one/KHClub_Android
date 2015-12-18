@@ -31,11 +31,11 @@
 
     <!-- 圈子 -->
     <TextView
+        android:visibility="gone"
         android:id="@+id/txt_main_circles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/news_item_margins_top"
-        android:text="圈子名称"
         android:textColor="@color/main_light_black"
         android:textSize="@dimen/font_size_tiny" />    
     
