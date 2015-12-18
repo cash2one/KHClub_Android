@@ -164,8 +164,12 @@ public class NewsOperate {
 						if (status == KHConst.STATUS_FAIL) {
 							callInterface.onFinish(OP_Type_Add_Comment, false,
 									null);
-							ToastUtil.show(mContext, mContext
-									.getString(R.string.network_unavailable));
+							if (jsonResponse.getInteger(KHConst.HTTP_RESULT) == 1) {
+								//没关注圈子
+								ToastUtil.show(mContext, mContext.getString(R.string.circle_no_follow));
+							}else {
+								ToastUtil.show(mContext, mContext.getString(R.string.network_unavailable));								
+							}
 						}
 					}
 

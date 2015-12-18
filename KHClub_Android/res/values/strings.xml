@@ -152,6 +152,7 @@
     <string name="circle_web">Circle Web</string>
     <string name="circle_qrcode">WeiXin QRcode</string>
     <string name="wx_num">WeiXin number</string>
+    <string name="circle_no_follow">you are not following this circle, can\'t comment</string>
     <string name="circle_phone">Circle Phone</string>
     <string name="circle_address">Circle Address</string>
     <string name="circle_info">Circle Introduce</string>
