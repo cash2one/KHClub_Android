@@ -124,10 +124,11 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 					public void onClick(View v) {
 						if (choiceList.contains(helper.getPosition()+"")) {
 							choiceList.remove(helper.getPosition()+"");
-							helper.getView().setBackgroundResource(R.color.main_white);
+							helper.getView(R.id.change_circle).setVisibility(View.GONE);
 						}else {
 							choiceList.add(helper.getPosition()+"");
-							helper.getView().setBackgroundResource(R.color.main_light_gary);
+							helper.getView(R.id.change_circle).setVisibility(View.VISIBLE);
+							//helper.getView().setBackgroundResource(R.color.main_light_gary);
 						}						
 					}
 				});

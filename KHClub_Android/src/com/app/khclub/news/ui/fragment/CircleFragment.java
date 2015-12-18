@@ -262,7 +262,6 @@ public class CircleFragment extends BaseFragment {
 
 	private void freshAttentionData() {
 		// TODO Auto-generated method stub
-		Log.i("wwww", position+"");
 		if (isattention) {
 			CircleItemModel attention = dataList.get(position);
 			followList.add(attention);

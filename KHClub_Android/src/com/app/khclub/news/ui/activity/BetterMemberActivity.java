@@ -167,13 +167,12 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 					} else {
 						MembersModelAdapter.addAll(dataList);
 					}
+					
 					membersListView.onRefreshComplete();
-					membersListView.setMode(Mode.PULL_FROM_START);
 
 				}
 				if (status == KHConst.STATUS_FAIL) {
 					membersListView.onRefreshComplete();
-					membersListView.setMode(Mode.PULL_FROM_START);
 				}
 			}
 

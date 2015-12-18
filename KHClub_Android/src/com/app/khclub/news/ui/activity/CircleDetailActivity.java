@@ -83,9 +83,9 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 	@Override
 	protected void setUpView() {
 		setBarText(getString(R.string.news_circle_detail_title));
-		ImageView rightBtn = addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view,
-				R.id.img_btn_right_top);
-		rightBtn.setImageResource(R.drawable.personal_more);
+//		ImageView rightBtn = addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view,
+//				R.id.img_btn_right_top);
+//		rightBtn.setImageResource(R.drawable.personal_more);
 		if (getIntent().hasExtra(CIRCLEDETAIL)) {
 			circleModel = (CirclePageModel) getIntent().getSerializableExtra(CIRCLEDETAIL);
 			if (circleModel == null) {

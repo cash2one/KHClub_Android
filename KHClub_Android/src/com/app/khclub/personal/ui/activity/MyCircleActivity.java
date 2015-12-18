@@ -163,8 +163,12 @@ public class MyCircleActivity extends BaseActivityWithTopBar{
 						myCircle.setContentWithJson(object);
 						dataList.add(myCircle);
 					}
-					//Log.i("wx", msg)
-					circleAdapter.replaceAll(dataList);
+					if (isPullDowm) {
+						circleAdapter.replaceAll(dataList);
+					} else {
+						circleAdapter.addAll(dataList);
+					}
+					circleListView.onRefreshComplete();
 				}
 			}
 			@Override
