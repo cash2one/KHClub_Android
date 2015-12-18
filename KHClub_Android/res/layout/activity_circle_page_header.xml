@@ -104,7 +104,6 @@
     <!-- 引入达人部分 -->
 
     <include layout="@layout/activity_circle_page_haeder_expert" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
