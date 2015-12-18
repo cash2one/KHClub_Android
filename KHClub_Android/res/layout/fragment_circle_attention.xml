@@ -113,7 +113,8 @@
                     android:background="@drawable/filet_03"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:text="关注" />
+                    android:textColor="@color/main_gold"
+                    android:text="@string/attention" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

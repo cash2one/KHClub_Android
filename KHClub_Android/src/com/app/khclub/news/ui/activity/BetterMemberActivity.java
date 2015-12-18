@@ -1,6 +1,5 @@
 package com.app.khclub.news.ui.activity;
 
-
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
@@ -87,7 +86,7 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 				helper.setText(R.id.member_user_name, item.getName());
 				if ("".equals(item.getJob())) {
 					helper.setText(R.id.member_job, "暂无信息");
-				}else {
+				} else {
 					helper.setText(R.id.member_job, item.getJob());
 				}
 				ImageView userImageView = helper.getView(R.id.member_user_image);
@@ -117,15 +116,15 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 
 		// 快宿滑动时不加载图片
 		membersListView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), false, true));
-		
+
 		membersListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Intent intentToUsrMain = new Intent(BetterMemberActivity.this,OtherPersonalActivity.class);
-				BetterMembersModel membersModel = MembersModelAdapter.getItem(position);
-				intentToUsrMain.putExtra(OtherPersonalActivity.INTENT_KEY, KHUtils.stringToInt(membersModel.getUser_id()));
-				startActivityWithRight(intentToUsrMain);				
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intentToUsrMain = new Intent(BetterMemberActivity.this, OtherPersonalActivity.class);
+				BetterMembersModel membersModel = MembersModelAdapter.getItem(position - 1);
+				intentToUsrMain.putExtra(OtherPersonalActivity.INTENT_KEY,
+						KHUtils.stringToInt(membersModel.getUser_id()));
+				startActivityWithRight(intentToUsrMain);
 			}
 		});
 	}
@@ -194,9 +193,8 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 		// TODO Auto-generated method stub
 		setBarText(getString(R.string.news_club_expert));
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
-				.displayer(new RoundedBitmapDisplayer(7))
-				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
+				.displayer(new RoundedBitmapDisplayer(7)).showImageOnFail(R.drawable.loading_default)
+				.cacheInMemory(true).cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 		getData();
 		initListViewSet();
 	}

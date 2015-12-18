@@ -67,6 +67,7 @@
                     android:gravity="center_vertical" >
 
                     <TextView
+                        android:textColor="@color/main_gold"
                         android:id="@+id/circle_unattention_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="27dp"
