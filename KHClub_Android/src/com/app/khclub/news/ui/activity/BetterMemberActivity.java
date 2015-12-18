@@ -17,12 +17,14 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.message.ui.activity.CollectCardActivity;
 import com.app.khclub.news.ui.model.BetterMembersModel;
 import com.app.khclub.news.ui.model.CircleItemModel;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -58,9 +60,13 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 	public static final int PULL_UP_MODE = 1;
 	// 是否下拉刷新
 	
-	private boolean isPullDowm = false;
+	private boolean isPullDown = false;
+	// 当前的数据页
+	private int currentPage = 1;
 	// 是否是最后一页数据
-		private boolean lastPage = false;
+	private String lastPage = "0";
+	// 是否正在请求数据
+	private boolean isRequestingData = false;
 	// 是否是最后一页
 	private boolean isattention = true;
 	// private BitmapUtils bitmapUtils;
@@ -102,24 +108,46 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 		membersListView.setAdapter(MembersModelAdapter);
 		membersListView.setMode(Mode.BOTH);
 		membersListView.setPullToRefreshOverScrollEnabled(false);
-		// 设置刷新事件监听
+		/**
+		 * 刷新监听
+		 * */
 		membersListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 
 			@Override
-			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-				// 下拉刷新
-				isPullDowm = true;
-				getData();
-			}
-
-			@Override
-			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-				   if (lastPage) {
-					   getData();
+			public void onPullDownToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
+				if (!isRequestingData) {
+					isRequestingData = true;
+					currentPage = 1;
+					isPullDown = true;
+					getData(currentPage);
 				}
 			}
 
+			@Override
+			public void onPullUpToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
+				if (!lastPage.equals("1") && !isRequestingData) {
+					isRequestingData = true;
+					isPullDown = false;
+					getData(currentPage);
+				}
+			}
 		});
+		/**
+		 * 设置底部自动刷新
+		 * */
+		membersListView
+				.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
+
+					@Override
+					public void onLastItemVisible() {
+						if (!lastPage.equals("1")) {
+							membersListView.setMode(Mode.PULL_FROM_END);
+							membersListView.setRefreshing(true);
+						}
+					}
+				});
 
 		// 快宿滑动时不加载图片
 		membersListView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), false, true));
@@ -154,9 +182,10 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 	/**
 	 * 获取动态数据
 	 */
-	private void getData() {
+	private void getData(int page) {
 		String circleid = getIntent().getStringExtra("circle_id");
-		String path = KHConst.GET_CIRCLE_MEMBERS + "?circle_id=" + circleid;
+		String path = KHConst.GET_CIRCLE_MEMBERS + "?circle_id=" + circleid + "&page="
+				+ page;
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
 			@Override
@@ -169,26 +198,44 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 					String followJsonArray = jResult.getString("list");
 					dataList = JSON.parseArray(followJsonArray, BetterMembersModel.class);
 					// 如果是下拉刷新
-					if (isPullDowm) {
+					if (isPullDown) {
 						MembersModelAdapter.replaceAll(dataList);
 					} else {
 						MembersModelAdapter.addAll(dataList);
 					}
 					
 					membersListView.onRefreshComplete();
+					// 是否是最后页
+					lastPage = jResult.getString("is_last");
+					if (lastPage.equals("0")) {
+						currentPage++;
+						membersListView.setMode(Mode.BOTH);
+					} else {
+						membersListView.setMode(Mode.PULL_FROM_START);
+					}
+					isRequestingData = false;					
 
 				}
+				
 				if (status == KHConst.STATUS_FAIL) {
 					membersListView.onRefreshComplete();
+					if (lastPage.equals("0")) {
+						membersListView.setMode(Mode.BOTH);
+					}
+					ToastUtil.show(BetterMemberActivity.this,jsonResponse.getString(KHConst.HTTP_MESSAGE));
 				}
+				isRequestingData = false;
 			}
 
 			@Override
 			public void onFailure(HttpException arg0, String arg1, String flag) {
 				super.onFailure(arg0, arg1, flag);
 				membersListView.onRefreshComplete();
-				// 是否是最后一页
-				membersListView.setMode(Mode.BOTH);
+				if (lastPage.equals("0")) {
+					membersListView.setMode(Mode.BOTH);
+				}
+				ToastUtil.show(BetterMemberActivity.this,getString(R.string.net_error));
+				isRequestingData = false;
 			}
 
 		}, null));
@@ -201,7 +248,7 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.displayer(new RoundedBitmapDisplayer(7)).showImageOnFail(R.drawable.loading_default)
 				.cacheInMemory(true).cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
-		getData();
+		getData(currentPage);
 		initListViewSet();
 	}
 
