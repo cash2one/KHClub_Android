@@ -83,6 +83,7 @@ import com.easemob.EMCallBack;
 import com.easemob.EMError;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupInfo;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
@@ -657,19 +658,35 @@ public class MessageAdapter extends BaseAdapter{
 								}
 							});
 						}
+						
+						if (jsonObject.containsKey("avatar")) {
+							String avatar = jsonObject.getString("avatar");
+							if (avatar.length() > 0) {
+								//头像
+								UserUtils.setUserAvatar(context, KHConst.KH + jsonObject.getString("id"), holder.cardImageView, avatar);
+							}else {
+								//头像
+								UserUtils.setUserAvatar(context, KHConst.KH + jsonObject.getString("id"), holder.cardImageView);
+							}
+						}
+						
 					}else if (jsonObject.getIntValue("type") == EMMessage.ChatType.GroupChat.ordinal()){
 						holder.cardTitleTextView.setText(R.string.im_group_name_card);
 						if (jsonObject.containsKey("id")) {
+							
 							holder.cardLayout.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View v) {
-									// 跳转到群结果页面
 									EMGroupInfo	group = new EMGroupInfo(jsonObject.getString("id"), jsonObject.getString("title"));
+									// 跳转到群结果页面
 									Intent intent = new Intent(context, GroupSimpleDetailActivity.class).putExtra("groupinfo", group);
 									context.startActivity(intent);
 									((Activity) context).overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
 								}
-							});							
+							});
+							
+							EMGroup group2 = new EMGroup(jsonObject.getString("id"));
+							UserUtils.setGroupAvatar(context, group2, holder.cardImageView);
 						}
 					}else {
 						holder.cardTitleTextView.setText(R.string.im_circle_name_card);
@@ -685,18 +702,20 @@ public class MessageAdapter extends BaseAdapter{
 								}
 							});							
 						}
+						
+						if (jsonObject.containsKey("avatar")) {
+							String avatar = jsonObject.getString("avatar");
+							LogUtils.i(avatar, 1);
+							if (avatar.length() > 0) {
+								Picasso.with(context).load(avatar).placeholder(R.drawable.mini_avatar_shadow).into(holder.cardImageView);
+							}
+						}
 					}
 				}
 				if (jsonObject.containsKey("title")) {
 					holder.cardTextView.setText(jsonObject.getString("title"));
 				}				
-				if (jsonObject.containsKey("avatar")) {
-					String avatar = jsonObject.getString("avatar");
-					LogUtils.i(avatar, 1);
-					if (avatar.length() > 0) {
-						Picasso.with(context).load(avatar).placeholder(R.drawable.mini_avatar_shadow).into(holder.cardImageView);
-					}
-				}				
+								
 			} catch (Exception e) {
 			}
 			

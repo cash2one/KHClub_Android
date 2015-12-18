@@ -121,6 +121,23 @@ public class UserUtils {
     }
     
     /**
+     * 设置用户头像
+     * @param username
+     */
+    public static void setUserAvatar(Context context, String username, ImageView imageView, String holderPath){
+    	if (username.equals(KHConst.KH_ROBOT)) {
+			Picasso.with(context).load(R.drawable.icon).into(imageView);
+    		return;
+		}
+    	User user = getUserInfo(username);
+        if(user != null && user.getAvatar() != null){
+            Picasso.with(context).load(user.getAvatar()).placeholder(R.drawable.default_avatar).into(imageView);
+        }else{
+            Picasso.with(context).load(holderPath).placeholder(R.drawable.default_avatar).into(imageView);
+        }
+    }
+    
+    /**
      * 设置当前用户头像
      */
 	public static void setCurrentUserAvatar(Context context, ImageView imageView) {
