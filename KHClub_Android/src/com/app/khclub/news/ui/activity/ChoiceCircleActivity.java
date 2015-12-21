@@ -119,6 +119,12 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 					headImageView.setImageResource(R.drawable.loading_default);
 				}
 				
+				if (choiceList.contains(helper.getPosition()+"")) {
+					helper.getView(R.id.change_circle).setVisibility(View.GONE);
+				}else {
+					helper.getView(R.id.change_circle).setVisibility(View.VISIBLE);
+				}
+				
 				helper.getView().setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
