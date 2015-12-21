@@ -2,16 +2,12 @@ package com.app.khclub.news.ui.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,9 +16,7 @@ import com.app.khclub.R;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.news.ui.model.CircleModel;
 import com.app.khclub.news.ui.model.CirclePageModel;
-import com.app.khclub.news.ui.view.LoopViewPager;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -35,6 +29,7 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 	private static final String CIRCLEDETAIL = "circledetail";
 
 	public static String INTENT_CIRCLE_KEY = "circleModel";
+//	private ShowQrcodePopupWindow qrImageView;
 	// 圈子封面
 	@ViewInject(R.id.circle_cover)
 	private ImageView coverImage;
@@ -99,6 +94,7 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 	}
 
 	private void initUI() {
+//		qrImageView = new ShowQrcodePopupWindow(CircleDetailActivity.this);	
 		imgLoader = ImageLoader.getInstance();
 		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
@@ -123,6 +119,20 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 		}else {
 			qrcodeImage.setVisibility(View.VISIBLE);
 			imgLoader.displayImage(circleModel.getWxqrCode(), qrcodeImage, options);
+			//qrcodeImage.setTag(circleModel.getWxqrCode());
+			// 设置照片
+			// bitmapUtils.display(imageView, filePath);
+//			ImageLoader.getInstance().displayImage("file://" + circleModel.getWxqrCode(), imageView,
+//					headImageOptions);
+			qrcodeImage.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+//					qrImageView.setQRcode(true);
+//					qrImageView.setGroupID(circleModel.getWxqrCode());
+//					qrImageView.showPopupWindow(v);
+                      
+				}
+			});
 		}
 
 		// 圈子封面

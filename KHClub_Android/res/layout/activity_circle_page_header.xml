@@ -94,7 +94,6 @@
                     android:layout_height="14dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/member2x" />
-
                 <TextView
                     android:text="0"
                     android:textSize="13sp"

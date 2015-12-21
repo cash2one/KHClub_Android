@@ -1,6 +1,5 @@
 package com.app.khclub.news.ui.fragment;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +9,6 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -27,17 +24,14 @@ import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
-import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.ui.fragment.BaseFragment;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.news.ui.activity.CirclePageActivity;
-import com.app.khclub.news.ui.activity.CreateCircleActivity;
 import com.app.khclub.news.ui.model.CircleItemModel;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.exception.HttpException;
@@ -53,7 +47,9 @@ public class CircleFragment extends BaseFragment {
 	private static final String CIRCLE_ID = "circle_id";
 	private static final String CIRCLE_ISFOLLOW= "isFollow";
 	private static final String UNFOLLOW_LIST = "unfollowList";
-	private List<CircleItemModel> followList, unfollowList, dataList;
+	private List<CircleItemModel> followList, unfollowList,dataList;
+	//private String[] data={"1}
+	//private List<CircleItemModel> dataList=new ArrayList<CircleItemModel>();
 	// private boolean ISNOTATTENTION=true;
 	// 下拉列表
 	@ViewInject(R.id.circle_refresh_list)
@@ -129,6 +125,7 @@ public class CircleFragment extends BaseFragment {
 				}
 				if (unfollowList.size() > 0) {
 					if (unfollowList.get(0).getId().equals(item.getId())) {
+						//if(！dataList.size()==1){
 						helper.setVisible(R.id.circle_recommend_layout, true);
 						helper.setVisible(R.id.circle_recommend_type, true);
 						helper.setText(R.id.circle_recommend_type,
@@ -251,6 +248,7 @@ public class CircleFragment extends BaseFragment {
 							tmpList.addAll(followList);
 							tmpList.addAll(unfollowList);
 							dataList = tmpList;
+							
 							circleAdapter.replaceAll(dataList);
 							break;
 						case KHConst.STATUS_FAIL:

@@ -178,8 +178,8 @@
     <string name="circle_recommend_type_name">推荐圈子</string>
     <string name="news_news_topic">动态</string>
     <string name="news_circle_title">圈子</string>
-    <string name="news_circle_intro">圈层介绍</string>
-    <string name="news_circle_detail_title">圈层详情</string>
+    <string name="news_circle_intro">圈子介绍</string>
+    <string name="news_circle_detail_title">圈子详情</string>
     <string name="news_enter_content">请输入内容</string>
     <string name="news_where">所在位置</string>
     <string name="news_content_image_empty">内容和图片至少有一个不能为空</string>
@@ -548,4 +548,5 @@
     <string name="unattention_fail">取消关注失败</string>
     <string name="attention">关注</string>
     <string name="cover_name_unnull">封面和名字不能为空</string>
+    <string name="freshing">正在刷新</string>
 </resources>
