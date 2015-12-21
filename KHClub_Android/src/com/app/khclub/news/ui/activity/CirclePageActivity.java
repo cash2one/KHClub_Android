@@ -640,17 +640,17 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 					case 2:
 						helper.setVisible(R.id.members_image2, true);
 						imgLoader.displayImage(membersDatas.get(i).getMembersimage(),
-								(ImageView) helper.getView(R.id.members_image1), membersoptions);
+								(ImageView) helper.getView(R.id.members_image2), membersoptions);
 						break;
 					case 3:
 						helper.setVisible(R.id.members_image3, true);
 						imgLoader.displayImage(membersDatas.get(i).getMembersimage(),
-								(ImageView) helper.getView(R.id.members_image1), membersoptions);
+								(ImageView) helper.getView(R.id.members_image3), membersoptions);
 						break;
 					case 4:
 						helper.setVisible(R.id.members_image4, true);
 						imgLoader.displayImage(membersDatas.get(i).getMembersimage(),
-								(ImageView) helper.getView(R.id.members_image1), membersoptions);
+								(ImageView) helper.getView(R.id.members_image4), membersoptions);
 						break;
 
 					default:
