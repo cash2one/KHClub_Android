@@ -86,7 +86,6 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	// private View headerView;
 	// 圈子信息
 	private CirclePageModel circleModel2;
-
 	// 标题
 	@ViewInject(R.id.title_text_view)
 	private TextView titleTextView;
@@ -123,45 +122,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 	}
 
-	// private void initUI() {
-	// options = new
-	// DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
-	// .showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
-	// .bitmapConfig(Bitmap.Config.RGB_565).build();
-	// // 标题
-	// titleTextView.setText(circleModel.getTitle());
-	// // 介绍
-	// introTextView.setText(" " + circleModel.getIntro());
-	// // 地址
-	// addressTextView.setText(circleModel.getAddress());
-	// // 名
-	// managerNameTextView.setText(circleModel.getManager_name());
-	// // 电话
-	// phoneTextView.setText(circleModel.getPhone_num());
-	// // 微信
-	// wxTextView.setText(circleModel.getWx_num());
-	// // 网页
-	// webTextView.setText(circleModel.getWeb());
-	// // 初始化pageView
-	// images = circleModel.getImage().split(",");
-	// if (images.length > 0) {
-	// int size = images.length;
-	// if (size > 3) {
-	// size = 3;
-	// }
-	// switch (size) {
-	// case 1:
-	// // pageView2.setVisibility(View.GONE);
-	// // pageView3.setVisibility(View.GONE);
-	// break;
-	// case 2:
-	// // pageView3.setVisibility(View.GONE);
-	// break;
-	// default:
-	// break;
-	// }
-	// }
-	// }
+	
 
 	// 动态listview
 	@ViewInject(R.id.news_circle_listView)
@@ -180,8 +141,8 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	private Context mContext;
 	// 当前数据的页
 	private int pageIndex = 1;
-	 //是否是最后一页数据
-	 private boolean lastPage = false;
+	// 是否是最后一页数据
+	private boolean lastPage = false;
 	// 时间戳
 	private String latestTimesTamp = "";
 	// 是否下拉
@@ -224,6 +185,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		initBoradcastReceiver();
 		multiItemTypeSet();
 		newsListViewSet();
+		
 		sendnews.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -300,7 +262,8 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 							}
 							break;
 						case KHConst.STATUS_FAIL:
-							Toast.makeText(CirclePageActivity.this, R.string.unattention_fail, Toast.LENGTH_SHORT).show();
+							Toast.makeText(CirclePageActivity.this, R.string.unattention_fail, Toast.LENGTH_SHORT)
+									.show();
 							break;
 						}
 					}
@@ -340,7 +303,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				} else {
 					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
-				
+
 				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
 				// 执行图文分享
@@ -463,6 +426,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		// headerView =
 		// getLayoutInflater().inflate(R.layout.activity_circle_page_header,
 		// null);
+
 		mContext = CirclePageActivity.this;
 		shareMenu = new PersonalBottomPopupMenu(this, false);
 		itemViewClickListener = new ItemViewClick();
@@ -589,10 +553,10 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		newsListView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
 			@Override
 			public void onLastItemVisible() {
-				 if (!lastPage) {
+				if (!lastPage) {
 					newsListView.setMode(Mode.PULL_FROM_END);
-				 	newsListView.setRefreshing(true);
-				 }
+					newsListView.setRefreshing(true);
+				}
 			}
 		});
 
@@ -874,7 +838,6 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		// /////////////////////////设置事件监听///////////////////////////////
 		final int postion = helper.getPosition();
 		OnClickListener listener = new OnClickListener() {
-
 			@Override
 			public void onClick(View view) {
 				itemViewClickListener.onClick(view, postion, view.getId());
@@ -908,6 +871,9 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 					// Log.i("wwww", circle.toString());
 					circleModel2 = new CirclePageModel();
 					circleModel2.setContentWithJson(circle);
+					if ("1".equals(circleModel2.getIsFollow())) {
+						sendnews.setVisibility(View.VISIBLE); 
+					}
 					// 圈子帖子
 					List<JSONObject> JSONList = (List<JSONObject>) jResult.get("list");
 					List<JSONObject> JSONMemberslist = (List<JSONObject>) jResult.get("circleMembers");
