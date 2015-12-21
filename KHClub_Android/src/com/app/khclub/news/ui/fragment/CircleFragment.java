@@ -2,6 +2,7 @@ package com.app.khclub.news.ui.fragment;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -111,6 +112,12 @@ public class CircleFragment extends BaseFragment {
 				// helper.setOnClickListener(viewId, listener)
 				// 圈子标题
 				helper.setText(R.id.circle_name, item.getCircle_name());
+				
+				helper.setVisible(R.id.circle_attention_type, false);
+				helper.setVisible(R.id.circle_attention_layout, false);
+				helper.setVisible(R.id.circle_recommend_layout, false);
+				helper.setVisible(R.id.circle_recommend_type, false);				
+				
 				// 圈子类型（是否关注）
 				if (followList.size() > 0) {
 					if (followList.get(0).getId().equals(item.getId())) {
@@ -118,9 +125,6 @@ public class CircleFragment extends BaseFragment {
 						helper.setVisible(R.id.circle_attention_type, true);
 						helper.setText(R.id.circle_attention_type,
 								getResources().getString(R.string.circle_attention_type_name));
-					} else {
-						helper.setVisible(R.id.circle_attention_type, false);
-						helper.setVisible(R.id.circle_attention_layout, false);
 					}
 				}
 				if (unfollowList.size() > 0) {
@@ -129,12 +133,9 @@ public class CircleFragment extends BaseFragment {
 						helper.setVisible(R.id.circle_recommend_type, true);
 						helper.setText(R.id.circle_recommend_type,
 								getResources().getString(R.string.circle_recommend_type_name));
-					} else {
-						helper.setVisible(R.id.circle_recommend_layout, false);
-						helper.setVisible(R.id.circle_recommend_type, false);
-					}
+					} 
 				}
-				if (position >= (followList.size() - unfollowList.size())) {
+				if (position >= followList.size()) {
 					helper.setVisible(R.id.recommend_btn, true);
 				} else {
 					helper.setVisible(R.id.recommend_btn, false);
@@ -154,7 +155,7 @@ public class CircleFragment extends BaseFragment {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						recommend(item.getId());
+						recommend(item);
 						//Log.i("wwww", dataList.get(position).getId());
 						Log.i("wwww", item.getId());
 						//Log.i("wwww", position+"");
@@ -212,12 +213,12 @@ public class CircleFragment extends BaseFragment {
 	}
 
 	// 关注请求
-	private void recommend(String circle_id) {
+	private void recommend(final CircleItemModel circleItemModel) {
 		// TODO Auto-generated method stub
 		RequestParams params = new RequestParams();
 		final UserModel userModel = UserManager.getInstance().getUser();
 		params.addBodyParameter("user_id", userModel.getUid() + "");
-		params.addBodyParameter("circle_id", circle_id);
+		params.addBodyParameter("circle_id", circleItemModel.getId());
 		//if (position >= (followList.size() - unfollowList.size())) {
 			// 设置为关注
 		params.addBodyParameter("isFollow", "1");
@@ -227,7 +228,7 @@ public class CircleFragment extends BaseFragment {
 //			isattention = false;
 //		}
 		// Log.i("wwww", "关注成功");
-
+		showLoading(getActivity(), getString(R.string.uploading));
 		// 关注
 		HttpManager.post(KHConst.FOLLOW_OR_UNFOLLOW_CIRCLE, params,
 				new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
@@ -235,14 +236,22 @@ public class CircleFragment extends BaseFragment {
 					public void onSuccess(JSONObject jsonResponse, String flag) {
 						super.onSuccess(jsonResponse, flag);
 						int status = jsonResponse.getIntValue("status");
-						Log.i("wwww", status + "");
+						hideLoading();
+						
 						switch (status) {
 						case KHConst.STATUS_SUCCESS:
-							showLoading(getActivity(), "正在刷新");
-							ToastUtil.show(getActivity(), "关注成功");
-							getData();
+							ToastUtil.show(getActivity(), R.string.attention_success);
+							
+							followList.add(circleItemModel);
+							unfollowList.remove(circleItemModel);
+							
+							LogUtils.i(followList+"----"+unfollowList, 1);
+							//临时用
+							List<CircleItemModel> tmpList = new ArrayList<CircleItemModel>();
+							tmpList.addAll(followList);
+							tmpList.addAll(unfollowList);
+							dataList = tmpList;
 							circleAdapter.replaceAll(dataList);
-							hideLoading();
 							break;
 						case KHConst.STATUS_FAIL:
 							Toast.makeText(getActivity(), R.string.circle_attention_fail, Toast.LENGTH_SHORT).show();
@@ -260,20 +269,20 @@ public class CircleFragment extends BaseFragment {
 
 	}
 
-	private void freshAttentionData() {
-		// TODO Auto-generated method stub
-		if (isattention) {
-			CircleItemModel attention = dataList.get(position);
-			followList.add(attention);
-			unfollowList.remove(attention);
-			circleAdapter.notifyDataSetChanged();
-		} else {
-			CircleItemModel attention = dataList.get(position);
-			unfollowList.add(attention);
-			followList.remove(attention);
-			circleAdapter.notifyDataSetChanged();
-		}
-	}
+//	private void freshAttentionData() {
+//		// TODO Auto-generated method stub
+//		if (isattention) {
+//			CircleItemModel attention = dataList.get(position);
+//			followList.add(attention);
+//			unfollowList.remove(attention);
+//			circleAdapter.notifyDataSetChanged();
+//		} else {
+//			CircleItemModel attention = dataList.get(position);
+//			unfollowList.add(attention);
+//			followList.remove(attention);
+//			circleAdapter.notifyDataSetChanged();
+//		}
+//	}
 
 	/**
 	 * 获取动态数据
@@ -295,8 +304,11 @@ public class CircleFragment extends BaseFragment {
 					String followJsonArray = jResult.getString(FOLLOW_LIST);
 					followList = JSON.parseArray(followJsonArray, CircleItemModel.class);
 					unfollowList = JSON.parseArray(unfollowJsonArray, CircleItemModel.class);
-					followList.addAll(unfollowList);
-					dataList = followList;
+					//临时用
+					List<CircleItemModel> tmpList = new ArrayList<CircleItemModel>();
+					tmpList.addAll(followList);
+					tmpList.addAll(unfollowList);
+					dataList = tmpList;
 					// 如果是下拉刷新
 					if (isPullDowm) {
 						circleAdapter.replaceAll(dataList);
