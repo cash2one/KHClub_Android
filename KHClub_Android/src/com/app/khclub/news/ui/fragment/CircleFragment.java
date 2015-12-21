@@ -2,6 +2,7 @@ package com.app.khclub.news.ui.fragment;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -52,7 +53,9 @@ public class CircleFragment extends BaseFragment {
 	private static final String CIRCLE_ID = "circle_id";
 	private static final String CIRCLE_ISFOLLOW= "isFollow";
 	private static final String UNFOLLOW_LIST = "unfollowList";
-	private List<CircleItemModel> followList, unfollowList, dataList;
+	private List<CircleItemModel> followList, unfollowList,dataList;
+	//private String[] data={"1}
+	//private List<CircleItemModel> dataList=new ArrayList<CircleItemModel>();
 	// private boolean ISNOTATTENTION=true;
 	// 下拉列表
 	@ViewInject(R.id.circle_refresh_list)
@@ -125,16 +128,18 @@ public class CircleFragment extends BaseFragment {
 				}
 				if (unfollowList.size() > 0) {
 					if (unfollowList.get(0).getId().equals(item.getId())) {
+						//if(！dataList.size()==1){
 						helper.setVisible(R.id.circle_recommend_layout, true);
 						helper.setVisible(R.id.circle_recommend_type, true);
 						helper.setText(R.id.circle_recommend_type,
 								getResources().getString(R.string.circle_recommend_type_name));
+						//}
 					} else {
 						helper.setVisible(R.id.circle_recommend_layout, false);
 						helper.setVisible(R.id.circle_recommend_type, false);
 					}
 				}
-				if (position >= (followList.size() - unfollowList.size())) {
+				if (position >= (dataList.size() - unfollowList.size())) {
 					helper.setVisible(R.id.recommend_btn, true);
 				} else {
 					helper.setVisible(R.id.recommend_btn, false);
@@ -221,12 +226,6 @@ public class CircleFragment extends BaseFragment {
 		//if (position >= (followList.size() - unfollowList.size())) {
 			// 设置为关注
 		params.addBodyParameter("isFollow", "1");
-	//		isattention = true;
-//		} else {
-//			params.addBodyParameter("isFollow", "0");
-//			isattention = false;
-//		}
-		// Log.i("wwww", "关注成功");
 
 		// 关注
 		HttpManager.post(KHConst.FOLLOW_OR_UNFOLLOW_CIRCLE, params,
@@ -238,8 +237,8 @@ public class CircleFragment extends BaseFragment {
 						Log.i("wwww", status + "");
 						switch (status) {
 						case KHConst.STATUS_SUCCESS:
-							showLoading(getActivity(), "正在刷新");
-							ToastUtil.show(getActivity(), "关注成功");
+							showLoading(getActivity(), getString(R.string.freshing));
+							ToastUtil.show(getActivity(), getString(R.string.attention_success));
 							getData();
 							circleAdapter.replaceAll(dataList);
 							hideLoading();

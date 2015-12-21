@@ -333,7 +333,7 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		 * .getDefaultDisplay().getWidth() - space * 3 - oriMarginLeft * 2) / 4;
 		 * addImageView.setLayoutParams(rlParams); // 添加完成按钮
 		 */
-		TextView sendBtn = addRightBtn("下一步");
+		TextView sendBtn = addRightBtn(getString(R.string.next));
 		sendBtn.setTextColor(getResources().getColor(R.color.main_white));
 		locationString = "";
 		// bitmap初始化
