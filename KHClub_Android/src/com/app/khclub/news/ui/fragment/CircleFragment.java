@@ -265,12 +265,12 @@ public class CircleFragment extends BaseFragment {
 		if (isattention) {
 			CircleItemModel attention = dataList.get(position);
 			followList.add(attention);
-			unfollowList.remove(position);
+			unfollowList.remove(attention);
 			circleAdapter.notifyDataSetChanged();
 		} else {
 			CircleItemModel attention = dataList.get(position);
 			unfollowList.add(attention);
-			followList.remove(position);
+			followList.remove(attention);
 			circleAdapter.notifyDataSetChanged();
 		}
 	}
