@@ -12,7 +12,6 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.style.LeadingMarginSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;

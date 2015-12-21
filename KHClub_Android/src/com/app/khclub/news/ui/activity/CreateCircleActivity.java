@@ -315,14 +315,13 @@ public class CreateCircleActivity extends BaseActivityWithTopBar {
 		
 	}
 
-	// /////////////////////////////////////Override//////////////////////////////////////////
+	/////////////////////////////////////Override//////////////////////////////////////////
 	@Override
 	public int setLayoutId() {
 		// TODO Auto-generated method stub
 		return R.layout.acitivity_create_circle;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void setUpView() {
 		// 标题
