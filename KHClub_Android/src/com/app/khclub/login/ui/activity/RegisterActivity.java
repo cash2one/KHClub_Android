@@ -110,8 +110,12 @@ public class RegisterActivity extends BaseActivityWithTopBar {
 			getVerificationCode();
 			break;
 		case R.id.register_activity:
-			InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+			try {
+				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+						0);
+			} catch (Exception e) {
+			}
 			break;
 		default:
 			break;
