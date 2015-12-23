@@ -638,11 +638,11 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			public void onSuccess(JSONObject jsonResponse, String flag) {
 				super.onSuccess(jsonResponse, flag);
 				int status = jsonResponse.getInteger(KHConst.HTTP_STATUS);
-				Log.i("wx", status+"")
+				
 				if (status == KHConst.STATUS_SUCCESS) {
 					// 数据处理
-
 					JSONArray array = jsonResponse.getJSONArray(KHConst.HTTP_RESULT);
+					Log.i("wx", status+"");
 					fillData(array);
 				}
 
@@ -663,10 +663,11 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		for (int i = 0; i < array.size(); i++) {
 			JSONObject object = (JSONObject) array.get(i);
 			herCircleImageList.add(object.getString("circle_cover_sub_image"));
+				Log.i("wx", i+"");
 		}
 
 		// 最多3
-		int size = newsImageList.size();
+		int size = herCircleImageList.size();
 		if (size > 3) {
 			size = 3;
 		}
@@ -681,7 +682,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			// 设置图片
 			if (null != path && path.length() > 0) {
 				ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR + path, imageView, imageOptions);
-				Log.i("wx", KHConst.ATTACHMENT_ADDR + path);
+//				Log.i("wx", KHConst.ATTACHMENT_ADDR + path);
 			} else {
 				imageView.setImageResource(R.drawable.loading_default);
 			}

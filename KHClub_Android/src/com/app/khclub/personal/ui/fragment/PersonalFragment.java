@@ -434,7 +434,7 @@ public class PersonalFragment extends BaseFragment {
 							}
 
 							// 最多3
-							int size = newsImageList.size();
+							int size = myCircleImageList.size();
 							if (size > 3) {
 								size = 3;
 							}
