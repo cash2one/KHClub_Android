@@ -2,8 +2,6 @@ package com.app.khclub.news.ui.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -19,21 +17,22 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import android.widget.TextView;
 
 import com.app.khclub.R;
-import com.app.khclub.base.easeim.widget.QRCodePopupMenu;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.news.ui.model.CircleModel;
 import com.app.khclub.news.ui.model.CirclePageModel;
-import com.app.khclub.news.ui.view.LoopViewPager;
 import com.app.khclub.news.ui.view.ShowQrcodePopupWindow;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -114,7 +113,11 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 	}
 
 	private void initUI() {
+
 		qrImageView = new ShowQrcodePopupWindow(CircleDetailActivity.this);
+
+//		qrImageView = new ShowQrcodePopupWindow(CircleDetailActivity.this);	
+
 		imgLoader = ImageLoader.getInstance();
 		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
@@ -148,6 +151,10 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 					qrImageView.setQRcode(true);
 					qrImageView.showPopupWindow(v, true);
 
+//					qrImageView.setQRcode(true);
+//					qrImageView.setGroupID(circleModel.getWxqrCode());
+//					qrImageView.showPopupWindow(v);
+                      
 				}
 			});
 		}
