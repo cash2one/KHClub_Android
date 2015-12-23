@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.Log;
 import android.util.Pair;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -112,7 +113,7 @@ public class ChatAllHistoryFragment extends Fragment implements
 					int position, long id) {
 				EMConversation conversation = adapter.getItem(position);
 				String username = conversation.getUserName();
-
+				//Log.i("wx", username.replace("kh",""));
 				if (username.equals(KHUtils.selfCommonIMID()))
 					Toast.makeText(getActivity(), st2, 0).show();
 				else {
@@ -125,16 +126,21 @@ public class ChatAllHistoryFragment extends Fragment implements
 							intent.putExtra("chatType",
 									ChatActivity.CHATTYPE_CHATROOM);
 							intent.putExtra("groupId", username);
+							
 						} else {
 							// it is group chat
 							intent.putExtra("chatType",
 									ChatActivity.CHATTYPE_GROUP);
 							intent.putExtra("groupId", username);
+						
 						}
 
 					} else {
 						// it is single chat
 						intent.putExtra("userId", username);
+						//Log.i("wx", username);
+						intent.putExtra("user_id", username.replace("kh",""));
+						//Log.i("wx", username.replace("kh",""));
 					}
 					startActivity(intent);
 				}

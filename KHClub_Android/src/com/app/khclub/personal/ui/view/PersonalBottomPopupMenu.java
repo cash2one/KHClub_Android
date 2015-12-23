@@ -108,44 +108,6 @@ public class PersonalBottomPopupMenu extends PopupWindow {
 					}
 				});
 
-		// 删除好友
-		TextView deleteFriend = (TextView) conentView
-				.findViewById(R.id.txt_delete_friend);
-		deleteFriend.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				listener.deleteFriendClick();
-				PersonalBottomPopupMenu.this.dismiss();
-			}
-		});
-		// 编辑备注
-		TextView editRemark = (TextView) conentView
-				.findViewById(R.id.txt_edit_remark);
-		editRemark.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				listener.editRemarkClick();
-				PersonalBottomPopupMenu.this.dismiss();
-			}
-		});
-
-		// 取操作
-		((TextView) conentView.findViewById(R.id.txt_cancel))
-				.setOnClickListener(new OnClickListener() {
-
-					@Override
-					public void onClick(View arg0) {
-						PersonalBottomPopupMenu.this.dismiss();
-					}
-				});
-
-		if (!isFriend) {
-			// 非好友隐藏相关控件
-			editRemark.setVisibility(View.GONE);
-			deleteFriend.setVisibility(View.GONE);
-		}
 		// 设置PopupWindow的View
 		this.setContentView(conentView);
 		// 设置窗体的尺寸

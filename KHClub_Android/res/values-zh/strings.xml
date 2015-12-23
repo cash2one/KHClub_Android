@@ -96,7 +96,7 @@
 
     <!-- Personal -->
     <string name="personal_me_title">我的</string>
-    <string name="personal_signature">个人说明</string>
+    <string name="personal_signature">个人介绍</string>
     <string name="personal_icon">头像</string>
     <string name="personal_name">昵称</string>
     <string name="personal_remark">备注</string>
@@ -125,6 +125,7 @@
     <string name="personal_add_friend">添加为好友</string>
     <string name="personal_send_message">发送消息</string>
     <string name="personal_moments">动态列表</string>
+    <string name="other_moments">TA的动态</string>
     <string name="personal_no_moments">暂无动态</string>
     <string name="personal_clear_cache">清空缓存</string>
     <string name="personal_version">版本检测</string>
@@ -175,6 +176,7 @@
     <string name="news_master_name">圈主：</string>
     <string name="news_circle_name">圈子名称：</string>
     <string name="circle_attention_type_name">我的圈子</string>
+     <string name="other_circle">TA的圈子</string>
     <string name="circle_recommend_type_name">推荐圈子</string>
     <string name="news_news_topic">动态</string>
     <string name="news_circle_title">圈子</string>

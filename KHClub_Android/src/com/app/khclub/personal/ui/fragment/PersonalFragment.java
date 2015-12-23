@@ -119,7 +119,7 @@ public class PersonalFragment extends BaseFragment {
 	private List<String> myCircleImageList = new ArrayList<String>();
 	// 控件数组
 	private List<ImageView> imageList = new ArrayList<ImageView>();
-	//
+	//我的圈子数组
 	private List<ImageView> myCircleList = new ArrayList<ImageView>();
 	// 图片缓存工具
 	private DisplayImageOptions imageOptions;

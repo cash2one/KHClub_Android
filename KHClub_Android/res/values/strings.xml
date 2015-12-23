@@ -125,6 +125,8 @@
     <string name="personal_add_friend">Add</string>
     <string name="personal_send_message">Send Message</string>
     <string name="personal_moments">Moments</string>
+    <string name="other_moments">Her Moments</string>
+    <string name="other_circle">Other Circle</string>
     <string name="personal_no_moments">No Moments</string>
     <string name="personal_clear_cache">Clear Cache</string>
     <string name="personal_version">Version</string>

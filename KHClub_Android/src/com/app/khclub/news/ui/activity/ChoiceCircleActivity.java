@@ -10,6 +10,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import cn.sharesdk.framework.authorize.e;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.amap.api.maps2d.model.Text;
 import com.app.khclub.R;
 import com.app.khclub.base.adapter.HelloHaAdapter;
 import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
@@ -26,9 +28,11 @@ import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
+import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
+import com.app.khclub.login.ui.activity.LaunchActivity;
 import com.app.khclub.news.ui.model.CircleItemModel;
 import com.app.khclub.news.ui.model.NewsConstants;
 import com.lidroid.xutils.exception.HttpException;
@@ -51,11 +55,16 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 	@ViewInject(R.id.follow_circle_list)
 	private ListView listView;
 	private List<String> choiceList = new ArrayList<String>();
-	private int index;
+	//private int index;
 	private String content_text;
 	private String location;
 	private ArrayList<String> images;
-
+	//没有数据时显示的部分
+	@ViewInject(R.id.please_choice_circle)
+    private LinearLayout linearLayout;
+	//跳转至选择圈子的按钮
+	@ViewInject(R.id.skip_cirlce_fragemt)
+	private TextView skipTextView;
 	// 位置listview的适配器
 	private HelloHaAdapter<CircleItemModel> circleAdapter;
 	// 图片配置
@@ -179,7 +188,15 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 					JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
 					// 获取数据列表
 					List<CircleItemModel> list = JSON.parseArray(jResult.getString("list"), CircleItemModel.class);
+					//测试没圈子时的假数据
+					//List<CircleItemModel> list =new ArrayList<CircleItemModel>();
 					circleAdapter.replaceAll(list);
+					if (list.size()==0) {
+						linearLayout.setVisibility(View.VISIBLE);
+						skip();
+					}else {
+						linearLayout.setVisibility(View.GONE);
+					}
 				}
 
 				if (status == KHConst.STATUS_FAIL) {
@@ -187,11 +204,24 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 				}
 			}
 
+			
 			@Override
 			public void onFailure(HttpException arg0, String arg1, String flag) {
 				super.onFailure(arg0, arg1, flag);
 			}
 		}, null));
+	}
+	private void skip() {
+		// TODO Auto-generated method stub
+		skipTextView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(ChoiceCircleActivity.this, MainTabActivity.class));
+			}
+		});
+		
 	}
 
 	private void publishNews() {
