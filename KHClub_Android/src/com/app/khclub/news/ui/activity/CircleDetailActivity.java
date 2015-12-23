@@ -6,15 +6,23 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +38,7 @@ import com.app.khclub.news.ui.view.ShowQrcodePopupWindow;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.UrlConnectionDownloader;
 
 @SuppressLint("ResourceAsColor")
 public class CircleDetailActivity extends BaseActivityWithTopBar {
@@ -88,9 +97,10 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 	@Override
 	protected void setUpView() {
 		setBarText(getString(R.string.news_circle_detail_title));
-//		ImageView rightBtn = addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view,
-//				R.id.img_btn_right_top);
-//		rightBtn.setImageResource(R.drawable.personal_more);
+		// ImageView rightBtn = addRightImgBtn(R.layout.right_image_button,
+		// R.id.layout_top_btn_root_view,
+		// R.id.img_btn_right_top);
+		// rightBtn.setImageResource(R.drawable.personal_more);
 		if (getIntent().hasExtra(CIRCLEDETAIL)) {
 			circleModel = (CirclePageModel) getIntent().getSerializableExtra(CIRCLEDETAIL);
 			if (circleModel == null) {
@@ -104,7 +114,7 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 	}
 
 	private void initUI() {
-		qrImageView = new ShowQrcodePopupWindow(CircleDetailActivity.this);	
+		qrImageView = new ShowQrcodePopupWindow(CircleDetailActivity.this);
 		imgLoader = ImageLoader.getInstance();
 		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
@@ -126,21 +136,18 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 		// 二维码
 		if (KHConst.ATTACHMENT_ADDR.equals(circleModel.getWxqrCode())) {
 			qrcodeImage.setVisibility(View.GONE);
-		}else {
+		} else {
 			qrcodeImage.setVisibility(View.VISIBLE);
 			imgLoader.displayImage(circleModel.getWxqrCode(), qrcodeImage, options);
-			//qrcodeImage.setTag(circleModel.getWxqrCode());
-			// 设置照片
-			// bitmapUtils.display(imageView, filePath);
-//			ImageLoader.getInstance().displayImage("file://" + circleModel.getWxqrCode(), imageView,
-//					headImageOptions);
+
+			// 点击放大二维码
 			qrcodeImage.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					qrImageView.setQRcode(true);
 					qrImageView.setGroupID(circleModel.getWxqrCode());
-					qrImageView.showPopupWindow(v);
-                      
+					qrImageView.setQRcode(true);
+					qrImageView.showPopupWindow(v, true);
+
 				}
 			});
 		}
@@ -173,6 +180,14 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 			phoneTextView.setText("    " + getString(R.string.personal_none));
 		} else {
 			phoneTextView.setText("    " + circleModel.getPhoneNum());
+			phoneTextView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					phoneClick();
+				}
+			});
 		}
 		// 微信
 		if ("".equals(circleModel.getWxNum())) {
@@ -185,8 +200,59 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 			webTextView.setText("    " + getString(R.string.personal_none));
 		} else {
 			webTextView.setText("    " + circleModel.getCircleUrl());
+			// 调用浏览器打开网页
+			webTextView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+
+					// TODO Auto-generated method stub
+					Intent webIntent = new Intent(Intent.ACTION_VIEW);
+					webIntent.setData(Uri.parse("http://" + circleModel.getCircleUrl()));
+					startActivityWithRight(webIntent);
+					// Log.i("wx", "跳转网页");
+				}
+			});
 		}
 		// 初始化pageView
+
+	}
+
+	private void phoneClick() {
+
+		// 确认dialog
+		Builder nameAlertDialog = new AlertDialog.Builder(this);
+		LinearLayout textViewLayout = (LinearLayout) View.inflate(this, R.layout.dialog_call, null);
+		nameAlertDialog.setInverseBackgroundForced(false);
+		//nameAlertDialog.setView(textViewLayout);
+		final TextView tvphone = (TextView) textViewLayout.findViewById(R.id.call_phone_num);
+		tvphone.setText(circleModel.getPhoneNum());
+		final Dialog dialog = nameAlertDialog.show();
+		dialog.setContentView(textViewLayout);
+//		 Window diaoview= dialog.getWindow();
+//	     WindowManager.LayoutParams params=diaoview.getAttributes();
+//		 params.width=300;
+//		 params.height=160;
+//		 diaoview.setAttributes(params);
+		TextView cancelTextView = (TextView) textViewLayout.findViewById(R.id.tv_phone_alert_dialog_cancel);
+		//取消拨打电话
+		cancelTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		// 确定拨打电话
+		TextView confirmTextView = (TextView) textViewLayout.findViewById(R.id.tv_phone_alert_dialog_confirm);
+		confirmTextView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String phonoNum = tvphone.getText().toString().trim();
+				Intent callIntent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+phonoNum));
+				startActivity(callIntent);
+				dialog.dismiss();
+			}
+		});
 
 	}
 
