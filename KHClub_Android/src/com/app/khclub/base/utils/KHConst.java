@@ -105,6 +105,10 @@ public interface KHConst {
 	public static final String POST_NEW_NOTICE = DOMIN + "/postNewNotice";
 	// 获取公告列表
 	public static final String GET_NOTICE_LIST = DOMIN + "/getNoticeList";	
+	// 发公告评论
+	public static final String SEND_NOTICE_COMMENT = DOMIN + "/sendNoticeComment";
+	// 公告点赞
+	public static final String NOTICE_LIKE_OR_CANCEL = DOMIN + "/noticeLikeOrCancel";		
 	//////////////////////////////////////////////个人信息////////////////////////////////////////////////
 	// 修改个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION = DOMIN

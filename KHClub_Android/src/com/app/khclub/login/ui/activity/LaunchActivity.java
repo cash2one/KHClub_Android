@@ -20,7 +20,7 @@ public class LaunchActivity extends BaseActivity {
 
 	@ViewInject(R.id.vPager)
 	private ViewPager mPager;//页卡内容
-	private static final int sleepTime = 2000;
+	private static final int sleepTime = 2000; 
 	
 	@Override
 	public int setLayoutId() {
