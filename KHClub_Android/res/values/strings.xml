@@ -125,6 +125,8 @@
     <string name="personal_add_friend">Add</string>
     <string name="personal_send_message">Send Message</string>
     <string name="personal_moments">Moments</string>
+    <string name="other_moments">Her Moments</string>
+    <string name="other_circle">Other Circle</string>
     <string name="personal_no_moments">No Moments</string>
     <string name="personal_clear_cache">Clear Cache</string>
     <string name="personal_version">Version</string>
@@ -537,7 +539,6 @@
     <string name="attention_success">Attention Success</string>
     <string name="unattention_success">Unattention Success </string>
     <string name="unattention_fail">Unattention Fail</string>
-    <string name="attention">Attention</string><string name="cover_name_unnull">Cover and Name unble null</string>
-    
-
+    <string name="attention">Attention</string>	<string name="cover_name_unnull">Cover and Name unble null</string>	<string name="confirm_call_phone">Whether to call customer service</string>
+	<string name="sdcard_inexistence">SDCard Inexistence</string> 
 </resources>

@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -100,8 +101,7 @@ public class BigImgLookActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// 隐藏状态栏
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		// 隐藏标题栏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
@@ -128,15 +128,12 @@ public class BigImgLookActivity extends BaseActivity {
 	private void init() {
 		imgLoader = ImageLoader.getInstance();
 		// 显示图片的配置
-		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(android.R.color.black)
-				.showImageOnFail(R.drawable.image_load_fail)
-				.cacheInMemory(true).cacheOnDisk(true)
+		options = new DisplayImageOptions.Builder().showImageOnLoading(android.R.color.black)
+				.showImageOnFail(R.drawable.image_load_fail).cacheInMemory(true).cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 
 		// 创建加载dialog
-		loadingDialog = CustomImageLoadingDialog
-				.createLoadingDialog(BigImgLookActivity.this);
+		loadingDialog = CustomImageLoadingDialog.createLoadingDialog(BigImgLookActivity.this);
 		Intent intent = this.getIntent();
 		if (intent.hasExtra(INTENT_KEY)) {
 			// 传递的是单张图片url
@@ -148,8 +145,7 @@ public class BigImgLookActivity extends BaseActivity {
 			}
 		} else if (intent.hasExtra(INTENT_KEY_IMG_MODEl_LIST)) {
 			// 传递图片model列表
-			List<ImageModel> imgModList = (List<ImageModel>) intent
-					.getSerializableExtra(INTENT_KEY_IMG_MODEl_LIST);
+			List<ImageModel> imgModList = (List<ImageModel>) intent.getSerializableExtra(INTENT_KEY_IMG_MODEl_LIST);
 			for (int index = 0; index < imgModList.size(); index++) {
 				imageUrlList.add(imgModList.get(index).getURL());
 				imageSubUrlList.add(imgModList.get(index).getSubURL());
@@ -161,8 +157,7 @@ public class BigImgLookActivity extends BaseActivity {
 			}
 		} else if (intent.hasExtra(INTENT_KEY_IMG_LIST)) {
 			// 传递图片地址list
-			imageUrlList = (List<String>) intent
-					.getSerializableExtra(INTENT_KEY_IMG_LIST);
+			imageUrlList = (List<String>) intent.getSerializableExtra(INTENT_KEY_IMG_LIST);
 			LogUtils.i(imageUrlList.toString(), 1);
 			imageSubUrlList = imageUrlList;
 			if (intent.hasExtra(INTENT_KEY_INDEX)) {
@@ -191,8 +186,7 @@ public class BigImgLookActivity extends BaseActivity {
 				}
 				tipList.add(dotImage);
 				LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-						new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT,
-								LayoutParams.WRAP_CONTENT));
+						new ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 				params.leftMargin = 5;
 				params.rightMargin = 5;
 				tipsBoxLayout.addView(dotImage, params);
@@ -202,7 +196,7 @@ public class BigImgLookActivity extends BaseActivity {
 
 	/**
 	 * viewpage初始化
-	 * */
+	 */
 	private void createPageImageView() {
 		for (int index = 0; index < imageUrlList.size(); index++) {
 			TouchImageView tcView = new TouchImageView(this);
@@ -234,7 +228,7 @@ public class BigImgLookActivity extends BaseActivity {
 
 	/**
 	 * 初始化PagerAdapter
-	 * */
+	 */
 	@SuppressLint("ClickableViewAccessibility")
 	private void setViewPageAdpter() {
 
@@ -246,7 +240,7 @@ public class BigImgLookActivity extends BaseActivity {
 
 	/**
 	 * 长按操作
-	 * */
+	 */
 	private void imageLongClick() {
 		List<String> menuList = new ArrayList<String>();
 		menuList.add(getString(R.string.save_picture));
@@ -274,39 +268,40 @@ public class BigImgLookActivity extends BaseActivity {
 
 	/**
 	 * 下载图片
-	 * */
+	 */
 	private void download(String Url, final String imageName) {
 		HttpUtils http = new HttpUtils();
-		File appDir = new File(Environment.getExternalStorageDirectory(),
-				"KHClub");
-		http.download(Url, appDir + "/" + imageName, true, true,
-				new RequestCallBack<File>() {
-					@Override
-					public void onStart() {
-					}
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			Log.i("wx",Environment.getExternalStorageState());
+			File appDir = new File(Environment.getExternalStorageDirectory(), "KHClub");
+			http.download(Url, appDir + "/" + imageName, true, true, new RequestCallBack<File>() {
+				@Override
+				public void onStart() {
+				}
 
-					@Override
-					public void onLoading(long total, long current,
-							boolean isUploading) {
-					}
+				@Override
+				public void onLoading(long total, long current, boolean isUploading) {
+				}
 
-					@Override
-					public void onFailure(HttpException error, String msg) {
-						ToastUtil.show(BigImgLookActivity.this, msg);
-					}
+				@Override
+				public void onFailure(HttpException error, String msg) {
+					ToastUtil.show(BigImgLookActivity.this, msg);
+					Log.i("wx",msg);
+				}
 
-					@Override
-					public void onSuccess(ResponseInfo<File> responseInfo) {
-						ToastUtil.show(BigImgLookActivity.this,
-								getString(R.string.save_picture_as)
-										+ responseInfo.result.getPath());
-						// 通知图库更新
-						sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
-								Uri.parse("file://"
-										+ Environment
-												.getExternalStorageDirectory())));
-					}
-				});
+				@Override
+				public void onSuccess(ResponseInfo<File> responseInfo) {
+					ToastUtil.show(BigImgLookActivity.this,
+							getString(R.string.save_picture_as) + responseInfo.result.getPath());
+					// 通知图库更新
+					sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
+							Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+				}
+			});
+		}
+		else{
+			ToastUtil.show(this,R.string.sdcard_inexistence);
+		}
 	}
 
 	/**
@@ -336,11 +331,9 @@ public class BigImgLookActivity extends BaseActivity {
 		}
 
 		@Override
-		public Object instantiateItem(final ViewGroup container,
-				final int position) {
+		public Object instantiateItem(final ViewGroup container, final int position) {
 			if (position == currentPage) {
-				imgLoader.loadImage(imageUrlList.get(currentPage), options,
-						loadingListener);
+				imgLoader.loadImage(imageUrlList.get(currentPage), options, loadingListener);
 			}
 			container.addView(mList.get(position));
 			return mList.get(position);
@@ -365,13 +358,10 @@ public class BigImgLookActivity extends BaseActivity {
 
 		@Override
 		public void onPageSelected(int position) {
-			tipList.get(currentPage).setBackgroundResource(
-					R.drawable.cursor_point_not_selected);
-			tipList.get(position).setBackgroundResource(
-					R.drawable.cursor_point_selected);
+			tipList.get(currentPage).setBackgroundResource(R.drawable.cursor_point_not_selected);
+			tipList.get(position).setBackgroundResource(R.drawable.cursor_point_selected);
 			currentPage = position;
-			imgLoader.loadImage(imageUrlList.get(currentPage), options,
-					loadingListener);
+			imgLoader.loadImage(imageUrlList.get(currentPage), options, loadingListener);
 		}
 	}
 
@@ -397,16 +387,13 @@ public class BigImgLookActivity extends BaseActivity {
 		}
 
 		@Override
-		public void onLoadingFailed(String imageUri, View view,
-				FailReason failReason) {
+		public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 			loadingDialog.dismiss();
-			imageViewList.get(currentPage).setImageResource(
-					R.drawable.image_load_fail);
+			imageViewList.get(currentPage).setImageResource(R.drawable.image_load_fail);
 		}
 
 		@Override
-		public void onLoadingComplete(String imageUri, View view,
-				Bitmap loadedImage) {
+		public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 			loadingDialog.dismiss();
 			imageViewList.get(currentPage).setImageBitmap(loadedImage);
 		}

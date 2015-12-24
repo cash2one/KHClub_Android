@@ -48,6 +48,8 @@ public class CircleFragment extends BaseFragment {
 	private static final String CIRCLE_ISFOLLOW= "isFollow";
 	private static final String UNFOLLOW_LIST = "unfollowList";
 	private List<CircleItemModel> followList, unfollowList,dataList;
+     //临时数组
+	private List<CircleItemModel> list;
 	//private String[] data={"1}
 	//private List<CircleItemModel> dataList=new ArrayList<CircleItemModel>();
 	// private boolean ISNOTATTENTION=true;
@@ -302,11 +304,16 @@ public class CircleFragment extends BaseFragment {
 					String followJsonArray = jResult.getString(FOLLOW_LIST);
 					followList = JSON.parseArray(followJsonArray, CircleItemModel.class);
 					unfollowList = JSON.parseArray(unfollowJsonArray, CircleItemModel.class);
+
+					dataList=followList;
+					dataList.addAll(unfollowList);
+
 					//临时用
 					List<CircleItemModel> tmpList = new ArrayList<CircleItemModel>();
 					tmpList.addAll(followList);
 					tmpList.addAll(unfollowList);
 					dataList = tmpList;
+
 					// 如果是下拉刷新
 					if (isPullDowm) {
 						circleAdapter.replaceAll(dataList);

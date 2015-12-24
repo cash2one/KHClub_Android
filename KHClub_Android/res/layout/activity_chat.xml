@@ -24,7 +24,7 @@
             android:textSize="20sp" />
 
         <RelativeLayout
-            android:id="@+id/container_remove"
+            android:id="@+id/container_resume"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
@@ -38,7 +38,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="9dp"
                 android:scaleType="centerInside"
-                android:src="@drawable/mm_title_remove" />
+                android:src="@drawable/icon_people_white" />
         </RelativeLayout>
 
         <RelativeLayout

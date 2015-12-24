@@ -88,6 +88,7 @@ import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
+import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.easemob.EMChatRoomChangeListener;
 import com.easemob.EMError;
 import com.easemob.EMEventListener;
@@ -410,7 +411,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 		} else {
 			// 群聊
 			findViewById(R.id.container_to_group).setVisibility(View.VISIBLE);
-			findViewById(R.id.container_remove).setVisibility(View.GONE);
+			findViewById(R.id.container_resume).setVisibility(View.GONE);
 //			findViewById(R.id.container_voice_call).setVisibility(View.GONE);
 //			findViewById(R.id.container_video_call).setVisibility(View.GONE);
 			toChatUsername = getIntent().getStringExtra("groupId");
@@ -1288,9 +1289,16 @@ public class ChatActivity extends BaseActivity implements OnClickListener, EMEve
 	 * @param view
 	 */
 	public void emptyHistory(View view) {
-		String st5 = getResources().getString(R.string.Whether_to_empty_all_chats);
-		startActivityForResult(new Intent(this, AlertDialog.class).putExtra("titleIsCancel", true).putExtra("msg", st5)
-				.putExtra("cancel", true), REQUEST_CODE_EMPTY_HISTORY);
+//		String st5 = getResources().getString(R.string.Whether_to_empty_all_chats);
+//		startActivityForResult(new Intent(this, AlertDialog.class).putExtra("titleIsCancel", true).putExtra("msg", st5)
+//				.putExtra("cancel", true), REQUEST_CODE_EMPTY_HISTORY);
+		String userid=getIntent().getStringExtra("user_id");
+		//Log.i("wx", userid.trim());
+		Intent intent = new Intent(ChatActivity.this, OtherPersonalActivity.class);
+		intent.putExtra("username", toChatUsername);
+		intent.putExtra(OtherPersonalActivity.INTENT_KEY,Integer.parseInt(userid.trim()));
+        startActivity(intent);
+	    overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
 	}
 
 	/**
