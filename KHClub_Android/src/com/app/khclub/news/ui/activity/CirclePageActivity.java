@@ -795,6 +795,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		// 父布局监听
 		helper.setOnClickListener(R.id.miv_main_news_images, listener);
 		helper.setOnClickListener(R.id.layout_news_body_rootview, listener);
+		helper.setText(R.id.txt_main_news_publish_time, TimeHandle.getShowTimeFormat(bodyData.getSendTime(), mContext));
 	}
 
 	/**
@@ -803,7 +804,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	private void setOperateItemView(HelloHaBaseAdapterHelper helper, NewsItemModel item) {
 		OperateItem opData = (OperateItem) item;
 		// ///////////////// 绑定时间///////////////////////////////////////
-		helper.setText(R.id.txt_main_news_publish_time, TimeHandle.getShowTimeFormat(opData.getSendTime(), mContext));
+		//helper.setText(R.id.txt_main_news_publish_time, TimeHandle.getShowTimeFormat(opData.getSendTime(), mContext));
 
 		// /////////////////// 绑定评论/////////////////////////////////////////
 		helper.setText(R.id.btn_mian_reply, String.valueOf(opData.getCommentCount()));

@@ -117,6 +117,9 @@
         <activity
             android:name="com.app.khclub.personal.ui.activity.MyCircleActivity">
         </activity>
+        <activity
+            android:name="com.app.khclub.personal.ui.activity.OtherCircleActivity">
+        </activity>
         <activity android:name="com.app.khclub.personal.ui.activity.CardActivity" >
         </activity>
         <activity

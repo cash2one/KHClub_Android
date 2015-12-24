@@ -55,6 +55,7 @@ public class NewsToItemData {
 			item.setImageNewsList(news.getImageNewsList());
 			item.setLocation(news.getLocation());
 			item.setCircles(news.getCircles());
+			item.setSendTime(news.getSendTime());
 			
 		} catch (Exception e) {
 			LogUtils.e("createBody error.");
@@ -69,7 +70,7 @@ public class NewsToItemData {
 			item.setItemType(Type);
 			item.setNewsID(news.getNewsID());
 			//
-			item.setSendTime(news.getSendTime());
+			
 			item.setLikeCount(news.getLikeQuantity());
 			item.setIsLike(news.getIsLike());
 			item.setCommentCount(String.valueOf(news.getCommentQuantity()));

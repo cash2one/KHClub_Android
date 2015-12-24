@@ -8,7 +8,7 @@ import com.app.khclub.base.utils.LogUtils;
 
 /**
  * 将每条动态拆分成不同的几个模块达到滑动优化的效果
- * */
+ */
 public class NewsItemModel {
 
 	// 动态item的种类数
@@ -29,7 +29,7 @@ public class NewsItemModel {
 
 	/**
 	 * 设置item的类型
-	 * */
+	 */
 	public void setItemType(int type) {
 		switch (type) {
 		case 0:
@@ -54,7 +54,7 @@ public class NewsItemModel {
 
 	/**
 	 * 动态的头部
-	 * */
+	 */
 	public static class TitleItem extends NewsItemModel {
 
 		// 用户的id
@@ -121,7 +121,7 @@ public class NewsItemModel {
 
 	/**
 	 * 动态的内容主体
-	 * */
+	 */
 	public static class BodyItem extends NewsItemModel {
 
 		// 动态的文字内容
@@ -131,7 +131,7 @@ public class NewsItemModel {
 		// 发布的位置
 		private String location;
 		// 发布的圈子
-		private String circles;		
+		private String circles;
 
 		public String getNewsContent() {
 			return newsContent;
@@ -149,6 +149,17 @@ public class NewsItemModel {
 			this.newsImageList = imageList;
 		}
 
+		// 发布的时间
+		private String sendTime;
+        
+		public String getSendTime() {
+			return sendTime;
+		}
+
+		public void setSendTime(String sendTime) {
+			this.sendTime = sendTime;
+		}
+
 		public String getLocation() {
 			return location;
 		}
@@ -164,12 +175,12 @@ public class NewsItemModel {
 		public void setCircles(String circles) {
 			this.circles = circles;
 		}
-		
+
 	}
 
 	/**
 	 * 动态的操作部分
-	 * */
+	 */
 	public static class OperateItem extends NewsItemModel {
 
 		// 是否已赞
@@ -179,7 +190,7 @@ public class NewsItemModel {
 		// 评论数
 		private int commentCount;
 		// 发布的时间
-		private String sendTime;
+//		private String sendTime;
 
 		public boolean getIsLike() {
 			return isLike;
@@ -197,13 +208,13 @@ public class NewsItemModel {
 			this.isLike = isLike;
 		}
 
-		public String getSendTime() {
-			return sendTime;
-		}
-
-		public void setSendTime(String sendTime) {
-			this.sendTime = sendTime;
-		}
+//		public String getSendTime() {
+//			return sendTime;
+//		}
+//
+//		public void setSendTime(String sendTime) {
+//			this.sendTime = sendTime;
+//		}
 
 		public int getCommentCount() {
 			return commentCount;

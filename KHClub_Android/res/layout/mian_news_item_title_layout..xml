@@ -8,8 +8,8 @@
     android:background="@color/main_deep_white"
     android:clickable="true"
     android:orientation="horizontal"
-    android:paddingLeft="@dimen/news_item_margins_left"
-    android:paddingRight="@dimen/news_item_margins_right"
+    android:paddingLeft="@dimen/news_item_margins_top"
+    android:paddingRight="@dimen/news_item_margins_top"
     android:paddingTop="@dimen/news_item_margins_top" >
 
     <!-- 用户头像 -->
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/item_interior_space_medium" >
+        android:paddingLeft="@dimen/item_interior_space_large" >
 
         <TextView
             android:id="@+id/txt_main_news_user_name"
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="@string/personal_job"
-                android:textColor="@color/main_light_black"
+                android:textColor="#949494"
                 android:textSize="@dimen/font_size_tiny" />
 
             <TextView

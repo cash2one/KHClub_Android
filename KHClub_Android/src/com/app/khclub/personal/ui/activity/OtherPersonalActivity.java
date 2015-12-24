@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -67,6 +68,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class OtherPersonalActivity extends BaseActivityWithTopBar {
 
+	public static final String USERID = "userid";
 	public final static String INTENT_KEY = "uid";
 	// 用于添加好友成功后进入详情
 	public final static String INTENT_FRIEND_KEY = "isFriend";
@@ -167,7 +169,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	// imUser
 	private User imUser;
 
-	@OnClick({ R.id.image_cover_layout, R.id.add_send_btn, R.id.text_collect_btn, R.id.card_layout, R.id.share_btn })
+	@OnClick({ R.id.image_cover_layout, R.id.add_send_btn, R.id.text_collect_btn, R.id.card_layout, R.id.share_btn,
+			R.id.image_hercircle_layout })
 	private void clickEvent(View view) {
 		switch (view.getId()) {
 		case R.id.image_cover_layout:
@@ -205,6 +208,12 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		case R.id.share_btn:
 			// 分享名片
 			shareMenu.showPopupWindow(titleBar);
+			break;
+		// 跳转至它圈子
+		case R.id.image_hercircle_layout:
+			Intent herCircleIntent = new Intent(OtherPersonalActivity.this, OtherCircleActivity.class);
+			herCircleIntent.putExtra(USERID, uid);
+			startActivityWithRight(herCircleIntent);
 			break;
 		default:
 			break;
@@ -638,11 +647,11 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			public void onSuccess(JSONObject jsonResponse, String flag) {
 				super.onSuccess(jsonResponse, flag);
 				int status = jsonResponse.getInteger(KHConst.HTTP_STATUS);
-				
+
 				if (status == KHConst.STATUS_SUCCESS) {
 					// 数据处理
 					JSONArray array = jsonResponse.getJSONArray(KHConst.HTTP_RESULT);
-					Log.i("wx", status+"");
+					Log.i("wx", status + "");
 					fillData(array);
 				}
 
@@ -663,7 +672,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		for (int i = 0; i < array.size(); i++) {
 			JSONObject object = (JSONObject) array.get(i);
 			herCircleImageList.add(object.getString("circle_cover_sub_image"));
-				Log.i("wx", i+"");
+			Log.i("wx", i + "");
 		}
 
 		// 最多3
@@ -675,14 +684,14 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		for (ImageView imageView : herCircleList) {
 			imageView.setVisibility(View.GONE);
 		}
-             Log.i("wx", size+"");
+		Log.i("wx", size + "");
 		for (int i = 0; i < size; i++) {
 			ImageView imageView = herCircleList.get(i);
 			String path = herCircleImageList.get(i);
 			// 设置图片
 			if (null != path && path.length() > 0) {
 				ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR + path, imageView, imageOptions);
-//				Log.i("wx", KHConst.ATTACHMENT_ADDR + path);
+				// Log.i("wx", KHConst.ATTACHMENT_ADDR + path);
 			} else {
 				imageView.setImageResource(R.drawable.loading_default);
 			}
@@ -850,6 +859,10 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		et_search.setSelection(et_search.getText().length());
 
 		final Dialog dialog = nameAlertDialog.show();
+//		LayoutParams params = dialog.getWindow().getAttributes();
+//		params.height = params.MATCH_PARENT;
+//		params.width = params.MATCH_PARENT;
+//		dialog.getWindow().setAttributes(params);
 		TextView cancelTextView = (TextView) textViewLayout.findViewById(R.id.tv_custom_alert_dialog_cancel);
 		cancelTextView.setOnClickListener(new View.OnClickListener() {
 			@Override

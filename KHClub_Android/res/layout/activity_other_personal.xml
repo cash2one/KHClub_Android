@@ -216,7 +216,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/image_mycircle_layout"
+                android:id="@+id/image_hercircle_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
@@ -225,7 +225,7 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="55dp"
                     android:layout_marginBottom="5dip"
                     android:layout_marginLeft="10dip"
@@ -240,7 +240,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginBottom="5dip"
-                    android:layout_marginLeft="20dp"
+                  
                     android:layout_marginTop="5dip"
                     android:background="@color/main_blue"
                     android:scaleType="centerCrop"
