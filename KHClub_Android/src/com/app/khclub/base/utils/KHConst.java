@@ -2,7 +2,7 @@ package com.app.khclub.base.utils;
 
 public interface KHConst {
 
-	// 正式环境 120.25.213.171
+	// 正式环境 120.25.213.171 www.pinweihuanqiu.com
 	// 测试环境 114.215.95.23
 	public static final String DOMIN = "http://114.215.95.23/khclub_php/index.php/Home/MobileApi";
 	public static final String ATTACHMENT_ADDR = "http://114.215.95.23/khclub_php/Uploads/";
@@ -101,6 +101,10 @@ public interface KHConst {
 	public static final String GET_CIRCLE_MEMBERS = DOMIN + "/getCircleMembers";
 	// 我关注的圈子列表
 	public static final String GET_MY_FOLLOW_CIRCLE_LIST = DOMIN + "/getMyFollowCircleList";
+	// 发布圈子公告
+	public static final String POST_NEW_NOTICE = DOMIN + "/postNewNotice";
+	// 获取公告列表
+	public static final String GET_NOTICE_LIST = DOMIN + "/getNoticeList";	
 	//////////////////////////////////////////////个人信息////////////////////////////////////////////////
 	// 修改个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION = DOMIN
