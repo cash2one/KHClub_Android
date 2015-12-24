@@ -85,7 +85,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class NewsDetailActivity extends BaseActivityWithTopBar {
 
-	// 与评论或点赞数据相关的key      1
+	// 与评论或点赞数据相关的key 1
 	private final static String USER_HEAD = "user_head";
 	private final static String USER_NAME = "user_name";
 	private final static String USER_JOB = "USER_JOB";
@@ -155,7 +155,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 	/**
 	 * 事件监听函数
-	 * */
+	 */
 	@OnClick(value = { R.id.base_ll_right_btns, R.id.btn_comment_send })
 	private void clickEvent(View view) {
 		switch (view.getId()) {
@@ -187,14 +187,12 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		commentEditText.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence str, int start, int before,
-					int count) {
+			public void onTextChanged(CharSequence str, int start, int before, int count) {
 				commentContentStr = str.toString().trim();
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 			}
 
 			@Override
@@ -211,8 +209,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 						if (KeyboardLayout.KEYBOARD_STATE_HIDE == state) {
 							// 评论框内容为空并且，软键盘隐藏时
 							if (commentContentStr.length() <= 0) {
-								commentEditText
-										.setHint(R.string.news_enter_comment_content);
+								commentEditText.setHint(R.string.news_enter_comment_content);
 								isPublishComment = true;
 							}
 						}
@@ -224,14 +221,12 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		if (null != intent) {
 			if (intent.hasExtra(NewsConstants.INTENT_KEY_NEWS_OBJ)) {
 				// 如果传递过来的是动态的对象
-				currentNews = (NewsModel) intent
-						.getSerializableExtra(NewsConstants.INTENT_KEY_NEWS_OBJ);
+				currentNews = (NewsModel) intent.getSerializableExtra(NewsConstants.INTENT_KEY_NEWS_OBJ);
 				newsContentDataSet(currentNews);
 			} else if (intent.hasExtra(NewsConstants.INTENT_KEY_NEWS_ID)) {
 				// 如果传递过来的是动态的id
 				currentNews = new NewsModel();
-				currentNews.setNewsID(intent
-						.getStringExtra(NewsConstants.INTENT_KEY_NEWS_ID));
+				currentNews.setNewsID(intent.getStringExtra(NewsConstants.INTENT_KEY_NEWS_ID));
 			} else {
 				LogUtils.e("未传递任何动态信息到详情页面.");
 			}
@@ -256,10 +251,10 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
 					sp.setText("KHClub");
 				}
-				if (null != news.getImageNewsList() && news.getImageNewsList().size()>0) {
-					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());	
-				}else {
-					sp.setImageUrl(KHConst.ROOT_IMG);	
+				if (null != news.getImageNewsList() && news.getImageNewsList().size() > 0) {
+					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());
+				} else {
+					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
 				Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
 				weibo.setPlatformActionListener(platformActionListener); // 设置分享事件回调
@@ -283,10 +278,10 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
 					sp.setText("KHClub");
 				}
-				if (null != news.getImageNewsList() && news.getImageNewsList().size()>0) {
-					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());	
-				}else {
-					sp.setImageUrl(KHConst.ROOT_IMG);	
+				if (null != news.getImageNewsList() && news.getImageNewsList().size() > 0) {
+					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());
+				} else {
+					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
 				Platform wexin = ShareSDK.getPlatform(Wechat.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
@@ -296,7 +291,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void shareToQzoneClick(NewsModel news) {
-				LogUtils.i(""+news.getUserHeadSubImage(), 1);
+				LogUtils.i("" + news.getUserHeadSubImage(), 1);
 				// 分享到qq空间
 				ShareParams sp = new ShareParams();
 				sp.setTitle(news.getUserName());
@@ -308,10 +303,10 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
 					sp.setText("KHClub");
 				}
-				if (null != news.getImageNewsList() && news.getImageNewsList().size()>0) {
-					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());	
-				}else {
-					sp.setImageUrl(KHConst.ROOT_IMG);	
+				if (null != news.getImageNewsList() && news.getImageNewsList().size() > 0) {
+					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());
+				} else {
+					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
 
 				Platform qq = ShareSDK.getPlatform(QZone.NAME);
@@ -335,10 +330,10 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				if (news.getNewsContent() == null || news.getNewsContent().length() < 1) {
 					sp.setText("KHClub");
 				}
-				if (null != news.getImageNewsList() && news.getImageNewsList().size()>0) {
-					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());	
-				}else {
-					sp.setImageUrl(KHConst.ROOT_IMG);	
+				if (null != news.getImageNewsList() && news.getImageNewsList().size() > 0) {
+					sp.setImageUrl(news.getImageNewsList().get(0).getSubURL());
+				} else {
+					sp.setImageUrl(KHConst.ROOT_IMG);
 				}
 				Platform wexin = ShareSDK.getPlatform(WechatMoments.NAME);
 				wexin.setPlatformActionListener(platformActionListener); // 设置分享事件回调
@@ -353,14 +348,12 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			}
 		});
 		// 从网络上更新动态数据
-		getNewsDetailData(
-				String.valueOf(UserManager.getInstance().getUser().getUid()),
-				currentNews.getNewsID());
+		getNewsDetailData(String.valueOf(UserManager.getInstance().getUser().getUid()), currentNews.getNewsID());
 	}
 
 	/**
 	 * 数据的初始化
-	 * */
+	 */
 	private void init() {
 		setBarText(getResources().getString(R.string.news_detail_title));
 		commentDataList = new ArrayList<CommentModel>();
@@ -371,32 +364,29 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		// 图片加载初始化
 		imgLoader = ImageLoader.getInstance();
 		// 显示图片的配置
-		options = new DisplayImageOptions.Builder()
-				.showImageOnLoading(R.color.main_light_white)
-				.showImageOnFail(R.drawable.icon).cacheInMemory(true)
-				.cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
+		options = new DisplayImageOptions.Builder().showImageOnLoading(R.color.main_light_white)
+				.showImageOnFail(R.drawable.icon).cacheInMemory(true).cacheOnDisk(true)
+				.bitmapConfig(Bitmap.Config.RGB_565).build();
 	}
 
 	/**
 	 * 设置键盘状态打开或收起
-	 * */
+	 */
 	private void setKeyboardStatu(boolean state) {
 		if (state) {
-			InputMethodManager imm = (InputMethodManager) commentEditText
-					.getContext()
+			InputMethodManager imm = (InputMethodManager) commentEditText.getContext()
 					.getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
 		} else {
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(NewsDetailActivity.this
-					.getCurrentFocus().getWindowToken(),
+			imm.hideSoftInputFromWindow(NewsDetailActivity.this.getCurrentFocus().getWindowToken(),
 					InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 	}
 
 	/**
 	 * 动态操作设置
-	 * */
+	 */
 	private void newsOperateSet() {
 		newsOPerate = new NewsOperate(NewsDetailActivity.this);
 		newsOPerate.setOperateListener(new OperateCallBack() {
@@ -408,9 +398,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					break;
 
 				case NewsOperate.OP_Type_Add_Comment:
-					showLoading(
-							getResources().getString(
-									R.string.news_publish_commenting), true);
+					showLoading(getResources().getString(R.string.news_publish_commenting), true);
 					break;
 
 				case NewsOperate.OP_Type_Delete_Comment:
@@ -422,20 +410,17 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			}
 
 			@Override
-			public void onFinish(int operateType, boolean isSucceed,
-					Object resultValue) {
+			public void onFinish(int operateType, boolean isSucceed, Object resultValue) {
 				actionType = NewsConstants.OPERATE_UPDATE;
 				switch (operateType) {
 				case NewsOperate.OP_Type_Delete_News:
 					if (isSucceed) {
-						ToastUtil.show(NewsDetailActivity.this, getResources()
-								.getString(R.string.news_delete_success));
+						ToastUtil.show(NewsDetailActivity.this, getResources().getString(R.string.news_delete_success));
 						// 返回上一页
 						actionType = NewsConstants.OPERATE_DELETET;
 						finishWithRight();
 					} else {
-						ToastUtil.show(NewsDetailActivity.this, getResources()
-								.getString(R.string.news_delete_fail));
+						ToastUtil.show(NewsDetailActivity.this, getResources().getString(R.string.news_delete_fail));
 					}
 					break;
 
@@ -446,35 +431,26 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 							CommentModel resultmModel = (CommentModel) resultValue;
 							// 返回来的评论对象
 							Map<String, String> tempMap = new HashMap<String, String>();
-							tempMap.put(USER_HEAD,
-									resultmModel.getHeadSubImage());
-							tempMap.put(USER_NAME,
-									resultmModel.getPublishName());
+							tempMap.put(USER_HEAD, resultmModel.getHeadSubImage());
+							tempMap.put(USER_NAME, resultmModel.getPublishName());
 							tempMap.put(PUBLISH_TIME, resultmModel.getAddDate());
 							tempMap.put(USER_JOB, resultmModel.getUserJob());
-							tempMap.put(COMMENT_CONTENT,
-									resultmModel.getCommentContent());
-							tempMap.put(TARGET_NAME,
-									resultmModel.getTargetUserName());
-							tempMap.put(TARGET_ID,
-									resultmModel.getTargetUserId());
+							tempMap.put(COMMENT_CONTENT, resultmModel.getCommentContent());
+							tempMap.put(TARGET_NAME, resultmModel.getTargetUserName());
+							tempMap.put(TARGET_ID, resultmModel.getTargetUserId());
 
 							// 更新数据
 							detailAdapter.add(tempMap);
 							commentDataList.add(resultmModel);
 							// 滚动到底部
-							newsDetailListView.getRefreshableView()
-									.setSelection(detailAdapter.getCount() - 1);
+							newsDetailListView.getRefreshableView().setSelection(detailAdapter.getCount() - 1);
 							// 更新数据
-							currentNews.setCommentQuantity(String
-									.valueOf(currentNews.getCommentQuantity() + 1));
-							newsCommentCount.setText(getResources().getString(
-									R.string.news_comment)
-									+ " " + currentNews.getCommentQuantity());
+							currentNews.setCommentQuantity(String.valueOf(currentNews.getCommentQuantity() + 1));
+							newsCommentCount.setText(getResources().getString(R.string.news_comment) + " "
+									+ currentNews.getCommentQuantity());
 						}
 					} else {
-						ToastUtil.show(NewsDetailActivity.this, getResources()
-								.getString(R.string.news_publish_fail));
+						ToastUtil.show(NewsDetailActivity.this, getResources().getString(R.string.news_publish_fail));
 					}
 					hideLoading();
 					break;
@@ -483,16 +459,12 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					if (isSucceed) {
 						// 删除评论
 						detailAdapter.remove(currentOperateIndex);
-						ToastUtil.show(NewsDetailActivity.this, getResources()
-								.getString(R.string.news_delete_success));
-						currentNews.setCommentQuantity(String
-								.valueOf(currentNews.getCommentQuantity() - 1));
-						newsCommentCount.setText(getResources().getString(
-								R.string.news_comment)
-								+ " " + currentNews.getCommentQuantity());
+						ToastUtil.show(NewsDetailActivity.this, getResources().getString(R.string.news_delete_success));
+						currentNews.setCommentQuantity(String.valueOf(currentNews.getCommentQuantity() - 1));
+						newsCommentCount.setText(getResources().getString(R.string.news_comment) + " "
+								+ currentNews.getCommentQuantity());
 					} else {
-						ToastUtil.show(NewsDetailActivity.this, getResources()
-								.getString(R.string.news_delete_fail));
+						ToastUtil.show(NewsDetailActivity.this, getResources().getString(R.string.news_delete_fail));
 					}
 					break;
 
@@ -505,41 +477,27 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 	/**
 	 * listview的head的初始化
-	 * */
+	 */
 	private void listViewHeadInit() {
 		// 添加顶部布局与初始化事件
-		contenteader = View.inflate(NewsDetailActivity.this,
-				R.layout.news_detail_content_layout, null);
+		contenteader = View.inflate(NewsDetailActivity.this, R.layout.news_detail_content_layout, null);
 		newsDetailListView.getRefreshableView().addHeaderView(contenteader);
 		// 获取控件
-		newsUserHeadImgView = (ImageView) contenteader
-				.findViewById(R.id.img_news_detail_user_head);
-		newsUserName = (TextView) contenteader
-				.findViewById(R.id.txt_news_detail_user_name);
-		newsUserJob = (TextView) contenteader
-				.findViewById(R.id.txt_news_detail_user_office);
-		newsUserCompany = (TextView) contenteader
-				.findViewById(R.id.txt_news_detail_user_company);
-		newsContent = (TextView) contenteader
-				.findViewById(R.id.txt_news_detail_content);
-		newsPictures = (MultiImageView) contenteader
-				.findViewById(R.id.miv_news_detail_images);
-		newsLocation = (TextView) contenteader
-				.findViewById(R.id.txt_news_detail_location);
-		newsCircles = (TextView) contenteader
-				.findViewById(R.id.txt_main_circles);
-		newsPublishTime = (TextView) contenteader
-				.findViewById(R.id.txt_news_detail_publish_time);
-		newsShareBtn = (ImageView) contenteader
-				.findViewById(R.id.btn_news_detail_share);
-		newsLikeBtn = (ImageView) contenteader
-				.findViewById(R.id.btn_news_detail_like);
-		newsCommentCount = (TextView) contenteader
-				.findViewById(R.id.txt_news_detail_comment_count);
-		newsLikeCount = (TextView) contenteader
-				.findViewById(R.id.txt_news_detail_like_count);
-		likeControl = (LikeImageListView) contenteader
-				.findViewById(R.id.control_news_detail_like_listview);
+		newsUserHeadImgView = (ImageView) contenteader.findViewById(R.id.img_news_detail_user_head);
+		newsUserName = (TextView) contenteader.findViewById(R.id.txt_news_detail_user_name);
+		newsUserJob = (TextView) contenteader.findViewById(R.id.txt_news_detail_user_office);
+		newsUserCompany = (TextView) contenteader.findViewById(R.id.txt_news_detail_user_company);
+		newsContent = (TextView) contenteader.findViewById(R.id.txt_news_detail_content);
+		newsPictures = (MultiImageView) contenteader.findViewById(R.id.miv_news_detail_images);
+		newsLocation = (TextView) contenteader.findViewById(R.id.txt_news_detail_location);
+		newsCircles = (TextView) contenteader.findViewById(R.id.txt_main_circles);
+		newsCircleshead = (TextView) contenteader.findViewById(R.id.txt_main_circles_head);
+		newsPublishTime = (TextView) contenteader.findViewById(R.id.txt_news_detail_publish_time);
+		newsShareBtn = (ImageView) contenteader.findViewById(R.id.btn_news_detail_share);
+		newsLikeBtn = (ImageView) contenteader.findViewById(R.id.btn_news_detail_like);
+		newsCommentCount = (TextView) contenteader.findViewById(R.id.txt_news_detail_comment_count);
+		newsLikeCount = (TextView) contenteader.findViewById(R.id.txt_news_detail_like_count);
+		likeControl = (LikeImageListView) contenteader.findViewById(R.id.control_news_detail_like_listview);
 
 		// 点击头像
 		newsUserHeadImgView.setOnClickListener(new OnClickListener() {
@@ -580,17 +538,12 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			@Override
 			public void onClick(View arg0) {
 				showCommentData();
-				Drawable drawable = getResources().getDrawable(
-						R.drawable.comment_list_flag);
-				newsCommentCount.setCompoundDrawablesWithIntrinsicBounds(null,
-						null, null, drawable);
-				newsLikeCount.setCompoundDrawablesWithIntrinsicBounds(null,
-						null, null, null);
+				Drawable drawable = getResources().getDrawable(R.drawable.comment_list_flag);
+				newsCommentCount.setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawable);
+				newsLikeCount.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 				// 设置字体颜色
-				newsCommentCount.setTextColor(getResources().getColor(
-						R.color.main_deep_black));
-				newsLikeCount.setTextColor(getResources().getColor(
-						R.color.main_light_black));
+				newsCommentCount.setTextColor(getResources().getColor(R.color.main_deep_black));
+				newsLikeCount.setTextColor(getResources().getColor(R.color.main_light_black));
 			}
 		});
 		// 点击查看所有点赞的人
@@ -599,17 +552,12 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			@Override
 			public void onClick(View arg0) {
 				showLikeData();
-				Drawable drawable = getResources().getDrawable(
-						R.drawable.comment_list_flag);
-				newsLikeCount.setCompoundDrawablesWithIntrinsicBounds(null,
-						null, null, drawable);
-				newsCommentCount.setCompoundDrawablesWithIntrinsicBounds(null,
-						null, null, null);
+				Drawable drawable = getResources().getDrawable(R.drawable.comment_list_flag);
+				newsLikeCount.setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawable);
+				newsCommentCount.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 				// 设置字体颜色
-				newsCommentCount.setTextColor(getResources().getColor(
-						R.color.main_light_black));
-				newsLikeCount.setTextColor(getResources().getColor(
-						R.color.main_deep_black));
+				newsCommentCount.setTextColor(getResources().getColor(R.color.main_light_black));
+				newsLikeCount.setTextColor(getResources().getColor(R.color.main_deep_black));
 			}
 		});
 
@@ -625,10 +573,9 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 	/**
 	 * 绑定动态内容数据
-	 * */
+	 */
 	private void newsContentDataSet(NewsModel data) {
-		imgLoader.displayImage(data.getUserHeadSubImage(), newsUserHeadImgView,
-				options);
+		imgLoader.displayImage(data.getUserHeadSubImage(), newsUserHeadImgView, options);
 		if (data.getUserName().equals("")) {
 			newsUserName.setText(getString(R.string.personal_none));
 		} else {
@@ -675,14 +622,15 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			newsLocation.setText(data.getLocation());
 		}
 		if ("".equals(data.getCircles())) {
+			newsCircleshead.setVisibility(View.GONE);
 			newsCircles.setVisibility(View.GONE);
 		} else {
+			newsCircleshead.setVisibility(View.VISIBLE);
 			newsCircles.setVisibility(View.VISIBLE);
-			newsCircles.setText(getString(R.string.publish_circle_from)+data.getCircles());
+			newsCircles.setText(data.getCircles());
 		}
 		// 发布的时间
-		newsPublishTime.setText(TimeHandle.getShowTimeFormat(
-				data.getSendTime(), getApplicationContext()));
+		newsPublishTime.setText(TimeHandle.getShowTimeFormat(data.getSendTime(), getApplicationContext()));
 		// 点赞按钮状态设置
 		if (data.getIsLike()) {
 			newsLikeBtn.setImageResource(R.drawable.like_btn_press);
@@ -690,19 +638,16 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			newsLikeBtn.setImageResource(R.drawable.like_btn_normal);
 		}
 
-		newsCommentCount.setText(getResources()
-				.getString(R.string.news_comment)
-				+ " "
-				+ currentNews.getCommentQuantity());
-		newsLikeCount.setText(getResources().getString(R.string.news_like)
-				+ " " + data.getLikeQuantity());
+		newsCommentCount
+				.setText(getResources().getString(R.string.news_comment) + " " + currentNews.getCommentQuantity());
+		newsLikeCount.setText(getResources().getString(R.string.news_like) + " " + data.getLikeQuantity());
 		// 绑定点赞的头像
 		likeControl.listDataBindSet(likeDataList);
 	}
 
 	/**
 	 * listview设置
-	 * */
+	 */
 	private void listViewSet() {
 		// 设置刷新模式
 		newsDetailListView.setMode(Mode.PULL_FROM_START);
@@ -710,59 +655,47 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		listViewHeadInit();
 		/**
 		 * 刷新监听
-		 * */
-		newsDetailListView
-				.setOnRefreshListener(new OnRefreshListener2<ListView>() {
-					@Override
-					public void onPullDownToRefresh(
-							PullToRefreshBase<ListView> refreshView) {
-						getNewsDetailData(
-								String.valueOf(UserManager.getInstance()
-										.getUser().getUid()),
-								currentNews.getNewsID());
-					}
+		 */
+		newsDetailListView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+				getNewsDetailData(String.valueOf(UserManager.getInstance().getUser().getUid()),
+						currentNews.getNewsID());
+			}
 
-					@Override
-					public void onPullUpToRefresh(
-							PullToRefreshBase<ListView> refreshView) {
-					}
-				});
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+			}
+		});
 
-		detailAdapter = new HelloHaAdapter<Map<String, String>>(
-				NewsDetailActivity.this,
+		detailAdapter = new HelloHaAdapter<Map<String, String>>(NewsDetailActivity.this,
 				R.layout.news_detail_like_and_comment_item, dataList) {
 
 			@Override
-			protected void convert(HelloHaBaseAdapterHelper helper,
-					final Map<String, String> item) {
+			protected void convert(HelloHaBaseAdapterHelper helper, final Map<String, String> item) {
 				// 设置评论与点赞的数据
-				imgLoader.displayImage(item.get(USER_HEAD), (ImageView) helper
-						.getView(R.id.img_news_reply_user_head), options);
-				helper.setText(R.id.txt_news_reply_user_name,
-						item.get(USER_NAME));
+				imgLoader.displayImage(item.get(USER_HEAD), (ImageView) helper.getView(R.id.img_news_reply_user_head),
+						options);
+				helper.setText(R.id.txt_news_reply_user_name, item.get(USER_NAME));
 				helper.setText(R.id.txt_news_reply_user_job, item.get(USER_JOB));
 				if (isCurrentShowComment) {
 					// 评论的内容
 					helper.setVisible(R.id.txt_news_reply_time, true);
 					helper.setVisible(R.id.txt_news_reply_content, true);
 					//
-					helper.setText(R.id.txt_news_reply_time, TimeHandle
-							.getShowTimeFormat(item.get(PUBLISH_TIME),
-									getApplicationContext()));
-					TextView commentView = (TextView) helper
-							.getView(R.id.txt_news_reply_content);
+					helper.setText(R.id.txt_news_reply_time,
+							TimeHandle.getShowTimeFormat(item.get(PUBLISH_TIME), getApplicationContext()));
+					TextView commentView = (TextView) helper.getView(R.id.txt_news_reply_content);
 					if (!item.get(TARGET_NAME).equals("")) {
 						// 有回复的人时
 						commentView.setText(getString(R.string.reply));
-						SpannableString spStr = new SpannableString(
-								item.get(TARGET_NAME) + " : ");
+						SpannableString spStr = new SpannableString(item.get(TARGET_NAME) + " : ");
 
 						spStr.setSpan(new ClickableSpan() {
 							@Override
 							public void updateDrawState(TextPaint ds) {
 								// 设置文件颜色
-								ds.setColor(getResources().getColor(
-										R.color.main_light_blue));
+								ds.setColor(getResources().getColor(R.color.main_light_blue));
 								// 设置下划线
 								ds.setUnderlineText(false);
 							}
@@ -772,19 +705,16 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 								LogUtils.i("TARGET_ID=" + item.get(TARGET_ID));
 								// 跳转至用户的主页
 								if (!item.get(TARGET_ID).equals("")) {
-									JumpToHomepage(KHUtils.stringToInt(item
-											.get(TARGET_ID)));
+									JumpToHomepage(KHUtils.stringToInt(item.get(TARGET_ID)));
 								}
 							}
-						}, 0, item.get(TARGET_NAME).length(),
-								Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+						}, 0, item.get(TARGET_NAME).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 						// 设置点击后的颜色为透明，否则会一直出现高亮
 						commentView.setHighlightColor(Color.TRANSPARENT);
 						commentView.append(spStr);
 						commentView.append(item.get(COMMENT_CONTENT));
 						// 开始响应点击事件
-						commentView.setMovementMethod(LinkMovementMethod
-								.getInstance());
+						commentView.setMovementMethod(LinkMovementMethod.getInstance());
 					} else {
 						commentView.setText(item.get(COMMENT_CONTENT));
 					}
@@ -800,17 +730,13 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 					@Override
 					public void onClick(View view) {
-						itemViewClickListener.onClick(view, postion,
-								view.getId());
+						itemViewClickListener.onClick(view, postion, view.getId());
 					}
 				};
 				//
-				helper.setOnClickListener(R.id.layout_news_reply_rootview,
-						listener);
-				helper.setOnClickListener(R.id.txt_news_reply_user_name,
-						listener);
-				helper.setOnClickListener(R.id.img_news_reply_user_head,
-						listener);
+				helper.setOnClickListener(R.id.layout_news_reply_rootview, listener);
+				helper.setOnClickListener(R.id.txt_news_reply_user_name, listener);
+				helper.setOnClickListener(R.id.img_news_reply_user_head, listener);
 			}
 		};
 
@@ -821,7 +747,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 	/**
 	 * 显示评论数据
-	 * */
+	 */
 	private void showCommentData() {
 		dataList.clear();
 		for (int index = 0; index < commentDataList.size(); index++) {
@@ -830,10 +756,8 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			tempMap.put(USER_NAME, commentDataList.get(index).getPublishName());
 			tempMap.put(PUBLISH_TIME, commentDataList.get(index).getAddDate());
 			tempMap.put(USER_JOB, commentDataList.get(index).getUserJob());
-			tempMap.put(COMMENT_CONTENT, commentDataList.get(index)
-					.getCommentContent());
-			tempMap.put(TARGET_NAME, commentDataList.get(index)
-					.getTargetUserName());
+			tempMap.put(COMMENT_CONTENT, commentDataList.get(index).getCommentContent());
+			tempMap.put(TARGET_NAME, commentDataList.get(index).getTargetUserName());
 			tempMap.put(TARGET_ID, commentDataList.get(index).getTargetUserId());
 			dataList.add(tempMap);
 		}
@@ -843,7 +767,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 	/**
 	 * 显示点赞数据
-	 * */
+	 */
 	private void showLikeData() {
 		dataList.clear();
 		for (int index = 0; index < likeDataList.size(); index++) {
@@ -866,8 +790,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		commentDataList.clear();
 		// 评论数据的转换
 		if (data.containsKey("comments")) {
-			List<JSONObject> JCommentObj = (List<JSONObject>) data
-					.get("comments");
+			List<JSONObject> JCommentObj = (List<JSONObject>) data.get("comments");
 			for (JSONObject cmtObject : JCommentObj) {
 				CommentModel cmtTemp = new CommentModel();
 				cmtTemp.setContentWithJson(cmtObject);
@@ -884,90 +807,74 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 				likeDataList.add(lkTemp);
 			}
 		}
-		if (currentNews.getUid().equals(
-				String.valueOf(UserManager.getInstance().getUser().getUid()))) {
+		if (currentNews.getUid().equals(String.valueOf(UserManager.getInstance().getUser().getUid()))) {
 			// 如果是自己发布的动态则添加删除按钮
-			addRightImgBtn(R.layout.right_image_button,
-					R.id.layout_top_btn_root_view, R.id.img_btn_right_top);
+			addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view, R.id.img_btn_right_top);
 		}
 		// 更新动态数据
 		newsContentDataSet(currentNews);
 		// 显示评论数据
 		showCommentData();
-		Drawable drawable = getResources().getDrawable(
-				R.drawable.comment_list_flag);
-		newsCommentCount.setCompoundDrawablesWithIntrinsicBounds(null, null,
-				null, drawable);
+		Drawable drawable = getResources().getDrawable(R.drawable.comment_list_flag);
+		newsCommentCount.setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawable);
 		// 设置字体颜色
-		newsCommentCount.setTextColor(getResources().getColor(
-				R.color.main_deep_black));
-		newsLikeCount.setTextColor(getResources().getColor(
-				R.color.main_light_black));
+		newsCommentCount.setTextColor(getResources().getColor(R.color.main_deep_black));
+		newsLikeCount.setTextColor(getResources().getColor(R.color.main_light_black));
 	}
 
 	/**
 	 * 获取动态详情数据
-	 * */
+	 */
 	private void getNewsDetailData(String uid, String newsId) {
-		String path = KHConst.NEWS_DETAIL + "?" + "news_id=" + newsId
-				+ "&user_id=" + uid;
+		String path = KHConst.NEWS_DETAIL + "?" + "news_id=" + newsId + "&user_id=" + uid;
 		LogUtils.i("详情的接口:" + path);
-		HttpManager.get(path, new JsonRequestCallBack<String>(
-				new LoadDataHandler<String>() {
+		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
-					@Override
-					public void onSuccess(JSONObject jsonResponse, String flag) {
-						super.onSuccess(jsonResponse, flag);
-						int status = jsonResponse
-								.getInteger(KHConst.HTTP_STATUS);
-						if (status == KHConst.STATUS_SUCCESS) {
-							JSONObject jResult = jsonResponse
-									.getJSONObject(KHConst.HTTP_RESULT);
-							jsonToNewsModel(jResult);
-							newsDetailListView.onRefreshComplete();
-						}
+			@Override
+			public void onSuccess(JSONObject jsonResponse, String flag) {
+				super.onSuccess(jsonResponse, flag);
+				int status = jsonResponse.getInteger(KHConst.HTTP_STATUS);
+				if (status == KHConst.STATUS_SUCCESS) {
+					JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
+					jsonToNewsModel(jResult);
+					newsDetailListView.onRefreshComplete();
+				}
 
-						if (status == KHConst.STATUS_FAIL) {
-							ToastUtil.show(NewsDetailActivity.this,
-									jsonResponse
-											.getString(KHConst.HTTP_MESSAGE));
-							newsDetailListView.onRefreshComplete();
-						}
-					}
+				if (status == KHConst.STATUS_FAIL) {
+					ToastUtil.show(NewsDetailActivity.this, jsonResponse.getString(KHConst.HTTP_MESSAGE));
+					newsDetailListView.onRefreshComplete();
+				}
+			}
 
-					@Override
-					public void onFailure(HttpException arg0, String arg1,
-							String flag) {
-						super.onFailure(arg0, arg1, flag);
-						newsDetailListView.onRefreshComplete();
-						ToastUtil.show(NewsDetailActivity.this,
-								getString(R.string.network_unavailable));
-					}
+			@Override
+			public void onFailure(HttpException arg0, String arg1, String flag) {
+				super.onFailure(arg0, arg1, flag);
+				newsDetailListView.onRefreshComplete();
+				ToastUtil.show(NewsDetailActivity.this, getString(R.string.network_unavailable));
+			}
 
-				}, null));
+		}, null));
 	}
 
 	/**
 	 * 删除动态
-	 * */
+	 */
 	private void deleteCurrentNews() {
-		final CustomAlertDialog confirmDialog = new CustomAlertDialog(
-				NewsDetailActivity.this, getString(R.string.confirm_delete),
-				getString(R.string.confirm), getString(R.string.cancel));
+		final CustomAlertDialog confirmDialog = new CustomAlertDialog(NewsDetailActivity.this,
+				getString(R.string.confirm_delete), getString(R.string.confirm), getString(R.string.cancel));
 		confirmDialog.show();
-		confirmDialog
-				.setClicklistener(new CustomAlertDialog.ClickListenerInterface() {
-					@Override
-					public void doConfirm() {
-						newsOPerate.deleteNews(currentNews.getNewsID());
-						confirmDialog.dismiss();
-					}
+		confirmDialog.setClicklistener(new CustomAlertDialog.ClickListenerInterface() {
+			@Override
+			public void doConfirm() {
+				newsOPerate.deleteNews(currentNews.getNewsID());
+				confirmDialog.dismiss();
+			}
 
-					@Override
-					public void doCancel() {
-						confirmDialog.dismiss();
-					}
-				});
+			@Override
+			public void doCancel() {
+				confirmDialog.dismiss();
+			}
+		});
 	}
 
 	// 点击回复发送按钮
@@ -976,8 +883,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			String tempContent = commentContentStr;
 			// 清空输入内容
 			commentEditText.setText("");
-			commentEditText
-					.setHint(getString(R.string.news_enter_comment_content));
+			commentEditText.setHint(getString(R.string.news_enter_comment_content));
 			// 隐藏输入键盘
 			setKeyboardStatu(false);
 
@@ -987,16 +893,13 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			temMode.setAddDate(TimeHandle.getCurrentDataStr());
 			if (isPublishComment) {
 				// 发布评论
-				newsOPerate.publishComment(UserManager.getInstance().getUser(),
-						currentNews.getNewsID(), tempContent);
+				newsOPerate.publishComment(UserManager.getInstance().getUser(), currentNews.getNewsID(), tempContent);
 				currentOperateIndex = -1;
 			} else {
 				// 发布回复
-				newsOPerate.publishComment(UserManager.getInstance().getUser(),
-						currentNews.getNewsID(), tempContent, commentDataList
-								.get(currentOperateIndex).getUserId(),
-						commentDataList.get(currentOperateIndex)
-								.getPublishName());
+				newsOPerate.publishComment(UserManager.getInstance().getUser(), currentNews.getNewsID(), tempContent,
+						commentDataList.get(currentOperateIndex).getUserId(),
+						commentDataList.get(currentOperateIndex).getPublishName());
 			}
 			isPublishComment = true;
 		}
@@ -1004,7 +907,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 	/**
 	 * view点击事件
-	 * */
+	 */
 	public class ItemViewClick implements ListItemClickHelp {
 
 		@Override
@@ -1013,25 +916,19 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			if (isCurrentShowComment) {
 				// 在显示评论的情况下
 				if (viewID == R.id.layout_news_reply_rootview) {
-					if (commentDataList
-							.get(currentOperateIndex)
-							.getUserId()
-							.equals(String.valueOf(UserManager.getInstance()
-									.getUser().getUid()))) {
+					if (commentDataList.get(currentOperateIndex).getUserId()
+							.equals(String.valueOf(UserManager.getInstance().getUser().getUid()))) {
 						// 如果是自己发布的评论，则删除评论
 						List<String> menuList = new ArrayList<String>();
 						menuList.add(getString(R.string.delete_comment));
-						final CustomListViewDialog downDialog = new CustomListViewDialog(
-								NewsDetailActivity.this, menuList);
+						final CustomListViewDialog downDialog = new CustomListViewDialog(NewsDetailActivity.this,
+								menuList);
 						downDialog.setClickCallBack(new ClickCallBack() {
 
 							@Override
 							public void Onclick(View view, int which) {
-								newsOPerate.deleteComment(
-										commentDataList
-												.get(currentOperateIndex)
-												.getCommentID(), currentNews
-												.getNewsID());
+								newsOPerate.deleteComment(commentDataList.get(currentOperateIndex).getCommentID(),
+										currentNews.getNewsID());
 								downDialog.cancel();
 							}
 						});
@@ -1040,30 +937,26 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 						// 发布回复别人的评论
 						commentEditText.requestFocus();
 						commentEditText.setText("");
-						commentEditText.setHint(getString(R.string.reply)
-								+ ":"
-								+ commentDataList.get(currentOperateIndex)
-										.getPublishName());
+						commentEditText.setHint(getString(R.string.reply) + ":"
+								+ commentDataList.get(currentOperateIndex).getPublishName());
 						isPublishComment = false;
 						// 显示键盘
 						setKeyboardStatu(true);
 					}
 				} else {
 					// 跳转至别人主页
-					JumpToHomepage(KHUtils.stringToInt(commentDataList.get(
-							currentOperateIndex).getUserId()));
+					JumpToHomepage(KHUtils.stringToInt(commentDataList.get(currentOperateIndex).getUserId()));
 				}
 			} else {
 				// 显示点赞列表的情况下 跳转至别人主页
-				JumpToHomepage(KHUtils.stringToInt(likeDataList.get(
-						currentOperateIndex).getUserID()));
+				JumpToHomepage(KHUtils.stringToInt(likeDataList.get(currentOperateIndex).getUserID()));
 			}
 		}
 	}
 
 	/**
 	 * 点赞操作
-	 * */
+	 */
 	private void likeOperate(final View view) {
 		newsOPerate.setLikeListener(new LikeCallBack() {
 
@@ -1071,25 +964,17 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			public void onLikeStart(boolean isLike) {
 				if (isLike) {
 					// 点赞操作
-					currentNews.setLikeQuantity(String.valueOf(currentNews
-							.getLikeQuantity() + 1));
+					currentNews.setLikeQuantity(String.valueOf(currentNews.getLikeQuantity() + 1));
 					currentNews.setIsLike("1");
-					((ImageView) view)
-							.setImageResource(R.drawable.like_btn_press);
+					((ImageView) view).setImageResource(R.drawable.like_btn_press);
 					// 插入用户
 					LikeModel myModel = new LikeModel();
-					myModel.setUserID(String.valueOf(UserManager.getInstance()
-							.getUser().getUid()));
-					myModel.setHeadImage(KHConst.ATTACHMENT_ADDR
-							+ UserManager.getInstance().getUser()
-									.getHead_image());
-					myModel.setHeadSubImage(KHConst.ATTACHMENT_ADDR
-							+ UserManager.getInstance().getUser()
-									.getHead_sub_image());
-					myModel.setName(UserManager.getInstance().getUser()
-							.getName());
-					myModel.setUserJob(UserManager.getInstance().getUser()
-							.getJob());
+					myModel.setUserID(String.valueOf(UserManager.getInstance().getUser().getUid()));
+					myModel.setHeadImage(KHConst.ATTACHMENT_ADDR + UserManager.getInstance().getUser().getHead_image());
+					myModel.setHeadSubImage(
+							KHConst.ATTACHMENT_ADDR + UserManager.getInstance().getUser().getHead_sub_image());
+					myModel.setName(UserManager.getInstance().getUser().getName());
+					myModel.setUserJob(UserManager.getInstance().getUser().getJob());
 					try {
 						likeControl.insertToFirst(myModel);
 						if (!isCurrentShowComment) {
@@ -1099,39 +984,31 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 					}
 				} else {
 					// 取消点赞
-					currentNews.setLikeQuantity(String.valueOf(currentNews
-							.getLikeQuantity() - 1));
+					currentNews.setLikeQuantity(String.valueOf(currentNews.getLikeQuantity() - 1));
 					currentNews.setIsLike("0");
-					((ImageView) view)
-							.setImageResource(R.drawable.like_btn_normal);
+					((ImageView) view).setImageResource(R.drawable.like_btn_normal);
 					// 移除头像
 					likeControl.removeHeadImg();
 					if (!isCurrentShowComment) {
 						showLikeData();
 					}
 				}
-				newsLikeCount.setText(getString(R.string.news_like)
-						+ currentNews.getLikeQuantity());
+				newsLikeCount.setText(getString(R.string.news_like) + currentNews.getLikeQuantity());
 			}
 
 			@Override
 			public void onLikeFail(boolean isLike) {
 				// 撤销上次
 				if (isLike) {
-					currentNews.setLikeQuantity(String.valueOf(currentNews
-							.getLikeQuantity() - 1));
+					currentNews.setLikeQuantity(String.valueOf(currentNews.getLikeQuantity() - 1));
 					currentNews.setIsLike("0");
-					((ImageView) view)
-							.setImageResource(R.drawable.like_btn_normal);
+					((ImageView) view).setImageResource(R.drawable.like_btn_normal);
 				} else {
-					currentNews.setLikeQuantity(String.valueOf(currentNews
-							.getLikeQuantity() + 1));
+					currentNews.setLikeQuantity(String.valueOf(currentNews.getLikeQuantity() + 1));
 					currentNews.setIsLike("1");
-					((ImageView) view)
-							.setImageResource(R.drawable.like_btn_press);
+					((ImageView) view).setImageResource(R.drawable.like_btn_press);
 				}
-				newsLikeCount.setText(getString(R.string.news_like)
-						+ currentNews.getLikeQuantity());
+				newsLikeCount.setText(getString(R.string.news_like) + currentNews.getLikeQuantity());
 			}
 		});
 		if (currentNews.getIsLike()) {
@@ -1155,8 +1032,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 	 * 跳转至用户的主页
 	 */
 	private void JumpToHomepage(int userID) {
-		Intent intentUsrMain = new Intent(NewsDetailActivity.this,
-				OtherPersonalActivity.class);
+		Intent intentUsrMain = new Intent(NewsDetailActivity.this, OtherPersonalActivity.class);
 		intentUsrMain.putExtra(OtherPersonalActivity.INTENT_KEY, userID);
 		startActivityWithRight(intentUsrMain);
 	}
@@ -1181,35 +1057,31 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 	/**
 	 * 保存对动态的数据，并广播给上一个activity
-	 * */
+	 */
 	private void updateResultData() {
 		Intent mIntent = new Intent(KHConst.BROADCAST_NEWS_LIST_REFRESH);
 		if (actionType.equals(NewsConstants.OPERATE_UPDATE)) {
 			mIntent.putExtra(NewsConstants.OPERATE_UPDATE, currentNews);
 		} else if (actionType.equals(NewsConstants.OPERATE_DELETET)) {
 			// 删除操作
-			mIntent.putExtra(NewsConstants.OPERATE_DELETET,
-					currentNews.getNewsID());
+			mIntent.putExtra(NewsConstants.OPERATE_DELETET, currentNews.getNewsID());
 		} else if (actionType.equals(NewsConstants.OPERATE_NO_ACTION)) {
 			// 没有操作
 			mIntent.putExtra(NewsConstants.OPERATE_NO_ACTION, "");
 		}
 		// 发送广播
-		LocalBroadcastManager.getInstance(NewsDetailActivity.this)
-				.sendBroadcast(mIntent);
+		LocalBroadcastManager.getInstance(NewsDetailActivity.this).sendBroadcast(mIntent);
 	}
-	
+
 	// 分享监听
 	PlatformActionListener platformActionListener = new PlatformActionListener() {
 		@Override
 		public void onError(Platform arg0, int arg1, Throwable arg2) {
-			ToastUtil.show(NewsDetailActivity.this,
-					R.string.personal_share_fail);
+			ToastUtil.show(NewsDetailActivity.this, R.string.personal_share_fail);
 		}
 
 		@Override
-		public void onComplete(Platform arg0, int arg1,
-				HashMap<String, Object> arg2) {
+		public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
 			// ToastUtil.show(getActivity(), R.string.personal_share_ok);
 		}
 
@@ -1217,4 +1089,5 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		public void onCancel(Platform arg0, int arg1) {
 		}
 	};
+	private TextView newsCircleshead;
 }

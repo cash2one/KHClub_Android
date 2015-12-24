@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.Platform.ShareParams;
@@ -553,8 +554,8 @@ public class NewsListFragment extends BaseFragment {
 		} else {
 			helper.setVisible(R.id.txt_main_circles_head, true);
 			helper.setVisible(R.id.txt_main_circles, true);
-			helper.setText(R.id.txt_main_circles,  bodyData.getCircles());
-			//Log.i("wx", bodyData.getCircles());
+			helper.setText(R.id.txt_main_circles, bodyData.getCircles());
+			// Log.i("wx", bodyData.getCircles());
 		}
 		// 设置地理位置
 		if (bodyData.getLocation().equals("")) {
@@ -564,7 +565,7 @@ public class NewsListFragment extends BaseFragment {
 			helper.setText(R.id.txt_main_news_location, bodyData.getLocation());
 		}
 		// ///////////////// 绑定时间///////////////////////////////////////
-		//OperateItem opData = (OperateItem) item;
+		// OperateItem opData = (OperateItem) item;
 		helper.setText(R.id.txt_main_news_publish_time, TimeHandle.getShowTimeFormat(bodyData.getSendTime(), mContext));
 		// 父布局监听
 		helper.setOnClickListener(R.id.miv_main_news_images, listener);
@@ -574,8 +575,8 @@ public class NewsListFragment extends BaseFragment {
 	/**
 	 * 设置操作部分item
 	 */
-	private void setOperateItemView(HelloHaBaseAdapterHelper helper, NewsItemModel item) {
-		OperateItem opData = (OperateItem) item;
+	private void setOperateItemView(final HelloHaBaseAdapterHelper helper, NewsItemModel item) {
+		final OperateItem opData = (OperateItem) item;
 		// /////////////////// 绑定评论/////////////////////////////////////////
 		helper.setText(R.id.btn_mian_reply, String.valueOf(opData.getCommentCount()));
 		// if (opData.getCommentCount() > 0) {
@@ -587,14 +588,21 @@ public class NewsListFragment extends BaseFragment {
 		// }
 
 		// /////////////////////点赞按钮///////////////////////////////////
+
+		ImageView likeImage = helper.getView(R.id.like_image);
 		TextView likeBtn = helper.getView(R.id.btn_news_like);
 		Drawable drawable = null;
 		if (opData.getIsLike()) {
-			drawable = getResources().getDrawable(R.drawable.like_btn_press);
+			likeImage.setImageResource(R.drawable.like_btn_press);
+			// drawable =
+			// getResources().getDrawable(R.drawable.like_btRn_press);
 		} else {
-			drawable = getResources().getDrawable(R.drawable.like_btn_normal);
+			likeImage.setImageResource(R.drawable.like_btn_normal);
+			// drawable =
+			// getResources().getDrawable(R.drawable.like_btn_normal);
 		}
-		likeBtn.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+		// likeBtn.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null,
+		// null);
 		likeBtn.setText(String.valueOf(opData.getLikeCount()));
 		// // 点赞数大于0才显示点赞数量
 		// if (opData.getLikeCount() > 0) {
@@ -614,9 +622,19 @@ public class NewsListFragment extends BaseFragment {
 		};
 
 		// 事件监听绑定
+		// helper.setOnClickListener(R.id.like_layout, listener);
+		helper.setOnClickListener(R.id.xinxi_layout, listener);
+		helper.setOnClickListener(R.id.like_layout, new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				likeOperate(postion, v, opData, helper);
+			}
+		});
 		helper.setOnClickListener(R.id.btn_mian_reply, listener);
 		helper.setOnClickListener(R.id.btn_mian_share, listener);
-		helper.setOnClickListener(R.id.btn_news_like, listener);
+		// helper.setOnClickListener(R.id.btn_news_like, listener);
 		helper.setOnClickListener(R.id.layout_news_operate_rootview, listener);
 	}
 
@@ -720,16 +738,18 @@ public class NewsListFragment extends BaseFragment {
 				// 跳转到动态详情
 				jumpToNewsDetail(bodyData, NewsConstants.KEY_BOARD_CLOSE, null);
 				break;
-
+			case R.id.like_layout:
+			case R.id.xinxi_layout:
 			case R.id.btn_mian_reply:
-			case R.id.btn_news_like:
+				// case R.id.btn_news_like:
 			case R.id.btn_mian_share:
 			case R.id.layout_news_operate_rootview:
 
 				final OperateItem operateData = (OperateItem) newsAdapter.getItem(postion);
-				if (R.id.btn_news_like == viewID) {
+				if (R.id.like_layout == viewID) {
 					// 点赞操作
-					likeOperate(postion, view, operateData);
+					// Log.i("wx", 11111+"");
+					// likeOperate(postion, view, operateData);
 				} else if (R.id.btn_mian_share == viewID) {
 					// 分享操作
 					// for (int index = 0; index < newsList.size(); index++) {
@@ -764,61 +784,88 @@ public class NewsListFragment extends BaseFragment {
 
 	/**
 	 * 点赞操作
+	 * 
+	 * @param helper
+	 * 
+	 * @param helper
 	 */
-	private void likeOperate(int postion, View view, final OperateItem operateData) {
+	private void likeOperate(int postion, View view, final OperateItem operateData,
+			final HelloHaBaseAdapterHelper helper) {
 
-		final TextView oprtView = (TextView) view;
+		final RelativeLayout oprtView = (RelativeLayout) view;
 		newsOPerate.setLikeListener(new LikeCallBack() {
+			// ImageView likeimage = (ImageView)
+			// oprtView.findViewById(R.id.like_image);
+			// TextView likecount = (TextView)
+			// oprtView.findViewById(R.id.btn_news_like);
 
 			@Override
 			public void onLikeStart(boolean isLike) {
-				Drawable drawable = null;
+				// Drawable drawable = null;
 				if (isLike) {
-					// 点赞操作
+					// likeimage.setImageResource(R.drawable.like_btn_press);
+					helper.setImageResource(R.id.like_image, R.drawable.like_btn_press);
 					operateData.setLikeCount(operateData.getLikeCount() + 1);
-					drawable = getResources().getDrawable(R.drawable.like_btn_press);
+					// drawable =
+					// getResources().getDrawable(R.drawable.like_btn_press);
+					// drawable.setBounds(12, 14, 12, 14);
 					operateData.setIsLike(true);
 				} else {
 					// 取消点赞
-					drawable = getResources().getDrawable(R.drawable.like_btn_normal);
+					// likeimage.setImageResource(R.drawable.like_btn_normal);
+					helper.setImageResource(R.id.like_image, R.drawable.like_btn_normal);
+					// drawable =
+					// getResources().getDrawable(R.drawable.like_btn_normal);
 					operateData.setLikeCount(operateData.getLikeCount() - 1);
+					// drawable.setBounds(12, 14, 12, 14);
 					operateData.setIsLike(false);
 				}
-
-				oprtView.setText(String.valueOf(operateData.getLikeCount()));
+				helper.setText(R.id.btn_news_like, String.valueOf(operateData.getLikeCount()));
+				// likecount.setText(String.valueOf(operateData.getLikeCount()));
 				// // 点赞数大于0才显示点赞数量
 				// if (operateData.getLikeCount() > 0) {
 				// oprtView.setText(String.valueOf(operateData.getLikeCount()));
 				// } else {
 				// oprtView.setText(getString(R.string.news_like));
 				// }
-				oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+				// oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable,
+				// null, null, null);
 			}
 
 			@Override
 			public void onLikeFail(boolean isLike) {
 				// 撤销上次
+
 				Drawable drawable = null;
 				if (isLike) {
 					// 取消点赞
-					drawable = getResources().getDrawable(R.drawable.like_btn_normal);
+					// likeimage.setImageResource(R.drawable.like_btn_normal);
+					helper.setImageResource(R.id.like_image, R.drawable.like_btn_normal);
+					// drawable =
+					// getResources().getDrawable(R.drawable.like_btn_normal);
 					operateData.setLikeCount(operateData.getLikeCount() - 1);
 					operateData.setIsLike(false);
 				} else {
 					// 点赞操作
 					operateData.setLikeCount(operateData.getLikeCount() + 1);
-					drawable = getResources().getDrawable(R.drawable.like_btn_press);
+					// likeimage.setImageResource(R.drawable.like_btn_press);
+					helper.setImageResource(R.id.like_image, R.drawable.like_btn_press);
+					// drawable =
+					// getResources().getDrawable(R.drawable.like_btn_press);
 					operateData.setIsLike(true);
 				}
-				oprtView.setText(String.valueOf(operateData.getLikeCount()));
+				// likecount.setText(String.valueOf(operateData.getLikeCount()));
+				helper.setText(R.id.btn_news_like, String.valueOf(operateData.getLikeCount()));
 				// // 点赞数大于0才显示点赞数量
 				// if (operateData.getLikeCount() > 0) {
 				// oprtView.setText(String.valueOf(operateData.getLikeCount()));
 				// } else {
 				// oprtView.setText(getString(R.string.news_like));
 				// }
-				oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+				// oprtView.setCompoundDrawablesWithIntrinsicBounds(drawable,
+				// null, null, null);
 			}
+
 		});
 		if (operateData.getIsLike()) {
 			newsOPerate.uploadLikeOperate(operateData.getNewsID(), false);
