@@ -150,6 +150,9 @@
 
 
     <!-- News -->
+    <string name="circle_master">圈主</string>
+     <string name="circle_announcement">圈公告</string>
+    <string name="circle_member">圈会员</string>
     <string name="circle_web">圈子网址</string>
     <string name="circle_qrcode">公众号二维码</string>
     <string name="wx_num">公众号名称</string> 
@@ -186,6 +189,7 @@
     <string name="news_where">所在位置</string>
     <string name="news_content_image_empty">内容和图片至少有一个不能为空</string>
     <string name="news_content_too_long">内容不能超过140个字</string>
+    <string name="announcement_content_too_long">140字以内</string>
     <string name="news_publish_success">发布成功</string>
     <string name="news_publish_fail">发布失败</string>
     <string name="news_publish">发布动态</string>
@@ -553,4 +557,5 @@
     <string name="freshing">正在刷新</string>
     <string name="confirm_call_phone">是否拨打客服电话</string>
     <string name="sdcard_inexistence">SD卡不存在</string> 
+    <string name="no_announcement">暂无公告</string>
 </resources>

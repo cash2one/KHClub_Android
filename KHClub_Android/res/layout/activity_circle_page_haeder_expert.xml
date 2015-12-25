@@ -3,82 +3,91 @@
     xmlns:app="http://schemas.android.com/apk/res/com.app.khclub"
     android:id="@+id/better_members_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="5dp" >
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="7dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginTop="5dp"
             android:src="@drawable/ring" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="8dp"
             android:paddingLeft="10dp"
-            android:text="@string/news_club_expert"
+            android:text="@string/circle_member"
             android:textSize="14sp" />
 
         <com.app.khclub.base.ui.view.RoundImageView
             android:id="@+id/members_image0"
-            android:layout_width="@dimen/head_image_size_small"
-            android:layout_height="@dimen/head_image_size_small"
-            android:layout_marginLeft="7dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="15dp"
             android:src="@drawable/default_avatar"
             android:visibility="gone"
             app:rect_adius="15dp" />
 
         <com.app.khclub.base.ui.view.RoundImageView
             android:id="@+id/members_image1"
-            android:layout_width="@dimen/head_image_size_small"
-            android:layout_height="@dimen/head_image_size_small"
-            android:layout_marginLeft="7dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/default_avatar"
             android:visibility="gone"
             app:rect_adius="15dp" />
 
         <com.app.khclub.base.ui.view.RoundImageView
             android:id="@+id/members_image2"
-            android:layout_width="@dimen/head_image_size_small"
-            android:layout_height="@dimen/head_image_size_small"
-            android:layout_marginLeft="7dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/default_avatar"
             android:visibility="gone"
             app:rect_adius="15dp" />
 
         <com.app.khclub.base.ui.view.RoundImageView
             android:id="@+id/members_image3"
-            android:layout_width="@dimen/head_image_size_small"
-            android:layout_height="@dimen/head_image_size_small"
-            android:layout_marginLeft="7dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/default_avatar"
             android:visibility="gone"
             app:rect_adius="15dp" />
 
         <com.app.khclub.base.ui.view.RoundImageView
             android:id="@+id/members_image4"
-            android:layout_width="@dimen/head_image_size_small"
-            android:layout_height="@dimen/head_image_size_small"
-            android:layout_marginLeft="7dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/default_avatar"
             android:visibility="gone"
             app:rect_adius="15dp" />
 
         <com.app.khclub.base.ui.view.RoundImageView
             android:id="@+id/members_image5"
-            android:layout_width="@dimen/head_image_size_small"
-            android:layout_height="@dimen/head_image_size_small"
-            android:layout_marginLeft="7dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/default_avatar"
             android:visibility="gone"
             app:rect_adius="15dp" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_marginTop="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/return_03" />
 
 </RelativeLayout>

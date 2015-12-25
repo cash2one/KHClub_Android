@@ -16,7 +16,17 @@ public class CirclePageModel implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	//private String content;
+	//圈子公告
 	private String circleId;
+//	public String getContent() {
+//		return content;
+//	}
+//
+//	public void setContent(String content) {
+//		this.content = content;
+//	}
+
 	// 圈子ID
 	private String userID;
 	// 用户ID
@@ -50,7 +60,10 @@ public class CirclePageModel implements Serializable{
 	// 内容注入
 	@SuppressWarnings("unchecked")
 	public void setContentWithJson(JSONObject object) {
-
+//		Log.i("wwww", object.getString("content_text"));
+//		if (object.containsKey("content_text")) {
+//			setContent(object.getString("content_text"));
+//		}
 		if (object.containsKey("id")) {
 			setCircleId(object.getString("id"));
 		}

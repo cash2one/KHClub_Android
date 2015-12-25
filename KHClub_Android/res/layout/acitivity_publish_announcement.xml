@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+  <include layout="@layout/layout_title_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_white"
+        android:orientation="vertical"
+        android:paddingBottom="10dp" >
+
+        <EditText
+            android:id="@+id/content_edit"
+            android:layout_width="match_parent"
+            android:layout_height="130dip"
+            android:layout_marginLeft="25dip"
+            android:layout_marginRight="25dip"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/publish_edittext_bkgrnd"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="@string/announcement_content_too_long"
+            android:inputType="textMultiLine"
+            android:maxLength="140"
+            android:padding="7dip"
+            android:textSize="@dimen/font_size_small" />
+
+       <!--  <RelativeLayout
+            android:id="@+id/addImageLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip" >
+
+            <ImageView
+                android:id="@+id/addImageView"
+                android:layout_width="70dip"
+                android:layout_height="70dip"
+                android:layout_marginLeft="25dip"
+                android:scaleType="centerCrop"
+                android:src="@drawable/add_picture" />
+        </RelativeLayout> -->
+    </LinearLayout>
+
+    <!-- <LinearLayout
+        android:id="@+id/choice_location_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:background="@drawable/selector_deep_white_click"
+        android:gravity="left"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="25dip"
+        android:paddingTop="15dp" >
+
+        <ImageView
+            android:layout_width="15dip"
+            android:layout_height="15dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/location_icon" />
+
+        <TextView
+            android:id="@+id/choice_location_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="10dip"
+            android:text="@string/news_where"
+            android:textColor="@color/main_light_black"
+            android:textSize="@dimen/font_size_small" />
+    </LinearLayout> -->  
+
+</LinearLayout>

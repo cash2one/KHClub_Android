@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/layout_announcement_operate_rootview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:orientation="vertical" >
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/main_light_white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/main_deep_white"
+            android:orientation="horizontal" >
+
+            <!-- 分享按钮 -->
+
+            <TextView
+                android:id="@+id/btn_mian_share"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/btn_share_selector"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:textColor="@color/main_light_black"
+                android:textSize="@dimen/font_size_tiny"
+                android:visibility="gone" />
+
+            <!-- 评论按钮 -->
+
+            <RelativeLayout
+                android:background="@drawable/announcement_bottom_selector"
+                android:id="@+id/xinxi_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/xinxi_image"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/announcement_repley_selector" />
+
+                <TextView
+                    android:id="@+id/btn_mian_reply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/xinxi_image"
+                    android:gravity="center"
+                    android:text="111"
+                    android:textColor="@drawable/announcement_text_seletot"
+                    android:textSize="@dimen/font_size_tiny" />
+            </RelativeLayout>
+            <!-- 点赞按钮 -->
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/btn_mian_reply"
+                android:background="@color/main_light_white" />
+
+            <RelativeLayout
+                android:background="@drawable/announcement_bottom_selector"
+                android:id="@+id/like_layout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/like_image"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/like_btn_normal" />
+
+                <TextView
+                    android:id="@+id/btn_news_like"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/like_image"
+                    android:gravity="center_vertical"
+                    android:text="1111"
+                    android:textColor="@drawable/announcement_text_seletot"
+                    android:textSize="@dimen/font_size_tiny" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/main_light_white" />
+    </LinearLayout>
+
+</LinearLayout>

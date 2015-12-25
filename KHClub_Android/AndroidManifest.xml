@@ -73,6 +73,10 @@
         <activity android:name="com.app.khclub.base.ui.view.gallery.imageloader.GalleyActivity" />
 
         <!-- 动态 -->
+        <activity android:name="com.app.khclub.news.ui.activity.AnnouncementActivity" >
+        </activity>
+         <activity android:name="com.app.khclub.news.ui.activity.PublisAnnouncementActivity" >
+        </activity>
         <activity android:name="com.app.khclub.news.ui.activity.BetterMemberActivity" >
         </activity>
         <activity android:name="com.app.khclub.news.ui.activity.ModifyCircleActivity" >

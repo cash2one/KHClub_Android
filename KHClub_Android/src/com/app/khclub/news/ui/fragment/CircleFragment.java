@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,13 +49,13 @@ import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 public class CircleFragment extends BaseFragment {
 	private static final String FOLLOW_LIST = "followList";
 	private static final String CIRCLE_ID = "circle_id";
-	private static final String CIRCLE_ISFOLLOW= "isFollow";
+	private static final String CIRCLE_ISFOLLOW = "isFollow";
 	private static final String UNFOLLOW_LIST = "unfollowList";
-	private List<CircleItemModel> followList, unfollowList,dataList;
-     //临时数组
+	private List<CircleItemModel> followList, unfollowList, dataList;
+	// 临时数组
 	private List<CircleItemModel> list;
-	//private String[] data={"1}
-	//private List<CircleItemModel> dataList=new ArrayList<CircleItemModel>();
+	// private String[] data={"1}
+	// private List<CircleItemModel> dataList=new ArrayList<CircleItemModel>();
 	// private boolean ISNOTATTENTION=true;
 	// 下拉列表
 	@ViewInject(R.id.circle_refresh_list)
@@ -87,10 +91,10 @@ public class CircleFragment extends BaseFragment {
 
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
-				.displayer(new RoundedBitmapDisplayer(7))
-				.bitmapConfig(Bitmap.Config.RGB_565).build();
+				.displayer(new RoundedBitmapDisplayer(7)).bitmapConfig(Bitmap.Config.RGB_565).build();
 		initListViewSet();
 		getData();
+		initBoradcastReceiver();
 	}
 
 	/***
@@ -110,12 +114,12 @@ public class CircleFragment extends BaseFragment {
 				// helper.setOnClickListener(viewId, listener)
 				// 圈子标题
 				helper.setText(R.id.circle_name, item.getCircle_name());
-				
+
 				helper.setVisible(R.id.circle_attention_type, false);
 				helper.setVisible(R.id.circle_attention_layout, false);
 				helper.setVisible(R.id.circle_recommend_layout, false);
-				helper.setVisible(R.id.circle_recommend_type, false);				
-				
+				helper.setVisible(R.id.circle_recommend_type, false);
+
 				// 圈子类型（是否关注）
 				if (followList.size() > 0) {
 					if (followList.get(0).getId().equals(item.getId())) {
@@ -127,12 +131,12 @@ public class CircleFragment extends BaseFragment {
 				}
 				if (unfollowList.size() > 0) {
 					if (unfollowList.get(0).getId().equals(item.getId())) {
-						//if(！dataList.size()==1){
+						// if(！dataList.size()==1){
 						helper.setVisible(R.id.circle_recommend_layout, true);
 						helper.setVisible(R.id.circle_recommend_type, true);
 						helper.setText(R.id.circle_recommend_type,
 								getResources().getString(R.string.circle_recommend_type_name));
-					} 
+					}
 				}
 				if (position >= followList.size()) {
 					helper.setVisible(R.id.recommend_btn, true);
@@ -155,9 +159,9 @@ public class CircleFragment extends BaseFragment {
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
 						recommend(item);
-						//Log.i("wwww", dataList.get(position).getId());
+						// Log.i("wwww", dataList.get(position).getId());
 						Log.i("wwww", item.getId());
-						//Log.i("wwww", position+"");
+						// Log.i("wwww", position+"");
 					}
 				});
 				LinearLayout linearLayout = (LinearLayout) helper.getView();
@@ -168,7 +172,7 @@ public class CircleFragment extends BaseFragment {
 						// 跳转到其他人页面
 						Intent intent = new Intent(getActivity(), CirclePageActivity.class);
 						intent.putExtra(CIRCLE_ID, item.getId());
-						
+
 						startActivityWithRight(intent);
 					}
 				});
@@ -218,14 +222,14 @@ public class CircleFragment extends BaseFragment {
 		final UserModel userModel = UserManager.getInstance().getUser();
 		params.addBodyParameter("user_id", userModel.getUid() + "");
 		params.addBodyParameter("circle_id", circleItemModel.getId());
-		//if (position >= (followList.size() - unfollowList.size())) {
-			// 设置为关注
+		// if (position >= (followList.size() - unfollowList.size())) {
+		// 设置为关注
 		params.addBodyParameter("isFollow", "1");
-	//		isattention = true;
-//		} else {
-//			params.addBodyParameter("isFollow", "0");
-//			isattention = false;
-//		}
+		// isattention = true;
+		// } else {
+		// params.addBodyParameter("isFollow", "0");
+		// isattention = false;
+		// }
 		// Log.i("wwww", "关注成功");
 		showLoading(getActivity(), getString(R.string.uploading));
 		// 关注
@@ -236,21 +240,21 @@ public class CircleFragment extends BaseFragment {
 						super.onSuccess(jsonResponse, flag);
 						int status = jsonResponse.getIntValue("status");
 						hideLoading();
-						
+
 						switch (status) {
 						case KHConst.STATUS_SUCCESS:
 							ToastUtil.show(getActivity(), R.string.attention_success);
-							
+
 							followList.add(circleItemModel);
 							unfollowList.remove(circleItemModel);
-							
-							LogUtils.i(followList+"----"+unfollowList, 1);
-							//临时用
+
+							LogUtils.i(followList + "----" + unfollowList, 1);
+							// 临时用
 							List<CircleItemModel> tmpList = new ArrayList<CircleItemModel>();
 							tmpList.addAll(followList);
 							tmpList.addAll(unfollowList);
 							dataList = tmpList;
-							
+
 							circleAdapter.replaceAll(dataList);
 							break;
 						case KHConst.STATUS_FAIL:
@@ -269,20 +273,20 @@ public class CircleFragment extends BaseFragment {
 
 	}
 
-//	private void freshAttentionData() {
-//		// TODO Auto-generated method stub
-//		if (isattention) {
-//			CircleItemModel attention = dataList.get(position);
-//			followList.add(attention);
-//			unfollowList.remove(attention);
-//			circleAdapter.notifyDataSetChanged();
-//		} else {
-//			CircleItemModel attention = dataList.get(position);
-//			unfollowList.add(attention);
-//			followList.remove(attention);
-//			circleAdapter.notifyDataSetChanged();
-//		}
-//	}
+	// private void freshAttentionData() {
+	// // TODO Auto-generated method stub
+	// if (isattention) {
+	// CircleItemModel attention = dataList.get(position);
+	// followList.add(attention);
+	// unfollowList.remove(attention);
+	// circleAdapter.notifyDataSetChanged();
+	// } else {
+	// CircleItemModel attention = dataList.get(position);
+	// unfollowList.add(attention);
+	// followList.remove(attention);
+	// circleAdapter.notifyDataSetChanged();
+	// }
+	// }
 
 	/**
 	 * 获取动态数据
@@ -305,10 +309,10 @@ public class CircleFragment extends BaseFragment {
 					followList = JSON.parseArray(followJsonArray, CircleItemModel.class);
 					unfollowList = JSON.parseArray(unfollowJsonArray, CircleItemModel.class);
 
-					dataList=followList;
+					dataList = followList;
 					dataList.addAll(unfollowList);
 
-					//临时用
+					// 临时用
 					List<CircleItemModel> tmpList = new ArrayList<CircleItemModel>();
 					tmpList.addAll(followList);
 					tmpList.addAll(unfollowList);
@@ -341,22 +345,53 @@ public class CircleFragment extends BaseFragment {
 
 		}, null));
 	}
- /*   public  interface freshCircleData{
-    	void fresh();
-    }*/
-	
-	 Fresh fresh =new Fresh();
-     class Fresh implements Serializable{
 
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
+	private LocalBroadcastManager mLocalBroadcastManager;
 
-		public void fresh() {
+	/**
+	 * 初始化广播信息
+	 */
+	private void initBoradcastReceiver() {
+
+		mLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+		IntentFilter myIntentFilter = new IntentFilter();
+		myIntentFilter.addAction(KHConst.BROADCAST_CIRCLE_LIST_REFRESH);
+		// 注册广播
+		mLocalBroadcastManager.registerReceiver(mBroadcastReceiver, myIntentFilter);
+	}
+	/*
+	 * public interface freshCircleData{ void fresh(); }
+	 */
+
+	// Fresh fresh =new Fresh();
+	// class Fresh implements Serializable{
+	//
+	// /**
+	// *
+	// */
+	// private static final long serialVersionUID = 1L;
+	//
+	// public void fresh() {
+	// // TODO Auto-generated method stub
+	// getData();
+	// circleAdapter.replaceAll(dataList);
+	// }}
+	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			getData();
-			circleAdapter.replaceAll(dataList);
-		}}
-   
+			//Log.i("wwww","刷新");
+			if (intent.hasExtra(CirclePageActivity.CIRCLEFRESH)) {
+			//	Log.i("wwww","刷新");
+				getData();
+				circleAdapter.notifyDataSetChanged();
+			}
+		}
+	};
+	public void onDestroy() {
+		if (mBroadcastReceiver != null && mLocalBroadcastManager != null) {
+			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
+		}
+	};
 }
