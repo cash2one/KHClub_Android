@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -17,8 +16,8 @@ import com.app.khclub.base.easeim.KHHXSDKHelper;
 import com.app.khclub.base.easeim.applib.controller.HXSDKHelper;
 import com.app.khclub.base.easeim.db.InviteMessgeDao;
 import com.app.khclub.base.easeim.domain.InviteMessage;
-import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.easeim.domain.InviteMessage.InviteMesageStatus;
+import com.app.khclub.base.easeim.domain.User;
 import com.app.khclub.base.easeim.utils.UserUtils;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.NewsPushModel;
@@ -75,7 +74,12 @@ public class PushReceiver extends BroadcastReceiver {
 					handleNewsPush(obj, context);
 					break;
 				case NewsPushModel.PushGroupInvite:
+					//如果是群组邀请					
 					handleGroupPush(obj, context);
+					break;
+				case NewsPushModel.PushNoticeComment:
+					//如果是通知评论					
+					handleNewsPush(obj, context);
 					break;
 				default:
 					break;
@@ -154,6 +158,7 @@ public class PushReceiver extends BroadcastReceiver {
 			content = pushObject.getString("name")+":"+pushObject.getString("comment_content");
 			break;
 		case NewsPushModel.PushSecondComment:
+		case NewsPushModel.PushNoticeComment:
 			content = pushObject.getString("name")+":"+pushObject.getString("comment_content");
 			break;
 		case NewsPushModel.PushLikeNews:
@@ -162,7 +167,7 @@ public class PushReceiver extends BroadcastReceiver {
 		default:
 			break;
 		}
-		
+		//本地通知
 		showNotification(context, title, title, content);
 		
 		NewsPushModel pushModel = new NewsPushModel();

@@ -21,6 +21,8 @@ public class NewsPushModel {
 	public final static int PushLikeNews = 4;
 	//成员邀请成员 发给群主的通知
 	public final static int PushGroupInvite = 5;	
+	//公告中的评论
+	public final static int PushNoticeComment = 6;
 	
 	//本条数据的id
 	private int pid;

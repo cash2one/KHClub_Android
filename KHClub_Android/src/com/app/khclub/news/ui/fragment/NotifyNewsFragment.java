@@ -175,6 +175,12 @@ public class NotifyNewsFragment extends BaseFragmentWithTopBar {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				NewsPushModel newsPushModel = newsAdapter.getItem(position);
+				
+				if (newsPushModel.getType() == NewsPushModel.PushNoticeComment) {
+					//点击进入圈子公告
+					return;
+				}
+				
 				Intent detailIntent = new Intent(getActivity(),
 						NewsDetailActivity.class);
 				detailIntent.putExtra(NewsConstants.INTENT_KEY_NEWS_ID, ""
