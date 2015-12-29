@@ -150,6 +150,7 @@
 
 
     <!-- News -->
+    <string name="notice_details">公告详情</string>
     <string name="circle_master">圈主</string>
      <string name="circle_announcement">圈公告</string>
     <string name="circle_member">圈会员</string>

@@ -258,7 +258,6 @@ public class NewsOperate {
 			params.addBodyParameter("user_id", String.valueOf(UserManager
 					.getInstance().getUser().getUid()));
 			params.addBodyParameter("is_second", "0");
-
 			HttpManager.post(KHConst.LIKE_OR_CANCEL, params,
 					new JsonRequestCallBack<String>(
 							new LoadDataHandler<String>() {

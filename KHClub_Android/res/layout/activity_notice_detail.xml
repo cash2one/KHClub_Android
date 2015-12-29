@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/layout_title_bar" />
+
+    <!-- 动态与评论listview -->
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/notice_reply_listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:cacheColorHint="#00000000"
+        android:divider="#00000000"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:smoothScrollbar="true" >
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
+
+    <LinearLayout
+        android:id="@+id/reply_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/comment_background"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="@dimen/item_interior_space_small" >
+
+        <EditText
+            android:id="@+id/edt_comment_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:background="@drawable/regist_phone_edittext_bkgrnd"
+            android:hint="@string/news_enter_comment_content"
+            android:inputType="textMultiLine"
+            android:maxLength="140"
+            android:paddingLeft="@dimen/item_interior_space_small"
+            android:textColor="@color/main_deep_black"
+            android:textSize="@dimen/font_size_secondary" />
+
+        <View
+            android:id="@+id/view_space"
+            android:layout_width="3dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btn_comment_send"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="2"
+            android:background="@drawable/btn_comment_send"
+            android:paddingLeft="@dimen/item_interior_space_small"
+            android:text="@string/publish_news"
+            android:textColor="@color/main_deep_white"
+            android:textSize="@dimen/font_size_medium" />
+    </LinearLayout>
+</LinearLayout>

@@ -151,6 +151,7 @@
 
 
     <!-- News -->
+    <string name="notice_details">Notice Details</string>
     <string name="announcement_content_too_long">In the 140 - word</string>
     <string name="circle_master">Circle Master</string>
     <string name="circle_announcement">Circle Announcement</string>
@@ -546,6 +547,7 @@
     <string name="attention">Attention</string>	<string name="cover_name_unnull">Cover and Name unble null</string>	<string name="confirm_call_phone">Whether to call customer service</string>
 	<string name="sdcard_inexistence">SDCard Inexistence</string> 
 	<string name="no_announcement">No announcement</string> 
+	 
 	
 	
 	

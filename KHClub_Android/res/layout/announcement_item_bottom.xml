@@ -36,9 +36,8 @@
                 android:visibility="gone" />
 
             <!-- 评论按钮 -->
-
+<!-- android:background="@drawable/announcement_bottom_selector" -->
             <RelativeLayout
-                android:background="@drawable/announcement_bottom_selector"
                 android:id="@+id/xinxi_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -58,7 +57,6 @@
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/xinxi_image"
                     android:gravity="center"
-                    android:text="111"
                     android:textColor="@drawable/announcement_text_seletot"
                     android:textSize="@dimen/font_size_tiny" />
             </RelativeLayout>
@@ -70,9 +68,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/btn_mian_reply"
                 android:background="@color/main_light_white" />
-
+<!--  android:background="@drawable/announcement_bottom_selector" -->
             <RelativeLayout
-                android:background="@drawable/announcement_bottom_selector"
                 android:id="@+id/like_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -86,13 +83,12 @@
                     android:src="@drawable/like_btn_normal" />
 
                 <TextView
-                    android:id="@+id/btn_news_like"
+                    android:id="@+id/btn_notice_like"
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
                     android:layout_toRightOf="@id/like_image"
                     android:gravity="center_vertical"
-                    android:text="1111"
                     android:textColor="@drawable/announcement_text_seletot"
                     android:textSize="@dimen/font_size_tiny" />
             </RelativeLayout>

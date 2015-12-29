@@ -867,6 +867,7 @@ public class NewsListFragment extends BaseFragment {
 			}
 
 		});
+		//Log.i("wx", operateData.getIsLike()+"");
 		if (operateData.getIsLike()) {
 			newsOPerate.uploadLikeOperate(operateData.getNewsID(), false);
 		} else {
