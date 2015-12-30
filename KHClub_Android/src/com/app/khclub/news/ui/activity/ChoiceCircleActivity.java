@@ -204,7 +204,8 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 					JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
 					// 获取数据列表
 					List<CircleItemModel> list = JSON.parseArray(jResult.getString("list"), CircleItemModel.class);
-					
+					//模拟没有数据时候
+					//List<CircleItemModel> list=new ArrayList<CircleItemModel>();
 					//有选中的
 					if (null != choicedCirlce) {
 						CircleItemModel tmpModel = null;

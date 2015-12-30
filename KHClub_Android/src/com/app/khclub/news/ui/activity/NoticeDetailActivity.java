@@ -370,6 +370,7 @@ public class NoticeDetailActivity extends BaseActivityWithTopBar implements OnCl
 			// 如果是自己发布的动态则添加删除按钮
 			ImageView rightBtn = addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view,
 					R.id.img_btn_right_top);
+			rightBtn.setImageResource(R.drawable.mm_title_remove);
 			rightBtn.setOnClickListener(this);
 			// Log.i("wx", rightBtn.getId()+"");
 		}
