@@ -118,13 +118,12 @@ public interface KHConst {
 	public static final String DELETE_NOTICE = DOMIN + "/deleteNotice";
 	// 公告点赞
 	public static final String NOTICE_LIKE_OR_CANCEL = DOMIN + "/noticeLikeOrCancel";
-<<<<<<< HEAD
+
 	////////////////////////////////////////////// 个人信息////////////////////////////////////////////////
-=======
+
 	// 新闻所属圈子列表
 	public static final String NEWS_CIRCLE_LIST = DOMIN + "/newsCircleList";	
 	//////////////////////////////////////////////个人信息////////////////////////////////////////////////
->>>>>>> 2346ac1722dbbfbbd8596a32a36d8668c69283cc
 	// 修改个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION = DOMIN + "/changePersonalInformation";
 	// 修改个人额外信息
