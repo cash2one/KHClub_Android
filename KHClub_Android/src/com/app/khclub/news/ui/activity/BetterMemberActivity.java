@@ -79,15 +79,12 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 				// item 位置
 				position = helper.getPosition();
 				if (position == 0) {
+					//圈主
 					helper.setVisible(R.id.all_club_members_layout, true);
+					helper.setVisible(R.id.circle_master_tv, true);
 				} else {
 					helper.setVisible(R.id.all_club_members_layout, false);
 				}
-				//圈主
-				if (position == 1) {
-					helper.setVisible(R.id.circle_master_tv, true);
-				}
-				
 				helper.setText(R.id.member_user_name, item.getName());
 				helper.setText(R.id.member_job, KHUtils.emptyRetunNone(item.getJob()));
 				ImageView userImageView = helper.getView(R.id.member_user_image);
@@ -191,7 +188,6 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 					dataList = JSON.parseArray(followJsonArray, BetterMembersModel.class);
 					// 如果是下拉刷新
 					if (isPullDown) {
-						dataList.add(0, new BetterMembersModel());
 						MembersModelAdapter.replaceAll(dataList);
 					} else {
 						MembersModelAdapter.addAll(dataList);
