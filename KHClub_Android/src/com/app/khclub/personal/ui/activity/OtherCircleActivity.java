@@ -3,31 +3,6 @@ package com.app.khclub.personal.ui.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.app.khclub.R;
-import com.app.khclub.base.adapter.HelloHaAdapter;
-import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
-import com.app.khclub.base.helper.JsonRequestCallBack;
-import com.app.khclub.base.helper.LoadDataHandler;
-import com.app.khclub.base.manager.HttpManager;
-import com.app.khclub.base.manager.UserManager;
-import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
-import com.app.khclub.base.utils.KHConst;
-import com.app.khclub.base.utils.LogUtils;
-import com.app.khclub.news.ui.activity.CirclePageActivity;
-import com.app.khclub.news.ui.model.CircleItemModel;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -38,8 +13,35 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class OtherCircleActivity extends BaseActivityWithTopBar {
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.app.khclub.R;
+import com.app.khclub.base.adapter.HelloHaAdapter;
+import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
+import com.app.khclub.base.helper.JsonRequestCallBack;
+import com.app.khclub.base.helper.LoadDataHandler;
+import com.app.khclub.base.manager.HttpManager;
+import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
+import com.app.khclub.base.utils.KHConst;
+import com.app.khclub.base.utils.LogUtils;
+import com.app.khclub.news.ui.activity.CirclePageActivity;
+import com.app.khclub.news.ui.model.CircleItemModel;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
+public class OtherCircleActivity extends BaseActivityWithTopBar {
+	
+	//newsID用的Intent key
+	public static String INTENT_NEWS_ID = "newsID";
+	
 	private List<CircleItemModel> dataList;
 	// 圈子ID
 	private String CIRCLE_ID = "circle_id";
@@ -145,6 +147,10 @@ public class OtherCircleActivity extends BaseActivityWithTopBar {
 		dataList = new ArrayList<CircleItemModel>();
 		int uid=getIntent().getIntExtra(OtherPersonalActivity.USERID, -1);
 		String path = KHConst.GET_MY_CIRCLE_LIST + "?" + "user_id=" +uid;
+		//动态所属圈子
+		if (getIntent().hasExtra(INTENT_NEWS_ID)) {
+			path = KHConst.NEWS_CIRCLE_LIST + "?" + "news_id=" +getIntent().getStringExtra(INTENT_NEWS_ID);	
+		}
 		Log.i("wwww", path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
@@ -184,6 +190,10 @@ public class OtherCircleActivity extends BaseActivityWithTopBar {
 	protected void setUpView() {
 		// TODO Auto-generated method stub
 		setBarText(getString(R.string.other_circle));
+		if (getIntent().hasExtra(INTENT_NEWS_ID)) {
+			//如果查看的是动态所属圈子
+			setBarText(getString(R.string.circles_title));
+		}
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
 				.displayer(new RoundedBitmapDisplayer(7)).bitmapConfig(Bitmap.Config.RGB_565).build();

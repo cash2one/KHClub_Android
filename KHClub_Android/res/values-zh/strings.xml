@@ -180,7 +180,8 @@
     <string name="news_master_name">圈主：</string>
     <string name="news_circle_name">圈子名称：</string>
     <string name="circle_attention_type_name">我的圈子</string>
-     <string name="other_circle">TA的圈子</string>
+    <string name="other_circle">TA的圈子</string>
+    <string name="circles_title">动态圈</string>
     <string name="circle_recommend_type_name">推荐圈子</string>
     <string name="news_news_topic">动态</string>
     <string name="news_circle_title">圈子</string>

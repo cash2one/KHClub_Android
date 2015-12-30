@@ -113,7 +113,9 @@ public interface KHConst {
 	//删除公告评论接口
 	public static final String DELETE_NOTICE_COMMENT = DOMIN + "/deleteNoticeComment";
 	// 公告点赞
-	public static final String NOTICE_LIKE_OR_CANCEL = DOMIN + "/noticeLikeOrCancel";		
+	public static final String NOTICE_LIKE_OR_CANCEL = DOMIN + "/noticeLikeOrCancel";
+	// 新闻所属圈子列表
+	public static final String NEWS_CIRCLE_LIST = DOMIN + "/newsCircleList";	
 	//////////////////////////////////////////////个人信息////////////////////////////////////////////////
 	// 修改个人信息
 	public static final String CHANGE_PERSONAL_INFORMATION = DOMIN

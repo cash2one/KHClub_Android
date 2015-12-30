@@ -8,7 +8,6 @@ import java.util.Map;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -29,11 +28,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.framework.Platform.ShareParams;
 import cn.sharesdk.sina.weibo.SinaWeibo;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
@@ -41,7 +39,6 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
-import com.app.khclub.R.color;
 import com.app.khclub.base.adapter.HelloHaAdapter;
 import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
 import com.app.khclub.base.helper.JsonRequestCallBack;
@@ -67,11 +64,12 @@ import com.app.khclub.news.ui.utils.NewsOperate;
 import com.app.khclub.news.ui.utils.NewsOperate.LikeCallBack;
 import com.app.khclub.news.ui.utils.NewsOperate.OperateCallBack;
 import com.app.khclub.news.ui.view.LikeImageListView;
-import com.app.khclub.news.ui.view.NewsBottomPopupMenu;
 import com.app.khclub.news.ui.view.LikeImageListView.EventCallBack;
 import com.app.khclub.news.ui.view.MultiImageView;
 import com.app.khclub.news.ui.view.MultiImageView.JumpCallBack;
+import com.app.khclub.news.ui.view.NewsBottomPopupMenu;
 import com.app.khclub.news.ui.view.NewsBottomPopupMenu.NewsBottomClickListener;
+import com.app.khclub.personal.ui.activity.OtherCircleActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -567,6 +565,18 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 			@Override
 			public void onItemClick(int userId) {
 				JumpToHomepage(userId);
+			}
+		});
+		
+		newsCircles.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				//跳转到圈子
+				Intent circleIntent = new Intent(NewsDetailActivity.this, OtherCircleActivity.class);
+				circleIntent.putExtra(OtherCircleActivity.INTENT_NEWS_ID, currentNews.getNewsID());
+				startActivityWithRight(circleIntent);	
 			}
 		});
 	}
