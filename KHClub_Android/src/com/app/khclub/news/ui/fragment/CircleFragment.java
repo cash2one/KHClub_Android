@@ -307,15 +307,13 @@ public class CircleFragment extends BaseFragment {
 					String followJsonArray = jResult.getString(FOLLOW_LIST);
 					followList = JSON.parseArray(followJsonArray, CircleItemModel.class);
 					unfollowList = JSON.parseArray(unfollowJsonArray, CircleItemModel.class);
-
-					dataList = followList;
+					if (dataList == null) {
+						dataList = new ArrayList<CircleItemModel>();
+					}
+					//显示的数组
+					dataList.clear();
+					dataList.addAll(followList);
 					dataList.addAll(unfollowList);
-
-					// 临时用
-					List<CircleItemModel> tmpList = new ArrayList<CircleItemModel>();
-					tmpList.addAll(followList);
-					tmpList.addAll(unfollowList);
-					dataList = tmpList;
 
 					// 如果是下拉刷新
 					if (isPullDowm) {

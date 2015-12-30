@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.jivesoftware.smackx.provider.HeaderProvider;
-
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,7 +11,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.preference.PreferenceActivity.Header;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
@@ -442,6 +439,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	private void sendnews() {
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(CirclePageActivity.this, PublishNewsActivity.class);
+		intent.putExtra(ChoiceCircleActivity.INTENT_CIRCLE_ID, circle_id);
 		startActivityWithRight(intent);
 	}
 

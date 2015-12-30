@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -38,7 +37,6 @@ import com.app.khclub.base.manager.HttpManager;
 import com.app.khclub.base.manager.UserManager;
 import com.app.khclub.base.model.ImageModel;
 import com.app.khclub.base.ui.fragment.BaseFragment;
-import com.app.khclub.base.utils.HttpCacheUtils;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.LogUtils;
@@ -59,6 +57,7 @@ import com.app.khclub.news.ui.view.MultiImageView;
 import com.app.khclub.news.ui.view.MultiImageView.JumpCallBack;
 import com.app.khclub.news.ui.view.NewsBottomPopupMenu;
 import com.app.khclub.news.ui.view.NewsBottomPopupMenu.NewsBottomClickListener;
+import com.app.khclub.personal.ui.activity.OtherCircleActivity;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -434,25 +433,24 @@ public class NewsListFragment extends BaseFragment {
 	/***
 	 * 上次缓存的数据
 	 */
-	@SuppressWarnings("unchecked")
-	private void setLastData(int userID) {
-		String path = KHConst.NEWS_LIST + "?" + "user_id=" + userID + "&page=" + 1 + "&frist_time=";
-		try {
-			JSONObject JObject = HttpCacheUtils.getHttpCache(path);
-			if (null != JObject) {
-				JSONObject jResult = JObject.getJSONObject(KHConst.HTTP_RESULT);
-				if (null != jResult) {
-					List<JSONObject> JSONList = (List<JSONObject>) jResult.get(KHConst.HTTP_LIST);
-					if (null != JSONList) {
-						JsonToNewsModel(JSONList);
-					}
-				}
-			}
-		} catch (Exception e) {
-			LogUtils.e("解析本地缓存错误.");
-		}
-
-	}
+//	private void setLastData(int userID) {
+//		String path = KHConst.NEWS_LIST + "?" + "user_id=" + userID + "&page=" + 1 + "&frist_time=";
+//		try {
+//			JSONObject JObject = HttpCacheUtils.getHttpCache(path);
+//			if (null != JObject) {
+//				JSONObject jResult = JObject.getJSONObject(KHConst.HTTP_RESULT);
+//				if (null != jResult) {
+//					List<JSONObject> JSONList = (List<JSONObject>) jResult.get(KHConst.HTTP_LIST);
+//					if (null != JSONList) {
+//						JsonToNewsModel(JSONList);
+//					}
+//				}
+//			}
+//		} catch (Exception e) {
+//			LogUtils.e("解析本地缓存错误.");
+//		}
+//
+//	}
 
 	/**
 	 * titleItem的数据绑定与设置
@@ -556,6 +554,7 @@ public class NewsListFragment extends BaseFragment {
 			helper.setVisible(R.id.txt_main_circles, true);
 			helper.setText(R.id.txt_main_circles, bodyData.getCircles());
 			// Log.i("wx", bodyData.getCircles());
+			
 		}
 		// 设置地理位置
 		if (bodyData.getLocation().equals("")) {
@@ -570,6 +569,7 @@ public class NewsListFragment extends BaseFragment {
 		// 父布局监听
 		helper.setOnClickListener(R.id.miv_main_news_images, listener);
 		helper.setOnClickListener(R.id.layout_news_body_rootview, listener);
+		helper.setOnClickListener(R.id.txt_main_circles, listener);
 	}
 
 	/**
@@ -737,6 +737,13 @@ public class NewsListFragment extends BaseFragment {
 				BodyItem bodyData = (BodyItem) newsAdapter.getItem(postion);
 				// 跳转到动态详情
 				jumpToNewsDetail(bodyData, NewsConstants.KEY_BOARD_CLOSE, null);
+				break;
+			case R.id.txt_main_circles:
+				//跳转到圈子
+				BodyItem circleData = (BodyItem) newsAdapter.getItem(postion);
+				Intent circleIntent = new Intent(getActivity(), OtherCircleActivity.class);
+				circleIntent.putExtra(OtherCircleActivity.INTENT_NEWS_ID, circleData.getNewsID());
+				startActivityWithRight(circleIntent);
 				break;
 			case R.id.like_layout:
 			case R.id.xinxi_layout:

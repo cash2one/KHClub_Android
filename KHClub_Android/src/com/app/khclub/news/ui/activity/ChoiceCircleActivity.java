@@ -14,11 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import cn.sharesdk.framework.authorize.e;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.amap.api.maps2d.model.Text;
 import com.app.khclub.R;
 import com.app.khclub.base.adapter.HelloHaAdapter;
 import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
@@ -32,7 +30,6 @@ import com.app.khclub.base.ui.activity.MainTabActivity;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
-import com.app.khclub.login.ui.activity.LaunchActivity;
 import com.app.khclub.news.ui.model.CircleItemModel;
 import com.app.khclub.news.ui.model.NewsConstants;
 import com.lidroid.xutils.exception.HttpException;
@@ -41,19 +38,20 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class ChoiceCircleActivity extends BaseActivityWithTopBar {
-
+	
+	//已选的圈子ID
+	public static final String INTENT_CIRCLE_ID = "circleID";
 	// 内容
 	public static String INTENT_CONTENT_TEXT = "content_text";
 	// 位置
 	public static String INTENT_LOCATION = "location";
 	// 图片
 	public static String INTENT_IMAGES = "images";
-	private List<CircleItemModel> choice = new ArrayList<CircleItemModel>();
 	@ViewInject(R.id.follow_circle_list)
 	private ListView listView;
+	//被选中的圈子位置数组
 	private List<String> choiceList = new ArrayList<String>();
 	//private int index;
 	private String content_text;
@@ -69,6 +67,8 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 	private HelloHaAdapter<CircleItemModel> circleAdapter;
 	// 图片配置
 	private DisplayImageOptions options;
+	//已选圈子
+	private String choicedCirlce; 
 
 	@OnClick(value = { R.id.base_ll_right_btns })
 	private void clickEvent(View view) {
@@ -96,6 +96,11 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 		content_text = intent.getStringExtra(INTENT_CONTENT_TEXT);
 		location = intent.getStringExtra(INTENT_LOCATION);
 		images = intent.getStringArrayListExtra(INTENT_IMAGES);
+		//有圈子
+		if (intent.hasExtra(INTENT_CIRCLE_ID)) {
+			choicedCirlce = intent.getStringExtra(INTENT_CIRCLE_ID);
+		}
+		
 		// 添加完成按钮
 		TextView sendBtn = addRightBtn(getResources().getString(R.string.publish_news));
 		sendBtn.setTextColor(getResources().getColor(R.color.main_white));
@@ -118,15 +123,22 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 				helper.setText(R.id.circle_people_count, item.getFollow_quantity());
 				ImageView headImageView = helper.getView(R.id.circle_image);
 				String image = item.getCircle_cover_sub_image();
-				// 加入图片
-				for (CircleItemModel model : choice) {
-					if (item.getId().equals(model.getId())) {
-						helper.getView(R.id.change_circle).setVisibility(View.VISIBLE);
-						break;
-					}else {
-						helper.getView(R.id.change_circle).setVisibility(View.GONE);
-					}
+//				//是否选中处理
+//				for (CircleItemModel model : choice) {
+//					if (item.getId().equals(model.getId())) {
+//						helper.getView(R.id.change_circle).setVisibility(View.VISIBLE);
+//						break;
+//					}else {
+//						helper.getView(R.id.change_circle).setVisibility(View.GONE);
+//					}
+//				}
+				//是否选中处理
+				if (choiceList.contains(helper.getPosition()+"")) {
+					helper.getView(R.id.change_circle).setVisibility(View.VISIBLE);
+				}else {
+					helper.getView(R.id.change_circle).setVisibility(View.GONE);
 				}
+				// 加入图片
 				if (image.length() > 0) {
 					ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR + image, headImageView, options);
 				} else {
@@ -142,14 +154,16 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 				helper.getView().setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						if (null != choicedCirlce && choicedCirlce.equals(item.getId())) {
+							//默认选中的不可以取消
+							return;
+						}
 						if (choiceList.contains(helper.getPosition() + "")) {
 							choiceList.remove(helper.getPosition() + "");
 							helper.getView(R.id.change_circle).setVisibility(View.GONE);
-							choice.remove(item);
 							//index--;
 						} else {
 							choiceList.add(helper.getPosition() + "");
-							choice.add(item);
 							// if
 							// (choiceList.get(index).equals(helper.getPosition()+""))
 							// {
@@ -188,9 +202,26 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 					JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
 					// 获取数据列表
 					List<CircleItemModel> list = JSON.parseArray(jResult.getString("list"), CircleItemModel.class);
-					//测试没圈子时的假数据
-					//List<CircleItemModel> list =new ArrayList<CircleItemModel>();
+					
+					//有选中的
+					if (null != choicedCirlce) {
+						CircleItemModel tmpModel = null;
+						for (CircleItemModel circleItemModel : list) {
+							if (choicedCirlce.equals(circleItemModel.getId())) {
+								tmpModel = circleItemModel;
+								break;
+							}
+						}
+						//顺序修改
+						if (null != tmpModel) {
+							list.remove(tmpModel);
+							list.add(0, tmpModel);
+							choiceList.add("0");
+						}
+					}
+					
 					circleAdapter.replaceAll(list);
+					
 					if (list.size()==0) {
 						linearLayout.setVisibility(View.VISIBLE);
 						skip();
@@ -203,7 +234,6 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 
 				}
 			}
-
 			
 			@Override
 			public void onFailure(HttpException arg0, String arg1, String flag) {
