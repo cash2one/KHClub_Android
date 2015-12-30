@@ -151,6 +151,7 @@
 
 
     <!-- News -->
+    <string name="confirm_delete_notice">Confirm Delete Notice</string>
     <string name="notice_details">Notice Details</string>
     <string name="announcement_content_too_long">In the 140 - word</string>
     <string name="circle_master">Circle Master</string>

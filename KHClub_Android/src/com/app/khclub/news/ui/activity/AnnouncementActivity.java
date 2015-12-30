@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
 import com.app.khclub.base.adapter.HelloHaAdapter;
 import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
+import com.app.khclub.base.easeim.widget.MainPopupMenu.ClickListener;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
@@ -19,9 +20,13 @@ import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.news.ui.model.BetterMembersModel;
 import com.app.khclub.news.ui.model.CirclePageModel;
 import com.app.khclub.news.ui.model.LikeModel;
+import com.app.khclub.news.ui.model.NewsConstants;
+import com.app.khclub.news.ui.model.NewsModel;
+import com.app.khclub.news.ui.model.NoticeDetailsModel;
 import com.app.khclub.news.ui.model.NoticeModel;
 import com.app.khclub.news.ui.model.NewsItemModel.OperateItem;
 import com.app.khclub.news.ui.utils.NewsOperate;
+import com.app.khclub.news.ui.utils.NewsToItemData;
 import com.app.khclub.news.ui.utils.NoticeOperate;
 import com.app.khclub.news.ui.utils.NoticeOperate.LikeCallBack;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
@@ -40,9 +45,13 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
 import android.R.integer;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -52,7 +61,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class AnnouncementActivity extends BaseActivityWithTopBar implements OnClickListener {
+public class AnnouncementActivity extends BaseActivityWithTopBar {
 	public static final String NOTICEID = "noticeid";
 	// 下拉模式
 	public static final int PULL_DOWM_MODE = 0;
@@ -91,6 +100,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar implements OnCl
 		rightBtn.setVisibility(View.GONE);
 		circleData = (CirclePageModel) getIntent().getSerializableExtra("data");
 		sendNotice();
+		initBoradcastReceiver();
 		getData(currentPage);
 		InitListView();
 	}
@@ -107,6 +117,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar implements OnCl
 					// 跳转发布页面
 					Intent intent = new Intent(AnnouncementActivity.this, PublisAnnouncementActivity.class);
 					intent.putExtra("data", circleData);
+					//startActivityForResult(intent, 0);
 					startActivityWithRight(intent);
 				}
 			});
@@ -119,7 +130,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar implements OnCl
 
 			@Override
 			public void onLikeStart(boolean isLike) {
-				Log.i("wx",item.getIs_like() );
+				//Log.i("wx", item.getIs_like());
 				if (isLike) {
 					helper.setImageResource(R.id.like_image, R.drawable.like_btn_press);
 					item.setLike_quantity((String.valueOf(Integer.parseInt(item.getLike_quantity()) + 1)));
@@ -147,12 +158,29 @@ public class AnnouncementActivity extends BaseActivityWithTopBar implements OnCl
 				helper.setText(R.id.btn_notice_like, item.getLike_quantity());
 			}
 		});
-		
+
 		if ("1".equals(item.getIs_like())) {
 			noticeOperate.uploadLikeOperate(item.getId(), false);
 		} else {
-			//Log.i("wx", 1111+"");
+			// Log.i("wx", 1111+"");
 			noticeOperate.uploadLikeOperate(item.getId(), true);
+		}
+
+	}
+
+	protected void handerClick(View v, HelloHaBaseAdapterHelper helper, NoticeModel item) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.xinxi_layout:
+		case R.id.notice_content_root:
+			noticeDetail(item.getId());
+			break;
+		case R.id.like_layout:
+			likeOperate(v, helper, item);
+			break;
+
+		default:
+			break;
 		}
 
 	}
@@ -177,23 +205,23 @@ public class AnnouncementActivity extends BaseActivityWithTopBar implements OnCl
 					helper.setImageResource(R.id.like_image, R.drawable.like_btn_normal);
 				}
 				// 点赞监听
-				helper.setOnClickListener(R.id.like_layout, new OnClickListener() {
+
+				OnClickListener listener = new OnClickListener() {
+
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						likeOperate(v, helper, item);
+						handerClick(v, helper, item);
 					}
 
-				});
+				};
+				//点赞
+				helper.setOnClickListener(R.id.like_layout, listener);
+
 				// 评论监听
-				helper.setOnClickListener(R.id.xinxi_layout, new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						noticeDetail(item.getId());
-					}
-				});
+				helper.setOnClickListener(R.id.xinxi_layout, listener);
+				helper.setOnClickListener(R.id.notice_content_root, listener);
+
 			}
 		};
 
@@ -317,27 +345,68 @@ public class AnnouncementActivity extends BaseActivityWithTopBar implements OnCl
 
 		}, null));
 	}
-
-	@Override
-	public void onClick(View v) {
-//		// TODO Auto-generated method stub
-//		switch (v.getId()) {
-//		// case R.id.like_layout:
-//		// likeOperate();
-//		// break;
-//		case R.id.xinxi_layout:
-//			// 跳转 至公告详情页面
-//			noticeDetail();
-//			break;
-//
-//		default:
-//			break;
-//		}
+	private LocalBroadcastManager mLocalBroadcastManager;
+	/**
+	 * 初始化广播信息
+	 */
+	private void initBoradcastReceiver() {
+		mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+		IntentFilter myIntentFilter = new IntentFilter();
+		myIntentFilter.addAction(KHConst.BROADCAST_NOTICE_LIST_REFRESH);
+		// 注册广播
+		mLocalBroadcastManager.registerReceiver(mBroadcastReceiver, myIntentFilter);
 	}
-
+	/**
+	 * 广播接收处理
+	 */
+	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent resultIntent) {
+			String action = resultIntent.getAction();
+			//Log.i("wx", action);
+			if (action.equals(KHConst.BROADCAST_NOTICE_LIST_REFRESH)) {
+				if (resultIntent.hasExtra(NewsConstants.OPERATE_UPDATE)) {
+					// 更新动态列表
+					NoticeDetailsModel resultNews = (NoticeDetailsModel) resultIntent.getSerializableExtra(NewsConstants.OPERATE_UPDATE);
+					for (int index = 0; index < datalist.size(); index++) {
+						if (resultNews.getId().equals(datalist.get(index).getId())) {
+							datalist.get(index).setComment_quantity(resultNews.getCommentQuantity());
+							datalist.get(index).setLike_quantity(resultNews.getLikeQuantity());
+							datalist.get(index).setIs_like(resultNews.getIsLike());
+							noticeModelAdapter.replaceAll(datalist);
+							break;
+						}
+					}
+				} else if (resultIntent.hasExtra(NewsConstants.OPERATE_DELETET)) {
+					String resultID = resultIntent.getStringExtra(NewsConstants.OPERATE_DELETET);
+					// 删除该动态
+					for (int index = 0; index < datalist.size(); index++) {
+						if (resultID.equals(datalist.get(index).getId())) {
+							datalist.remove(index);
+							noticeModelAdapter.replaceAll(datalist);
+							break;
+						}
+					}
+				} else if (resultIntent.hasExtra(NewsConstants.OPERATE_NO_ACTION)) {
+					// 无改变
+				} else if (resultIntent.hasExtra(NewsConstants.PUBLISH_FINISH)) {
+					// 发布了公告,进行刷新
+					if (!isRequestingData) {
+						isRequestingData = true;
+						currentPage = 1;
+						isPullDown = true;
+						getData(currentPage);
+					}
+				} else if (resultIntent.hasExtra(NewsConstants.NEWS_LISTVIEW_REFRESH)) {
+					// 点击table栏进行刷新
+					//smoothToTop();
+				}
+			}
+		}
+	};
 	private void noticeDetail(String noticeid) {
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(AnnouncementActivity.this,NoticeDetailActivity.class);
+		Intent intent = new Intent(AnnouncementActivity.this, NoticeDetailActivity.class);
 		intent.putExtra(NOTICEID, noticeid);
 		startActivityWithRight(intent);
 	}

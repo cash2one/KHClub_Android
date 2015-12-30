@@ -217,6 +217,7 @@
     <string name="modify_success">修改成功</string>
     <string name="reply">回复</string>
     <string name="confirm_delete">确认删除信息？</string>
+    <string name="confirm_delete_notice">确认删除公告？</string>
     <string name="confirm_clear">确认清空？</string>
     <string name="confirm">确认</string>
     <string name="publish_news">发送</string>

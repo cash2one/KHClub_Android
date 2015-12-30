@@ -1,10 +1,16 @@
 package com.app.khclub.news.ui.model;
 
+import java.io.Serializable;
+
 import com.alibaba.fastjson.JSONObject;
 
 import android.util.Log;
 
-public class NoticeDetailsModel {
+public class NoticeDetailsModel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 公告内容
 	private String noticeContent;
 	// 是否点赞

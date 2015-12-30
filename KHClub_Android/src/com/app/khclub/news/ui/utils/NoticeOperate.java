@@ -57,13 +57,13 @@ public class NoticeOperate {
 	/**
 	 * 删除动态操作
 	 */
-	public void deleteNews(String newsId) {
+	public void deleteNitice(String noticeId) {
 		lastOperateType = OP_Type_Delete_News;
 		callInterface.onStart(OP_Type_Delete_News);
 		RequestParams params = new RequestParams();
-		params.addBodyParameter("notice_id", newsId);
-
-		HttpManager.post(KHConst.DELETE_NEWS, params, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
+		params.addBodyParameter("notice_id", noticeId);
+		Log.i("wx", KHConst.DELETE_NOTICE+noticeId);
+		HttpManager.post(KHConst.DELETE_NOTICE, params, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
 			@Override
 			public void onSuccess(JSONObject jsonResponse, String flag) {
@@ -108,7 +108,7 @@ public class NoticeOperate {
 		lastOperateType = OP_Type_Add_Comment;
 		callInterface.onStart(OP_Type_Add_Comment);
 		RequestParams params = new RequestParams();
-		Log.i("wx", String.valueOf(user.getUid()));
+		//Log.i("wx", String.valueOf(user.getUid()));
 		params.addBodyParameter("user_id", String.valueOf(user.getUid()));
 		params.addBodyParameter("notice_id", parameter[0]);
 		params.addBodyParameter("comment_content", parameter[1]);
@@ -131,15 +131,15 @@ public class NoticeOperate {
 							// 获取评论成功的返回值
 							JSONObject JResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
 							NoticeReplyModel temMode = new NoticeReplyModel();
-							Log.i("wx", JResult.toString());
+							//Log.i("wx", JResult.toString());
    						    temMode.setContentWithJson(JResult);
 							temMode.setName(user.getName());
 						    temMode.setHead_sub_image(KHConst.ATTACHMENT_ADDR + user.getHead_sub_image());
 							temMode.setJob(user.getJob());
 							if (parameter.length >= 3) {
-								temMode.setUser_id(parameter[2]);
+								temMode.setTarget_id(parameter[2]);
 							} else {
-								temMode.setUser_id("");
+								temMode.setTarget_id("");
 							}
 							if (parameter.length >= 4) {
 								temMode.setTarget_name(parameter[3]);
@@ -180,12 +180,13 @@ public class NoticeOperate {
 	 * @param newsID
 	 *            动态的id
 	 */
-	public void deleteComment(String CID, String newsID) {
+	public void deleteComment(String CID, String noticeID) {
 		lastOperateType = OP_Type_Delete_Comment;
 		callInterface.onStart(OP_Type_Delete_Comment);
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("cid", CID);
-		params.addBodyParameter("notice_id", newsID);
+		Log.i("wx", noticeID);
+		params.addBodyParameter("notice_id", noticeID);
 
 		HttpManager.post(KHConst.DELETE_NOTICE_COMMENT, params, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 

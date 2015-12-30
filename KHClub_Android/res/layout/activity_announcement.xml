@@ -11,6 +11,7 @@
    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <TextView android:text="暂无"/>
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/announcement_listView"
         android:layout_width="match_parent"

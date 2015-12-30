@@ -16,38 +16,40 @@ public interface KHConst {
 
 	public static final int PAGE_SIZE = 10;
 
-	//客服账号
+	// 客服账号
 	public static final String KH_ROBOT = "kh100";
-	//分享的网址
+	// 分享的网址
 	public static final String SHARE_WEB = "http://www.khclub.sg/";
-	//名片分享网址
-//	public static final String SHARE_CARD_WEB = "http://120.25.121.179/api/index.html";
+	// 名片分享网址
+	// public static final String SHARE_CARD_WEB =
+	// "http://120.25.121.179/api/index.html";
 	public static final String SHARE_CARD_WEB = ROOT_PATH + "index.php/Home/WX/cardDetail";
-	//圈子分享网址
+	// 圈子分享网址
 	public static final String SHARE_CIRCLE_WEB = ROOT_PATH + "index.php/Home/WX/details";
-	
-	//本地持久的额外信息key
+
+	// 本地持久的额外信息key
 	public static final String TITLE_1_KEY = "title_1";
 	public static final String TITLE_2_KEY = "title_2";
 	public static final String TITLE_3_KEY = "title_3";
 	public static final String TITLE_4_KEY = "title_4";
-	
+
 	// IM和推送 公用前缀
 	public static final String KH = "kh";
 	public static final String KH_GROUP = "khGroup";
 	// IM通用密码
 	public static final String IM_PWD = "123456";
 
-	//服务器默认图片
+	// 服务器默认图片
 	public static final String ROOT_IMG = ROOT_PATH + "/icon.png";
-	
+
 	// broadCast
 	// 状态回复消息或点赞或者新好友
 	public static final String BROADCAST_NEW_MESSAGE_PUSH = "com.khclub.broadcastreceiver.newsPush";
 	public static final String BROADCAST_NEWS_LIST_REFRESH = "com.khclub.broadcastreceiver.newsPush";
+	public static final String BROADCAST_NOTICE_LIST_REFRESH = "com.khclub.broadcastreceiver.noticePush";
 	public static final String BROADCAST_TAB_BADGE = "com.khclub.broadcastreceiver.tabBadge";
 	public static final String BROADCAST_CIRCLE_LIST_REFRESH = "com.khclub.broadcastreceiver.circlePush";
-	//群组邀请
+	// 群组邀请
 	public static final String BROADCAST_GROUP_INVITE = "com.khclub.broadcastreceiver.groupInvite";
 
 	// 匹配网页
@@ -70,7 +72,7 @@ public interface KHConst {
 	public static final String FIND_PWD = DOMIN + "/findPwd";
 	// 用户登录
 	public static final String LOGIN_USER = DOMIN + "/loginUser";
-	//////////////////////////////////////////////首页'状态'部分////////////////////////////////////////////////
+	////////////////////////////////////////////// 首页'状态'部分////////////////////////////////////////////////
 	// 发布状态
 	public static final String PUBLISH_NEWS = DOMIN + "/publishNews";
 	// 状态新闻列表
@@ -83,7 +85,7 @@ public interface KHConst {
 	public static final String LIKE_OR_CANCEL = DOMIN + "/likeOrCancel";
 	// 新闻详情
 	public static final String NEWS_DETAIL = DOMIN + "/newsDetail";
-	//////////////////////////////////////////////首页'圈子'部分////////////////////////////////////////////////
+	////////////////////////////////////////////// 首页'圈子'部分////////////////////////////////////////////////
 	// 圈子列表 废弃
 	public static final String GET_CIRCLE_LIST = DOMIN + "/getCircleList";
 	// 创建圈子
@@ -93,7 +95,7 @@ public interface KHConst {
 	// 圈子列表
 	public static final String GET_PERSONAL_CIRCLE_LIST = DOMIN + "/getPersonalCircleList";
 	// 圈子主页列表
-	public static final String GET_CIRCLE_HOME_LIST = DOMIN + "/getCircleHomeList";	
+	public static final String GET_CIRCLE_HOME_LIST = DOMIN + "/getCircleHomeList";
 	// 我的圈子列表
 	public static final String GET_MY_CIRCLE_LIST = DOMIN + "/getMyCircleList";
 	// 关注或者取消关注圈子
@@ -105,36 +107,32 @@ public interface KHConst {
 	// 发布圈子公告
 	public static final String POST_NEW_NOTICE = DOMIN + "/postNewNotice";
 	// 获取公告列表
-	public static final String GET_NOTICE_LIST = DOMIN + "/getNoticeList";	
-	//获取公告详情
+	public static final String GET_NOTICE_LIST = DOMIN + "/getNoticeList";
+	// 获取公告详情
 	public static final String GET_NOTICE_DETAILS = DOMIN + "/getNoticeDetails";
 	// 发公告评论
 	public static final String SEND_NOTICE_COMMENT = DOMIN + "/sendNoticeComment";
-	//删除公告评论接口
+	// 删除公告评论接口
 	public static final String DELETE_NOTICE_COMMENT = DOMIN + "/deleteNoticeComment";
+	// 删除公告评论接口
+	public static final String DELETE_NOTICE = DOMIN + "/deleteNotice";
 	// 公告点赞
-	public static final String NOTICE_LIKE_OR_CANCEL = DOMIN + "/noticeLikeOrCancel";		
-	//////////////////////////////////////////////个人信息////////////////////////////////////////////////
+	public static final String NOTICE_LIKE_OR_CANCEL = DOMIN + "/noticeLikeOrCancel";
+	////////////////////////////////////////////// 个人信息////////////////////////////////////////////////
 	// 修改个人信息
-	public static final String CHANGE_PERSONAL_INFORMATION = DOMIN
-			+ "/changePersonalInformation";
+	public static final String CHANGE_PERSONAL_INFORMATION = DOMIN + "/changePersonalInformation";
 	// 修改个人额外信息
-	public static final String CHANGE_PERSONAL_EXTRA_INFORMATION = DOMIN
-			+ "/changePersonalExtraInformation";	
+	public static final String CHANGE_PERSONAL_EXTRA_INFORMATION = DOMIN + "/changePersonalExtraInformation";
 	// 获取个人额外信息
-	public static final String GET_PERSONAL_EXTRA_INFORMATION = DOMIN
-			+ "/getPersonalExtraInformation";		
+	public static final String GET_PERSONAL_EXTRA_INFORMATION = DOMIN + "/getPersonalExtraInformation";
 	// 修改有可见状态的个人信息
-	public static final String CHANGE_PERSONAL_INFORMATION_STATE = DOMIN
-			+ "/changePersonalInformationState";
+	public static final String CHANGE_PERSONAL_INFORMATION_STATE = DOMIN + "/changePersonalInformationState";
 	// 获取用户二维码
 	public static final String GET_USER_QRCODE = DOMIN + "/getUserQRCode";
 	// 修改个人信息中的图片 如背景图 头像
-	public static final String CHANGE_INFORMATION_IMAGE = DOMIN
-			+ "/changeInformationImage";
+	public static final String CHANGE_INFORMATION_IMAGE = DOMIN + "/changeInformationImage";
 	// 个人信息中 获取最新动态的十张图片
-	public static final String GET_NEWS_COVER_LIST = DOMIN
-			+ "/getNewsCoverList";
+	public static final String GET_NEWS_COVER_LIST = DOMIN + "/getNewsCoverList";
 	// 个人信息中 用户发布过的状态列表
 	public static final String USER_NEWS_LIST = DOMIN + "/userNewsList";
 	// 个人信息 删除状态
@@ -144,8 +142,7 @@ public interface KHConst {
 	// 举报用户
 	public static final String REPORT_OFFENCE = DOMIN + "/reportOffence";
 	// 版本更新
-	public static final String GET_LASTEST_VERSION = DOMIN
-			+ "/getLastestVersion";
+	public static final String GET_LASTEST_VERSION = DOMIN + "/getLastestVersion";
 	// ////////////////////////////////////////IM模块//////////////////////////////////////////
 	// 添加好友
 	public static final String Add_FRIEND = DOMIN + "/addFriend";
@@ -158,13 +155,12 @@ public interface KHConst {
 	// 创建圈子
 	public static final String CREATE_GROUP = DOMIN + "/createGroup";
 	// 获取群组图片和名字
-	public static final String GET_GROUP_IMAGE_AND_NAME_AND_QRCODE = DOMIN
-			+ "/getGroupImageAndNameAndQrcode";
+	public static final String GET_GROUP_IMAGE_AND_NAME_AND_QRCODE = DOMIN + "/getGroupImageAndNameAndQrcode";
 	// 更新群组名字
 	public static final String UPDATE_GROUP_NAME = DOMIN + "/updateGroupName";
 	// 更新群组封面
 	public static final String UPDATE_GROUP_COVER = DOMIN + "/updateGroupCover";
-	//同步全部好友
+	// 同步全部好友
 	public static final String GET_ALL_FRIENDS_LIST = DOMIN + "/getAllFriendsList";
 
 	// //////////////////////////////////////发现模块//////////////////////////////////////////
@@ -181,6 +177,5 @@ public interface KHConst {
 	public static final String GET_COLLECT_CARD_LIST = DOMIN + "/getCardList";
 	// ////////////////////////////主菜，搜索，二维码，创建群///////////////////////////////////
 	// 搜索
-	public static final String SEARCH_USER_OR_GROUP = DOMIN
-			+ "/findUserOrGroup";
+	public static final String SEARCH_USER_OR_GROUP = DOMIN + "/findUserOrGroup";
 }

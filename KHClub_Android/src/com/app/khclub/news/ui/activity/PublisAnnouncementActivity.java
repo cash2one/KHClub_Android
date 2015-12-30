@@ -9,10 +9,13 @@ import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.news.ui.model.CirclePageModel;
+import com.app.khclub.news.ui.model.NewsConstants;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -110,7 +113,15 @@ public class PublisAnnouncementActivity extends BaseActivityWithTopBar {
 								R.string.net_error, Toast.LENGTH_SHORT).show();
 					}
 				}, null));
+		refreshsNoticeList();
 		finish();
+	}
+
+	private void refreshsNoticeList() {
+		// TODO Auto-generated method stub
+		Intent mIntent = new Intent(KHConst.BROADCAST_NOTICE_LIST_REFRESH);
+		mIntent.putExtra(NewsConstants.PUBLISH_FINISH,"refresh");
+		LocalBroadcastManager.getInstance(PublisAnnouncementActivity.this).sendBroadcast(mIntent);
 	}
 
 }
