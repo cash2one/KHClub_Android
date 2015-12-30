@@ -68,7 +68,9 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 	// 图片配置
 	private DisplayImageOptions options;
 	//已选圈子
-	private String choicedCirlce; 
+	private String choicedCirlce;
+	//正在提交中的标示
+	private Boolean isUpload = false;
 
 	@OnClick(value = { R.id.base_ll_right_btns })
 	private void clickEvent(View view) {
@@ -255,6 +257,11 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 	}
 
 	private void publishNews() {
+		
+		if (isUpload) {
+			return;
+		}
+		
 		if (choiceList.isEmpty()) {
 			ToastUtil.show(this, R.string.choice_circle_none);
 			return;
@@ -288,12 +295,15 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 			sb.delete(sb.length() - 1, sb.length());
 		}
 		params.addBodyParameter("circles", sb.toString());
+		
+		isUpload = true;
 		// 发布
 		HttpManager.post(KHConst.PUBLISH_NEWS, params, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
 			@Override
 			public void onSuccess(JSONObject jsonResponse, String flag) {
 				super.onSuccess(jsonResponse, flag);
+				isUpload = false;
 				hideLoading();
 				int status = jsonResponse.getIntValue("status");
 				switch (status) {
@@ -314,6 +324,7 @@ public class ChoiceCircleActivity extends BaseActivityWithTopBar {
 			@Override
 			public void onFailure(HttpException arg0, String arg1, String flag) {
 				super.onFailure(arg0, arg1, flag);
+				isUpload = false;
 				hideLoading();
 				Toast.makeText(ChoiceCircleActivity.this, R.string.net_error, Toast.LENGTH_SHORT).show();
 			}
