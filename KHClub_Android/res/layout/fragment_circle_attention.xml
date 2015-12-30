@@ -66,11 +66,12 @@
                 android:id="@+id/circle_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="18dp"
                 android:text="@string/circle_name"
                 android:textSize="14sp" />
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/circle_people_image"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
@@ -79,6 +80,7 @@
                 android:src="@drawable/member2x" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/circle_people_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,8 +93,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/circle_people_count"
-                android:layout_marginTop="12dp"
+                android:layout_below="@id/circle_name"
+                android:layout_marginTop="30dp"
                 android:background="@color/main_light_gary" />
 
             <RelativeLayout

@@ -1,6 +1,5 @@
 package com.app.khclub.news.ui.fragment;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -169,7 +168,7 @@ public class CircleFragment extends BaseFragment {
 				linearLayout.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						// 跳转到其他人页面
+						// 跳转到圈子首页
 						Intent intent = new Intent(getActivity(), CirclePageActivity.class);
 						intent.putExtra(CIRCLE_ID, item.getId());
 

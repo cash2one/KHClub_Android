@@ -2,6 +2,14 @@ package com.app.khclub.news.ui.activity;
 
 import java.util.List;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.ListView;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
@@ -10,40 +18,23 @@ import com.app.khclub.base.adapter.HelloHaBaseAdapterHelper;
 import com.app.khclub.base.helper.JsonRequestCallBack;
 import com.app.khclub.base.helper.LoadDataHandler;
 import com.app.khclub.base.manager.HttpManager;
-import com.app.khclub.base.manager.UserManager;
-import com.app.khclub.base.model.UserModel;
 import com.app.khclub.base.ui.activity.BaseActivityWithTopBar;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.KHUtils;
-import com.app.khclub.base.utils.LogUtils;
 import com.app.khclub.base.utils.ToastUtil;
-import com.app.khclub.message.ui.activity.CollectCardActivity;
 import com.app.khclub.news.ui.model.BetterMembersModel;
-import com.app.khclub.news.ui.model.CircleItemModel;
 import com.app.khclub.personal.ui.activity.OtherPersonalActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
-
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 public class BetterMemberActivity extends BaseActivityWithTopBar {
 
@@ -92,12 +83,13 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 				} else {
 					helper.setVisible(R.id.all_club_members_layout, false);
 				}
-				helper.setText(R.id.member_user_name, item.getName());
-				if ("".equals(item.getJob())) {
-					helper.setText(R.id.member_job, "暂无信息");
-				} else {
-					helper.setText(R.id.member_job, item.getJob());
+				//圈主
+				if (position == 1) {
+					helper.setVisible(R.id.circle_master_tv, true);
 				}
+				
+				helper.setText(R.id.member_user_name, item.getName());
+				helper.setText(R.id.member_job, KHUtils.emptyRetunNone(item.getJob()));
 				ImageView userImageView = helper.getView(R.id.member_user_image);
 				ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR + item.getHead_sub_image(),
 						userImageView, headImageOptions);
@@ -199,6 +191,7 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 					dataList = JSON.parseArray(followJsonArray, BetterMembersModel.class);
 					// 如果是下拉刷新
 					if (isPullDown) {
+						dataList.add(0, new BetterMembersModel());
 						MembersModelAdapter.replaceAll(dataList);
 					} else {
 						MembersModelAdapter.addAll(dataList);
