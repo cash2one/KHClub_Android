@@ -172,7 +172,7 @@
     <string name="choice_circle">Choice Cirlce</string>
     <string name="choice_circle_none">You need to choice a circle</string>
     <string name="modify_circle">Modify Circle</string>
-    <string name="circle_attention_fail">Attention Fail</string>
+    <string name="circle_attention_fail">Follow Fail</string>
     <string name="create_circle_introduce">Club Introduce</string>
     <string name="create_circle_name">Club Name</string>
     <string name="circle_name_limit">Content can\'t exceed 7 characters</string>
@@ -544,12 +544,12 @@
     <string name="my_collect_code">Collection of cards</string>
     <string name="exchange_card">（Exchange card）</string>
     <string name="picture_number_count"></string>
-    <string name="attention_success">Attention Success</string>
-    <string name="unattention_success">Unattention Success </string>
-    <string name="unattention_fail">Unattention Fail</string>
+    <string name="attention_success">Follow Success</string>
+    <string name="unattention_success">Unfollow Success </string>
+    <string name="unattention_fail">Unfollow Fail</string>
     	<string name="cover_name_unnull">Cover and Name unble null</string>	<string name="confirm_call_phone">Whether to call customer service</string>
 	<string name="sdcard_inexistence">SDCard Inexistence</string> 
-	<string name="no_announcement">No announcement</string>	<string name="go_attention">Pay attention to</string> 	<string name="chioce_circle_attention">Chioce circle attention</string> 	
+	<string name="no_announcement">No announcement</string>	<string name="go_attention">To Follow </string> 	<string name="chioce_circle_attention">Chioce circle Follow</string> 	
 	 
 	
 	

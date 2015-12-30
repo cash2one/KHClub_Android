@@ -407,6 +407,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 					// 无改变
 				} else if (resultIntent.hasExtra(NewsConstants.PUBLISH_FINISH)) {
 					// 发布了公告,进行刷新
+					txt_no_notice.setVisibility(View.GONE);
 					if (!isRequestingData) {
 						isRequestingData = true;
 						currentPage = 1;

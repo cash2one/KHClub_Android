@@ -1060,7 +1060,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 			this.finishWithRight();
 			return false;
-		} else {
+		} else { 
 			return super.onKeyDown(keyCode, event);
 		}
 	}
