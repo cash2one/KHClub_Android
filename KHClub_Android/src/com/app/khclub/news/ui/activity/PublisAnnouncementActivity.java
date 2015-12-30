@@ -37,6 +37,7 @@ public class PublisAnnouncementActivity extends BaseActivityWithTopBar {
 	@Override
 	protected void setUpView() {
 		// TODO Auto-generated method stub
+		setBarText(getString(R.string.send_notice));
 		TextView sendBtn = addRightBtn(getResources().getString(
 				R.string.publish_news));
 		sendBtn.setTextColor(getResources().getColor(R.color.main_white));

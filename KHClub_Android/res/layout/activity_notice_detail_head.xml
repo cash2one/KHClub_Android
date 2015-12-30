@@ -43,8 +43,8 @@
             <ImageView
                 android:id="@+id/like_notice"
                 android:layout_marginRight="3dp"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignBottom="@id/notice_publish_date"
                 android:src="@drawable/like_btn_press"

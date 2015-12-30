@@ -59,6 +59,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class AnnouncementActivity extends BaseActivityWithTopBar {
@@ -77,6 +78,8 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 	private boolean isRequestingData = false;
 	// 是否是最后一页
 	private CirclePageModel circleData;
+	@ViewInject(R.id.no_notice)
+	TextView txt_no_notice;
 	@ViewInject(R.id.announcement_listView)
 	// 公告listview
 	private PullToRefreshListView noticeListView;
@@ -117,7 +120,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 					// 跳转发布页面
 					Intent intent = new Intent(AnnouncementActivity.this, PublisAnnouncementActivity.class);
 					intent.putExtra("data", circleData);
-					//startActivityForResult(intent, 0);
+					// startActivityForResult(intent, 0);
 					startActivityWithRight(intent);
 				}
 			});
@@ -130,7 +133,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onLikeStart(boolean isLike) {
-				//Log.i("wx", item.getIs_like());
+				// Log.i("wx", item.getIs_like());
 				if (isLike) {
 					helper.setImageResource(R.id.like_image, R.drawable.like_btn_press);
 					item.setLike_quantity((String.valueOf(Integer.parseInt(item.getLike_quantity()) + 1)));
@@ -215,7 +218,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 					}
 
 				};
-				//点赞
+				// 点赞
 				helper.setOnClickListener(R.id.like_layout, listener);
 
 				// 评论监听
@@ -302,6 +305,9 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 					// 获取动态列表
 					String followJsonArray = jResult.getString("list");
 					datalist = JSON.parseArray(followJsonArray, NoticeModel.class);
+					if (datalist.size() == 0) {
+						txt_no_notice.setVisibility(View.VISIBLE);
+					}
 					// 如果是下拉刷新
 					if (isPullDown) {
 						noticeModelAdapter.replaceAll(datalist);
@@ -345,7 +351,9 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 
 		}, null));
 	}
+
 	private LocalBroadcastManager mLocalBroadcastManager;
+
 	/**
 	 * 初始化广播信息
 	 */
@@ -356,6 +364,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 		// 注册广播
 		mLocalBroadcastManager.registerReceiver(mBroadcastReceiver, myIntentFilter);
 	}
+
 	/**
 	 * 广播接收处理
 	 */
@@ -363,20 +372,27 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 		@Override
 		public void onReceive(Context context, Intent resultIntent) {
 			String action = resultIntent.getAction();
-			//Log.i("wx", action);
+			// Log.i("wx", action);
 			if (action.equals(KHConst.BROADCAST_NOTICE_LIST_REFRESH)) {
 				if (resultIntent.hasExtra(NewsConstants.OPERATE_UPDATE)) {
-					// 更新动态列表
-					NoticeDetailsModel resultNews = (NoticeDetailsModel) resultIntent.getSerializableExtra(NewsConstants.OPERATE_UPDATE);
-					for (int index = 0; index < datalist.size(); index++) {
-						if (resultNews.getId().equals(datalist.get(index).getId())) {
-							datalist.get(index).setComment_quantity(resultNews.getCommentQuantity());
-							datalist.get(index).setLike_quantity(resultNews.getLikeQuantity());
-							datalist.get(index).setIs_like(resultNews.getIsLike());
-							noticeModelAdapter.replaceAll(datalist);
-							break;
-						}
+				// 更新动态列表
+					if (!isRequestingData) {
+						isRequestingData = true;
+						currentPage = 1;
+						isPullDown = true;
+						getData(currentPage);
 					}
+//					NoticeDetailsModel resultNews = (NoticeDetailsModel) resultIntent
+//							.getSerializableExtra(NewsConstants.OPERATE_UPDATE);
+//					for (int index = 0; index < datalist.size(); index++) {
+//						if (resultNews.getId().equals(datalist.get(index).getId())) {
+//							datalist.get(index).setComment_quantity(resultNews.getCommentQuantity());
+//							datalist.get(index).setLike_quantity(resultNews.getLikeQuantity());
+//							datalist.get(index).setIs_like(resultNews.getIsLike());
+//							noticeModelAdapter.replaceAll(datalist);
+//							break;
+//						}
+//					}
 				} else if (resultIntent.hasExtra(NewsConstants.OPERATE_DELETET)) {
 					String resultID = resultIntent.getStringExtra(NewsConstants.OPERATE_DELETET);
 					// 删除该动态
@@ -399,11 +415,12 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 					}
 				} else if (resultIntent.hasExtra(NewsConstants.NEWS_LISTVIEW_REFRESH)) {
 					// 点击table栏进行刷新
-					//smoothToTop();
+					// smoothToTop();
 				}
 			}
 		}
 	};
+
 	private void noticeDetail(String noticeid) {
 		// TODO Auto-generated method stub
 		Intent intent = new Intent(AnnouncementActivity.this, NoticeDetailActivity.class);

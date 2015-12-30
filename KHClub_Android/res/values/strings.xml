@@ -152,6 +152,7 @@
 
 
     <!-- News -->
+    <string name="send_notice">Send Notice</string>
     <string name="confirm_delete_notice">Confirm Delete Notice</string>
     <string name="notice_details">Notice Details</string>
     <string name="announcement_content_too_long">In the 140 - word</string>
@@ -546,9 +547,9 @@
     <string name="attention_success">Attention Success</string>
     <string name="unattention_success">Unattention Success </string>
     <string name="unattention_fail">Unattention Fail</string>
-    <string name="attention">Attention</string>	<string name="cover_name_unnull">Cover and Name unble null</string>	<string name="confirm_call_phone">Whether to call customer service</string>
+    	<string name="cover_name_unnull">Cover and Name unble null</string>	<string name="confirm_call_phone">Whether to call customer service</string>
 	<string name="sdcard_inexistence">SDCard Inexistence</string> 
-	<string name="no_announcement">No announcement</string> 
+	<string name="no_announcement">No announcement</string>	<string name="go_attention">Pay attention to</string> 	<string name="chioce_circle_attention">Chioce circle attention</string> 	
 	 
 	
 	

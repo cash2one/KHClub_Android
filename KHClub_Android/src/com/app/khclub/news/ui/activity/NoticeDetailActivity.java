@@ -300,7 +300,7 @@ public class NoticeDetailActivity extends BaseActivityWithTopBar implements OnCl
 			currentOperateIndex = postion;
 
 			if (isCurrentShowComment) {
-				//Log.i("wx", postion + "");
+				// Log.i("wx", postion + "");
 				// 在显示评论的情况下
 				if (viewID == R.id.notice_commemt_root) {
 					if (replydata.get(currentOperateIndex).getUser_id()
@@ -467,11 +467,6 @@ public class NoticeDetailActivity extends BaseActivityWithTopBar implements OnCl
 		}
 	}
 
-	protected void setReply(HelloHaBaseAdapterHelper helper, Map<String, String> item) {
-		// TODO Auto-generated method stub
-
-	}
-
 	/*
 	 * protected void setHeaderData(HelloHaBaseAdapterHelper helper) { // TODO
 	 * Auto-generated method stub
@@ -562,7 +557,6 @@ public class NoticeDetailActivity extends BaseActivityWithTopBar implements OnCl
 			// isCurrentShowComment = false;
 			// Log.i("wx", 1 + "");
 		}
-
 		isCurrentShowComment = false;
 		listAdapter.replaceAll(dataList);
 	}
@@ -708,7 +702,11 @@ public class NoticeDetailActivity extends BaseActivityWithTopBar implements OnCl
 				case NoticeOperate.OP_Type_Delete_Comment:
 					if (isSucceed) {
 						// 删除评论
+						//Log.i("wx", listAdapter.getCount() + "");
+						replydata.remove(currentOperateIndex);
 						listAdapter.remove(currentOperateIndex);
+						listAdapter.notifyDataSetChanged();
+						//Log.i("wx", listAdapter.getCount() + "");
 						ToastUtil.show(NoticeDetailActivity.this,
 								getResources().getString(R.string.news_delete_success));
 						detail.setCommentQuantity(String.valueOf(Integer.parseInt(detail.getCommentQuantity()) - 1));
@@ -786,7 +784,7 @@ public class NoticeDetailActivity extends BaseActivityWithTopBar implements OnCl
 	 */
 	private void updateResultData() {
 		Log.i("wx", id);
-		Log.i("wx",detail.getId());
+		Log.i("wx", detail.getId());
 		Intent mIntent = new Intent(KHConst.BROADCAST_NOTICE_LIST_REFRESH);
 		if (actionType.equals(NewsConstants.OPERATE_UPDATE)) {
 			mIntent.putExtra(NewsConstants.OPERATE_UPDATE, detail);

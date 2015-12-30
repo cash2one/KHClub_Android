@@ -150,6 +150,7 @@
 
 
     <!-- News -->
+    <string name="send_notice">发布公告</string>
     <string name="notice_details">公告详情</string>
     <string name="circle_master">圈主</string>
      <string name="circle_announcement">圈公告</string>
@@ -162,7 +163,7 @@
     <string name="circle_address">地址</string>   
     <string name="circle_info">介绍</string> 
     <string name="edit_circle">编辑圈子</string>
-    <string name="all_members">全部圈友</string>
+    <string name="all_members">推荐会员</string>
     <string name="publish_circle_from">来自：</string>
     <string name="choice_circle">选择圈子</string>
     <string name="choice_circle_none">您需要选择一个圈子</string>
@@ -175,7 +176,7 @@
     <string name="create_circle_title">创建圈子</string>
     <string name="create_uploading_cover">上传封面</string>
     <string name="club_main_page">圈子主页</string>
-    <string name="news_club_expert">圈达人</string>
+    <string name="news_club_expert">圈子会员</string>
     <string name="news_circle_friend">圈友：</string>
     <string name="news_master_name">圈主：</string>
     <string name="news_circle_name">圈子名称：</string>
@@ -561,4 +562,6 @@
     <string name="confirm_call_phone">是否拨打客服电话</string>
     <string name="sdcard_inexistence">SD卡不存在</string> 
     <string name="no_announcement">暂无公告</string>
+    <string name="go_attention">去关注</string>
+    <string name="chioce_circle_attention">选择去圈子，去关注</string> 
 </resources>

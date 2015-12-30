@@ -45,8 +45,8 @@
             <TextView
                 android:visibility="gone"
                 android:id="@+id/circle_master_tv"
-                android:layout_width="30dp"
-                android:layout_height="16dp"
+                android:layout_width="32dp"
+                android:layout_height="18dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/circle_master"
                 android:gravity="center"
