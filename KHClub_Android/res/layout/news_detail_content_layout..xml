@@ -122,9 +122,8 @@
             android:id="@+id/txt_main_circles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
             android:paddingTop="@dimen/news_item_margins_top"
-            android:singleLine="true"
+            android:layout_marginRight="10dp"
             android:textColor="#deb574"
             android:textSize="@dimen/font_size_tiny"
             android:visibility="gone" />
