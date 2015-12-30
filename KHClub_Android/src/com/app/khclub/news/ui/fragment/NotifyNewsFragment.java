@@ -28,7 +28,9 @@ import com.app.khclub.base.ui.view.CustomListViewDialog;
 import com.app.khclub.base.ui.view.CustomListViewDialog.ClickCallBack;
 import com.app.khclub.base.utils.KHConst;
 import com.app.khclub.base.utils.TimeHandle;
+import com.app.khclub.news.ui.activity.AnnouncementActivity;
 import com.app.khclub.news.ui.activity.NewsDetailActivity;
+import com.app.khclub.news.ui.activity.NoticeDetailActivity;
 import com.app.khclub.news.ui.model.NewsConstants;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -178,6 +180,9 @@ public class NotifyNewsFragment extends BaseFragmentWithTopBar {
 				
 				if (newsPushModel.getType() == NewsPushModel.PushNoticeComment) {
 					//点击进入圈子公告
+					Intent noticeIntent = new Intent(getActivity(),NoticeDetailActivity.class);
+					noticeIntent.putExtra(AnnouncementActivity.NOTICEID, "" + newsPushModel.getNews_id());
+					startActivityWithRight(noticeIntent);					
 					return;
 				}
 				

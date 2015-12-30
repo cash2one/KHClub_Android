@@ -54,7 +54,7 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 
 	public static final int LOCATION_SELECT = 100;// 地理位置返回
 	public static final String IMAGE_UNSPECIFIED = "image/*";
-
+	
 	// 添加附件的layout
 	@ViewInject(R.id.addImageLayout)
 	private RelativeLayout addImageLayout;
