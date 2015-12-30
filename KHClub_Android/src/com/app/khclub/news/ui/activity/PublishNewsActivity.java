@@ -45,7 +45,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class PublishNewsActivity extends BaseActivityWithTopBar {
-
+	
 	public static final int TAKE_PHOTO = 1;// 拍照
 	public static final int ALBUM_SELECT = 2;// 相册选取
 	public static final int PHOTO_ZOOM = 3; // 缩放
@@ -271,8 +271,13 @@ public class PublishNewsActivity extends BaseActivityWithTopBar {
 		}
 		
 		Intent choiceIntent = new Intent(this, ChoiceCircleActivity.class);
+		//要发布的信息
 		choiceIntent.putExtra(ChoiceCircleActivity.INTENT_CONTENT_TEXT, contentEditText.getText().toString());
 		choiceIntent.putExtra(ChoiceCircleActivity.INTENT_LOCATION, locationString);
+		if (getIntent().hasExtra(ChoiceCircleActivity.INTENT_CIRCLE_ID)) {
+			//已选圈子
+			choiceIntent.putExtra(ChoiceCircleActivity.INTENT_CIRCLE_ID, getIntent().getStringExtra(ChoiceCircleActivity.INTENT_CIRCLE_ID));
+		}
 		ArrayList<String> images = new ArrayList<String>();
 		// 图片
 		for (int i = 0; i < addImageLayout.getChildCount(); i++) {
