@@ -137,7 +137,6 @@ public class CircleFragment extends BaseFragment {
 								getResources().getString(R.string.circle_recommend_type_name));
 					}
 				}
-				LogUtils.i(position + " " + followList.size(), 1);
 				if (position >= followList.size()) {
 					helper.setVisible(R.id.recommend_btn, true);
 				} else {
