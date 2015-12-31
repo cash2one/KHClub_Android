@@ -84,6 +84,7 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 					helper.setVisible(R.id.circle_master_tv, true);
 				} else {
 					helper.setVisible(R.id.all_club_members_layout, false);
+					helper.setVisible(R.id.circle_master_tv, false);
 				}
 				helper.setText(R.id.member_user_name, KHUtils.emptyRetunNone(item.getName()));
 				helper.setText(R.id.member_job, KHUtils.emptyRetunNone(item.getJob()));
