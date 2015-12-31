@@ -93,6 +93,7 @@ public class PublisAnnouncementActivity extends BaseActivityWithTopBar {
 							ToastUtil.show(PublisAnnouncementActivity.this,
 									R.string.news_publish_success);
 							//hideLoading();
+							refreshsNoticeList();
 							finishWithRight();
 							//publishFinishBroadcast();
 							break;
@@ -114,8 +115,8 @@ public class PublisAnnouncementActivity extends BaseActivityWithTopBar {
 								R.string.net_error, Toast.LENGTH_SHORT).show();
 					}
 				}, null));
-		refreshsNoticeList();
-		finish();
+		
+		finishWithRight();
 	}
 
 	private void refreshsNoticeList() {
