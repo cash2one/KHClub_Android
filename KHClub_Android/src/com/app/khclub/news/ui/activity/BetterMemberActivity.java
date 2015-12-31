@@ -85,7 +85,7 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 				} else {
 					helper.setVisible(R.id.all_club_members_layout, false);
 				}
-				helper.setText(R.id.member_user_name, item.getName());
+				helper.setText(R.id.member_user_name, KHUtils.emptyRetunNone(item.getName()));
 				helper.setText(R.id.member_job, KHUtils.emptyRetunNone(item.getJob()));
 				ImageView userImageView = helper.getView(R.id.member_user_image);
 				ImageLoader.getInstance().displayImage(KHConst.ATTACHMENT_ADDR + item.getHead_sub_image(),
@@ -234,8 +234,8 @@ public class BetterMemberActivity extends BaseActivityWithTopBar {
 	protected void setUpView() {
 		// TODO Auto-generated method stub
 		setBarText(getString(R.string.news_club_expert));
-		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
-				.displayer(new RoundedBitmapDisplayer(7)).showImageOnFail(R.drawable.loading_default)
+		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.default_avatar)
+				.displayer(new RoundedBitmapDisplayer(7)).showImageOnFail(R.drawable.default_avatar)
 				.cacheInMemory(true).cacheOnDisk(true).bitmapConfig(Bitmap.Config.RGB_565).build();
 		getData(currentPage);
 		initListViewSet();
