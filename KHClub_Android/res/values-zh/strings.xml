@@ -562,6 +562,7 @@
     <string name="confirm_call_phone">是否拨打客服电话</string>
     <string name="sdcard_inexistence">SD卡不存在</string> 
     <string name="no_announcement">暂无公告</string>
+    <string name="notice">公告</string>
     <string name="go_attention">去关注</string>
     <string name="chioce_circle_attention">选择去圈子，去关注</string> 
 </resources>

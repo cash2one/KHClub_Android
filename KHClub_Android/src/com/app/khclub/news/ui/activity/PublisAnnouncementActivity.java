@@ -115,7 +115,6 @@ public class PublisAnnouncementActivity extends BaseActivityWithTopBar {
 								R.string.net_error, Toast.LENGTH_SHORT).show();
 					}
 				}, null));
-		
 		finishWithRight();
 	}
 

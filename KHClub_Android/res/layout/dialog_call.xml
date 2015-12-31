@@ -24,7 +24,7 @@
         android:layout_marginTop="6dp"
         android:background="@color/main_gold"
         android:gravity="center_horizontal"
-        android:maxLength="10"
+        android:maxLength="20"
         android:textColor="@color/main_deep_white"
         android:textSize="13sp" />
 

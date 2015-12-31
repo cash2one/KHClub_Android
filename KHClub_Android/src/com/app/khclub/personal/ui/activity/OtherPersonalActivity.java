@@ -208,6 +208,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		case R.id.share_btn:
 			// 分享名片
 			shareMenu.showPopupWindow(titleBar);
+//			shareMenu.setInputMethodMode(Popupwindow.iNPUT_METHOD_NEEDED); 
 			break;
 		// 跳转至它圈子
 		case R.id.image_hercircle_layout:

@@ -150,7 +150,6 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 					qrImageView.setGroupID(circleModel.getWxqrCode());
 					qrImageView.setQRcode(true);
 					qrImageView.showPopupWindow(v, true);
-
 //					qrImageView.setQRcode(true);
 //					qrImageView.setGroupID(circleModel.getWxqrCode());
 //					qrImageView.showPopupWindow(v);
@@ -254,8 +253,9 @@ public class CircleDetailActivity extends BaseActivityWithTopBar {
 		confirmTextView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String phonoNum = tvphone.getText().toString().trim();
-				Intent callIntent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+phonoNum));
+				String phonoNum = tvphone.getText().toString();
+				Log.i("wx", phonoNum);
+				Intent callIntent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+circleModel.getPhoneNum()));
 				startActivity(callIntent);
 				dialog.dismiss();
 			}

@@ -183,7 +183,7 @@ public class PersonalMorePopupWindow extends PopupWindow {
 		// 设置PopupWindow的View
 		this.setContentView(conentView);
 		// 设置窗体的尺寸
-		this.setWidth(200);
+		this.setWidth(LayoutParams.WRAP_CONTENT);
 		this.setHeight(LayoutParams.WRAP_CONTENT);
 		// 设置窗体可点击
 		this.setFocusable(true);

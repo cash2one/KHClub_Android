@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -116,6 +117,8 @@ public class PersonalBottomPopupMenu extends PopupWindow {
 		// 设置窗体可点击
 		this.setFocusable(true);
 		this.setOutsideTouchable(true);
+		//this.setInputMethodMode(Popupwindows.iNPUT_METHOD_NEEDED);
+		this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 		// 刷新状态
 		this.update();
 		// 背景变暗

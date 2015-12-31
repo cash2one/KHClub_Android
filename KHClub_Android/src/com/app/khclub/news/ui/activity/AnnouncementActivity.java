@@ -97,7 +97,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 
 	@Override
 	protected void setUpView() {
-		setBarText("公告");
+		setBarText(getString(R.string.notice));
 		rightBtn = addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view, R.id.img_btn_right_top);
 		rightBtn.setImageResource(R.drawable.revise);
 		rightBtn.setVisibility(View.GONE);
