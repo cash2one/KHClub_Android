@@ -307,6 +307,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 					datalist = JSON.parseArray(followJsonArray, NoticeModel.class);
 					if (datalist.size() == 0) {
 						txt_no_notice.setVisibility(View.VISIBLE);
+						noticeListView.setVisibility(View.GONE);
 					}
 					// 如果是下拉刷新
 					if (isPullDown) {
@@ -408,6 +409,7 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 				} else if (resultIntent.hasExtra(NewsConstants.PUBLISH_FINISH)) {
 					// 发布了公告,进行刷新
 					txt_no_notice.setVisibility(View.GONE);
+					noticeListView.setVisibility(View.VISIBLE);
 					if (!isRequestingData) {
 						isRequestingData = true;
 						currentPage = 1;

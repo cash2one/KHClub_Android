@@ -153,7 +153,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	// private OtherPersonalQrcodeFragment otherPersonalQRFragment;
 	// 用户ID
 	private int uid;
-	private String toChatUsername;
+	// private String toChatUsername;
 	// 查看者的模型
 	private UserModel otherUserModel;
 	// 如果是好友的话备注
@@ -242,7 +242,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		// initViewPager();
 		Intent intent = getIntent();
 		uid = intent.getIntExtra(INTENT_KEY, 0);
-		toChatUsername = intent.getStringExtra("username");
+		// toChatUsername = intent.getStringExtra("username");
 		if (uid == 0) {
 			ToastUtil.show(this, R.string.personal_no_person);
 			return;
@@ -254,19 +254,23 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			isFriend = true;
 			addSendButton.setText(R.string.personal_send_message);
 			shareMenu = new PersonalBottomPopupMenu(this, true);
-			morowindow = new PersonalMorePopupWindow(this, isFriend, toChatUsername);
+			morowindow = new PersonalMorePopupWindow(this, isFriend, KHConst.KH + uid);
 		} else {
 			isFriend = false;
 			addSendButton.setText(R.string.personal_add_friend);
-			morowindow = new PersonalMorePopupWindow(this, isFriend, toChatUsername);
-			shareMenu = new PersonalBottomPopupMenu(this, false);
+			morowindow = new PersonalMorePopupWindow(this, true, KHConst.KH + uid);
+			shareMenu = new PersonalBottomPopupMenu(this, true);
 		}
 		// 如果有这个参数
 		if (intent.hasExtra(INTENT_FRIEND_KEY)) {
+			// 是否是好友
 			isFriend = intent.getBooleanExtra(INTENT_FRIEND_KEY, false);
+			// imUser = ((KHHXSDKHelper)
+			// KHHXSDKHelper.getInstance()).getContactList().get(KHConst.KH +
+			// uid);
 			if (isFriend) {
 				addSendButton.setText(R.string.personal_send_message);
-			}else {
+			} else {
 				addSendButton.setText(R.string.personal_send_message);
 			}
 		}
@@ -286,8 +290,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	 */
 	private void initPopupListener() {
 
-		rightBtn = addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view,
-				R.id.img_btn_right_top);
+		rightBtn = addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view, R.id.img_btn_right_top);
 		rightBtn.setImageResource(R.drawable.more_better);
 		if (!isFriend) {
 			rightBtn.setVisibility(View.GONE);
@@ -458,8 +461,16 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			if (imUser != null) {
 				// 删除好友
 				deleteContact(imUser);
-				isFriend=false;
+				isFriend = false;
 				rightBtn.setVisibility(View.GONE);
+			} else {
+				imUser = ((KHHXSDKHelper) KHHXSDKHelper.getInstance()).getContactList().get(KHConst.KH + uid);
+				if (imUser != null) {
+					// 删除好友
+					deleteContact(imUser);
+					isFriend = false;
+					rightBtn.setVisibility(View.GONE);
+				}
 			}
 		}
 
@@ -657,7 +668,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 				if (status == KHConst.STATUS_SUCCESS) {
 					// 数据处理
 					JSONArray array = jsonResponse.getJSONArray(KHConst.HTTP_RESULT);
-					Log.i("wx", status + "");
+					// /Log.i("wx", status + "");
 					fillData(array);
 				}
 
@@ -690,7 +701,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		for (ImageView imageView : herCircleList) {
 			imageView.setVisibility(View.GONE);
 		}
-		Log.i("wx", size + "");
+		// Log.i("wx", size + "");
 		for (int i = 0; i < size; i++) {
 			ImageView imageView = herCircleList.get(i);
 			String path = herCircleImageList.get(i);
@@ -865,10 +876,10 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		et_search.setSelection(et_search.getText().length());
 
 		final Dialog dialog = nameAlertDialog.show();
-//		LayoutParams params = dialog.getWindow().getAttributes();
-//		params.height = params.MATCH_PARENT;
-//		params.width = params.MATCH_PARENT;
-//		dialog.getWindow().setAttributes(params);
+		// LayoutParams params = dialog.getWindow().getAttributes();
+		// params.height = params.MATCH_PARENT;
+		// params.width = params.MATCH_PARENT;
+		// dialog.getWindow().setAttributes(params);
 		TextView cancelTextView = (TextView) textViewLayout.findViewById(R.id.tv_custom_alert_dialog_cancel);
 		cancelTextView.setOnClickListener(new View.OnClickListener() {
 			@Override
