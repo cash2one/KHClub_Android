@@ -1097,6 +1097,7 @@ public class NewsDetailActivity extends BaseActivityWithTopBar {
 
 		@Override
 		public void onCancel(Platform arg0, int arg1) {
+			
 		}
 	};
 	private TextView newsCircleshead;

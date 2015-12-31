@@ -257,7 +257,6 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			morowindow = new PersonalMorePopupWindow(this, isFriend, toChatUsername);
 		} else {
 			isFriend = false;
-
 			addSendButton.setText(R.string.personal_add_friend);
 			morowindow = new PersonalMorePopupWindow(this, isFriend, toChatUsername);
 			shareMenu = new PersonalBottomPopupMenu(this, false);
@@ -282,8 +281,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 	 */
 	private void initPopupListener() {
 
-		// 添加右边操作按钮
-		ImageView rightBtn = addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view,
+		rightBtn = addRightImgBtn(R.layout.right_image_button, R.id.layout_top_btn_root_view,
 				R.id.img_btn_right_top);
 		rightBtn.setImageResource(R.drawable.more_better);
 		if (!isFriend) {
@@ -455,6 +453,8 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 			if (imUser != null) {
 				// 删除好友
 				deleteContact(imUser);
+				isFriend=false;
+				rightBtn.setVisibility(View.GONE);
 			}
 		}
 
@@ -483,6 +483,7 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 
 	private PersonalMorePopupWindow morowindow;
 	private BottomClick bottomClick;
+	private ImageView rightBtn;
 
 	/**
 	 * 初始化ViewPager

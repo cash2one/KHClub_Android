@@ -175,11 +175,11 @@ public class PersonalMorePopupWindow extends PopupWindow {
 //			}
 //		});
 
-		if (!isFriend) {
-			// 非好友隐藏相关控件
-			// editRemark.setVisibility(View.GONE);
-			deletelyout.setVisibility(View.GONE);
-		}
+//		if (!isFriend) {
+//			// 非好友隐藏相关控件
+//			// editRemark.setVisibility(View.GONE);
+//			deletelyout.setVisibility(View.GONE);
+//		}
 		// 设置PopupWindow的View
 		this.setContentView(conentView);
 		// 设置窗体的尺寸
