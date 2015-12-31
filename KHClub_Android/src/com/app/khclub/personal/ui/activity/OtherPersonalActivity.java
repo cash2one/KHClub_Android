@@ -264,6 +264,11 @@ public class OtherPersonalActivity extends BaseActivityWithTopBar {
 		// 如果有这个参数
 		if (intent.hasExtra(INTENT_FRIEND_KEY)) {
 			isFriend = intent.getBooleanExtra(INTENT_FRIEND_KEY, false);
+			if (isFriend) {
+				addSendButton.setText(R.string.personal_send_message);
+			}else {
+				addSendButton.setText(R.string.personal_send_message);
+			}
 		}
 
 		// 如果是本人，则隐藏添加按钮
