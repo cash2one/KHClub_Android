@@ -159,7 +159,7 @@
 
                 <TextView
                     android:layout_width="100dp"
-                    android:layout_height="55dp"
+                    android:layout_height="45dp"
                     android:layout_marginBottom="5dip"
                     android:layout_marginLeft="10dip"
                     android:layout_marginTop="5dip"
@@ -170,8 +170,8 @@
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="5dip"
                     android:layout_marginTop="5dip"
                     android:background="@color/main_blue"
@@ -180,8 +180,8 @@
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="5dip"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dip"
@@ -191,8 +191,8 @@
 
                 <ImageView
                     android:id="@+id/personal_picture_image_view3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="5dip"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dip"
@@ -225,7 +225,7 @@
 
                 <TextView
                     android:layout_width="100dp"
-                    android:layout_height="55dp"
+                    android:layout_height="45dp"
                     android:layout_marginBottom="5dip"
                     android:layout_marginLeft="10dip"
                     android:layout_marginTop="5dip"
@@ -236,8 +236,8 @@
 
                 <ImageView
                     android:id="@+id/personal_mycircle_image_view1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="5dip"
                   
                     android:layout_marginTop="5dip"
@@ -247,8 +247,8 @@
 
                 <ImageView
                     android:id="@+id/personal_mycircle_image_view2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="5dip"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dip"
@@ -258,8 +258,8 @@
 
                 <ImageView
                     android:id="@+id/personal_mycircle_image_view3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="5dip"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dip"
@@ -279,7 +279,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="60dp"
+                    android:layout_height="55dp"
                     android:gravity="center"
                     android:text="@string/personal_signature"
                     android:textColor="@color/main_deep_black"
@@ -301,7 +301,7 @@
                 android:paddingBottom="40dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal" >
 
                 <Button
