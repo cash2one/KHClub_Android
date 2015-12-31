@@ -306,8 +306,12 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 					String followJsonArray = jResult.getString("list");
 					datalist = JSON.parseArray(followJsonArray, NoticeModel.class);
 					if (datalist.size() == 0) {
-						txt_no_notice.setVisibility(View.VISIBLE);
-						noticeListView.setVisibility(View.GONE);
+						if (currentPage == 1) {
+							txt_no_notice.setVisibility(View.VISIBLE);
+							noticeListView.setVisibility(View.GONE);
+						}
+					} else {
+						txt_no_notice.setVisibility(View.GONE);
 					}
 					// 如果是下拉刷新
 					if (isPullDown) {
@@ -376,24 +380,27 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 			// Log.i("wx", action);
 			if (action.equals(KHConst.BROADCAST_NOTICE_LIST_REFRESH)) {
 				if (resultIntent.hasExtra(NewsConstants.OPERATE_UPDATE)) {
-				// 更新动态列表
+					// 更新动态列表
 					if (!isRequestingData) {
 						isRequestingData = true;
 						currentPage = 1;
 						isPullDown = true;
 						getData(currentPage);
 					}
-//					NoticeDetailsModel resultNews = (NoticeDetailsModel) resultIntent
-//							.getSerializableExtra(NewsConstants.OPERATE_UPDATE);
-//					for (int index = 0; index < datalist.size(); index++) {
-//						if (resultNews.getId().equals(datalist.get(index).getId())) {
-//							datalist.get(index).setComment_quantity(resultNews.getCommentQuantity());
-//							datalist.get(index).setLike_quantity(resultNews.getLikeQuantity());
-//							datalist.get(index).setIs_like(resultNews.getIsLike());
-//							noticeModelAdapter.replaceAll(datalist);
-//							break;
-//						}
-//					}
+					// NoticeDetailsModel resultNews = (NoticeDetailsModel)
+					// resultIntent
+					// .getSerializableExtra(NewsConstants.OPERATE_UPDATE);
+					// for (int index = 0; index < datalist.size(); index++) {
+					// if
+					// (resultNews.getId().equals(datalist.get(index).getId()))
+					// {
+					// datalist.get(index).setComment_quantity(resultNews.getCommentQuantity());
+					// datalist.get(index).setLike_quantity(resultNews.getLikeQuantity());
+					// datalist.get(index).setIs_like(resultNews.getIsLike());
+					// noticeModelAdapter.replaceAll(datalist);
+					// break;
+					// }
+					// }
 				} else if (resultIntent.hasExtra(NewsConstants.OPERATE_DELETET)) {
 					String resultID = resultIntent.getStringExtra(NewsConstants.OPERATE_DELETET);
 					// 删除该动态
