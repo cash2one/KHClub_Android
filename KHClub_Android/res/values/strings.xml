@@ -152,6 +152,19 @@
 
 
     <!-- News -->
+    <string name="investment">Investment</string>
+    <string name="business_trade">Business And Trade</string>
+    <string name="tea">Tea</string>
+    <string name="liquor_cigar">Liquor And Cigar</string>
+    <string name="money">Money</string>
+    <string name="artwork">Artwork</string>
+    <string name="travel">Travel</string>
+    <string name="golf">Golf</string>
+    <string name="college">College</string>
+    <string name="luxury">Luxury</string>
+    <string name="car_yacht">Car And Yacht</string>
+    <string name="other">Other</string>
+    
     <string name="send_notice">Send Notice</string>
     <string name="confirm_delete_notice">Confirm Delete Notice</string>
     <string name="notice_details">Notice Details</string>
@@ -547,12 +560,12 @@
     <string name="attention_success">Follow Success</string>
     <string name="unattention_success">Unfollow Success </string>
     <string name="unattention_fail">Unfollow Fail</string>
-    	<string name="cover_name_unnull">Cover and Name unble null</string>	<string name="confirm_call_phone">Whether to call customer service</string>
-	<string name="sdcard_inexistence">SDCard Inexistence</string> 
-	<string name="no_announcement">No announcement</string>	<string name="go_attention">To Follow </string> 	<string name="chioce_circle_attention">Chioce circle Follow</string>    <string name="notice">Notice</string>
-		
-	 
-	
-	
-	
+    <string name="cover_name_unnull">Cover and Name unble null</string>
+    <string name="confirm_call_phone">Whether to call customer service</string>
+    <string name="sdcard_inexistence">SDCard Inexistence</string>
+    <string name="no_announcement">No announcement</string>
+    <string name="go_attention">To Follow </string>
+    <string name="chioce_circle_attention">Chioce circle Follow</string>
+    <string name="notice">Notice</string>
+
 </resources>

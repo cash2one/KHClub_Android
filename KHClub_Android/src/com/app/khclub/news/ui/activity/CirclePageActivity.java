@@ -431,7 +431,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	protected void freshCircle() {
 		// TODO Auto-generated method stub
 		Intent freshIntent = new Intent(KHConst.BROADCAST_CIRCLE_LIST_REFRESH);
-		// Log.i("wwww", "发广播");
+		 Log.i("wwww", "发广播");
 		freshIntent.putExtra(CIRCLEFRESH, "fresh");
 		mLocalBroadcastManager.sendBroadcast(freshIntent);
 	}
@@ -558,6 +558,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 					pageIndex = 1;
 					isPullDowm = true;
 					getNewsData(UserManager.getInstance().getUser().getUid(), pageIndex, "");
+					freshCircle();
 				}
 			}
 
@@ -1250,7 +1251,6 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 						isRequestingData = true;
 						pageIndex = 1;
 						isPullDowm = true;
-
 						getNewsData(userID, pageIndex, "");
 					}
 				} else if (resultIntent.hasExtra(NewsConstants.NEWS_LISTVIEW_REFRESH)) {

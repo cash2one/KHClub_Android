@@ -22,23 +22,22 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/tv_news_guid"
-                android:layout_width="wrap_content"
+                android:id="@+id/name"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/news_circle_title"
+                android:text="@string/app_name"
                 android:textColor="@color/main_white"
                 android:textSize="@dimen/font_size_large" />
 
-            <TextView
-                android:layout_marginLeft="15dp"
-                android:id="@+id/tv_campus_guid"
+           <!--  <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
                 android:gravity="center"
                 android:text="@string/news_news_topic"
                 android:textColor="@color/main_deep_black"
-                android:textSize="@dimen/font_size_large" />
+                android:textSize="@dimen/font_size_large" /> -->
         </LinearLayout>
 
         <LinearLayout
@@ -50,12 +49,12 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/img_cursor"
                 android:layout_width="@dimen/title_interior_size_large"
                 android:layout_height="@dimen/title_interior_size_tiny"
                 android:scaleType="fitXY"
-                android:src="@color/main_white" />
+                android:src="@color/main_white"
+                android:visibility="gone" />
         </LinearLayout>
 
         <FrameLayout
@@ -66,10 +65,10 @@
                 android:id="@+id/img_notice_btn"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:scaleType="centerInside"
                 android:background="@drawable/common_tab_bg"
                 android:paddingLeft="0dp"
                 android:paddingRight="10dp"
+                android:scaleType="centerInside"
                 android:src="@drawable/news_notice_btn_selector" />
 
             <ImageView
@@ -82,18 +81,90 @@
                 android:src="@drawable/small_unread"
                 android:visibility="invisible" />
         </FrameLayout>
-        
+
         <ImageView
-            android:layout_gravity="right"
             android:id="@+id/img_news_publish_btn"
             android:layout_width="50dp"
             android:layout_height="match_parent"
+            android:layout_gravity="right"
             android:background="@drawable/common_tab_bg"
-            android:scaleType="centerInside"
             android:padding="14dp"
-            android:src="@drawable/create_cirlce_bnt" />        
-        
+            android:scaleType="centerInside"
+            android:src="@drawable/create_cirlce_bnt" />
     </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_deep_white"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_news_guid"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="@string/news_circle_title" />
+
+            <View
+                android:id="@+id/tab1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/main_gold"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_circle_type"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="分类" />
+
+            <View
+                android:id="@+id/tab2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/main_gold"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_campus_guid"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center"
+                android:text="@string/news_news_topic" />
+
+            <View
+                android:id="@+id/tab3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/main_gold"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -105,7 +176,6 @@
             android:layout_height="match_parent"
             android:flipInterval="30"
             android:persistentDrawingCache="animation" />
-
     </FrameLayout>
 
 </LinearLayout>

@@ -60,6 +60,14 @@ public class MainPageFragment extends BaseFragment {
 	// 校园
 	@ViewInject(R.id.tv_campus_guid)
 	private TextView campusTitleTextView;
+	@ViewInject(R.id.tv_circle_type)
+	private TextView typeTitleTextView;
+	@ViewInject(R.id.tab1)
+	private View tabView1;
+	@ViewInject(R.id.tab2)
+	private View tabView2;
+	@ViewInject(R.id.tab3)
+	private View tabView3;
 	// 所有的
 	private List<Fragment> mFragmentList = new ArrayList<Fragment>();
 	// 偏移图片
@@ -93,11 +101,11 @@ public class MainPageFragment extends BaseFragment {
          
 			@Override
 			public void onClick(View arg0) {
-				if (currpage == 0) {
+				if (currpage == 0||currpage == 1) {
 					Intent intentUsrMain = new Intent(mContext, CreateCircleActivity.class);
 					startActivityWithRight(intentUsrMain);
 				}
-				if (currpage == 1) {
+				if (currpage == 2) {
 					Intent intentUsrMain = new Intent(mContext, PublishNewsActivity.class);
 					startActivityWithRight(intentUsrMain);
 				}
@@ -145,10 +153,11 @@ public class MainPageFragment extends BaseFragment {
 	 * 初始化ViewPager
 	 */
 	public void InitViewPager() {
-
 		newsTitleTextView.setOnClickListener(new ViewClickListener(0));
-		campusTitleTextView.setOnClickListener(new ViewClickListener(1));
+		typeTitleTextView.setOnClickListener(new ViewClickListener(1));
+		campusTitleTextView.setOnClickListener(new ViewClickListener(2));
 		mFragmentList.add(new CircleFragment());
+		mFragmentList.add(new CircleTypeFragment());
 		mFragmentList.add(new NewsListFragment());
 		mainPager.setAdapter(new MainFragmentPagerAdapter(getChildFragmentManager(), mFragmentList));
 		mainPager.setCurrentItem(0);
@@ -247,16 +256,32 @@ public class MainPageFragment extends BaseFragment {
 			currpage=index;
 			if (0 == index) {
 				publishBtn.setImageResource(R.drawable.create_cirlce_bnt);
-				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_white));
+				typeTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_gold));
 				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				tabView1.setVisibility(View.VISIBLE);
+				tabView2.setVisibility(View.GONE);
+				tabView3.setVisibility(View.GONE);
 				//newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 				//campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-			} else {
+			} else if(2 == index){
 				publishBtn.setImageResource(R.drawable.news_publish_btn_selector);
-				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_white));
+				typeTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_gold));
 				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				tabView1.setVisibility(View.GONE);
+				tabView2.setVisibility(View.GONE);
+				tabView3.setVisibility(View.VISIBLE);
 //				newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 //				campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+			}else {
+				publishBtn.setImageResource(R.drawable.create_cirlce_bnt);
+				typeTitleTextView.setTextColor(getResources().getColor(R.color.main_gold));
+				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				tabView1.setVisibility(View.GONE);
+				tabView2.setVisibility(View.VISIBLE);
+				tabView3.setVisibility(View.GONE);
 			}
 		}
 	}

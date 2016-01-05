@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.app.khclub.R;
 import com.app.khclub.base.adapter.HelloHaAdapter;
@@ -87,7 +88,7 @@ public class CircleFragment extends BaseFragment {
 
 	@Override
 	public void setUpViews(View rootView) {
-
+		followList = new ArrayList<CircleItemModel>();
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
 				.displayer(new RoundedBitmapDisplayer(7)).bitmapConfig(Bitmap.Config.RGB_565).build();
@@ -113,12 +114,11 @@ public class CircleFragment extends BaseFragment {
 				// helper.setOnClickListener(viewId, listener)
 				// 圈子标题
 				helper.setText(R.id.circle_name, item.getCircle_name());
-
+				helper.setText(R.id.category_name, item.getCategory_name());
 				helper.setVisible(R.id.circle_attention_type, false);
 				helper.setVisible(R.id.circle_attention_layout, false);
 				helper.setVisible(R.id.circle_recommend_layout, false);
 				helper.setVisible(R.id.circle_recommend_type, false);
-
 				// 圈子类型（是否关注）
 				if (followList.size() > 0) {
 					if (followList.get(0).getId().equals(item.getId())) {
@@ -139,7 +139,16 @@ public class CircleFragment extends BaseFragment {
 				}
 				if (position >= followList.size()) {
 					helper.setVisible(R.id.recommend_btn, true);
+					helper.setVisible(R.id.unread_news_num, false);
 				} else {
+					helper.setVisible(R.id.unread_news_num, true);
+					// Log.i("wwww", item.getNews_newsnum());
+					if ("0".equals(item.getNews_newsnum())) {
+						helper.setVisible(R.id.unread_news_num, false);
+					} else {
+						helper.setVisible(R.id.unread_news_num, true);
+						helper.setText(R.id.unread_news_num, "+" + item.getNews_newsnum());
+					}
 					helper.setVisible(R.id.recommend_btn, false);
 				}
 				helper.setText(R.id.circle_people_count, item.getFollow_quantity());
@@ -159,7 +168,7 @@ public class CircleFragment extends BaseFragment {
 						// TODO Auto-generated method stub
 						recommend(item);
 						// Log.i("wwww", dataList.get(position).getId());
-						Log.i("wwww", item.getId());
+						//Log.i("wwww", item.getId());
 						// Log.i("wwww", position+"");
 					}
 				});
@@ -171,7 +180,6 @@ public class CircleFragment extends BaseFragment {
 						// 跳转到圈子首页
 						Intent intent = new Intent(getActivity(), CirclePageActivity.class);
 						intent.putExtra(CIRCLE_ID, item.getId());
-
 						startActivityWithRight(intent);
 					}
 				});
@@ -243,17 +251,15 @@ public class CircleFragment extends BaseFragment {
 						switch (status) {
 						case KHConst.STATUS_SUCCESS:
 							ToastUtil.show(getActivity(), R.string.attention_success);
-
+							circleItemModel.setNews_newsnum("0");
 							followList.add(circleItemModel);
 							unfollowList.remove(circleItemModel);
-
 							LogUtils.i(followList + "----" + unfollowList, 1);
 							// 临时用
 							List<CircleItemModel> tmpList = new ArrayList<CircleItemModel>();
 							tmpList.addAll(followList);
 							tmpList.addAll(unfollowList);
 							dataList = tmpList;
-
 							circleAdapter.replaceAll(dataList);
 							break;
 						case KHConst.STATUS_FAIL:
@@ -293,7 +299,7 @@ public class CircleFragment extends BaseFragment {
 	private void getData() {
 		final UserModel userModel = UserManager.getInstance().getUser();
 		String path = KHConst.GET_PERSONAL_CIRCLE_LIST + "?user_id=" + userModel.getUid();
-		// Log.i("wwww", path);
+		Log.i("wwww", path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
 			@Override
@@ -304,13 +310,21 @@ public class CircleFragment extends BaseFragment {
 					JSONObject jResult = jsonResponse.getJSONObject(KHConst.HTTP_RESULT);
 					// 获取动态列表
 					String unfollowJsonArray = jResult.getString(UNFOLLOW_LIST);
-					String followJsonArray = jResult.getString(FOLLOW_LIST);
-					followList = JSON.parseArray(followJsonArray, CircleItemModel.class);
+					// String followJsonArray = jResult.getString(FOLLOW_LIST);
+					// followList = JSON.parseArray(followJsonArray,
+					// CircleItemModel.class);
+					followList.clear();
+					JSONArray followJsonArray = jResult.getJSONArray(FOLLOW_LIST);
+					for (Object object : followJsonArray) {
+						CircleItemModel itemModel = new CircleItemModel();
+						itemModel.setContentWithJson((JSONObject) object);
+						followList.add(itemModel);
+					}
 					unfollowList = JSON.parseArray(unfollowJsonArray, CircleItemModel.class);
 					if (dataList == null) {
 						dataList = new ArrayList<CircleItemModel>();
 					}
-					//显示的数组
+					// 显示的数组
 					dataList.clear();
 					dataList.addAll(followList);
 					dataList.addAll(unfollowList);
@@ -378,15 +392,18 @@ public class CircleFragment extends BaseFragment {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			//Log.i("wwww","刷新");
+			// Log.i("wwww","刷新");
 			if (intent.hasExtra(CirclePageActivity.CIRCLEFRESH)) {
-			//	Log.i("wwww","刷新");
+				//Log.i("wwww","刷新");
 				getData();
 				circleAdapter.notifyDataSetChanged();
 			}
 		}
 	};
+   @Override
 	public void onDestroy() {
+		super.onDestroy();
+		Log.i("wwww", "111");
 		if (mBroadcastReceiver != null && mLocalBroadcastManager != null) {
 			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
 		}

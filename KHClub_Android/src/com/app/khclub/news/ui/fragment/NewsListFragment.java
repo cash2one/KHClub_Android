@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -917,6 +918,7 @@ public class NewsListFragment extends BaseFragment {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		Log.i("wwww", "111");
 		if (mBroadcastReceiver != null && mLocalBroadcastManager != null) {
 			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
 		}

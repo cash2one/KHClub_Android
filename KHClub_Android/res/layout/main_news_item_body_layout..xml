@@ -14,7 +14,6 @@
     <!-- 动态的文字内容 -->
 
     <TextView
-        
         android:lineSpacingExtra="8dp"
         android:id="@+id/txt_main_news_content"
         android:layout_width="wrap_content"
@@ -43,7 +42,7 @@
         android:layout_gravity="top"
         android:layout_weight="1"
         android:gravity="top|left"
-        android:paddingTop="10dp"
+        android:paddingTop="4dp"
         android:text="11:12"
         android:textColor="@color/main_gary"
         android:textSize="@dimen/font_size_tiny" />
