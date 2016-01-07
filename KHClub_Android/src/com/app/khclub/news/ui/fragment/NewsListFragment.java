@@ -644,6 +644,7 @@ public class NewsListFragment extends BaseFragment {
 	 */
 	private void getNewsData(int userID, int desPage, String lastTime) {
 		String path = KHConst.NEWS_LIST + "?" + "user_id=" + userID + "&page=" + desPage + "&frist_time=" + lastTime;
+		//Log.i("wwww", path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
 			@SuppressWarnings("unchecked")
@@ -918,7 +919,6 @@ public class NewsListFragment extends BaseFragment {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		Log.i("wwww", "111");
 		if (mBroadcastReceiver != null && mLocalBroadcastManager != null) {
 			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
 		}

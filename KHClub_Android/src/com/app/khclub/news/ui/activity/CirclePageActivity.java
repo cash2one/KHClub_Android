@@ -47,6 +47,7 @@ import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.TimeHandle;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
+import com.app.khclub.news.ui.fragment.CircleTypeFragment;
 import com.app.khclub.news.ui.model.CircleMembersModel;
 import com.app.khclub.news.ui.model.CirclePageModel;
 import com.app.khclub.news.ui.model.NewsConstants;
@@ -431,8 +432,9 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	protected void freshCircle() {
 		// TODO Auto-generated method stub
 		Intent freshIntent = new Intent(KHConst.BROADCAST_CIRCLE_LIST_REFRESH);
-		 Log.i("wwww", "发广播");
+		// Log.i("wwww", "发广播");
 		freshIntent.putExtra(CIRCLEFRESH, "fresh");
+		freshIntent.putExtra(CircleTypeFragment.FRESHCATEGORYLIST, "fresh");
 		mLocalBroadcastManager.sendBroadcast(freshIntent);
 	}
 
@@ -630,6 +632,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				} else {
 					helper.setText(R.id.circle_announcement_tv, notice);
 				}
+				helper.setText(R.id.circle_page_category, circleModel2.getCategoryname());
 				helper.setText(R.id.news_circle_name, circleModel2.getCircleName());
 				helper.setText(R.id.news_master_name, circleModel2.getUserName());
 				helper.setText(R.id.news_circle_friend, " " + circleModel2.getFollowQuantity() + "人");

@@ -11,7 +11,7 @@
         android:layout_height="match_parent" >
     </ListView>
      <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/circle_refresh_list"
+        android:id="@+id/category_circle_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/main_light_white"

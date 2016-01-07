@@ -62,6 +62,8 @@
     <color name="main_card_green">#2ddd84</color>
     <!-- 字用灰色 -->
     <color name="main_char_gary">#808080</color>
+    <!-- 已关注字用灰色 -->
+    <color name="follow_char_gary">#c8c7cc</color>
     <!-- 透明灰色 -->
     <color name="main_clear_gary">#55cccccc</color>
     <!-- 透明黄色 -->

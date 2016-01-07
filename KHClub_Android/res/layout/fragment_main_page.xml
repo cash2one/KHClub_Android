@@ -139,8 +139,8 @@
                 android:id="@+id/tab2"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/main_gold"
-                android:visibility="gone" />
+                android:background="@color/main_light_gary"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -161,8 +161,8 @@
                 android:id="@+id/tab3"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/main_gold"
-                android:visibility="gone" />
+                android:background="@color/main_light_gary"
+               />
         </LinearLayout>
     </LinearLayout>
 

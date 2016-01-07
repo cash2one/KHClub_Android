@@ -570,6 +570,7 @@
     <string name="unattention_success">取消关注成功</string>
     <string name="unattention_fail">取消关注失败</string>
     <string name="attention">关注</string>
+    <string name="already_follow">已关注</string>
     <string name="cover_name_unnull">封面和名字不能为空</string>
     <string name="freshing">正在刷新</string>
     <string name="confirm_call_phone">是否拨打客服电话</string>

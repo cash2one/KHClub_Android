@@ -2,14 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/main_deep_white"
+    android:id="@+id/category_list_root"
+    android:background="#f7f9f8"
     android:orientation="vertical" >
 
-    <TextView
-        android:gravity="center"
-        android:id="@+id/typetext"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textSize="14sp" />
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/typetext"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/main_gold" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="-4dp" >
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/gold_triangle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/dalta_02" />
+        </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

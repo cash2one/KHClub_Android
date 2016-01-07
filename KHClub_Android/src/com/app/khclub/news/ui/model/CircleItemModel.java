@@ -20,9 +20,15 @@ public class CircleItemModel{
 	private String follow_quantity;
 	//圈子未读消息
 	private String news_newsnum;
+	//是否关注
+	private String is_follow;
 	
-	
-	
+	public String getIs_follow() {
+		return is_follow;
+	}
+	public void setIs_follow(String is_follow) {
+		this.is_follow = is_follow;
+	}
 	public String getCategory_name() {
 		return category_name;
 	}
@@ -78,6 +84,9 @@ public class CircleItemModel{
 		}
 		if (object.containsKey("category_name")) {
 			setCategory_name(object.getString("category_name"));
+		}
+		if (object.containsKey("is_follow")) {
+			setIs_follow(object.getString("is_follow"));
 		}
 	}
 }

@@ -15,7 +15,9 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+import cn.sharesdk.framework.authorize.g;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -88,6 +90,7 @@ public class CircleFragment extends BaseFragment {
 
 	@Override
 	public void setUpViews(View rootView) {
+		Log.i("wwww", "重新创建圈子碎片");
 		followList = new ArrayList<CircleItemModel>();
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
@@ -147,7 +150,9 @@ public class CircleFragment extends BaseFragment {
 						helper.setVisible(R.id.unread_news_num, false);
 					} else {
 						helper.setVisible(R.id.unread_news_num, true);
-						helper.setText(R.id.unread_news_num, "+" + item.getNews_newsnum());
+						// 取消显示未读数量了
+						// helper.setText(R.id.unread_news_num, "+" +
+						// item.getNews_newsnum());
 					}
 					helper.setVisible(R.id.recommend_btn, false);
 				}
@@ -168,11 +173,11 @@ public class CircleFragment extends BaseFragment {
 						// TODO Auto-generated method stub
 						recommend(item);
 						// Log.i("wwww", dataList.get(position).getId());
-						//Log.i("wwww", item.getId());
+						// Log.i("wwww", item.getId());
 						// Log.i("wwww", position+"");
 					}
 				});
-				LinearLayout linearLayout = (LinearLayout) helper.getView();
+				LinearLayout linearLayout = (LinearLayout) helper.getView(R.id.circle_list_root);
 				// 点击事件
 				linearLayout.setOnClickListener(new OnClickListener() {
 					@Override
@@ -182,6 +187,17 @@ public class CircleFragment extends BaseFragment {
 						intent.putExtra(CIRCLE_ID, item.getId());
 						startActivityWithRight(intent);
 					}
+				});
+				RelativeLayout moreClublayout = (RelativeLayout) helper.getView(R.id.butter_club_root);
+				moreClublayout.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+                           jumpCategory();
+					}
+
+					
 				});
 			}
 		};
@@ -221,7 +237,7 @@ public class CircleFragment extends BaseFragment {
 		// 快宿滑动时不加载图片
 		circleListView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), false, true));
 	}
-
+	
 	// 关注请求
 	private void recommend(final CircleItemModel circleItemModel) {
 		// TODO Auto-generated method stub
@@ -370,40 +386,36 @@ public class CircleFragment extends BaseFragment {
 		// 注册广播
 		mLocalBroadcastManager.registerReceiver(mBroadcastReceiver, myIntentFilter);
 	}
-	/*
-	 * public interface freshCircleData{ void fresh(); }
-	 */
 
-	// Fresh fresh =new Fresh();
-	// class Fresh implements Serializable{
-	//
-	// /**
-	// *
-	// */
-	// private static final long serialVersionUID = 1L;
-	//
-	// public void fresh() {
-	// // TODO Auto-generated method stub
-	// getData();
-	// circleAdapter.replaceAll(dataList);
-	// }}
+	/**
+	 * 跳转至分类
+	 * */
+	private void jumpCategory() {
+		// TODO Auto-generated method stub;
+		//Log.i("wwww", "调整");
+	    Intent intent=new Intent(KHConst.BROADCAST_NEW_MESSAGE_PUSH);
+	    //通知跳转至分类页面
+	    intent.putExtra("jumpcategory", "jumpcategory");
+		getActivity().sendBroadcast(intent);
+	}
 	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			// Log.i("wwww","刷新");
+			Log.i("wwww","刷新");
 			if (intent.hasExtra(CirclePageActivity.CIRCLEFRESH)) {
-				//Log.i("wwww","刷新");
+				// Log.i("wwww","刷新");
 				getData();
 				circleAdapter.notifyDataSetChanged();
 			}
 		}
 	};
-   @Override
+	
+
+	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Log.i("wwww", "111");
 		if (mBroadcastReceiver != null && mLocalBroadcastManager != null) {
 			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
 		}

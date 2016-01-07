@@ -76,6 +76,7 @@ public class MyCircleActivity extends BaseActivityWithTopBar{
 				helper.setText(R.id.circle_name, item.getCircle_name());
 				// 圈子类型（是否关注）
 				helper.setText(R.id.circle_people_count, item.getFollow_quantity());
+				helper.setText(R.id.category_name, item.getCategory_name());
 				ImageView headImageView = helper.getView(R.id.circle_image);
 				String image = item.getCircle_cover_sub_image();
 				LogUtils.i(KHConst.ATTACHMENT_ADDR + image + " " + image, 1);

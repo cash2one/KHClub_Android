@@ -16,8 +16,8 @@ public class CirclePageModel implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//private String content;
-	//圈子公告
+	
+	private String categoryname;
 	private String circleId;
 //	public String getContent() {
 //		return content;
@@ -26,7 +26,7 @@ public class CirclePageModel implements Serializable{
 //	public void setContent(String content) {
 //		this.content = content;
 //	}
-
+      
 	// 圈子ID
 	private String userID;
 	// 用户ID
@@ -106,6 +106,17 @@ public class CirclePageModel implements Serializable{
 		if (object.containsKey("is_follow")) {
 			setIsFollow(object.getString("is_follow"));
 		}
+		if (object.containsKey("category_name")) {
+			setCategoryname(object.getString("category_name"));
+		}
+	}
+   
+	public String getCategoryname() {
+		return categoryname;
+	}
+
+	public void setCategoryname(String categoryname) {
+		this.categoryname = categoryname;
 	}
 
 	public String getCircleId() {

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -89,6 +90,7 @@ public class MainPageFragment extends BaseFragment {
 
 	@Override
 	public void loadLayout(View rootView) {
+		
 	}
 
 	@Override
@@ -120,7 +122,6 @@ public class MainPageFragment extends BaseFragment {
 				startActivityWithRight(intentCampusInfo);
 			}
 		});
-
 		registerNotify();
 		refreshPush();
 	}
@@ -182,7 +183,7 @@ public class MainPageFragment extends BaseFragment {
 	/**
 	 * ViewPager的适配器
 	 */
-	class MainFragmentPagerAdapter extends FragmentStatePagerAdapter {
+	class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 		private List<Fragment> fragmentList;
 
 		public MainFragmentPagerAdapter(FragmentManager fm, List<Fragment> list) {
@@ -194,11 +195,13 @@ public class MainPageFragment extends BaseFragment {
 		@Override
 		public Fragment getItem(int index) {
 			return fragmentList.get(index);
+			//return fragmentList.get(index%3);
 		}
 
 		@Override
 		public int getCount() {
 			return fragmentList.size();
+			//return 10000;
 		}
 
 		@Override
@@ -208,9 +211,9 @@ public class MainPageFragment extends BaseFragment {
 		}
 
 		@Override
-		public Object instantiateItem(ViewGroup arg0, int arg1) {
+		public Object instantiateItem(ViewGroup arg0, int position) {
 			// 初始化每个页卡选项
-			return super.instantiateItem(arg0, arg1);
+			return super.instantiateItem(arg0, position);
 		}
 
 		@Override
@@ -254,24 +257,24 @@ public class MainPageFragment extends BaseFragment {
 		 */
 		public void onPageSelected(int index) {
 			currpage=index;
-			if (0 == index) {
+			if (0 == currpage) {
 				publishBtn.setImageResource(R.drawable.create_cirlce_bnt);
 				typeTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
 				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_gold));
 				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
-				tabView1.setVisibility(View.VISIBLE);
-				tabView2.setVisibility(View.GONE);
-				tabView3.setVisibility(View.GONE);
+				tabView1.setBackgroundResource(R.color.main_gold);
+				tabView2.setBackgroundResource(R.color.main_light_gary);
+				tabView3.setBackgroundResource(R.color.main_light_gary);
 				//newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 				//campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-			} else if(2 == index){
+			} else if(2 == currpage){
 				publishBtn.setImageResource(R.drawable.news_publish_btn_selector);
 				typeTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
 				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_gold));
 				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
-				tabView1.setVisibility(View.GONE);
-				tabView2.setVisibility(View.GONE);
-				tabView3.setVisibility(View.VISIBLE);
+				tabView1.setBackgroundResource(R.color.main_light_gary);
+				tabView2.setBackgroundResource(R.color.main_light_gary);
+				tabView3.setBackgroundResource(R.color.main_gold);
 //				newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 //				campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 			}else {
@@ -279,9 +282,9 @@ public class MainPageFragment extends BaseFragment {
 				typeTitleTextView.setTextColor(getResources().getColor(R.color.main_gold));
 				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
 				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
-				tabView1.setVisibility(View.GONE);
-				tabView2.setVisibility(View.VISIBLE);
-				tabView3.setVisibility(View.GONE);
+				tabView1.setBackgroundResource(R.color.main_light_gary);
+				tabView2.setBackgroundResource(R.color.main_gold);
+				tabView3.setBackgroundResource(R.color.main_light_gary);
 			}
 		}
 	}
@@ -294,8 +297,15 @@ public class MainPageFragment extends BaseFragment {
 		newMessageReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				// 刷新push
-				refreshPush();
+				if(intent.hasExtra("jumpcategory")){
+					//从圈子类表跳转，直接写死
+					//Log.i("wwww", "jumpcategory");
+					mainPager.setCurrentItem(1);
+				}else {
+					// 刷新push
+					refreshPush();
+				}
+				
 			}
 		};
 		IntentFilter intentFilter = new IntentFilter(KHConst.BROADCAST_NEW_MESSAGE_PUSH);
