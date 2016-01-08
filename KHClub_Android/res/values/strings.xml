@@ -165,6 +165,7 @@
     <string name="car_yacht">Car And Yacht</string>
     <string name="other">Other</string>
     
+     <string name="choice_category">Choice category</string>
     <string name="already_follow">Already Follow</string>
     <string name="send_notice">Send Notice</string>
     <string name="confirm_delete_notice">Confirm Delete Notice</string>
@@ -567,7 +568,10 @@
     <string name="no_announcement">No announcement</string>
     <string name="go_attention">To Follow </string>
     <string name="chioce_circle_attention">Chioce circle Follow</string>
-    <string name="notice">Notice</string>
+    <string name="notice">Notice</string>
+    <string name="must_choice_category">You must select a category</string>    <string name="start_chat">"You are a good friend, and start the chat"
+</string>
+   
     
 
 </resources>

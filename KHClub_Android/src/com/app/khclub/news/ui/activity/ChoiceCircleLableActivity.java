@@ -10,13 +10,12 @@ import com.app.khclub.news.ui.utils.CircleTypeConstant;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-import android.R.color;
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 public class ChoiceCircleLableActivity extends BaseActivityWithTopBar {
-	private static final int CHOICE_RESOULT = 5;
+	//private static final int CHOICE_RESOULT = 5;
 	private List<TextView> lableList=null;
 	@ViewInject(R.id.circle_lable1)
 	private TextView labletext1;
@@ -124,13 +123,15 @@ public class ChoiceCircleLableActivity extends BaseActivityWithTopBar {
 	private void choiceLable() {
 		// TODO Auto-generated method stub
 		if(category_id==-1){
-			ToastUtil.show(this, "必须选择一个分类");
+			ToastUtil.show(this, getString(R.string.must_choice_category));
 			return ;
 		}else {
 			Intent  intent =new Intent();
 			intent.putExtra("categoryid", category_id);
+			showLoading(getString(R.string.loading), true);
 			setResult(RESULT_OK, intent);
 			finishWithRight();
+			hideLoading();
 		}
 		
 	};
@@ -145,8 +146,8 @@ public class ChoiceCircleLableActivity extends BaseActivityWithTopBar {
 	protected void setUpView() {
 		// TODO Auto-generated method stub
 		initlableList();
-		setBarText("选择标签");
-		addRightBtn("完成");
+		setBarText(getString(R.string.choice_category));
+		addRightBtn(getString(R.string.alert_finish));
 	}
 
 	private void initlableList() {

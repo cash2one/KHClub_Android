@@ -47,6 +47,7 @@ import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.TimeHandle;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
+import com.app.khclub.news.ui.fragment.CircleFragment;
 import com.app.khclub.news.ui.fragment.CircleTypeFragment;
 import com.app.khclub.news.ui.model.CircleMembersModel;
 import com.app.khclub.news.ui.model.CirclePageModel;
@@ -82,6 +83,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	public static final String CIRCLEFRESH = "Circlefresh";
 	private static final String CIRCLEDETAIL = "circledetail";
 	// private Fresh fresh;
+	private boolean isFollowoperator=false;
 	private int userID;
 	private String notice;
 	protected static final String CIRCLE_ID = "circle_id";
@@ -245,8 +247,10 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				params.addBodyParameter("circle_id", circle_id);
 				if ("0".equals(circleModel2.getIsFollow())) {
 					params.addBodyParameter("isFollow", "1");
+					isFollowoperator=true;
 				} else {
 					params.addBodyParameter("isFollow", "0");
+					isFollowoperator=false;
 				}
 				// 关注
 				HttpManager.post(KHConst.FOLLOW_OR_UNFOLLOW_CIRCLE, params,
@@ -257,13 +261,13 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 						int status = jsonResponse.getIntValue("status");
 						switch (status) {
 						case KHConst.STATUS_SUCCESS:
-							Log.i("wx", circleModel2.getIsFollow());
+							//Log.i("wx", circleModel2.getIsFollow());
+							freshCircle();
 							if ("0".equals(circleModel2.getIsFollow())) {
 								ToastUtil.show(CirclePageActivity.this, R.string.attention_success);
 							} else {
 								ToastUtil.show(CirclePageActivity.this, R.string.unattention_success);
 							}
-							freshCircle();
 							break;
 						case KHConst.STATUS_FAIL:
 							Toast.makeText(CirclePageActivity.this, R.string.unattention_fail, Toast.LENGTH_SHORT)
@@ -434,7 +438,10 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		Intent freshIntent = new Intent(KHConst.BROADCAST_CIRCLE_LIST_REFRESH);
 		// Log.i("wwww", "发广播");
 		freshIntent.putExtra(CIRCLEFRESH, "fresh");
-		freshIntent.putExtra(CircleTypeFragment.FRESHCATEGORYLIST, "fresh");
+		//下面三个数据用于刷新圈子分类
+		freshIntent.putExtra(CircleFragment.CIRCLE_ID, circleModel2.getCircleId());
+		freshIntent.putExtra(CircleFragment.CATEGORYNAME, circleModel2.getCategoryname());
+		freshIntent.putExtra(CircleFragment.IS_FOLLOWOPERATOR, isFollowoperator);
 		mLocalBroadcastManager.sendBroadcast(freshIntent);
 	}
 

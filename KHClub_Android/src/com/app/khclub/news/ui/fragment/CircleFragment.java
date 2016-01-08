@@ -3,6 +3,7 @@ package com.app.khclub.news.ui.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.accounts.NetworkErrorException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -49,8 +50,10 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
 public class CircleFragment extends BaseFragment {
+	public static final String IS_FOLLOWOPERATOR = "isFollowoperator";
 	private static final String FOLLOW_LIST = "followList";
-	private static final String CIRCLE_ID = "circle_id";
+	public static final String CIRCLE_ID = "circle_id";
+	public static final String CATEGORYNAME = "categoryname";
 	private static final String CIRCLE_ISFOLLOW = "isFollow";
 	private static final String UNFOLLOW_LIST = "unfollowList";
 	private List<CircleItemModel> followList, unfollowList, dataList;
@@ -194,10 +197,9 @@ public class CircleFragment extends BaseFragment {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-                           jumpCategory();
+						jumpCategory();
 					}
 
-					
 				});
 			}
 		};
@@ -237,7 +239,7 @@ public class CircleFragment extends BaseFragment {
 		// 快宿滑动时不加载图片
 		circleListView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(), false, true));
 	}
-	
+
 	// 关注请求
 	private void recommend(final CircleItemModel circleItemModel) {
 		// TODO Auto-generated method stub
@@ -248,6 +250,7 @@ public class CircleFragment extends BaseFragment {
 		// if (position >= (followList.size() - unfollowList.size())) {
 		// 设置为关注
 		params.addBodyParameter("isFollow", "1");
+		refreshCategory(circleItemModel.getId().trim(), circleItemModel.getCategory_name().trim());
 		// isattention = true;
 		// } else {
 		// params.addBodyParameter("isFollow", "0");
@@ -373,6 +376,19 @@ public class CircleFragment extends BaseFragment {
 		}, null));
 	}
 
+	/**
+	 * 刷新分类列表
+	 * @param 圈子ID
+	 * @param 分类名称
+	 */
+	private void refreshCategory(String circleid, String categoryname) {
+         Intent intent=new Intent(KHConst.BROADCAST_CIRCLE_LIST_REFRESH);
+         intent.putExtra(CIRCLE_ID, circleid);
+         intent.putExtra(CATEGORYNAME, categoryname);
+         intent.putExtra(IS_FOLLOWOPERATOR, true);
+         mLocalBroadcastManager.sendBroadcast(intent);
+	}
+
 	private LocalBroadcastManager mLocalBroadcastManager;
 
 	/**
@@ -389,29 +405,29 @@ public class CircleFragment extends BaseFragment {
 
 	/**
 	 * 跳转至分类
-	 * */
+	 */
 	private void jumpCategory() {
 		// TODO Auto-generated method stub;
-		//Log.i("wwww", "调整");
-	    Intent intent=new Intent(KHConst.BROADCAST_NEW_MESSAGE_PUSH);
-	    //通知跳转至分类页面
-	    intent.putExtra("jumpcategory", "jumpcategory");
+		// Log.i("wwww", "调整");
+		Intent intent = new Intent(KHConst.BROADCAST_NEW_MESSAGE_PUSH);
+		// 通知跳转至分类页面
+		intent.putExtra("jumpcategory", "jumpcategory");
 		getActivity().sendBroadcast(intent);
 	}
+
 	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			Log.i("wwww","刷新");
+			// Log.i("wwww","刷新");
 			if (intent.hasExtra(CirclePageActivity.CIRCLEFRESH)) {
-				// Log.i("wwww","刷新");
+				//Log.i("wwww", "刷新");
 				getData();
 				circleAdapter.notifyDataSetChanged();
 			}
 		}
 	};
-	
 
 	@Override
 	public void onDestroy() {

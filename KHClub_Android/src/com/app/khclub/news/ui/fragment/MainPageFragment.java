@@ -299,7 +299,6 @@ public class MainPageFragment extends BaseFragment {
 			public void onReceive(Context context, Intent intent) {
 				if(intent.hasExtra("jumpcategory")){
 					//从圈子类表跳转，直接写死
-					//Log.i("wwww", "jumpcategory");
 					mainPager.setCurrentItem(1);
 				}else {
 					// 刷新push

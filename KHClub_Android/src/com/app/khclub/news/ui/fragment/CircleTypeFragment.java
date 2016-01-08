@@ -38,6 +38,7 @@ import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v4.content.LocalBroadcastManager;
@@ -81,8 +82,11 @@ public class CircleTypeFragment extends BaseFragment {
 	protected List<CircleItemModel> dataList;
 	// 圈子分类列表适配器
 	private HelloHaAdapter<CircleItemModel> categoryAdapter;
-	//记录点击的Item 所对应的关注按钮
-	private TextView impTextView;
+	// 记录点击的Item 所对应的关注按钮
+	// private TextView impTextView;
+	// 记录当前分类名称
+	private String currentCategory;
+
 	@Override
 	public int setLayoutId() {
 		// TODO Auto-generated method stub
@@ -98,10 +102,13 @@ public class CircleTypeFragment extends BaseFragment {
 	@Override
 	public void setUpViews(View rootView) {
 		// TODO Auto-generated method stub
+		// 默认值为第一个
+		currentCategory = getString(R.string.investment);
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
 				.displayer(new RoundedBitmapDisplayer(7)).bitmapConfig(Bitmap.Config.RGB_565).build();
 		dataList = new ArrayList<CircleItemModel>();
+		initBoradcastReceiver();
 		initTypeList();
 		initCategoryListData();
 		initCategoryLisView();
@@ -142,6 +149,8 @@ public class CircleTypeFragment extends BaseFragment {
 
 					});
 				} else {
+					TextView followview= helper.getView(R.id.category_circle_isfollow);
+					followview.setClickable(false);
 					helper.setBackgroundRes(R.id.category_circle_isfollow, R.drawable.category_follow);
 					helper.setText(R.id.category_circle_isfollow, getString(R.string.already_follow));
 					helper.setTextColor(R.id.category_circle_isfollow,
@@ -151,7 +160,8 @@ public class CircleTypeFragment extends BaseFragment {
 
 					@Override
 					public void onClick(View v) {
-						impTextView=(TextView) v.findViewById(R.id.category_circle_isfollow);
+						// impTextView = (TextView)
+						// v.findViewById(R.id.category_circle_isfollow);
 						// 跳转到圈子首页
 						Intent intent = new Intent(getActivity(), CirclePageActivity.class);
 						intent.putExtra(CIRCLE_ID, item.getId());
@@ -228,7 +238,7 @@ public class CircleTypeFragment extends BaseFragment {
 						case KHConst.STATUS_SUCCESS:
 							circleItemModel.setIs_follow("1");
 							TextView textView = helper.getView(R.id.category_circle_isfollow);
-							setting(textView);
+							settingFollow(textView);
 							freshCircle();
 							// isPullDowm=true;
 							// initCategoryListData();
@@ -250,12 +260,35 @@ public class CircleTypeFragment extends BaseFragment {
 				}, null));
 	}
 
-	protected void setting(TextView textView) {
+	private LocalBroadcastManager mLocalBroadcastManager;
+
+	/**
+	 * 初始化广播信息
+	 */
+	private void initBoradcastReceiver() {
+		mLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+		IntentFilter myIntentFilter = new IntentFilter();
+		myIntentFilter.addAction(KHConst.BROADCAST_CIRCLE_LIST_REFRESH);
+		// 注册广播
+		mLocalBroadcastManager.registerReceiver(mBroadcastReceiver, myIntentFilter);
+	}
+
+	protected void settingFollow(TextView textView) {
 		// TODO Auto-generated method stub
+		Log.i("wwww", textView.getText().toString());
 		textView.setBackgroundResource(R.drawable.category_follow);
 		textView.setText(getString(R.string.already_follow));
 		textView.setTextColor(getResources().getColor(R.color.follow_char_gary));
 		textView.setClickable(false);
+	}
+
+	protected void settingUnFollow(TextView textView) {
+		// TODO Auto-generated method stub
+		Log.i("wwww", textView.getText().toString());
+		textView.setBackgroundResource(R.drawable.category_unfollow);
+		textView.setText(getString(R.string.attention));
+		textView.setTextColor(getResources().getColor(R.color.main_gold));
+		textView.setClickable(true);
 	}
 
 	/**
@@ -371,6 +404,7 @@ public class CircleTypeFragment extends BaseFragment {
 				triangle.setVisibility(View.VISIBLE);
 				TextView categoryText = (TextView) view.findViewById(R.id.typetext);
 				categoryText.setTextColor(getResources().getColor(R.color.main_gold));
+				currentCategory = categoryText.getText().toString();
 				adapter.notifyDataSetChanged();
 			}
 		});
@@ -381,7 +415,9 @@ public class CircleTypeFragment extends BaseFragment {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		// Log.i("wwww", "1111");
+		if (mBroadcastReceiver != null && mLocalBroadcastManager != null) {
+			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
+		}
 	}
 
 	/**
@@ -390,7 +426,6 @@ public class CircleTypeFragment extends BaseFragment {
 	protected void freshCircle() {
 		// TODO Auto-generated method stub
 		Intent freshIntent = new Intent(KHConst.BROADCAST_CIRCLE_LIST_REFRESH);
-		Log.i("wwww", "发广播");
 		freshIntent.putExtra(CIRCLEFRESH, "fresh");
 		LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(freshIntent);
 	}
@@ -455,9 +490,42 @@ public class CircleTypeFragment extends BaseFragment {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			if (intent.hasExtra(FRESHCATEGORYLIST)) {
-                    setting(impTextView);
+			// if (intent.hasExtra(FRESHCATEGORYLIST)) {
+			// if (intent.getBooleanExtra(FRESHCATEGORYLIST, false)) {
+			// settingFollow(impTextView);
+			// } else {
+			// settingUnFollow(impTextView);
+			// }
+			// }
+			if (intent.hasExtra(CircleFragment.CATEGORYNAME)) {
+				String circleid = null;
+				if (intent.hasExtra(CircleFragment.CIRCLE_ID)) {
+					circleid = intent.getStringExtra(CircleFragment.CIRCLE_ID);
+				}
+				// Log.i("wwww", currentCategory);
+				// Log.i("wwww",
+				// intent.getStringExtra(CircleFragment.CATEGORYNAME));
+				if (currentCategory.equals(intent.getStringExtra(CircleFragment.CATEGORYNAME))) {
+					for (int i = 0; i < categoryAdapter.getCount(); i++) {
+						if (categoryAdapter.getItem(i).getId().equals(circleid)) {
+							if (intent.getBooleanExtra(CircleFragment.IS_FOLLOWOPERATOR, false)) {
+								categoryAdapter.getItem(i).setIs_follow("1");
+								View v = categoryAdapter.getView(i, null, null);
+								TextView impTextView = (TextView) v.findViewById(R.id.category_circle_isfollow);
+								Log.i("wwww", 111+"");
+								settingFollow(impTextView);
+							} else {
+								categoryAdapter.getItem(i).setIs_follow("0");
+								View v = categoryAdapter.getView(i, null, null);
+								TextView impTextView = (TextView) v.findViewById(R.id.category_circle_isfollow);
+								settingUnFollow(impTextView);
+							}
+							categoryAdapter.notifyDataSetChanged();
+						}
+					}
+				}
 			}
 		}
 	};
+
 }
