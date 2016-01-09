@@ -15,11 +15,11 @@
         <TextView
             android:id="@+id/circle_attention_type"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:textColor="@color/main_gold"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:visibility="gone" />
     </LinearLayout>
 
@@ -28,20 +28,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#efeff4"
+        android:orientation="vertical"
         android:visibility="gone" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@color/main_deep_white"
+            android:gravity="center" >
+
+            <RelativeLayout
+                android:id="@+id/butter_club_root"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="#f7f9f8" >
+
+                <TextView
+                    android:id="@+id/butter_club"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="发现更多高端圈层"
+                    android:textColor="@color/main_gold"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignBottom="@id/butter_club"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/butter_club"
+                    android:src="@drawable/more_circle" />
+            </RelativeLayout>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/circle_recommend_type"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:textColor="@color/main_gold"
-            android:textSize="15sp"
+            android:textSize="16sp"
             android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/circle_list_root"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -59,28 +93,45 @@
             android:id="@+id/intro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:paddingBottom="5dp"
             android:paddingLeft="10dp" >
 
-            <TextView
-                android:id="@+id/circle_name"
+            <RelativeLayout
+                android:id="@+id/name_root"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:text="@string/circle_name"
-                android:textSize="14sp" />
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/category_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/round_text"
+                    android:text="分类"
+                    android:textColor="@color/main_deep_white"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/circle_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/category_name"
+                    android:layout_marginTop="9dp"
+                    android:text="@string/circle_name"
+                    android:textSize="14sp" />
+            </RelativeLayout>
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/circle_people_image"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:layout_below="@id/circle_name"
+                android:layout_below="@id/name_root"
                 android:layout_marginTop="13dp"
-                android:src="@drawable/member2x" />
+                android:src="@drawable/member2x"
+                android:visibility="gone" />
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/circle_people_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,22 +139,45 @@
                 android:layout_marginTop="38dp"
                 android:layout_toRightOf="@id/circle_people_image"
                 android:text="0"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/circle_name"
-                android:layout_marginTop="30dp"
+                android:layout_below="@id/name_root"
+                android:layout_marginTop="12dp"
                 android:background="@color/main_light_gary" />
 
             <RelativeLayout
                 android:id="@+id/recommend_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_marginTop="17dp"
                 android:focusable="true"
                 android:gravity="center_vertical" >
+
+                <!--
+                     <ImageView
+                    android:id="@+id/unread_news_num"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/small_unread"
+                    android:visibility="gone" />-->
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/unread_news_num"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_horizontal"
+                    android:text="+10"
+                    android:textColor="@color/main_gold"
+                    android:textSize="12dp"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/recommend_btn"
@@ -111,12 +185,11 @@
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
-                    android:layout_marginTop="15dp"
                     android:background="@drawable/filet_03"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:textColor="@color/main_gold"
-                    android:text="@string/attention" />
+                    android:text="@string/attention"
+                    android:textColor="@color/main_gold" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -60,6 +61,14 @@ public class MainPageFragment extends BaseFragment {
 	// 校园
 	@ViewInject(R.id.tv_campus_guid)
 	private TextView campusTitleTextView;
+	@ViewInject(R.id.tv_circle_type)
+	private TextView typeTitleTextView;
+	@ViewInject(R.id.tab1)
+	private View tabView1;
+	@ViewInject(R.id.tab2)
+	private View tabView2;
+	@ViewInject(R.id.tab3)
+	private View tabView3;
 	// 所有的
 	private List<Fragment> mFragmentList = new ArrayList<Fragment>();
 	// 偏移图片
@@ -81,6 +90,7 @@ public class MainPageFragment extends BaseFragment {
 
 	@Override
 	public void loadLayout(View rootView) {
+		
 	}
 
 	@Override
@@ -93,11 +103,11 @@ public class MainPageFragment extends BaseFragment {
          
 			@Override
 			public void onClick(View arg0) {
-				if (currpage == 0) {
+				if (currpage == 0||currpage == 1) {
 					Intent intentUsrMain = new Intent(mContext, CreateCircleActivity.class);
 					startActivityWithRight(intentUsrMain);
 				}
-				if (currpage == 1) {
+				if (currpage == 2) {
 					Intent intentUsrMain = new Intent(mContext, PublishNewsActivity.class);
 					startActivityWithRight(intentUsrMain);
 				}
@@ -112,7 +122,6 @@ public class MainPageFragment extends BaseFragment {
 				startActivityWithRight(intentCampusInfo);
 			}
 		});
-
 		registerNotify();
 		refreshPush();
 	}
@@ -145,10 +154,11 @@ public class MainPageFragment extends BaseFragment {
 	 * 初始化ViewPager
 	 */
 	public void InitViewPager() {
-
 		newsTitleTextView.setOnClickListener(new ViewClickListener(0));
-		campusTitleTextView.setOnClickListener(new ViewClickListener(1));
+		typeTitleTextView.setOnClickListener(new ViewClickListener(1));
+		campusTitleTextView.setOnClickListener(new ViewClickListener(2));
 		mFragmentList.add(new CircleFragment());
+		mFragmentList.add(new CircleTypeFragment());
 		mFragmentList.add(new NewsListFragment());
 		mainPager.setAdapter(new MainFragmentPagerAdapter(getChildFragmentManager(), mFragmentList));
 		mainPager.setCurrentItem(0);
@@ -173,7 +183,7 @@ public class MainPageFragment extends BaseFragment {
 	/**
 	 * ViewPager的适配器
 	 */
-	class MainFragmentPagerAdapter extends FragmentStatePagerAdapter {
+	class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 		private List<Fragment> fragmentList;
 
 		public MainFragmentPagerAdapter(FragmentManager fm, List<Fragment> list) {
@@ -185,11 +195,13 @@ public class MainPageFragment extends BaseFragment {
 		@Override
 		public Fragment getItem(int index) {
 			return fragmentList.get(index);
+			//return fragmentList.get(index%3);
 		}
 
 		@Override
 		public int getCount() {
 			return fragmentList.size();
+			//return 10000;
 		}
 
 		@Override
@@ -199,9 +211,9 @@ public class MainPageFragment extends BaseFragment {
 		}
 
 		@Override
-		public Object instantiateItem(ViewGroup arg0, int arg1) {
+		public Object instantiateItem(ViewGroup arg0, int position) {
 			// 初始化每个页卡选项
-			return super.instantiateItem(arg0, arg1);
+			return super.instantiateItem(arg0, position);
 		}
 
 		@Override
@@ -245,18 +257,34 @@ public class MainPageFragment extends BaseFragment {
 		 */
 		public void onPageSelected(int index) {
 			currpage=index;
-			if (0 == index) {
+			if (0 == currpage) {
 				publishBtn.setImageResource(R.drawable.create_cirlce_bnt);
-				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_white));
+				typeTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_gold));
 				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				tabView1.setBackgroundResource(R.color.main_gold);
+				tabView2.setBackgroundResource(R.color.main_light_gary);
+				tabView3.setBackgroundResource(R.color.main_light_gary);
 				//newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
 				//campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-			} else {
+			} else if(2 == currpage){
 				publishBtn.setImageResource(R.drawable.news_publish_btn_selector);
-				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_white));
+				typeTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_gold));
 				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				tabView1.setBackgroundResource(R.color.main_light_gary);
+				tabView2.setBackgroundResource(R.color.main_light_gary);
+				tabView3.setBackgroundResource(R.color.main_gold);
 //				newsTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 //				campusTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+			}else {
+				publishBtn.setImageResource(R.drawable.create_cirlce_bnt);
+				typeTitleTextView.setTextColor(getResources().getColor(R.color.main_gold));
+				newsTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				campusTitleTextView.setTextColor(getResources().getColor(R.color.main_deep_black));
+				tabView1.setBackgroundResource(R.color.main_light_gary);
+				tabView2.setBackgroundResource(R.color.main_gold);
+				tabView3.setBackgroundResource(R.color.main_light_gary);
 			}
 		}
 	}
@@ -269,8 +297,14 @@ public class MainPageFragment extends BaseFragment {
 		newMessageReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				// 刷新push
-				refreshPush();
+				if(intent.hasExtra("jumpcategory")){
+					//从圈子类表跳转，直接写死
+					mainPager.setCurrentItem(1);
+				}else {
+					// 刷新push
+					refreshPush();
+				}
+				
 			}
 		};
 		IntentFilter intentFilter = new IntentFilter(KHConst.BROADCAST_NEW_MESSAGE_PUSH);

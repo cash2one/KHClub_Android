@@ -776,7 +776,7 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 			Log.d("--", username + "同意了你的好友请求");
 			msg.setStatus(InviteMesageStatus.BEAGREED);
 			notifyNewIviteMessage(msg);
-
+            sendHintMessage(username);
 		}
 
 		@Override
@@ -1033,6 +1033,20 @@ public class MainTabActivity extends BaseActivity implements EMEventListener{
 		// 刷新好友页面ui
 		contactListFragmentRefresh();
 		
+	}
+
+	public void sendHintMessage(String username) {
+		// TODO Auto-generated method stub
+		EMConversation conversation = EMChatManager.getInstance().getConversation(username);
+		EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
+		//如果是群聊，设置chattype,默认是单聊
+		message.setChatType(ChatType.Chat);
+		//设置消息body
+		TextMessageBody txtBody = new TextMessageBody(getString(R.string.start_chat));
+		message.addBody(txtBody);
+		message.setReceipt(username);
+		conversation.addMessage(message);
+		EMChatManager.getInstance().sendMessage(message, null);
 	}
 
 	/**

@@ -150,6 +150,20 @@
 
 
     <!-- News -->
+    <string name="investment">创业投资</string>
+    <string name="business_trade">商业协会</string>
+    <string name="tea">茗品沉香</string>
+    <string name="liquor_cigar">名酒雪茄</string>
+    <string name="money">金融理财</string>
+    <string name="artwork">艺术收藏</string>
+    <string name="travel">高端旅游</string>
+    <string name="golf">高尔夫</string>
+    <string name="college">商学院</string>
+    <string name="luxury">时尚奢侈品</string>
+    <string name="car_yacht">豪车游艇</string>
+    <string name="other">其他</string>
+    
+    <string name="choice_category">选择标签</string>
     <string name="send_notice">发布公告</string>
     <string name="notice_details">公告详情</string>
     <string name="circle_master">圈主</string>
@@ -557,6 +571,7 @@
     <string name="unattention_success">取消关注成功</string>
     <string name="unattention_fail">取消关注失败</string>
     <string name="attention">关注</string>
+    <string name="already_follow">已关注</string>
     <string name="cover_name_unnull">封面和名字不能为空</string>
     <string name="freshing">正在刷新</string>
     <string name="confirm_call_phone">是否拨打客服电话</string>
@@ -565,4 +580,6 @@
     <string name="notice">公告</string>
     <string name="go_attention">去关注</string>
     <string name="chioce_circle_attention">选择去圈子，去关注</string> 
+    <string name="must_choice_category">必须选择一个分类</string>
+     <string name="start_chat">"你们已经是好友了，开始聊天吧"</string>
 </resources>

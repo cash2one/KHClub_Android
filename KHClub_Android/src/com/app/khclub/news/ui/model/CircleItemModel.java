@@ -8,8 +8,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class CircleItemModel{
-	
-	
+	//圈子分类
+	private String category_name;
 	//圈子ID
 	private String id;
 	//圈子名称
@@ -18,6 +18,29 @@ public class CircleItemModel{
 	private String circle_cover_sub_image;
 	//关注人数
 	private String follow_quantity;
+	//圈子未读消息
+	private String news_newsnum;
+	//是否关注
+	private String is_follow;
+	
+	public String getIs_follow() {
+		return is_follow;
+	}
+	public void setIs_follow(String is_follow) {
+		this.is_follow = is_follow;
+	}
+	public String getCategory_name() {
+		return category_name;
+	}
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
+	public String getNews_newsnum() {
+		return news_newsnum;
+	}
+	public void setNews_newsnum(String news_newsnum) {
+		this.news_newsnum = news_newsnum;
+	}
 	public String getId() {
 		return id;
 	}
@@ -55,6 +78,15 @@ public class CircleItemModel{
 		}
 		if (object.containsKey("follow_quantity")) {
 			setFollow_quantity(object.getString("follow_quantity"));
+		}
+		if (object.containsKey("new_newsnum")) {
+			setNews_newsnum(object.getString("new_newsnum"));
+		}
+		if (object.containsKey("category_name")) {
+			setCategory_name(object.getString("category_name"));
+		}
+		if (object.containsKey("is_follow")) {
+			setIs_follow(object.getString("is_follow"));
 		}
 	}
 }

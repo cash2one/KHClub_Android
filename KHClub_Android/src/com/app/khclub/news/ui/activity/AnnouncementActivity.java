@@ -369,7 +369,19 @@ public class AnnouncementActivity extends BaseActivityWithTopBar {
 		// 注册广播
 		mLocalBroadcastManager.registerReceiver(mBroadcastReceiver, myIntentFilter);
 	}
-
+    
+	/**
+	 * 活动销毁时取消注册
+	*/
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (mBroadcastReceiver != null && mLocalBroadcastManager != null) {
+			mLocalBroadcastManager.unregisterReceiver(mBroadcastReceiver);
+		}
+	}
+	
 	/**
 	 * 广播接收处理
 	 */

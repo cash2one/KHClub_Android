@@ -47,6 +47,8 @@ import com.app.khclub.base.utils.KHUtils;
 import com.app.khclub.base.utils.TimeHandle;
 import com.app.khclub.base.utils.ToastUtil;
 import com.app.khclub.contact.ui.activity.ShareContactsActivity;
+import com.app.khclub.news.ui.fragment.CircleFragment;
+import com.app.khclub.news.ui.fragment.CircleTypeFragment;
 import com.app.khclub.news.ui.model.CircleMembersModel;
 import com.app.khclub.news.ui.model.CirclePageModel;
 import com.app.khclub.news.ui.model.NewsConstants;
@@ -81,6 +83,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	public static final String CIRCLEFRESH = "Circlefresh";
 	private static final String CIRCLEDETAIL = "circledetail";
 	// private Fresh fresh;
+	private boolean isFollowoperator=false;
 	private int userID;
 	private String notice;
 	protected static final String CIRCLE_ID = "circle_id";
@@ -244,8 +247,10 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				params.addBodyParameter("circle_id", circle_id);
 				if ("0".equals(circleModel2.getIsFollow())) {
 					params.addBodyParameter("isFollow", "1");
+					isFollowoperator=true;
 				} else {
 					params.addBodyParameter("isFollow", "0");
+					isFollowoperator=false;
 				}
 				// 关注
 				HttpManager.post(KHConst.FOLLOW_OR_UNFOLLOW_CIRCLE, params,
@@ -256,13 +261,13 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 						int status = jsonResponse.getIntValue("status");
 						switch (status) {
 						case KHConst.STATUS_SUCCESS:
-							Log.i("wx", circleModel2.getIsFollow());
+							//Log.i("wx", circleModel2.getIsFollow());
+							freshCircle();
 							if ("0".equals(circleModel2.getIsFollow())) {
 								ToastUtil.show(CirclePageActivity.this, R.string.attention_success);
 							} else {
 								ToastUtil.show(CirclePageActivity.this, R.string.unattention_success);
 							}
-							freshCircle();
 							break;
 						case KHConst.STATUS_FAIL:
 							Toast.makeText(CirclePageActivity.this, R.string.unattention_fail, Toast.LENGTH_SHORT)
@@ -433,6 +438,10 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 		Intent freshIntent = new Intent(KHConst.BROADCAST_CIRCLE_LIST_REFRESH);
 		// Log.i("wwww", "发广播");
 		freshIntent.putExtra(CIRCLEFRESH, "fresh");
+		//下面三个数据用于刷新圈子分类
+		freshIntent.putExtra(CircleFragment.CIRCLE_ID, circleModel2.getCircleId());
+		freshIntent.putExtra(CircleFragment.CATEGORYNAME, circleModel2.getCategoryname());
+		freshIntent.putExtra(CircleFragment.IS_FOLLOWOPERATOR, isFollowoperator);
 		mLocalBroadcastManager.sendBroadcast(freshIntent);
 	}
 
@@ -558,12 +567,13 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 					pageIndex = 1;
 					isPullDowm = true;
 					getNewsData(UserManager.getInstance().getUser().getUid(), pageIndex, "");
+					freshCircle();
 				}
 			}
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-				if (lastPage && !isRequestingData) {
+				if (!lastPage && !isRequestingData) {
 					isRequestingData = true;
 					isPullDowm = false;
 					getNewsData(UserManager.getInstance().getUser().getUid(), pageIndex, latestTimesTamp);
@@ -629,6 +639,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 				} else {
 					helper.setText(R.id.circle_announcement_tv, notice);
 				}
+				helper.setText(R.id.circle_page_category, circleModel2.getCategoryname());
 				helper.setText(R.id.news_circle_name, circleModel2.getCircleName());
 				helper.setText(R.id.news_master_name, circleModel2.getUserName());
 				helper.setText(R.id.news_circle_friend, " " + circleModel2.getFollowQuantity() + "人");
@@ -910,8 +921,8 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	 * 获取动态数据
 	 */
 	private void getNewsData(int userID, int desPage, String lastTime) {
-		String path = KHConst.GET_CIRCLE_HOME_LIST + "?" + "circle_id=" + circle_id + "&" + "user_id=" + userID;
-		// Log.i("wwww", path);
+		String path = KHConst.GET_CIRCLE_HOME_LIST + "?" + "circle_id=" + circle_id + "&" + "user_id=" + userID+ "&page=" + desPage + "&frist_time=" + lastTime;;
+		 Log.i("wwww", path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
 			@SuppressWarnings("unchecked")
@@ -1250,7 +1261,6 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 						isRequestingData = true;
 						pageIndex = 1;
 						isPullDowm = true;
-
 						getNewsData(userID, pageIndex, "");
 					}
 				} else if (resultIntent.hasExtra(NewsConstants.NEWS_LISTVIEW_REFRESH)) {

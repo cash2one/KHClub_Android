@@ -94,6 +94,8 @@ public interface KHConst {
 	public static final String MODIFY_CIRCLE = DOMIN + "/modifyCircle";
 	// 圈子列表
 	public static final String GET_PERSONAL_CIRCLE_LIST = DOMIN + "/getPersonalCircleList";
+	// 圈子分类列表
+	public static final String GET_CIRCLE_CATEGORY_LIST = DOMIN + "/getCircleCategoryList";
 	// 圈子主页列表
 	public static final String GET_CIRCLE_HOME_LIST = DOMIN + "/getCircleHomeList";
 	// 我的圈子列表

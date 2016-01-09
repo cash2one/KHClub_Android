@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_deep_white"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/category_head_image"
+            android:layout_width="@dimen/head_image_size_medium"
+            android:layout_height="@dimen/head_image_size_medium"
+            android:src="@drawable/default_avatar" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/category_circle_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="圈子名称"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/category_circle_isfollow"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/category_follow"
+            android:gravity="center"
+            android:text="已关注"
+            android:textColor="@color/main_gold"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</LinearLayout>
