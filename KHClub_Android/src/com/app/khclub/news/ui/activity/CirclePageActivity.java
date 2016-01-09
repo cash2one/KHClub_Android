@@ -573,7 +573,7 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-				if (lastPage && !isRequestingData) {
+				if (!lastPage && !isRequestingData) {
 					isRequestingData = true;
 					isPullDowm = false;
 					getNewsData(UserManager.getInstance().getUser().getUid(), pageIndex, latestTimesTamp);
@@ -921,8 +921,8 @@ public class CirclePageActivity extends BaseActivityWithTopBar {
 	 * 获取动态数据
 	 */
 	private void getNewsData(int userID, int desPage, String lastTime) {
-		String path = KHConst.GET_CIRCLE_HOME_LIST + "?" + "circle_id=" + circle_id + "&" + "user_id=" + userID;
-		// Log.i("wwww", path);
+		String path = KHConst.GET_CIRCLE_HOME_LIST + "?" + "circle_id=" + circle_id + "&" + "user_id=" + userID+ "&page=" + desPage + "&frist_time=" + lastTime;;
+		 Log.i("wwww", path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
 
 			@SuppressWarnings("unchecked")

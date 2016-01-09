@@ -93,7 +93,6 @@ public class CircleFragment extends BaseFragment {
 
 	@Override
 	public void setUpViews(View rootView) {
-		Log.i("wwww", "重新创建圈子碎片");
 		followList = new ArrayList<CircleItemModel>();
 		headImageOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.loading_default)
 				.showImageOnFail(R.drawable.loading_default).cacheInMemory(true).cacheOnDisk(true)
@@ -154,8 +153,8 @@ public class CircleFragment extends BaseFragment {
 					} else {
 						helper.setVisible(R.id.unread_news_num, true);
 						// 取消显示未读数量了
-						// helper.setText(R.id.unread_news_num, "+" +
-						// item.getNews_newsnum());
+						 helper.setText(R.id.unread_news_num, "+" +
+						 item.getNews_newsnum());
 					}
 					helper.setVisible(R.id.recommend_btn, false);
 				}

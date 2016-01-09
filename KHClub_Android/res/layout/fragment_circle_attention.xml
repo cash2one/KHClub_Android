@@ -44,22 +44,22 @@
                 android:background="#f7f9f8" >
 
                 <TextView
-                    android:layout_centerInParent="true"
                     android:id="@+id/butter_club"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:text="发现更多高端圈层"
                     android:textColor="@color/main_gold"
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:layout_marginBottom="3dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_alignBottom="@id/butter_club"
+                    android:layout_marginBottom="3dp"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@id/butter_club"
-                    android:src="@drawable/more_circle"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp" />
+                    android:src="@drawable/more_circle" />
             </RelativeLayout>
         </RelativeLayout>
 
@@ -157,28 +157,27 @@
                 android:focusable="true"
                 android:gravity="center_vertical" >
 
-                <ImageView
+                <!--
+                     <ImageView
                     android:id="@+id/unread_news_num"
                     android:layout_width="9dp"
                     android:layout_height="9dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/small_unread"
-                    android:visibility="gone" />
+                    android:visibility="gone" />-->
 
-                <!--
-                     <TextView
-                    android:background="@drawable/unread_count_bg.9"
+                <TextView
+                    android:layout_marginTop="5dp"
                     android:id="@+id/unread_news_num"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="5dp"
                     android:gravity="center_horizontal"
                     android:text="+10"
                     android:textColor="@color/main_gold"
                     android:textSize="12dp"
-                    android:visibility="gone" />                -->
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/recommend_btn"

@@ -151,6 +151,7 @@ public class OtherCircleActivity extends BaseActivityWithTopBar {
 		//动态所属圈子
 		if (getIntent().hasExtra(INTENT_NEWS_ID)) {
 			path = KHConst.NEWS_CIRCLE_LIST + "?" + "news_id=" +getIntent().getStringExtra(INTENT_NEWS_ID);	
+			
 		}
 		Log.i("wwww", path);
 		HttpManager.get(path, new JsonRequestCallBack<String>(new LoadDataHandler<String>() {
