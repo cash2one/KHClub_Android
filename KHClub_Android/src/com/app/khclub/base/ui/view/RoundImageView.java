@@ -56,7 +56,6 @@ public class RoundImageView extends ImageView {
 	  public RoundImageView(Context context, AttributeSet attrs) {
 	    this(context, attrs, 0);
 	  }
-
 	  public RoundImageView(Context context, AttributeSet attrs, int defStyle) {
 	    super(context, attrs, defStyle);
 

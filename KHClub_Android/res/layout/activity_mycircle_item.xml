@@ -36,7 +36,7 @@
                 android:background="@drawable/round_text"
                 android:text="分类"
                 android:textColor="@color/main_deep_white"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                android:layout_below="@id/category_name"
