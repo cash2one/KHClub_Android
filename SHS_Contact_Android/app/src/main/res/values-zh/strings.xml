@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">脉库</string>
+    <string name="action_settings">设置</string>
+    <string name="confirm">确定</string>
+</resources>

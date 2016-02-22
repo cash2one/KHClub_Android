@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SHS_Contact_Android</string>
+    <string name="action_settings">Settings</string>
+    <string name="confirm">confirm</string>
+</resources>
