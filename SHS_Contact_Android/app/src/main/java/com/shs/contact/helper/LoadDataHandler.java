@@ -1,5 +1,7 @@
 package com.shs.contact.helper;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSONObject;
 import com.lidroid.xutils.exception.HttpException;
 
@@ -14,8 +16,8 @@ public class LoadDataHandler<T> {
 		
 	}
 
-	public void onFailure(HttpException arg0, String arg1,T flag){
-		
+	public void onFailure(HttpException e, String arg1,T flag){
+		//Log.i("wx", e.toString() + arg1 + ":" + flag);
 	}
 
 	public void onSuccess(JSONObject jsonResponse,T flag){

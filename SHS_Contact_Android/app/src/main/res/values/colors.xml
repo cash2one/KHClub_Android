@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 深白色 -->
+    <color name="main_white">#ffffff</color>
+    <!--根布局背景色-->
+    <color name="backgroup_gary">#fafafa</color>
+    <!--分割线颜色-->
+    <color name="main_light_gary">#e3e3e3</color>
+    <!--提示语颜色-->
+    <color name="main_hint_gary">#c1c1c1</color>
+    <!--主黑色-->
+    <color name="main_black">#000000</color>
+    <!--按钮颜色-->
+    <color name="main_bnt_gary">#b2b2b2</color>
+</resources>

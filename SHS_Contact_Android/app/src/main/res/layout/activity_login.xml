@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/main_white"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:textSize="15sp"
+        android:id="@+id/please_in_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="72dp"
+        android:textColor="@color/main_black"
+        android:text="@string/please_input_phonenum" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/edit_root"
+        android:layout_below="@id/please_in_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:id="@+id/tv_area"
+            android:textColor="@color/main_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+86" />
+
+        <EditText
+            android:layout_marginLeft="25dp"
+            android:id="@+id/username"
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_area"
+             />
+        </LinearLayout>
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/main_light_gary"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/login"
+        android:gravity="center"
+        android:background="@drawable/round_lable_border"
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/edit_root"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textSize="17sp"
+        android:textColor="@color/main_white"
+        android:text="登录/注册" />
+   <!-- <TextView
+        android:layout_marginBottom="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="忘记密码？"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>-->
+</RelativeLayout>

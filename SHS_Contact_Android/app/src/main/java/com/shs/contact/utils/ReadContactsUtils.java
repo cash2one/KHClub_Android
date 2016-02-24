@@ -10,7 +10,10 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.shs.contact.model.ContactsModel;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wenhai on 2016/2/18.
@@ -18,52 +21,78 @@ import java.util.ArrayList;
 public class ReadContactsUtils {
     private static final String TAG = "ContactsTest";
     private static Context contexts;
-   private static ReadContactsUtils contacts=new ReadContactsUtils();
-
+    //判断当前联系人是否有一个号码
+    private boolean isSimpleNum = true;
+    //临时保存号码
+    private String temporaryPhone;
+    private static ReadContactsUtils contacts = new ReadContactsUtils();
+    private List contactData = new ArrayList<ContactsModel>();
+    private List list;
+    private ContactsModel model;
 
     public static ReadContactsUtils getInstance(Context context) {
-       contexts=context;
+        contexts = context;
         return contacts;
     }
 
     /**
      * 获取联系人
      */
-    public void getContacts() {
+    public List<ContactsModel> getContacts() {
         Uri uri = Uri.parse("content://com.android.contacts/contacts"); // 访问所有联系人
         ContentResolver resolver = contexts.getContentResolver();
+        List contactData = new ArrayList<ContactsModel>();
         Cursor cursor = resolver.query(uri, new String[]{"_id"}, null, null, null);
+        Log.i("wea", cursor.getCount()+"");
         while (cursor.moveToNext()) {
             int contactsId = cursor.getInt(0);
             StringBuilder sb = new StringBuilder("contactsId=");
             sb.append(contactsId);
             uri = Uri.parse("content://com.android.contacts/contacts/" + contactsId + "/data"); //某个联系人下面的所有数据
             Cursor dataCursor = resolver.query(uri, new String[]{"mimetype", "data1", "data2"}, null, null, null);
+            model = new ContactsModel();
+            list = new ArrayList<String>();
             while (dataCursor.moveToNext()) {
                 String data = dataCursor.getString(dataCursor.getColumnIndex("data1"));
                 String type = dataCursor.getString(dataCursor.getColumnIndex("mimetype"));
-                if ("vnd.android.cursor.item/name".equals(type)) {    // 如果他的mimetype类型是name
-                    sb.append(", name=" + data);
-                } else if ("vnd.android.cursor.item/email_v2".equals(type)) { // 如果他的mimetype类型是email
-                    sb.append(", email=" + data);
-                } else if ("vnd.android.cursor.item/phone_v2".equals(type)) { // 如果他的mimetype类型是phone
-                    sb.append(", phone=" + data);
-                }
+                Log.i("wx", type + data);
+                    if ("vnd.android.cursor.item/name".equals(type)) {    // 如果他的mimetype类型是name
+                        sb.append(", name=" + data);
+                        model.setName(data);
+                    } else if ("vnd.android.cursor.item/email_v2".equals(type)) { // 如果他的mimetype类型是email
+                        sb.append(", email=" + data);
+                    } else if ("vnd.android.cursor.item/phone_v2".equals(type)) { // 如果他的mimetype类型是phone
+                        sb.append(", phone=" + data);
+
+                        if ("".equals(data)) {
+                            isSimpleNum=false;
+                        }else {
+                            isSimpleNum=true;
+                            list.add(data);
+                        }
+                    }
+                if (isSimpleNum)
+                    model.setPhoneNums(list);
+                Log.i(TAG, sb.toString());
             }
-            Log.i(TAG, sb.toString());
+            Log.i("wx",model.getName()+"------"+model.getPhoneNums());
+           if (model.getPhoneNums()!=null&&model.getPhoneNums().size()>0)
+            contactData.add(model);
         }
+        Log.i("wea", contactData.size()+"");
+        return ConvertData(contactData);
     }
 
     /**
      * 根据来电号码获取联系人名字
      */
     public String getContactsByNumber(String phonenum) {
-        String name=null;
+        String name = null;
         Uri uri = Uri.parse("content://com.android.contacts/data/phones/filter/" + phonenum);
         ContentResolver resolver = contexts.getContentResolver();
         Cursor cursor = resolver.query(uri, new String[]{"display_name"}, null, null, null);
         if (cursor.moveToFirst()) {
-             name = cursor.getString(0);
+            name = cursor.getString(0);
             Log.i(TAG, name);
         }
         return name;
@@ -119,7 +148,6 @@ public class ReadContactsUtils {
         ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
 
 
-
         // 操作1.添加data表中name字段
         uri = Uri.parse("content://com.android.contacts/data");
         ContentProviderOperation operation1 = ContentProviderOperation.newInsert(uri)
@@ -155,5 +183,20 @@ public class ReadContactsUtils {
             e.printStackTrace();
         }
     }
-
+    private List<ContactsModel> ConvertData (List<ContactsModel> list){
+        List<ContactsModel>  data=new ArrayList<>();
+        for (ContactsModel model:list) {
+            if (model.getPhoneNums().size()>1){
+                for (int i=0;model.getPhoneNums().size()>i;i++){
+                    ContactsModel simpleModel=new ContactsModel();
+                    simpleModel.setName(model.getName());
+                    simpleModel.setPhoneNum(model.getPhoneNums().get(i));
+                    data.add(simpleModel);
+                }
+            }else {
+                data.add(model);
+            }
+        }
+        return data;
+    }
 }

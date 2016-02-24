@@ -2,4 +2,18 @@
     <string name="app_name">脉库</string>
     <string name="action_settings">设置</string>
     <string name="confirm">确定</string>
+    <string name="content_none">暂无信息</string>
+    <string name="net_error">网络错误</string>
+    <string name="loading">正在加载...</string>
+
+
+
+
+
+    <!-- Login -->
+    <string name="login_login_title">登录</string>
+    <string name="resend">重发</string>
+    <string name="login_verification_not_null">验证码不能为空</string>
+    <string name="login_password_length_six">密码长度至少六位</string>
+    <string name="please_input_phonenum">请输入手机号码</string>
 </resources>

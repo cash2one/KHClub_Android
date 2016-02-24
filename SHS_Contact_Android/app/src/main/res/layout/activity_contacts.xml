@@ -7,6 +7,7 @@
         android:id="@+id/title_bar"
         layout="@layout/layout_title_bar" />
     <ListView
+        android:id="@+id/contact_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
 </LinearLayout>
